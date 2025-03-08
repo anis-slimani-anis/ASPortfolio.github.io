@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Quantitative UX: AI-Act Game Redesign</title>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            overflow-x: hidden;
+            background-color: white;
+        }
+        .project-img {
+            border-radius: 16px;
+            box-shadow: 0px 10px 30px rgba(85, 93, 255, 0.3);
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+        }
+        .project-img:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 15px 35px rgba(85, 93, 255, 0.4);
+        }
+        .section-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0px 10px 30px rgba(85, 93, 255, 0.2);
+            transition: transform 0.3s ease-out;
+        }
+        .section-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0px 15px 35px rgba(85, 93, 255, 0.3);
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        .fade-in:nth-child(1) { animation-delay: 0.1s; }
+        .fade-in:nth-child(2) { animation-delay: 0.2s; }
+        .fade-in:nth-child(3) { animation-delay: 0.3s; }
+        .fade-in:nth-child(4) { animation-delay: 0.4s; }
+        .fade-in:nth-child(5) { animation-delay: 0.5s; }
+        .fade-in:nth-child(6) { animation-delay: 0.6s; }
+        .fade-in:nth-child(7) { animation-delay: 0.7s; }
+        
+        .circle-list li {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .circle-list li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 0.75rem;
+            height: 0.75rem;
+            background-color: #555dff;
+            border-radius: 50%;
+        }
+
+        .canva-embed {
+            width: 100%;
+            height: 500px;
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0px 10px 30px rgba(85, 93, 255, 0.3);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#555dff',
+                        secondary: '#bdcefc',
+                        highlight: 'black',
+                        title: '#a9adf8',
+                        dark: 'black',
+                        base: 'white',
+                        textLight: '#ffffff'
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'Arial', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white text-dark overflow-x-hidden">
+    <!-- Navigation Bar -->
+    <nav class="bg-primary p-4 fixed w-full top-0 flex justify-between items-center text-textLight z-50 shadow-lg">
+        <div class="flex items-center">
+            <a href="index.html" class="flex items-center">
+                <img src="images/logo.png" alt="Logo" class="w-10 h-10 mr-2">
+                <h1 class="text-2xl font-bold">UX Research</h1>
+            </a>
+        </div>
+        <div>
+            <a href="index.html" class="px-4 hover:text-secondary transition duration-300">Home</a>
+        </div>
+    </nav>
+    
+    <!-- Content Section -->
+    <section class="max-w-3xl mx-auto px-6 pt-24 pb-16">
+        <!-- Project Title -->
+        <h1 class="text-5xl font-bold text-primary mb-2 fade-in">AI-Act Game</h1>
+        <h2 class="text-2xl text-title font-bold mb-8 fade-in">Evaluating UX and Gamification in Legal Education</h2>
+        
+        <img src="images/ai-act-game.jpg" alt="AI Act Game Preview" class="w-full project-img mb-12 fade-in">
+        
+        <!-- Course & Academic Context Section -->
+        <div class="section-card p-8 mb-10 fade-in">
+            <h3 class="text-2xl font-bold text-primary mb-4">Course & Academic Context</h3>
+            <p class="text-lg leading-relaxed text-justify">
+                This project was conducted as part of the <span class="font-semibold">Quantitative UX</span> course at <span class="font-semibold">Télécom Paris</span>, focusing on evaluating and optimizing user experience through A/B testing and usability analysis. The study aimed to improve the AI Act Game, an interactive web-based educational tool designed to teach legal practitioners and the general public about the AI Act, a regulatory framework set by the European Commission.
+            </p>
+        </div>
+        
+        <!-- Sector & Relevance Section -->
+        <div class="section-card p-8 mb-10 fade-in">
+            <h3 class="text-2xl font-bold text-primary mb-4">Sector & Relevance</h3>
+            <p class="text-lg leading-relaxed text-justify">
+                This project is situated in the fields of <span class="font-semibold">Human-Computer Interaction (HCI)</span>, <span class="font-semibold">Digital Education</span>, and <span class="font-semibold">UX Research</span>. It explores the challenge of making complex legal frameworks more accessible and engaging through interactivity and gamification.
+            </p>
+        </div>
+        
+        <!-- Project Overview Section -->
+        <div class="section-card p-8 mb-10 fade-in">
+            <h3 class="text-2xl font-bold text-primary mb-4">Project Overview</h3>
+            <p class="text-lg leading-relaxed text-justify mb-4">
+                The AI Act Game, designed by Dr. Thomas Le Goff, presents users with interactive scenarios requiring them to navigate AI regulations, assess risk levels, and ensure compliance. The study focused on evaluating and improving the user experience by comparing two versions of the game:
+            </p>
+            <ul class="text-lg leading-relaxed mb-4 circle-list">
+                <li class="mb-2"><span class="font-semibold text-primary">Version A</span> – the original text-heavy, slide-based interface</li>
+                <li class="mb-2"><span class="font-semibold text-primary">Version B</span> – a redesigned version with improved segmentation, hover interactions, and subtle gamification elements</li>
+            </ul>
+            <p class="text-lg leading-relaxed text-justify">
+                The goal was to assess whether structural changes and interaction improvements could enhance <span class="font-semibold">comprehension, usability, and engagement</span>.
+            </p>
+        </div>
+        
+        <!-- Research Process Section -->
+        <div class="section-card p-8 mb-10 fade-in">
+            <h3 class="text-2xl font-bold text-primary mb-4">Research Process</h3>
+            
+            <div class="mb-6">
+                <h4 class="text-xl font-semibold mb-2">1. A/B Testing and Experiment Design</h4>
+                <ul class="text-lg leading-relaxed ml-6 list-disc">
+                    <li class="mb-1">20 participants (10 male, 10 female, aged 20-28) tested both versions in a counterbalanced within-subject study</li>
+                    <li class="mb-1">Each participant played one use case in the original version and another in the redesigned version</li>
+                    <li class="mb-1">Tasks were followed by quizzes and UX evaluation surveys</li>
+                </ul>
+            </div>
+            
+            <div class="mb-6">
+                <h4 class="text-xl font-semibold mb-2">2. Data Collection</h4>
+                <ul class="text-lg leading-relaxed ml-6 list-disc">
+                    <li class="mb-1">Heatmaps to analyze click patterns and navigation behavior</li>
+                    <li class="mb-1">System Usability Scale (SUS) and User Experience Questionnaire (UEQ) for usability evaluation</li>
+                    <li class="mb-1">Think-aloud protocol and semi-structured interviews for qualitative feedback</li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="text-xl font-semibold mb-2">3. Analysis</h4>
+                <ul class="text-lg leading-relaxed ml-6 list-disc">
+                    <li class="mb-1">Quantitative comparison of quiz results, dwell time, and user confusion points</li>
+                    <li class="mb-1">Thematic analysis of user feedback, identifying key pain points and improvement areas</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Original Game Embed -->
+        <p class="text-xl font-semibold text-center mb-6 fade-in">Original AI-Act Game - Created by Thomas Le Goff (Version A)</p>
+        <div class="mb-12 fade-in">
+            <iframe class="canva-embed" src="https://www.canva.com/design/DAGhESIJzJo/cshGUzZJ5IfV7FU20qbFsA/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>
+        </div>
+        
+        <!-- Redesigned Game Embed -->
+        <p class="text-xl font-semibold text-center mb-6 fade-in">Our Redesigned AI-Act Game (Version B)</p>
+        <div class="mb-12 fade-in">
+            <iframe class="canva-embed" src="https://www.canva.com/design/DAGdqani77I/5OSg8uIfYkFk25Zh517ahg/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>
+        </div>
+        
+        <!-- Challenges & Key Insights Section -->
+        <div class="section-card p-8 mb-10 fade-in">
+            <h3 class="text-2xl font-bold text-primary mb-4">Challenges & Key Insights</h3>
+            
+            <div class="mb-4">
+                <h4 class="text-xl font-semibold mb-2"><span class="text-primary">•</span> Need for Gamification</h4>
+                <p class="text-lg leading-relaxed text-justify">
+                    Participants found the game lacked core game mechanics such as progression, decision-making, and engagement loops. It felt more like an interactive document than a game, reducing user motivation and immersion.
+                </p>
+            </div>
+            
+            <div class="mb-4">
+                <h4 class="text-xl font-semibold mb-2"><span class="text-primary">•</span> Unclear Target Audience</h4>
+                <p class="text-lg leading-relaxed text-justify">
+                    The content was too shallow for legal professionals but too complex for general users. A clearer segmentation of user needs is necessary to make the game effective for both groups.
+                </p>
+            </div>
+            
+            <div class="mb-4">
+                <h4 class="text-xl font-semibold mb-2"><span class="text-primary">•</span> Navigation and Comprehension Issues</h4>
+                <p class="text-lg leading-relaxed text-justify">
+                    Users struggled with understanding game flow, leading to excessive back-and-forth navigation. Heatmaps showed many clicks on non-interactive elements, indicating confusion about what was actionable.
+                </p>
+            </div>
+            
+            <div>
+                <h4 class="text-xl font-semibold mb-2"><span class="text-primary">•</span> Redesigned Version Was Preferred, But Still Had Issues</h4>
+                <p class="text-lg leading-relaxed text-justify">
+                    The redesigned version was better received in terms of usability and comprehension, with an average UX score of 3.60 compared to 3.14 for the original. However, the game still lacked engagement and clarity in content structure.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Professional Impact & Learnings Section -->
+
+        <img src="images/ai-act-game2.jpg" alt="AI Act Game Preview" class="w-full project-img mb-12 fade-in">
+
+        <div class="section-card p-8 mb-12 fade-in">
+            <h3 class="text-2xl font-bold text-primary mb-4">Professional Impact & Learnings</h3>
+            <p class="text-lg leading-relaxed text-justify mb-4">
+                This project demonstrates expertise in:
+            </p>
+            <ul class="text-lg leading-relaxed mb-4 ml-6 list-disc">
+                <li class="mb-2"><span class="font-semibold">UX research and A/B testing</span> – applying quantitative and qualitative methods to evaluate and optimize interactive experiences</li>
+                <li class="mb-2"><span class="font-semibold">Usability analysis</span> – identifying friction points in digital tools and proposing user-centered design improvements</li>
+                <li class="mb-2"><span class="font-semibold">Gamification in education</span> – exploring how interactivity and engagement mechanics can improve knowledge retention</li>
+            </ul>
+            <p class="text-lg leading-relaxed text-justify">
+                The study highlights the importance of designing digital learning tools that balance <span class="font-semibold">depth and accessibility</span>, ensuring they effectively serve diverse user groups.
+            </p>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-primary p-6 text-center text-textLight shadow-md w-full">
+        <p>&copy; 2025 AS Portfolio. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.fade-in');
+                
+                // Check if elements are in viewport and play animation
+                const isInViewport = function(elem) {
+                    const bounding = elem.getBoundingClientRect();
+                    return (
+                        bounding.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.85
+                    );
+                };
+                
+                elements.forEach(element => {
+                    if (isInViewport(element)) {
+                        element.style.animationPlayState = 'running';
+                    }
+                });
+            };
+            
+            // Initially pause animations
+            document.querySelectorAll('.fade-in').forEach(element => {
+                element.style.animationPlayState = 'paused';
+            });
+            
+            // Listen for scroll
+            window.addEventListener('scroll', animateOnScroll);
+            
+            // Check initially in case elements are already in view
+            animateOnScroll();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AS Portfolio</title>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            overflow-x: hidden;
+            background-color: white;
+        }
+        .hero-image {
+            border: 12px solid #555dff;
+            border-radius: 50%;
+            box-shadow: 0px 25px 80px rgba(85, 93, 255, 0.6); /* Enhanced hero image shadow */
+        }
+        .about-card {
+            background: white;
+            box-shadow: 0px 10px 30px rgba(85, 93, 255, 0.3); /* Matched shadow style */
+            border-radius: 16px;
+            padding: 4rem;
+            max-width: 900px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateX(-100px);
+            animation: slideIn 1s ease-out forwards;
+        }
+        /* Add consistent section spacing */
+        .section-spacing {
+            padding-top: 6rem;
+            padding-bottom: 6rem;
+        }
+        
+        /* Animations */
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .project-card {
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
+            box-shadow: 0px 10px 30px rgba(85, 93, 255, 0.3); /* Matched shadow style */
+        }
+        
+        /* Stagger the project animations */
+        .project-card:nth-child(1) { animation-delay: 0.1s; }
+        .project-card:nth-child(2) { animation-delay: 0.2s; }
+        .project-card:nth-child(3) { animation-delay: 0.3s; }
+        .project-card:nth-child(4) { animation-delay: 0.4s; }
+        .project-card:nth-child(5) { animation-delay: 0.5s; }
+        .project-card:nth-child(6) { animation-delay: 0.6s; }
+        
+        /* Figma embed container */
+        .figma-container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0px 10px 30px rgba(85, 93, 255, 0.3);
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.3s forwards;
+        }
+        
+        .figma-embed {
+            width: 100%;
+            height: 600px;
+            border: none;
+        }
+        
+        /* Updated hover effects for project cards to match hero button */
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 15px 35px rgba(85, 93, 255, 0.4);
+            background-color: black;
+        }
+
+        /* Mobile menu styling */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 64px;
+            left: 0;
+            width: 100%;
+            z-index: 40;
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .about-card {
+                padding: 1.5rem;
+                transform: none;
+            }
+            
+            .about-card p {
+                font-size: 0.95rem;
+                line-height: 1.6;
+            }
+            
+            .hero-image {
+                border-width: 8px;
+            }
+            
+            /* Improved spacing for mobile */
+            .section-spacing {
+                padding-top: 4rem;
+                padding-bottom: 4rem;
+            }
+            
+            /* Better text sizing for mobile */
+            h2 {
+                font-size: 1.75rem !important;
+            }
+            
+            .project-card h3 {
+                font-size: 1.25rem !important;
+            }
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#555dff',
+                        secondary: '#bdcefc',
+                        highlight: 'black',
+                        dark: 'black',
+                        textLight: '#ffffff'
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'Arial', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white text-dark overflow-x-hidden">
+   <!-- Navigation Bar - Desktop --> 
+   <nav class="bg-primary p-4 fixed w-full top-0 flex justify-between items-center text-textLight z-50 shadow-lg">
+        <div class="flex items-center">
+            <img src="images/logo.png" alt="Logo" class="w-10 h-10 mr-2">
+            <h1 class="text-xl md:text-2xl font-bold">AS Portfolio</h1>
+        </div>
+        <div class="hidden md:block">
+            <a href="#about" class="px-4 hover:text-secondary transition duration-300">About</a>
+            <a href="#projects" class="px-4 hover:text-secondary transition duration-300">Projects</a>
+            <a href="#figma" class="px-4 hover:text-secondary transition duration-300">Figma Portfolio</a>
+        </div>
+        <button id="menu-toggle" class="md:hidden focus:outline-none" aria-label="Toggle Menu">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu bg-primary z-40 shadow-lg">
+        <div class="flex flex-col p-4">
+            <a href="#about" class="py-2 text-textLight hover:text-secondary transition duration-300">About</a>
+            <a href="#projects" class="py-2 text-textLight hover:text-secondary transition duration-300">Projects</a>
+            <a href="#figma" class="py-2 text-textLight hover:text-secondary transition duration-300">Figma Portfolio</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <header id="hero" class="min-h-screen flex flex-col items-center justify-center text-center text-dark pt-24 pb-16 px-6 w-full section-spacing">
+        <img src="images/mepixel.png" alt="Anis Slimani" class="w-40 h-40 md:w-72 md:h-72 hero-image mb-8">
+        <h2 class="text-2xl md:text-4xl lg:text-[3.375rem] text-primary font-extrabold leading-tight">Hi, I'm <span class="text-highlight">Anis Slimani.</span> <br><span class="text-primary text-xl md:text-3xl">Welcome to my portfolio.</span></h2>
+       <!-- <a href="#projects" class="mt-6 inline-block bg-primary text-textLight px-5 py-2 md:px-6 md:py-3 rounded-lg hover:bg-dark hover:text-secondary shadow-lg transition duration-300">View Projects</a> -->
+    </header>
+
+    <!-- About Section (Card Style) -->
+    <section id="about" class="section-spacing w-full flex justify-center bg-cover bg-center bg-no-repeat px-4" style="background-image: url('images/background2.svg');">
+        <div class="about-card text-center text-dark">
+            <h2 class="text-2xl md:text-4xl font-bold text-primary mb-4 md:mb-8">About Me</h2>
+            <p class="text-sm md:text-lg leading-relaxed md:leading-loose text-left md:text-justify mb-3 md:mb-6 text-dark">
+                With a <span class="font-semibold text-highlight">Bachelor's of Arts</span> in <span class="text-primary font-bold">Visual Studies, Multimedia, and Digital Arts</span> from Université Gustave Eiffel, and a <span class="font-semibold text-highlight">Master's of Science</span> in <span class="text-primary font-bold">Human-Computer Interaction</span> from Université Paris-Saclay, I specialize in crafting innovative, interactive digital experiences for different sectors.
+            </p>
+            
+            <p class="text-sm md:text-lg leading-relaxed md:leading-loose text-left md:text-justify mb-3 md:mb-6 text-dark">
+                Over the years, I've developed expertise in design tools like <span class="font-semibold">Adobe Creative Suite</span> and <span class="font-semibold">Figma</span>, alongside programming with <span class="font-semibold">HTML, CSS, JavaScript, Python, and C#</span>. My work includes <span class="font-semibold">UX/UI design, 3D modeling, motion design,</span> and <span class="font-semibold">web development</span>.
+            </p>
+            
+            <!-- Fixed CV/Resume Link with Proper Spacing -->
+            <p class="text-sm md:text-lg leading-relaxed md:leading-loose text-left md:text-justify mb-3 md:mb-6 text-dark">
+                View my <span class="font-bold">CV/Resume</span>: 
+                <a href="https://www.canva.com/design/DAGYj7biGjA/yA8MlbR-qdoHSifpqMcXog/view?utm_content=DAGYj7biGjA&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hbde6332d17" 
+                target="_blank" 
+                class="text-primary font-extrabold hover:underline">
+                    HERE
+                </a>
+                <img src="images/pin-asset.png" alt="Pin Icon" class="inline-block w-4 h-4 md:w-5 md:h-5 ml-1">
+            </p>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section-spacing px-4 md:px-8 w-full">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-2xl md:text-4xl font-bold text-center mb-4 md:mb-10 text-primary">My Projects</h2>
+            <p class="text-sm md:text-lg text-center mb-4 md:mb-8 text-dark">Projects centered around <span class="font-semibold">UX Design Methodologies</span>, <span class="font-semibold">Figma Prototyping</span> and <span class="font-semibold">XR (AR/VR) development</span>.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6" id="project-grid">
+                <!-- Projects will be added by JavaScript -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- Figma Portfolio Section -->
+    <section id="figma" class="section-spacing px-4 md:px-8 w-full">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-2xl md:text-4xl font-bold text-center mb-4 md:mb-10 text-primary">Interactive Figma Portfolio</h2>
+            <p class="text-sm md:text-lg text-center mb-4 md:mb-8 text-dark">Explore my <span class="font-semibold">career</span> in this <span class="font-semibold text-highlight">Interactive Figma prototype</span>. Click through the different screens and elements.</p>
+            
+            <!-- Desktop Figma -->
+            <div class="figma-container hidden md:block">
+                <iframe class="figma-embed" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FoC9aV9zhsMMxL3bSX923K8%2FAS-Portfolio%3Fnode-id%3D1-2%26p%3Df%26t%3DKvGYkfQeNWuc79Om-8%26scaling%3Dscale-down-width%26content-scaling%3Dfixed%26page-id%3D0%253A1%26starting-point-node-id%3D1%253A2%26disable-default-keyboard-nav%3D1%26hotspot-hints%3D0%26hide-ui%3D1" allowfullscreen></iframe>
+            </div>
+            
+            <!-- Mobile Figma Link -->
+            <div class="md:hidden text-center">
+                <p class="text-sm mb-6 text-dark">View my interactive Figma portfolio on a larger screen or click below to open directly in Figma.</p>
+                <a href="https://www.figma.com/proto/oC9aV9zhsMMxL3bSX923K8/AS-Portfolio?node-id=1-2&p=f&t=KvGYkfQeNWuc79Om-8&scaling=scale-down-width&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A2&disable-default-keyboard-nav=1&hotspot-hints=0&hide-ui=1" 
+                   target="_blank" 
+                   class="inline-block bg-primary text-textLight px-5 py-2 rounded-lg hover:bg-dark hover:text-secondary shadow-lg transition duration-300">
+                   Open Figma Portfolio
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary p-4 md:p-6 text-center text-textLight shadow-md w-full">
+        <p>&copy; 2025 Anis
+            <p>&copy; 2025 Anis Slimani. All rights reserved.</p>
+        </footer>
+    
+        <script>
+            // Projects data
+            const projects = [
+                { title: "Circles", type: "Product Design", link: "project1.html", image: "images/project1.jpg" },
+                { title: "EduSphere", type: "AR Development and UX Research", link: "project2.html", image: "images/project2.jpg" },
+                { title: "QuantUX", type: "UI Design and UX Research", link: "project3.html", image: "images/project3.jpg" },
+                { title: "STEPSTRATE", type: "UX/UI Design", link: "project4.html", image: "images/project4.jpg" },
+                { title: "SMARTPORT", type: "Product Design", link: "project5.html", image: "images/project5.jpg" },
+                { title: "ChoreoSphere", type: "VR Development", link: "project6.html", image: "images/project6.jpg" }
+            ];
+            
+            // DOM Content Loaded event handler
+            document.addEventListener("DOMContentLoaded", function() {
+                // Add projects to the grid
+                const projectGrid = document.getElementById('project-grid');
+                
+                // Clear any existing content in the grid (fixes duplicate projects bug)
+                projectGrid.innerHTML = '';
+                
+                projects.forEach((project) => {
+                    const projectCard = document.createElement('a');
+                    projectCard.href = project.link;
+                    projectCard.className = 'project-card block bg-primary p-4 md:p-6 rounded-lg text-center text-textLight transform transition duration-300 hover:bg-dark hover:text-secondary shadow-lg';
+                    
+                    projectCard.innerHTML = `
+                        <img src="${project.image}" alt="${project.title}" class="w-full h-32 md:h-36 object-cover rounded-lg mb-3 md:mb-4">
+                        <h3 class="text-lg md:text-2xl font-semibold">${project.title}</h3>
+                        <small class="block text-sm text-gray-300 mt-2 px-3 py-1 border border-gray-300 rounded-full inline-block">${project.type}</small>
+                    `;
+                    
+                    projectGrid.appendChild(projectCard);
+                });
+                
+                // Mobile menu toggle
+                const menuToggle = document.getElementById('menu-toggle');
+                const mobileMenu = document.getElementById('mobile-menu');
+                
+                if (menuToggle && mobileMenu) {
+                    menuToggle.addEventListener('click', function() {
+                        mobileMenu.classList.toggle('active');
+                    });
+                    
+                    // Close mobile menu when clicking on a link
+                    const mobileLinks = mobileMenu.querySelectorAll('a');
+                    mobileLinks.forEach(link => {
+                        link.addEventListener('click', function() {
+                            mobileMenu.classList.remove('active');
+                        });
+                    });
+                }
+                
+                // Scroll-based animation function
+                function animateOnScroll() {
+                    const aboutCard = document.querySelector('.about-card');
+                    const projectCards = document.querySelectorAll('.project-card');
+                    const figmaContainer = document.querySelector('.figma-container');
+                    
+                    // Check if elements are in viewport
+                    function isInViewport(element) {
+                        if (!element) return false;
+                        const rect = element.getBoundingClientRect();
+                        return (
+                            rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.8
+                        );
+                    }
+                    
+                    // Animate about card
+                    if (aboutCard && isInViewport(aboutCard)) {
+                        aboutCard.style.animationPlayState = 'running';
+                    }
+                    
+                    // Animate project cards
+                    projectCards.forEach(card => {
+                        if (isInViewport(card)) {
+                            card.style.animationPlayState = 'running';
+                        }
+                    });
+                    
+                    // Animate Figma container
+                    if (figmaContainer && isInViewport(figmaContainer)) {
+                        figmaContainer.style.animationPlayState = 'running';
+                    }
+                }
+                
+                // Initially pause animations
+                const elementsToAnimate = [
+                    document.querySelector('.about-card'),
+                    ...document.querySelectorAll('.project-card'),
+                    document.querySelector('.figma-container')
+                ];
+                
+                elementsToAnimate.forEach(element => {
+                    if (element) {
+                        element.style.animationPlayState = 'paused';
+                    }
+                });
+                
+                // Listen for scroll events
+                window.addEventListener('scroll', animateOnScroll);
+                
+                // Check initially for elements already in view
+                animateOnScroll();
+                
+                // Smooth scrolling for anchor links
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        const targetId = this.getAttribute('href');
+                        if (targetId === '#') return;
+                        
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            const navHeight = document.querySelector('nav').offsetHeight;
+                            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight;
+                            
+                            window.scrollTo({
+                                top: targetPosition,
+                                behavior: 'smooth'
+                            });
+                            
+                            // Close mobile menu after clicking
+                            if (window.innerWidth <= 768 && mobileMenu.classList.contains('active')) {
+                                mobileMenu.classList.remove('active');
+                            }
+                        }
+                    });
+                });
+                
+                // Fix for initial load
+                setTimeout(animateOnScroll, 300);
+                
+                // Handle resize events
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 768 && mobileMenu) {
+                        mobileMenu.classList.remove('active');
+                    }
+                });
+            });
+        </script>
+    </body>
+    </html>
