@@ -71,6 +71,34 @@
             background-color: #555dff;
             border-radius: 50%;
         }
+
+        /* Responsive text adjustments */
+        @media (max-width: 640px) {
+            .section-card {
+                padding: 1.25rem !important;
+            }
+            
+            h1 {
+                font-size: 2.5rem !important;
+            }
+            
+            h2 {
+                font-size: 1.5rem !important;
+            }
+            
+            h3 {
+                font-size: 1.25rem !important;
+            }
+            
+            .responsive-text {
+                font-size: 1rem !important;
+                line-height: 1.5 !important;
+            }
+            
+            .circle-list li::before {
+                top: 0.35rem;
+            }
+        }
     </style>
     <script>
         tailwind.config = {
@@ -108,74 +136,74 @@
     </nav>
     
     <!-- Content Section -->
-    <section class="max-w-3xl mx-auto px-6 pt-24 pb-16">
+    <section class="max-w-3xl mx-auto px-4 sm:px-6 pt-20 sm:pt-24 pb-12 sm:pb-16">
         <!-- Project Title -->
-        <h1 class="text-5xl font-bold text-primary mb-2 fade-in">Circles</h1>
-        <h2 class="text-2xl text-title font-bold mb-8 fade-in">A Redesign of Instagram</h2>
+        <h1 class="text-4xl sm:text-5xl font-bold text-primary mb-2 fade-in">Circles</h1>
+        <h2 class="text-xl sm:text-2xl text-title font-bold mb-6 sm:mb-8 fade-in">A Redesign of Instagram</h2>
         
-        <img src="images/circles1.png" alt="Circles Project Preview" class="w-full project-img mb-12 fade-in">
+        <img src="images/circles1.png" alt="Circles Project Preview" class="w-full project-img mb-8 sm:mb-12 fade-in">
         
         <!-- Course & Academic Context Section -->
-        <div class="section-card p-8 mb-10 fade-in">
-            <h3 class="text-2xl font-bold text-primary mb-4">Course & Academic Context</h3>
-            <p class="text-lg leading-relaxed text-justify">
+        <div class="section-card p-6 sm:p-8 mb-8 sm:mb-10 fade-in">
+            <h3 class="text-xl sm:text-2xl font-bold text-primary mb-3 sm:mb-4">Course & Academic Context</h3>
+            <p class="responsive-text text-lg leading-relaxed">
                 This project was developed for the <span class="font-semibold">Advanced Design of Interactive Things</span> course at <span class="font-semibold">Université Paris-Saclay</span>. The course explores innovative interaction design, user research, and iterative prototyping to create interactive systems that improve user experience.
             </p>
         </div>
         
         <!-- Sector & Relevance Section -->
-        <div class="section-card p-8 mb-10 fade-in">
-            <h3 class="text-2xl font-bold text-primary mb-4">Sector & Relevance</h3>
-            <p class="text-lg leading-relaxed text-justify">
+        <div class="section-card p-6 sm:p-8 mb-8 sm:mb-10 fade-in">
+            <h3 class="text-xl sm:text-2xl font-bold text-primary mb-3 sm:mb-4">Sector & Relevance</h3>
+            <p class="responsive-text text-lg leading-relaxed">
                 Circles falls within the <span class="font-semibold">Human-Computer Interaction (HCI)</span> and <span class="font-semibold">UX/UI Design</span> sectors, addressing key issues in <span class="font-semibold">digital well-being, online social interactions, and engagement design</span>. The project responds to concerns about <span class="font-semibold">addictive social media patterns, privacy, and the quality of online connections</span>.
             </p>
         </div>
         
         <!-- Project Overview Section -->
-        <div class="section-card p-8 mb-10 fade-in">
-            <h3 class="text-2xl font-bold text-primary mb-4">Project Overview</h3>
-            <p class="text-lg leading-relaxed text-justify mb-4">
+        <div class="section-card p-6 sm:p-8 mb-8 sm:mb-10 fade-in">
+            <h3 class="text-xl sm:text-2xl font-bold text-primary mb-3 sm:mb-4">Project Overview</h3>
+            <p class="responsive-text text-lg leading-relaxed mb-4">
                 Circles is a redesigned social networking platform aimed at fostering <span class="font-semibold">more meaningful interactions</span> while <span class="font-semibold">reducing digital overconsumption</span>. It structures engagement into four layers:
             </p>
-            <ul class="text-lg leading-relaxed mb-4 circle-list">
+            <ul class="responsive-text text-lg leading-relaxed mb-4 circle-list">
                 <li class="mb-2"><span class="font-semibold text-primary">Self Circle</span> – Personal screen-time management.</li>
                 <li class="mb-2"><span class="font-semibold text-primary">Inner Circle</span> – Private, close relationships.</li>
                 <li class="mb-2"><span class="font-semibold text-primary">Outer Circle</span> – Broader passive social interactions.</li>
                 <li class="mb-2"><span class="font-semibold text-primary">Discovery Circle</span> – Meeting new people and organizing events.</li>
             </ul>
-            <p class="text-lg leading-relaxed text-justify">
+            <p class="responsive-text text-lg leading-relaxed">
                 This approach gives users <span class="font-semibold">more control over their digital interactions</span>, encouraging balanced and intentional social media use.
             </p>
         </div>
         
-        <img src="images/circles2.png" alt="User Interface of Circles" class="w-full project-img mb-12 fade-in">
+        <img src="images/circles2.png" alt="User Interface of Circles" class="w-full project-img mb-8 sm:mb-12 fade-in">
         
         <!-- Design Process Section -->
-        <div class="section-card p-8 mb-10 fade-in">
-            <h3 class="text-2xl font-bold text-primary mb-4">Design Process</h3>
-            <p class="text-lg leading-relaxed text-justify mb-4">
+        <div class="section-card p-6 sm:p-8 mb-8 sm:mb-10 fade-in">
+            <h3 class="text-xl sm:text-2xl font-bold text-primary mb-3 sm:mb-4">Design Process</h3>
+            <p class="responsive-text text-lg leading-relaxed mb-4">
                 The project followed a <span class="font-semibold">user-centered design methodology</span>, combining research, ideation, prototyping, and testing:
             </p>
             
-            <div class="mb-6">
-                <h4 class="text-xl font-semibold mb-2">1. Understanding User Needs</h4>
-                <ul class="text-lg leading-relaxed ml-6 list-disc">
+            <div class="mb-5 sm:mb-6">
+                <h4 class="text-lg sm:text-xl font-semibold mb-2">1. Understanding User Needs</h4>
+                <ul class="responsive-text text-lg leading-relaxed ml-4 sm:ml-6 list-disc">
                     <li class="mb-1">Conducted <span class="font-semibold">user interviews and surveys</span> to identify frustrations with existing social media.</li>
                     <li class="mb-1">Analyzed <span class="font-semibold">privacy concerns, engagement patterns, and social habits</span>.</li>
                 </ul>
             </div>
             
-            <div class="mb-6">
-                <h4 class="text-xl font-semibold mb-2">2. Ideation during Participatory Workshops</h4>
-                <ul class="text-lg leading-relaxed ml-6 list-disc">
+            <div class="mb-5 sm:mb-6">
+                <h4 class="text-lg sm:text-xl font-semibold mb-2">2. Ideation during Participatory Workshops</h4>
+                <ul class="responsive-text text-lg leading-relaxed ml-4 sm:ml-6 list-disc">
                     <li class="mb-1">Mapped ideas using <span class="font-semibold">brainstorming workshops</span> and <span class="font-semibold">post-it schematic analysis</span>.</li>
                     <li class="mb-1">Refined interaction models using <span class="font-semibold">The Funnel Method</span>, filtering out ineffective concepts.</li>
                 </ul>
             </div>
             
             <div>
-                <h4 class="text-xl font-semibold mb-2">3. Prototyping & Testing</h4>
-                <ul class="text-lg leading-relaxed ml-6 list-disc">
+                <h4 class="text-lg sm:text-xl font-semibold mb-2">3. Prototyping & Testing</h4>
+                <ul class="responsive-text text-lg leading-relaxed ml-4 sm:ml-6 list-disc">
                     <li class="mb-1">Created <span class="font-semibold">paper prototypes</span> for initial usability testing.</li>
                     <li class="mb-1">Developed a <span class="font-semibold">high-fidelity interactive video prototype</span> to simulate real usage.</li>
                     <li class="mb-1">Conducted <span class="font-semibold">live user tests</span> to evaluate engagement and interaction flow.</li>
@@ -183,94 +211,94 @@
             </div>
         </div>
         
-        <img src="images/circles3.png" alt="Wireframe example" class="w-full project-img mb-12 fade-in">
+        <img src="images/circles3.png" alt="Wireframe example" class="w-full project-img mb-8 sm:mb-12 fade-in">
         
         <!-- Challenges & Key Insights Section -->
-        <div class="section-card p-8 mb-10 fade-in">
-            <h3 class="text-2xl font-bold text-primary mb-4">Challenges & Key Insights</h3>
+        <div class="section-card p-6 sm:p-8 mb-8 sm:mb-10 fade-in">
+            <h3 class="text-xl sm:text-2xl font-bold text-primary mb-3 sm:mb-4">Challenges & Key Insights</h3>
             
             <div class="mb-4">
-                <h4 class="text-xl font-semibold mb-2"><span class="text-primary">•</span> Balancing Privacy & Socialization</h4>
-                <p class="text-lg leading-relaxed text-justify">
+                <h4 class="text-lg sm:text-xl font-semibold mb-2"><span class="text-primary">•</span> Balancing Privacy & Socialization</h4>
+                <p class="responsive-text text-lg leading-relaxed">
                     Users wanted privacy but also easy connections. We designed <span class="font-semibold">customizable visibility settings</span> that adapt dynamically.
                 </p>
             </div>
             
             <div class="mb-4">
-                <h4 class="text-xl font-semibold mb-2"><span class="text-primary">•</span> Reducing Addictive Patterns While Keeping Engagement</h4>
-                <p class="text-lg leading-relaxed text-justify">
+                <h4 class="text-lg sm:text-xl font-semibold mb-2"><span class="text-primary">•</span> Reducing Addictive Patterns While Keeping Engagement</h4>
+                <p class="responsive-text text-lg leading-relaxed">
                     By removing likes and follower counts, we <span class="font-semibold">shifted the focus from passive scrolling to active interaction</span>.
                 </p>
             </div>
             
             <div>
-                <h4 class="text-xl font-semibold mb-2"><span class="text-primary">•</span> Encouraging Real-World Interactions</h4>
-                <p class="text-lg leading-relaxed text-justify">
+                <h4 class="text-lg sm:text-xl font-semibold mb-2"><span class="text-primary">•</span> Encouraging Real-World Interactions</h4>
+                <p class="responsive-text text-lg leading-relaxed">
                     The <span class="font-semibold">Discovery Circle</span> feature bridges digital and real-life connections, making social media less isolating.
                 </p>
             </div>
         </div>
         
         <!-- Professional Impact & Learnings Section -->
-        <div class="section-card p-8 mb-12 fade-in">
-            <h3 class="text-2xl font-bold text-primary mb-4">Professional Impact & Learnings</h3>
-            <p class="text-lg leading-relaxed text-justify mb-4">
+        <div class="section-card p-6 sm:p-8 mb-8 sm:mb-12 fade-in">
+            <h3 class="text-xl sm:text-2xl font-bold text-primary mb-3 sm:mb-4">Professional Impact & Learnings</h3>
+            <p class="responsive-text text-lg leading-relaxed mb-4">
                 This project demonstrates expertise in:
             </p>
-            <ul class="text-lg leading-relaxed mb-4 ml-6 list-disc">
+            <ul class="responsive-text text-lg leading-relaxed mb-4 ml-4 sm:ml-6 list-disc">
                 <li class="mb-2"><span class="font-semibold">UX/UI & Interaction Design</span> – Creating intuitive and ethical digital interactions.</li>
                 <li class="mb-2"><span class="font-semibold">User Research & Testing</span> – Using real user data to inform design decisions.</li>
                 <li class="mb-2"><span class="font-semibold">Prototyping & Iteration</span> – Rapidly refining concepts based on feedback.</li>
                 <li class="mb-2"><span class="font-semibold">Team Collaboration</span> – Working in a multidisciplinary setting to solve complex problems.</li>
             </ul>
-            <p class="text-lg leading-relaxed text-justify">
+            <p class="responsive-text text-lg leading-relaxed">
                 Circles highlights the need for <span class="font-semibold">responsible digital design</span>, proving that social platforms can be engaging without being addictive.
-            </p>
-        </div>
+                </p>
+            </div>
+            
+            <!-- Embedded YouTube Video -->
+            <p class="text-lg sm:text-xl font-semibold text-center mb-4 sm:mb-6 fade-in">Scenario Prototyping</p>
+            <div class="flex justify-center mb-10 sm:mb-16 fade-in">
+                <iframe width="100%" height="300" class="rounded-lg shadow-lg sm:h-450" src="https://www.youtube.com/embed/kis3AbcmCh4" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </section>
         
-        <!-- Embedded YouTube Video -->
-        <p class="text-xl font-semibold text-center mb-6 fade-in">Scenario Prototyping</p>
-        <div class="flex justify-center mb-16 fade-in">
-            <iframe width="100%" height="450" class="rounded-lg shadow-lg" src="https://www.youtube.com/embed/kis3AbcmCh4" frameborder="0" allowfullscreen></iframe>
-        </div>
-    </section>
+        <!-- Footer -->
+        <footer class="bg-primary p-4 sm:p-6 text-center text-textLight shadow-md w-full">
+            <p>&copy; 2025 AS Portfolio. All rights reserved.</p>
+        </footer>
     
-    <!-- Footer -->
-    <footer class="bg-primary p-6 text-center text-textLight shadow-md w-full">
-        <p>&copy; 2025 AS Portfolio. All rights reserved.</p>
-    </footer>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const animateOnScroll = function() {
-                const elements = document.querySelectorAll('.fade-in');
-                
-                // Check if elements are in viewport and play animation
-                const isInViewport = function(elem) {
-                    const bounding = elem.getBoundingClientRect();
-                    return (
-                        bounding.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.85
-                    );
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const animateOnScroll = function() {
+                    const elements = document.querySelectorAll('.fade-in');
+                    
+                    // Check if elements are in viewport and play animation
+                    const isInViewport = function(elem) {
+                        const bounding = elem.getBoundingClientRect();
+                        return (
+                            bounding.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.85
+                        );
+                    };
+                    
+                    elements.forEach(element => {
+                        if (isInViewport(element)) {
+                            element.style.animationPlayState = 'running';
+                        }
+                    });
                 };
                 
-                elements.forEach(element => {
-                    if (isInViewport(element)) {
-                        element.style.animationPlayState = 'running';
-                    }
+                // Initially pause animations
+                document.querySelectorAll('.fade-in').forEach(element => {
+                    element.style.animationPlayState = 'paused';
                 });
-            };
-            
-            // Initially pause animations
-            document.querySelectorAll('.fade-in').forEach(element => {
-                element.style.animationPlayState = 'paused';
+                
+                // Listen for scroll
+                window.addEventListener('scroll', animateOnScroll);
+                
+                // Check initially in case elements are already in view
+                animateOnScroll();
             });
-            
-            // Listen for scroll
-            window.addEventListener('scroll', animateOnScroll);
-            
-            // Check initially in case elements are already in view
-            animateOnScroll();
-        });
-    </script>
-</body>
-</html>
+        </script>
+    </body>
+    </html>
