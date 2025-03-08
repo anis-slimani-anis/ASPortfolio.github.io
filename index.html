@@ -13,11 +13,44 @@
             overflow-x: hidden;
             background-color: white;
         }
-        .hero-image {
-            border: 12px solid #555dff;
+        .hero-image-container {
+            position: relative;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
+            border: 12px solid #555dff;
             box-shadow: 0px 25px 80px rgba(85, 93, 255, 0.6); /* Enhanced hero image shadow */
         }
+        
+        @media (min-width: 768px) {
+            .hero-image-container {
+                width: 72px;
+                height: 72px;
+            }
+        }
+        
+        .hero-image, .hero-image-hover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            transition: opacity 0.3s ease;
+        }
+        
+        .hero-image-hover {
+            opacity: 0;
+        }
+        
+        .hero-image-container:hover .hero-image {
+            opacity: 0;
+        }
+        
+        .hero-image-container:hover .hero-image-hover {
+            opacity: 1;
+        }
+        
         .about-card {
             background: white;
             box-shadow: 0px 10px 30px rgba(85, 93, 255, 0.3); /* Matched shadow style */
@@ -123,7 +156,7 @@
                 line-height: 1.6;
             }
             
-            .hero-image {
+            .hero-image-container {
                 border-width: 8px;
             }
             
@@ -192,7 +225,10 @@
 
     <!-- Hero Section -->
     <header id="hero" class="min-h-screen flex flex-col items-center justify-center text-center text-dark pt-24 pb-16 px-6 w-full section-spacing">
-        <img src="images/mepixel.png" alt="Anis Slimani" class="w-40 h-40 md:w-72 md:h-72 hero-image mb-8">
+        <div class="hero-image-container w-40 h-40 md:w-72 md:h-72 mb-8">
+            <img src="images/mepixel.png" alt="Anis Slimani" class="hero-image">
+            <img src="images/anis.jpg" alt="Anis Slimani Hover" class="hero-image-hover">
+        </div>
         <h2 class="text-2xl md:text-4xl lg:text-[3.375rem] text-primary font-extrabold leading-tight">Hi, I'm <span class="text-highlight">Anis Slimani.</span> <br><span class="text-primary text-xl md:text-3xl">Welcome to my portfolio.</span></h2>
        <!-- <a href="#projects" class="mt-6 inline-block bg-primary text-textLight px-5 py-2 md:px-6 md:py-3 rounded-lg hover:bg-dark hover:text-secondary shadow-lg transition duration-300">View Projects</a> -->
     </header>
@@ -256,151 +292,150 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Footer - Fixed Version -->
     <footer class="bg-primary p-4 md:p-6 text-center text-textLight shadow-md w-full">
-        <p>&copy; 2025 Anis
-            <p>&copy; 2025 Anis Slimani. All rights reserved.</p>
-        </footer>
+        <p>&copy; 2025 Anis Slimani. All rights reserved.</p>
+    </footer>
     
-        <script>
-            // Projects data
-            const projects = [
-                { title: "Circles", type: "Product Design", link: "project1.html", image: "images/project1.jpg" },
-                { title: "EduSphere", type: "AR Development and UX Research", link: "project2.html", image: "images/project2.jpg" },
-                { title: "QuantUX", type: "UI Design and UX Research", link: "project3.html", image: "images/project3.jpg" },
-                { title: "STEPSTRATE", type: "UX/UI Design", link: "project4.html", image: "images/project4.jpg" },
-                { title: "SMARTPORT", type: "Product Design", link: "project5.html", image: "images/project5.jpg" },
-                { title: "ChoreoSphere", type: "VR Development", link: "project6.html", image: "images/project6.jpg" }
+    <script>
+        // Projects data
+        const projects = [
+            { title: "Circles", type: "Product Design", link: "project1.html", image: "images/project1.jpg" },
+            { title: "EduSphere", type: "AR Development and UX Research", link: "project2.html", image: "images/project2.jpg" },
+            { title: "QuantUX", type: "UI Design and UX Research", link: "project3.html", image: "images/project3.jpg" },
+            { title: "STEPSTRATE", type: "UX/UI Design", link: "project4.html", image: "images/project4.jpg" },
+            { title: "SMARTPORT", type: "Product Design", link: "project5.html", image: "images/project5.jpg" },
+            { title: "ChoreoSphere", type: "VR Development", link: "project6.html", image: "images/project6.jpg" }
+        ];
+        
+        // DOM Content Loaded event handler
+        document.addEventListener("DOMContentLoaded", function() {
+            // Add projects to the grid
+            const projectGrid = document.getElementById('project-grid');
+            
+            // Clear any existing content in the grid (fixes duplicate projects bug)
+            projectGrid.innerHTML = '';
+            
+            projects.forEach((project) => {
+                const projectCard = document.createElement('a');
+                projectCard.href = project.link;
+                projectCard.className = 'project-card block bg-primary p-4 md:p-6 rounded-lg text-center text-textLight transform transition duration-300 hover:bg-dark hover:text-secondary shadow-lg';
+                
+                projectCard.innerHTML = `
+                    <img src="${project.image}" alt="${project.title}" class="w-full h-32 md:h-36 object-cover rounded-lg mb-3 md:mb-4">
+                    <h3 class="text-lg md:text-2xl font-semibold">${project.title}</h3>
+                    <small class="block text-sm text-gray-300 mt-2 px-3 py-1 border border-gray-300 rounded-full inline-block">${project.type}</small>
+                `;
+                
+                projectGrid.appendChild(projectCard);
+            });
+            
+            // Mobile menu toggle
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('active');
+                });
+                
+                // Close mobile menu when clicking on a link
+                const mobileLinks = mobileMenu.querySelectorAll('a');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileMenu.classList.remove('active');
+                    });
+                });
+            }
+            
+            // Scroll-based animation function
+            function animateOnScroll() {
+                const aboutCard = document.querySelector('.about-card');
+                const projectCards = document.querySelectorAll('.project-card');
+                const figmaContainer = document.querySelector('.figma-container');
+                
+                // Check if elements are in viewport
+                function isInViewport(element) {
+                    if (!element) return false;
+                    const rect = element.getBoundingClientRect();
+                    return (
+                        rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.8
+                    );
+                }
+                
+                // Animate about card
+                if (aboutCard && isInViewport(aboutCard)) {
+                    aboutCard.style.animationPlayState = 'running';
+                }
+                
+                // Animate project cards
+                projectCards.forEach(card => {
+                    if (isInViewport(card)) {
+                        card.style.animationPlayState = 'running';
+                    }
+                });
+                
+                // Animate Figma container
+                if (figmaContainer && isInViewport(figmaContainer)) {
+                    figmaContainer.style.animationPlayState = 'running';
+                }
+            }
+            
+            // Initially pause animations
+            const elementsToAnimate = [
+                document.querySelector('.about-card'),
+                ...document.querySelectorAll('.project-card'),
+                document.querySelector('.figma-container')
             ];
             
-            // DOM Content Loaded event handler
-            document.addEventListener("DOMContentLoaded", function() {
-                // Add projects to the grid
-                const projectGrid = document.getElementById('project-grid');
-                
-                // Clear any existing content in the grid (fixes duplicate projects bug)
-                projectGrid.innerHTML = '';
-                
-                projects.forEach((project) => {
-                    const projectCard = document.createElement('a');
-                    projectCard.href = project.link;
-                    projectCard.className = 'project-card block bg-primary p-4 md:p-6 rounded-lg text-center text-textLight transform transition duration-300 hover:bg-dark hover:text-secondary shadow-lg';
+            elementsToAnimate.forEach(element => {
+                if (element) {
+                    element.style.animationPlayState = 'paused';
+                }
+            });
+            
+            // Listen for scroll events
+            window.addEventListener('scroll', animateOnScroll);
+            
+            // Check initially for elements already in view
+            animateOnScroll();
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
                     
-                    projectCard.innerHTML = `
-                        <img src="${project.image}" alt="${project.title}" class="w-full h-32 md:h-36 object-cover rounded-lg mb-3 md:mb-4">
-                        <h3 class="text-lg md:text-2xl font-semibold">${project.title}</h3>
-                        <small class="block text-sm text-gray-300 mt-2 px-3 py-1 border border-gray-300 rounded-full inline-block">${project.type}</small>
-                    `;
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
                     
-                    projectGrid.appendChild(projectCard);
-                });
-                
-                // Mobile menu toggle
-                const menuToggle = document.getElementById('menu-toggle');
-                const mobileMenu = document.getElementById('mobile-menu');
-                
-                if (menuToggle && mobileMenu) {
-                    menuToggle.addEventListener('click', function() {
-                        mobileMenu.classList.toggle('active');
-                    });
-                    
-                    // Close mobile menu when clicking on a link
-                    const mobileLinks = mobileMenu.querySelectorAll('a');
-                    mobileLinks.forEach(link => {
-                        link.addEventListener('click', function() {
-                            mobileMenu.classList.remove('active');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const navHeight = document.querySelector('nav').offsetHeight;
+                        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
                         });
-                    });
-                }
-                
-                // Scroll-based animation function
-                function animateOnScroll() {
-                    const aboutCard = document.querySelector('.about-card');
-                    const projectCards = document.querySelectorAll('.project-card');
-                    const figmaContainer = document.querySelector('.figma-container');
-                    
-                    // Check if elements are in viewport
-                    function isInViewport(element) {
-                        if (!element) return false;
-                        const rect = element.getBoundingClientRect();
-                        return (
-                            rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.8
-                        );
-                    }
-                    
-                    // Animate about card
-                    if (aboutCard && isInViewport(aboutCard)) {
-                        aboutCard.style.animationPlayState = 'running';
-                    }
-                    
-                    // Animate project cards
-                    projectCards.forEach(card => {
-                        if (isInViewport(card)) {
-                            card.style.animationPlayState = 'running';
-                        }
-                    });
-                    
-                    // Animate Figma container
-                    if (figmaContainer && isInViewport(figmaContainer)) {
-                        figmaContainer.style.animationPlayState = 'running';
-                    }
-                }
-                
-                // Initially pause animations
-                const elementsToAnimate = [
-                    document.querySelector('.about-card'),
-                    ...document.querySelectorAll('.project-card'),
-                    document.querySelector('.figma-container')
-                ];
-                
-                elementsToAnimate.forEach(element => {
-                    if (element) {
-                        element.style.animationPlayState = 'paused';
-                    }
-                });
-                
-                // Listen for scroll events
-                window.addEventListener('scroll', animateOnScroll);
-                
-                // Check initially for elements already in view
-                animateOnScroll();
-                
-                // Smooth scrolling for anchor links
-                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                    anchor.addEventListener('click', function(e) {
-                        e.preventDefault();
                         
-                        const targetId = this.getAttribute('href');
-                        if (targetId === '#') return;
-                        
-                        const targetElement = document.querySelector(targetId);
-                        if (targetElement) {
-                            const navHeight = document.querySelector('nav').offsetHeight;
-                            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight;
-                            
-                            window.scrollTo({
-                                top: targetPosition,
-                                behavior: 'smooth'
-                            });
-                            
-                            // Close mobile menu after clicking
-                            if (window.innerWidth <= 768 && mobileMenu.classList.contains('active')) {
-                                mobileMenu.classList.remove('active');
-                            }
+                        // Close mobile menu after clicking
+                        if (window.innerWidth <= 768 && mobileMenu.classList.contains('active')) {
+                            mobileMenu.classList.remove('active');
                         }
-                    });
-                });
-                
-                // Fix for initial load
-                setTimeout(animateOnScroll, 300);
-                
-                // Handle resize events
-                window.addEventListener('resize', function() {
-                    if (window.innerWidth > 768 && mobileMenu) {
-                        mobileMenu.classList.remove('active');
                     }
                 });
             });
-        </script>
-    </body>
-    </html>
+            
+            // Fix for initial load
+            setTimeout(animateOnScroll, 300);
+            
+            // Handle resize events
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768 && mobileMenu) {
+                    mobileMenu.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
