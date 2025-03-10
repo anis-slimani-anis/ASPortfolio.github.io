@@ -71,6 +71,59 @@
             background-color: #555dff;
             border-radius: 50%;
         }
+
+        /* Sticky Section Navigation */
+        .section-nav {
+            position: sticky;
+            top: 5rem; /* Space for the top navigation */
+            height: calc(100vh - 4rem);
+            overflow-y: auto;
+            padding-bottom: 2rem;
+        }
+        
+        .section-nav a {
+            display: block;
+            padding: 0.75rem 1rem;
+            border-left: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .section-nav a:hover, .section-nav a.active {
+            border-left: 2px solid #555dff;
+            background-color: rgba(85, 93, 255, 0.1);
+            color: #555dff;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .text-justify-desktop {
+                text-align: left;
+            }
+            
+            .section-nav {
+                display: none;
+            }
+            
+            .content-with-nav {
+                width: 100% !important;
+            }
+        }
+
+        /* Video container */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
     </style>
     <script>
         tailwind.config = {
@@ -107,144 +160,168 @@
         </div>
     </nav>
     
-    <!-- Content Section -->
-    <section class="max-w-3xl mx-auto px-6 pt-24 pb-16">
-        <!-- Project Title -->
-        <h1 class="text-5xl font-bold text-primary mb-2 fade-in">STEPSTRATE</h1>
-        <h2 class="text-2xl text-title font-bold mb-8 fade-in">Enhancing Interaction Through Situated Design</h2>
+    <!-- Content Section with Sidebar Navigation -->
+    <div class="flex pt-24 max-w-6xl mx-auto">
+        <!-- Desktop Navigation Sidebar - Hidden on Mobile -->
+        <aside class="w-64 section-nav hidden md:block">
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <h4 class="text-lg font-bold text-primary mb-4 border-b pb-2">Project Sections</h4>
+                <a href="#project-overview" class="text-sm font-medium hover:text-primary transition">Project Overview</a>
+                <a href="#course-context" class="text-sm font-medium hover:text-primary transition">Course & Academic Context</a>
+                <a href="#sector-relevance" class="text-sm font-medium hover:text-primary transition">Sector & Relevance</a>
+                <a href="#project-details" class="text-sm font-medium hover:text-primary transition">Project Details</a>
+                <a href="#research-process" class="text-sm font-medium hover:text-primary transition">Research & Development</a>
+                <a href="#challenges" class="text-sm font-medium hover:text-primary transition">Challenges & Key Insights</a>
+                <a href="#impact" class="text-sm font-medium hover:text-primary transition">Professional Impact</a>
+                <a href="#demo" class="text-sm font-medium hover:text-primary transition">Video Demo</a>
+            </div>
+        </aside>
         
-        <img src="images/stepstrate1.jpg" alt="StepStrate Project Preview" class="w-full project-img mb-12 fade-in">
-        
-        <!-- Course & Academic Context Section -->
-        <div class="section-card p-8 mb-10 fade-in">
-            <h3 class="text-2xl font-bold text-primary mb-4">Course & Academic Context</h3>
-            <p class="text-lg leading-relaxed text-justify">
-                This project was developed as part of the <span class="font-semibold">Fundamentals of Situated Interaction</span> course, focusing on UX design and interaction principles based on the six key notions of situated interaction. The course explores how digital systems can better support user workflows by integrating contextual awareness, action-based interactions, and human-computer partnerships.
-            </p>
-        </div>
-        
-        <!-- Sector & Relevance Section -->
-        <div class="section-card p-8 mb-10 fade-in">
-            <h3 class="text-2xl font-bold text-primary mb-4">Sector & Relevance</h3>
-            <p class="text-lg leading-relaxed text-justify">
-                The project is situated in the fields of <span class="font-semibold">Human-Computer Interaction (HCI)</span> and <span class="font-semibold">UX/UI Design</span>, particularly in the study of <span class="font-semibold">situated interaction</span>, which emphasizes how digital interfaces can adapt dynamically to users' real-world contexts.
-            </p>
-        </div>
-        
-        <!-- Project Overview Section -->
-        <div class="section-card p-8 mb-10 fade-in">
-            <h3 class="text-2xl font-bold text-primary mb-4">Project Overview</h3>
-            <p class="text-lg leading-relaxed text-justify mb-4">
-                STEPSTRATE is a redesign of the <span class="font-semibold">Google Slides Version History</span> tool, aimed at improving discoverability, transparency, and usability. The original version history feature presents several challenges, including:
-            </p>
-            <ul class="text-lg leading-relaxed mb-4 circle-list">
-                <li class="mb-2">Limited interaction and modification options</li>
-                <li class="mb-2">Poor discoverability, making past versions difficult to navigate</li>
-                <li class="mb-2">Low transparency in how history is saved</li>
-                <li class="mb-2">Rigid, timestamp-based snapshots instead of contextual changes</li>
-            </ul>
-            <p class="text-lg leading-relaxed text-justify mb-4">
-                STEPSTRATE introduces a <span class="font-semibold">more intuitive and action-based approach</span> to version management, enhancing user control and adaptability.
-            </p>
-            <p class="text-lg leading-relaxed mb-4">Key design improvements:</p>
-            <ul class="text-lg leading-relaxed mb-4 circle-list">
-                <li class="mb-2"><span class="font-semibold text-primary">Action-based history tracking</span> instead of rigid snapshots</li>
-                <li class="mb-2"><span class="font-semibold text-primary">Instrumental interaction</span> to make changes more intuitive and adaptable</li>
-                <li class="mb-2"><span class="font-semibold text-primary">Feedforward design</span> for better discoverability and predictability</li>
-                <li class="mb-2"><span class="font-semibold text-primary">Persistent customization</span> to allow users to modify history settings</li>
-            </ul>
-        </div>
-        
-        <img src="images/stepstrate2.jpg" alt="StepStrate Interface" class="w-full project-img mb-12 fade-in">
-        
-        <!-- Research & Development Process Section -->
-        <div class="section-card p-8 mb-10 fade-in">
-            <h3 class="text-2xl font-bold text-primary mb-4">Research & Development Process</h3>
-            
-            <div class="mb-6">
-                <h4 class="text-xl font-semibold mb-2">1. Understanding User Pain Points</h4>
-                <ul class="text-lg leading-relaxed ml-6 list-disc">
-                    <li class="mb-1">Conducted an analysis of <span class="font-semibold">existing version history tools</span></li>
-                    <li class="mb-1">Identified key usability issues, such as lack of transparency and flexibility</li>
-                </ul>
+        <!-- Main Content -->
+        <section class="content-with-nav w-full md:w-3/4 px-6 pb-16">
+            <!-- Project Title -->
+            <div id="project-overview">
+                <h1 class="text-5xl font-bold text-primary mb-2 fade-in">STEPSTRATE</h1>
+                <h2 class="text-2xl text-title font-bold mb-8 fade-in">Enhancing Interaction Through Situated Design</h2>
+                
+                <img src="images/stepstrate1.jpg" alt="StepStrate Project Preview" class="w-full project-img mb-12 fade-in">
             </div>
             
-            <div class="mb-6">
-                <h4 class="text-xl font-semibold mb-2">2. Redesigning Interaction with Situated Principles</h4>
-                <ul class="text-lg leading-relaxed ml-6 list-disc">
-                    <li class="mb-1">Shifted from <span class="font-semibold">timestamp-based history to action-based tracking</span></li>
-                    <li class="mb-1">Improved <span class="font-semibold">discoverability and feedback mechanisms</span></li>
-                    <li class="mb-1">Introduced <span class="font-semibold">customization options for different workflows</span></li>
-                </ul>
-            </div>
-            
-            <div>
-                <h4 class="text-xl font-semibold mb-2">3. Demonstration & Testing</h4>
-                <ul class="text-lg leading-relaxed ml-6 list-disc">
-                    <li class="mb-1">Developed a <span class="font-semibold">concept prototype</span> showcasing improved interaction</li>
-                    <li class="mb-1">Created a <span class="font-semibold">video demonstration</span> highlighting StepStrate's key features</li>
-                    <li class="mb-1">Explored potential future expansions, such as <span class="font-semibold">community-shared version histories</span></li>
-                </ul>
-            </div>
-        </div>
-        
-        <img src="images/stepstrate3.jpg" alt="StepStrate User Workflow" class="w-full project-img mb-12 fade-in">
-        
-        <!-- Challenges & Key Insights Section -->
-        <div class="section-card p-8 mb-10 fade-in">
-            <h3 class="text-2xl font-bold text-primary mb-4">Challenges & Key Insights</h3>
-            
-            <div class="mb-4">
-                <h4 class="text-xl font-semibold mb-2"><span class="text-primary">•</span> Balancing Transparency with Simplicity</h4>
-                <p class="text-lg leading-relaxed text-justify">
-                    While increasing transparency in version history is beneficial, too much information can overwhelm users. The solution was to introduce <span class="font-semibold">progressive disclosure</span>, allowing users to reveal more details as needed.
+            <!-- Course & Academic Context Section -->
+            <div id="course-context" class="section-card p-8 mb-10 fade-in">
+                <h3 class="text-2xl font-bold text-primary mb-4">Course & Academic Context</h3>
+                <p class="text-lg leading-relaxed text-justify-desktop md:text-justify">
+                    This project was developed as part of the <span class="font-semibold">Fundamentals of Situated Interaction</span> course, focusing on UX design and interaction principles based on the six key notions of situated interaction. The course explores how digital systems can better support user workflows by integrating contextual awareness, action-based interactions, and human-computer partnerships.
                 </p>
             </div>
             
-            <div class="mb-4">
-                <h4 class="text-xl font-semibold mb-2"><span class="text-primary">•</span> Enhancing Discoverability Without Complexity</h4>
-                <p class="text-lg leading-relaxed text-justify">
-                    Users often struggled to find or navigate previous versions. By incorporating <span class="font-semibold">feedforward design</span> and clearer affordances, STEPSTRATE made past versions more intuitive to access.
+            <!-- Sector & Relevance Section -->
+            <div id="sector-relevance" class="section-card p-8 mb-10 fade-in">
+                <h3 class="text-2xl font-bold text-primary mb-4">Sector & Relevance</h3>
+                <p class="text-lg leading-relaxed text-justify-desktop md:text-justify">
+                    The project is situated in the fields of <span class="font-semibold">Human-Computer Interaction (HCI)</span> and <span class="font-semibold">UX/UI Design</span>, particularly in the study of <span class="font-semibold">situated interaction</span>, which emphasizes how digital interfaces can adapt dynamically to users' real-world contexts.
                 </p>
             </div>
             
-            <div>
-                <h4 class="text-xl font-semibold mb-2"><span class="text-primary">•</span> Customization vs. Standardization</h4>
-                <p class="text-lg leading-relaxed text-justify">
-                    Some users preferred a simple history view, while others wanted more control. STEPSTRATE introduces <span class="font-semibold">modifiability</span>, allowing users to tailor the tool to their needs without unnecessary complexity.
+            <!-- Project Overview Section -->
+            <div id="project-details" class="section-card p-8 mb-10 fade-in">
+                <h3 class="text-2xl font-bold text-primary mb-4">Project Overview</h3>
+                <p class="text-lg leading-relaxed text-justify-desktop md:text-justify mb-4">
+                    STEPSTRATE is a redesign of the <span class="font-semibold">Google Slides Version History</span> tool, aimed at improving discoverability, transparency, and usability. The original version history feature presents several challenges, including:
+                </p>
+                <ul class="text-lg leading-relaxed mb-4 circle-list">
+                    <li class="mb-2">Limited interaction and modification options</li>
+                    <li class="mb-2">Poor discoverability, making past versions difficult to navigate</li>
+                    <li class="mb-2">Low transparency in how history is saved</li>
+                    <li class="mb-2">Rigid, timestamp-based snapshots instead of contextual changes</li>
+                </ul>
+                <p class="text-lg leading-relaxed text-justify-desktop md:text-justify mb-4">
+                    STEPSTRATE introduces a <span class="font-semibold">more intuitive and action-based approach</span> to version management, enhancing user control and adaptability.
+                </p>
+                <p class="text-lg leading-relaxed mb-4">Key design improvements:</p>
+                <ul class="text-lg leading-relaxed mb-4 circle-list">
+                    <li class="mb-2"><span class="font-semibold text-primary">Action-based history tracking</span> instead of rigid snapshots</li>
+                    <li class="mb-2"><span class="font-semibold text-primary">Instrumental interaction</span> to make changes more intuitive and adaptable</li>
+                    <li class="mb-2"><span class="font-semibold text-primary">Feedforward design</span> for better discoverability and predictability</li>
+                    <li class="mb-2"><span class="font-semibold text-primary">Persistent customization</span> to allow users to modify history settings</li>
+                </ul>
+            </div>
+            
+            <img src="images/stepstrate2.jpg" alt="StepStrate Interface" class="w-full project-img mb-12 fade-in">
+            
+            <!-- Research & Development Process Section -->
+            <div id="research-process" class="section-card p-8 mb-10 fade-in">
+                <h3 class="text-2xl font-bold text-primary mb-4">Research & Development Process</h3>
+                
+                <div class="mb-6">
+                    <h4 class="text-xl font-semibold mb-2">1. Understanding User Pain Points</h4>
+                    <ul class="text-lg leading-relaxed ml-6 list-disc">
+                        <li class="mb-1">Conducted an analysis of <span class="font-semibold">existing version history tools</span></li>
+                        <li class="mb-1">Identified key usability issues, such as lack of transparency and flexibility</li>
+                    </ul>
+                </div>
+                
+                <div class="mb-6">
+                    <h4 class="text-xl font-semibold mb-2">2. Redesigning Interaction with Situated Principles</h4>
+                    <ul class="text-lg leading-relaxed ml-6 list-disc">
+                        <li class="mb-1">Shifted from <span class="font-semibold">timestamp-based history to action-based tracking</span></li>
+                        <li class="mb-1">Improved <span class="font-semibold">discoverability and feedback mechanisms</span></li>
+                        <li class="mb-1">Introduced <span class="font-semibold">customization options for different workflows</span></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-semibold mb-2">3. Demonstration & Testing</h4>
+                    <ul class="text-lg leading-relaxed ml-6 list-disc">
+                        <li class="mb-1">Developed a <span class="font-semibold">concept prototype</span> showcasing improved interaction</li>
+                        <li class="mb-1">Created a <span class="font-semibold">video demonstration</span> highlighting StepStrate's key features</li>
+                        <li class="mb-1">Explored potential future expansions, such as <span class="font-semibold">community-shared version histories</span></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <img src="images/stepstrate3.jpg" alt="StepStrate User Workflow" class="w-full project-img mb-12 fade-in">
+            
+            <!-- Challenges & Key Insights Section -->
+            <div id="challenges" class="section-card p-8 mb-10 fade-in">
+                <h3 class="text-2xl font-bold text-primary mb-4">Challenges & Key Insights</h3>
+                
+                <div class="mb-4">
+                    <h4 class="text-xl font-semibold mb-2"><span class="text-primary">•</span> Balancing Transparency with Simplicity</h4>
+                    <p class="text-lg leading-relaxed text-justify-desktop md:text-justify">
+                        While increasing transparency in version history is beneficial, too much information can overwhelm users. The solution was to introduce <span class="font-semibold">progressive disclosure</span>, allowing users to reveal more details as needed.
+                    </p>
+                </div>
+                
+                <div class="mb-4">
+                    <h4 class="text-xl font-semibold mb-2"><span class="text-primary">•</span> Enhancing Discoverability Without Complexity</h4>
+                    <p class="text-lg leading-relaxed text-justify-desktop md:text-justify">
+                        Users often struggled to find or navigate previous versions. By incorporating <span class="font-semibold">feedforward design</span> and clearer affordances, STEPSTRATE made past versions more intuitive to access.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-semibold mb-2"><span class="text-primary">•</span> Customization vs. Standardization</h4>
+                    <p class="text-lg leading-relaxed text-justify-desktop md:text-justify">
+                        Some users preferred a simple history view, while others wanted more control. STEPSTRATE introduces <span class="font-semibold">modifiability</span>, allowing users to tailor the tool to their needs without unnecessary complexity.
+                    </p>
+                </div>
+            </div>
+            
+            <img src="images/stepstrate4.jpg" alt="StepStrate Design Process" class="w-full project-img mb-12 fade-in">
+            
+            <!-- Professional Impact & Learnings Section -->
+            <div id="impact" class="section-card p-8 mb-12 fade-in">
+                <h3 class="text-2xl font-bold text-primary mb-4">Professional Impact & Learnings</h3>
+                <p class="text-lg leading-relaxed text-justify-desktop md:text-justify mb-4">
+                    This project demonstrates expertise in:
+                </p>
+                <ul class="text-lg leading-relaxed mb-4 ml-6 list-disc">
+                    <li class="mb-2"><span class="font-semibold">Interaction design and UX research</span> – analyzing usability challenges and proposing user-centered design solutions</li>
+                    <li class="mb-2"><span class="font-semibold">Situated interaction principles</span> – designing interfaces that adapt to user context and workflow needs</li>
+                    <li class="mb-2"><span class="font-semibold">Prototyping and conceptual testing</span> – developing interactive tools that improve digital work environments</li>
+                </ul>
+                <p class="text-lg leading-relaxed text-justify-desktop md:text-justify">
+                    StepStrate showcases how <span class="font-semibold">situated interaction principles</span> can improve everyday digital tools, making them more intuitive, adaptable, and user-friendly.
                 </p>
             </div>
-        </div>
-        
-        <img src="images/stepstrate4.jpg" alt="StepStrate Design Process" class="w-full project-img mb-12 fade-in">
-        
-        <!-- Professional Impact & Learnings Section -->
-        <div class="section-card p-8 mb-12 fade-in">
-            <h3 class="text-2xl font-bold text-primary mb-4">Professional Impact & Learnings</h3>
-            <p class="text-lg leading-relaxed text-justify mb-4">
-                This project demonstrates expertise in:
-            </p>
-            <ul class="text-lg leading-relaxed mb-4 ml-6 list-disc">
-                <li class="mb-2"><span class="font-semibold">Interaction design and UX research</span> – analyzing usability challenges and proposing user-centered design solutions</li>
-                <li class="mb-2"><span class="font-semibold">Situated interaction principles</span> – designing interfaces that adapt to user context and workflow needs</li>
-                <li class="mb-2"><span class="font-semibold">Prototyping and conceptual testing</span> – developing interactive tools that improve digital work environments</li>
-            </ul>
-            <p class="text-lg leading-relaxed text-justify">
-                StepStrate showcases how <span class="font-semibold">situated interaction principles</span> can improve everyday digital tools, making them more intuitive, adaptable, and user-friendly.
-            </p>
-        </div>
-        
-        <img src="images/stepstrate5.jpg" alt="StepStrate Final Implementation" class="w-full project-img mb-12 fade-in">
-        
-        <!-- Video or Additional Media if available -->
-        <p class="text-xl font-semibold text-center mb-6 fade-in">STEPSTRATE Full Video Demo</p>
-        <div class="flex justify-center mb-16 fade-in">
-            <iframe width="800" height="450" class="rounded-lg shadow-lg" 
-                src="https://www.youtube.com/embed/ykm-LwVjfos" 
-                frameborder="0" allowfullscreen>
-            </iframe>
-        </div>
-    </section>
+            
+            <img src="images/stepstrate5.jpg" alt="StepStrate Final Implementation" class="w-full project-img mb-12 fade-in">
+            
+            <!-- Video or Additional Media -->
+            <div id="demo">
+                <p class="text-xl font-semibold text-center mb-6 fade-in">STEPSTRATE Full Video Demo</p>
+                <div class="flex justify-center mb-16 fade-in">
+                    <div class="w-full video-container">
+                        <iframe class="rounded-lg shadow-lg" 
+                            src="https://www.youtube.com/embed/ykm-LwVjfos" 
+                            frameborder="0" allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
     
     <!-- Footer -->
     <footer class="bg-primary p-6 text-center text-textLight shadow-md w-full">
@@ -253,6 +330,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            // Animation on scroll
             const animateOnScroll = function() {
                 const elements = document.querySelectorAll('.fade-in');
                 
@@ -281,6 +359,47 @@
             
             // Check initially in case elements are already in view
             animateOnScroll();
+            
+            // Section navigation active state
+            const sectionLinks = document.querySelectorAll('.section-nav a');
+            const sections = document.querySelectorAll('section > div[id]');
+            
+            const setActiveLink = function() {
+                let currentSection = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (window.scrollY >= (sectionTop - 100)) {
+                        currentSection = section.getAttribute('id');
+                    }
+                });
+                
+                sectionLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + currentSection) {
+                        link.classList.add('active');
+                    }
+                });
+            };
+            
+            window.addEventListener('scroll', setActiveLink);
+            setActiveLink(); // Set initial state
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('.section-nav a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                });
+            });
         });
     </script>
 </body>

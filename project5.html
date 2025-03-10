@@ -101,6 +101,59 @@
             display: none;
             z-index: 1000;
         }
+
+        /* Sticky Section Navigation */
+        .section-nav {
+            position: sticky;
+            top: 5rem; /* Space for the top navigation */
+            height: calc(100vh - 4rem);
+            overflow-y: auto;
+            padding-bottom: 2rem;
+        }
+        
+        .section-nav a {
+            display: block;
+            padding: 0.75rem 1rem;
+            border-left: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .section-nav a:hover, .section-nav a.active {
+            border-left: 2px solid #555dff;
+            background-color: rgba(85, 93, 255, 0.1);
+            color: #555dff;
+        }
+        
+        /* Added responsive text alignment */
+        @media (max-width: 768px) {
+            .text-justify-desktop {
+                text-align: left;
+            }
+            
+            .section-nav {
+                display: none;
+            }
+            
+            .content-with-nav {
+                width: 100% !important;
+            }
+        }
+        
+        /* Added responsive video container styles */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
     </style>
     <script>
         tailwind.config = {
@@ -140,141 +193,165 @@
     <!-- Zoom cursor element -->
     <div id="zoom-cursor"></div>
     
-    <!-- Content Section -->
-    <section class="max-w-3xl mx-auto px-6 pt-24 pb-16">
-        <!-- Project Title -->
-        <h1 class="text-5xl font-bold text-primary mb-2 fade-in">SMARTPORT</h1>
-        <h2 class="text-2xl text-title font-bold mb-8 fade-in">Enhancing In-Station Navigation with Smart Tickets</h2>
+    <!-- Content Section with Sidebar Navigation -->
+    <div class="flex pt-24 max-w-6xl mx-auto">
+        <!-- Desktop Navigation Sidebar - Hidden on Mobile -->
+        <aside class="w-64 section-nav hidden md:block">
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <h4 class="text-lg font-bold text-primary mb-4 border-b pb-2">Project Sections</h4>
+                <a href="#project-overview" class="text-sm font-medium hover:text-primary transition">Project Overview</a>
+                <a href="#course-context" class="text-sm font-medium hover:text-primary transition">Course & Academic Context</a>
+                <a href="#sector-relevance" class="text-sm font-medium hover:text-primary transition">Sector & Relevance</a>
+                <a href="#project-details" class="text-sm font-medium hover:text-primary transition">Project Details</a>
+                <a href="#research-process" class="text-sm font-medium hover:text-primary transition">Research & Development</a>
+                <a href="#challenges" class="text-sm font-medium hover:text-primary transition">Challenges & Key Insights</a>
+                <a href="#impact" class="text-sm font-medium hover:text-primary transition">Professional Impact</a>
+                <a href="#prototype" class="text-sm font-medium hover:text-primary transition">Paper Prototype</a>
+            </div>
+        </aside>
         
-        <img src="images/smartport1.png" alt="SMARTPORT Project Preview" class="w-full project-img mb-12 fade-in">
-        
-        <!-- Course & Academic Context Section -->
-        <div class="section-card p-8 mb-10 fade-in">
-            <h3 class="text-2xl font-bold text-primary mb-4">Course & Academic Context</h3>
-            <p class="text-lg leading-relaxed text-justify">
-                This project was developed as part of the <span class="font-semibold">Design of Interactive Systems (DOIS/DOIT) course</span>, focusing on <span class="font-semibold">situated interaction and urban mobility</span>. The goal was to design a <span class="font-semibold">smart navigation system</span> that helps users move through subway stations efficiently without relying on smartphones.
-            </p>
-        </div>
-        
-        <img src="images/smartport2.png" alt="SMARTPORT Ticket Concept" class="w-full project-img mb-12 fade-in">
-        
-        <!-- Sector & Relevance Section -->
-        <div class="section-card p-8 mb-10 fade-in">
-            <h3 class="text-2xl font-bold text-primary mb-4">Sector & Relevance</h3>
-            <p class="text-lg leading-relaxed text-justify">
-                SMARTPORT is positioned within <span class="font-semibold">Urban Mobility, Human-Computer Interaction (HCI), and UX Design</span>, addressing accessibility and usability challenges in <span class="font-semibold">public transportation systems</span>. The project targets <span class="font-semibold">newcomers, tourists, and individuals with navigation difficulties</span>, ensuring seamless transit experiences.
-            </p>
-        </div>
-        
-        <!-- Project Overview Section -->
-        <div class="section-card p-8 mb-10 fade-in">
-            <h3 class="text-2xl font-bold text-primary mb-4">Project Overview</h3>
-            <p class="text-lg leading-relaxed text-justify mb-4">
-                SMARTPORT is a <span class="font-semibold">smart transportation system</span> that integrates <span class="font-semibold">SmartTickets and Interactive Displays</span> to provide real-time in-station navigation. Unlike traditional navigation tools like Google Maps, which struggle with <span class="font-semibold">indoor navigation, line closures, and real-time route adjustments</span>, SMARTPORT combines <span class="font-semibold">official transit data and community-sourced updates</span> to ensure accurate guidance.
-            </p>
-            <p class="text-lg leading-relaxed mb-4">Key Features:</p>
-            <ul class="text-lg leading-relaxed mb-4 circle-list">
-                <li class="mb-2"><span class="font-semibold text-primary">SmartTickets</span> – Augmented transit tickets that display step-by-step directions and vibrate for important alerts.</li>
-                <li class="mb-2"><span class="font-semibold text-primary">Interactive Maps</span> – In-station touchscreens allowing users to configure routes, receive alerts, and report station issues.</li>
-                <li class="mb-2"><span class="font-semibold text-primary">Real-Time Updates</span> – Alerts for line closures, platform changes, and train arrivals.</li>
-                <li class="mb-2"><span class="font-semibold text-primary">Group Navigation</span> – Users can <span class="font-semibold">link tickets</span> by tapping them together, creating shared routes for easier coordination.</li>
-            </ul>
-            <p class="text-lg leading-relaxed text-justify">
-                SMARTPORT improves accessibility by including <span class="font-semibold">haptic feedback for colorblind users</span> and an intuitive interface for <span class="font-semibold">subway newcomers unfamiliar with the system</span>.
-            </p>
-        </div>
-        
-        <img src="images/smartport3.png" alt="SMARTPORT Interactive Display" class="w-full project-img mb-12 fade-in">
-        
-        <!-- Research & Development Process Section -->
-        <div class="section-card p-8 mb-10 fade-in">
-            <h3 class="text-2xl font-bold text-primary mb-4">Research & Development Process</h3>
-            
-            <div class="mb-6">
-                <h4 class="text-xl font-semibold mb-2">1. Identifying User Needs</h4>
-                <ul class="text-lg leading-relaxed ml-6 list-disc">
-                    <li class="mb-1">Conducted <span class="font-semibold">interviews</span> revealing that while signage was not a major issue, users struggled with <span class="font-semibold">Google Maps' limitations in subways</span>.</li>
-                    <li class="mb-1">Defined key <span class="font-semibold">personas</span> representing international students, colorblind individuals, and tourists unfamiliar with public transport.</li>
-                </ul>
+        <!-- Main Content -->
+        <section class="content-with-nav w-full md:w-3/4 px-6 pb-16">
+            <!-- Project Title -->
+            <div id="project-overview">
+                <h1 class="text-5xl font-bold text-primary mb-2 fade-in">SMARTPORT</h1>
+                <h2 class="text-2xl text-title font-bold mb-8 fade-in">Enhancing In-Station Navigation with Smart Tickets</h2>
+                
+                <img src="images/smartport1.png" alt="SMARTPORT Project Preview" class="w-full project-img mb-12 fade-in">
             </div>
             
-            <div class="mb-6">
-                <h4 class="text-xl font-semibold mb-2">2. Design & Prototyping</h4>
-                <ul class="text-lg leading-relaxed ml-6 list-disc">
-                    <li class="mb-1">Developed <span class="font-semibold">SmartTicket prototypes</span> integrating <span class="font-semibold">haptic feedback, visual alerts, and interactive gestures</span>.</li>
-                    <li class="mb-1">Created <span class="font-semibold">alternative interaction models</span>, including AR-guided navigation and gesture-based ticket interactions.</li>
-                </ul>
-            </div>
-            
-            <div>
-                <h4 class="text-xl font-semibold mb-2">3. Testing & Iteration</h4>
-                <ul class="text-lg leading-relaxed ml-6 list-disc">
-                    <li class="mb-1">Refined features based on feedback, improving <span class="font-semibold">route selection, ticket linking, and in-station guidance</span>.</li>
-                    <li class="mb-1">Introduced a <span class="font-semibold">ticket help button</span> to assist users during unexpected route changes.</li>
-                </ul>
-            </div>
-        </div>
-        
-        <img src="images/smartport4.png" alt="SMARTPORT User Testing" class="w-full project-img mb-12 fade-in">
-        
-        <!-- Challenges & Key Insights Section -->
-        <div class="section-card p-8 mb-10 fade-in">
-            <h3 class="text-2xl font-bold text-primary mb-4">Challenges & Key Insights</h3>
-            
-            <div class="mb-4">
-                <h4 class="text-xl font-semibold mb-2"><span class="text-primary">•</span> Navigation in Underground Environments</h4>
-                <p class="text-lg leading-relaxed text-justify">
-                    Traditional navigation tools struggle with <span class="font-semibold">subway-specific challenges</span> like indoor routing and sudden service disruptions. SMARTPORT provides a <span class="font-semibold">dedicated in-station solution</span>, reducing reliance on internet-based maps.
+            <!-- Course & Academic Context Section -->
+            <div id="course-context" class="section-card p-8 mb-10 fade-in">
+                <h3 class="text-2xl font-bold text-primary mb-4">Course & Academic Context</h3>
+                <p class="text-lg leading-relaxed text-justify-desktop md:text-justify">
+                    This project was developed as part of the <span class="font-semibold">Design of Interactive Systems (DOIS/DOIT) course</span>, focusing on <span class="font-semibold">situated interaction and urban mobility</span>. The goal was to design a <span class="font-semibold">smart navigation system</span> that helps users move through subway stations efficiently without relying on smartphones.
                 </p>
             </div>
             
-            <div class="mb-4">
-                <h4 class="text-xl font-semibold mb-2"><span class="text-primary">•</span> Balancing Simplicity and Functionality</h4>
-                <p class="text-lg leading-relaxed text-justify">
-                    While adding features like ticket linking and haptic feedback, it was crucial to <span class="font-semibold">maintain ease of use</span>, ensuring <span class="font-semibold">simple step-by-step directions</span> rather than overwhelming users with options.
+            <img src="images/smartport2.png" alt="SMARTPORT Ticket Concept" class="w-full project-img mb-12 fade-in">
+            
+            <!-- Sector & Relevance Section -->
+            <div id="sector-relevance" class="section-card p-8 mb-10 fade-in">
+                <h3 class="text-2xl font-bold text-primary mb-4">Sector & Relevance</h3>
+                <p class="text-lg leading-relaxed text-justify-desktop md:text-justify">
+                    SMARTPORT is positioned within <span class="font-semibold">Urban Mobility, Human-Computer Interaction (HCI), and UX Design</span>, addressing accessibility and usability challenges in <span class="font-semibold">public transportation systems</span>. The project targets <span class="font-semibold">newcomers, tourists, and individuals with navigation difficulties</span>, ensuring seamless transit experiences.
                 </p>
             </div>
             
-            <div>
-                <h4 class="text-xl font-semibold mb-2"><span class="text-primary">•</span> Enhancing Accessibility</h4>
-                <p class="text-lg leading-relaxed text-justify">
-                    SMARTPORT was designed with inclusivity in mind, integrating <span class="font-semibold">haptic alerts for colorblind users</span> and <span class="font-semibold">intuitive interactions</span> to accommodate a diverse user base.
+            <!-- Project Overview Section -->
+            <div id="project-details" class="section-card p-8 mb-10 fade-in">
+                <h3 class="text-2xl font-bold text-primary mb-4">Project Overview</h3>
+                <p class="text-lg leading-relaxed text-justify-desktop md:text-justify mb-4">
+                    SMARTPORT is a <span class="font-semibold">smart transportation system</span> that integrates <span class="font-semibold">SmartTickets and Interactive Displays</span> to provide real-time in-station navigation. Unlike traditional navigation tools like Google Maps, which struggle with <span class="font-semibold">indoor navigation, line closures, and real-time route adjustments</span>, SMARTPORT combines <span class="font-semibold">official transit data and community-sourced updates</span> to ensure accurate guidance.
+                </p>
+                <p class="text-lg leading-relaxed mb-4">Key Features:</p>
+                <ul class="text-lg leading-relaxed mb-4 circle-list">
+                    <li class="mb-2"><span class="font-semibold text-primary">SmartTickets</span> – Augmented transit tickets that display step-by-step directions and vibrate for important alerts.</li>
+                    <li class="mb-2"><span class="font-semibold text-primary">Interactive Maps</span> – In-station touchscreens allowing users to configure routes, receive alerts, and report station issues.</li>
+                    <li class="mb-2"><span class="font-semibold text-primary">Real-Time Updates</span> – Alerts for line closures, platform changes, and train arrivals.</li>
+                    <li class="mb-2"><span class="font-semibold text-primary">Group Navigation</span> – Users can <span class="font-semibold">link tickets</span> by tapping them together, creating shared routes for easier coordination.</li>
+                </ul>
+                <p class="text-lg leading-relaxed text-justify-desktop md:text-justify">
+                    SMARTPORT improves accessibility by including <span class="font-semibold">haptic feedback for colorblind users</span> and an intuitive interface for <span class="font-semibold">subway newcomers unfamiliar with the system</span>.
                 </p>
             </div>
-        </div>
-        
-        <img src="images/smartport5.png" alt="SMARTPORT Group Navigation Feature" class="w-full project-img mb-12 fade-in">
-        
-        <!-- Professional Impact & Learnings Section -->
-        <div class="section-card p-8 mb-12 fade-in">
-            <h3 class="text-2xl font-bold text-primary mb-4">Professional Impact & Learnings</h3>
-            <p class="text-lg leading-relaxed text-justify mb-4">
-                This project demonstrates expertise in:
-            </p>
-            <ul class="text-lg leading-relaxed mb-4 ml-6 list-disc">
-                <li class="mb-2"><span class="font-semibold">UX/UI design for public infrastructure</span> – improving usability in complex transit environments.</li>
-                <li class="mb-2"><span class="font-semibold">Situated interaction and tangible interfaces</span> – designing systems that adapt to real-world user needs.</li>
-                <li class="mb-2"><span class="font-semibold">Gamification of urban mobility</span> – making navigation more interactive and intuitive for diverse commuters.</li>
-            </ul>
-            <p class="text-lg leading-relaxed text-justify">
-                SMARTPORT reimagines <span class="font-semibold">public transport navigation</span>, offering a <span class="font-semibold">more accessible, user-friendly, and adaptable system</span> for city travelers.
-            </p>
-        </div>
-        
-        <!-- Special zoom effect image -->
-        <div class="zoom-container mb-12 fade-in">
-            <img id="zoomable-image" src="images/smartport6.png" alt="SMARTPORT Details" class="zoom-image">
-        </div>
-        
-        <!-- Video or Additional Media if available -->
-        <p class="text-xl font-semibold text-center mb-6 fade-in">Primitive Paper Prototype</p>
-        <div class="flex justify-center mb-16 fade-in">
-            <iframe width="800" height="450" class="rounded-lg shadow-lg" 
-                src="https://www.youtube.com/embed/JnAqFOxJzXg" 
-                frameborder="0" allowfullscreen>
-            </iframe>
-        </div>
-    </section>
+            
+            <img src="images/smartport3.png" alt="SMARTPORT Interactive Display" class="w-full project-img mb-12 fade-in">
+            
+            <!-- Research & Development Process Section -->
+            <div id="research-process" class="section-card p-8 mb-10 fade-in">
+                <h3 class="text-2xl font-bold text-primary mb-4">Research & Development Process</h3>
+                
+                <div class="mb-6">
+                    <h4 class="text-xl font-semibold mb-2">1. Identifying User Needs</h4>
+                    <ul class="text-lg leading-relaxed ml-6 list-disc">
+                        <li class="mb-1">Conducted <span class="font-semibold">interviews</span> revealing that while signage was not a major issue, users struggled with <span class="font-semibold">Google Maps' limitations in subways</span>.</li>
+                        <li class="mb-1">Defined key <span class="font-semibold">personas</span> representing international students, colorblind individuals, and tourists unfamiliar with public transport.</li>
+                    </ul>
+                </div>
+                
+                <div class="mb-6">
+                    <h4 class="text-xl font-semibold mb-2">2. Design & Prototyping</h4>
+                    <ul class="text-lg leading-relaxed ml-6 list-disc">
+                        <li class="mb-1">Developed <span class="font-semibold">SmartTicket prototypes</span> integrating <span class="font-semibold">haptic feedback, visual alerts, and interactive gestures</span>.</li>
+                        <li class="mb-1">Created <span class="font-semibold">alternative interaction models</span>, including AR-guided navigation and gesture-based ticket interactions.</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-semibold mb-2">3. Testing & Iteration</h4>
+                    <ul class="text-lg leading-relaxed ml-6 list-disc">
+                        <li class="mb-1">Refined features based on feedback, improving <span class="font-semibold">route selection, ticket linking, and in-station guidance</span>.</li>
+                        <li class="mb-1">Introduced a <span class="font-semibold">ticket help button</span> to assist users during unexpected route changes.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <img src="images/smartport4.png" alt="SMARTPORT User Testing" class="w-full project-img mb-12 fade-in">
+            
+            <!-- Challenges & Key Insights Section -->
+            <div id="challenges" class="section-card p-8 mb-10 fade-in">
+                <h3 class="text-2xl font-bold text-primary mb-4">Challenges & Key Insights</h3>
+                
+                <div class="mb-4">
+                    <h4 class="text-xl font-semibold mb-2"><span class="text-primary">•</span> Navigation in Underground Environments</h4>
+                    <p class="text-lg leading-relaxed text-justify-desktop md:text-justify">
+                        Traditional navigation tools struggle with <span class="font-semibold">subway-specific challenges</span> like indoor routing and sudden service disruptions. SMARTPORT provides a <span class="font-semibold">dedicated in-station solution</span>, reducing reliance on internet-based maps.
+                    </p>
+                </div>
+                
+                <div class="mb-4">
+                    <h4 class="text-xl font-semibold mb-2"><span class="text-primary">•</span> Balancing Simplicity and Functionality</h4>
+                    <p class="text-lg leading-relaxed text-justify-desktop md:text-justify">
+                        While adding features like ticket linking and haptic feedback, it was crucial to <span class="font-semibold">maintain ease of use</span>, ensuring <span class="font-semibold">simple step-by-step directions</span> rather than overwhelming users with options.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-semibold mb-2"><span class="text-primary">•</span> Enhancing Accessibility</h4>
+                    <p class="text-lg leading-relaxed text-justify-desktop md:text-justify">
+                        SMARTPORT was designed with inclusivity in mind, integrating <span class="font-semibold">haptic alerts for colorblind users</span> and <span class="font-semibold">intuitive interactions</span> to accommodate a diverse user base.
+                    </p>
+                </div>
+            </div>
+            
+            <img src="images/smartport5.png" alt="SMARTPORT Group Navigation Feature" class="w-full project-img mb-12 fade-in">
+            
+            <!-- Professional Impact & Learnings Section -->
+            <div id="impact" class="section-card p-8 mb-12 fade-in">
+                <h3 class="text-2xl font-bold text-primary mb-4">Professional Impact & Learnings</h3>
+                <p class="text-lg leading-relaxed text-justify-desktop md:text-justify mb-4">
+                    This project demonstrates expertise in:
+                </p>
+                <ul class="text-lg leading-relaxed mb-4 ml-6 list-disc">
+                    <li class="mb-2"><span class="font-semibold">UX/UI design for public infrastructure</span> – improving usability in complex transit environments.</li>
+                    <li class="mb-2"><span class="font-semibold">Situated interaction and tangible interfaces</span> – designing systems that adapt to real-world user needs.</li>
+                    <li class="mb-2"><span class="font-semibold">Gamification of urban mobility</span> – making navigation more interactive and intuitive for diverse commuters.</li>
+                </ul>
+                <p class="text-lg leading-relaxed text-justify-desktop md:text-justify">
+                    SMARTPORT reimagines <span class="font-semibold">public transport navigation</span>, offering a <span class="font-semibold">more accessible, user-friendly, and adaptable system</span> for city travelers.
+                </p>
+            </div>
+            
+            <!-- Special zoom effect image -->
+            <div class="zoom-container mb-12 fade-in">
+                <img id="zoomable-image" src="images/smartport6.png" alt="SMARTPORT Details" class="zoom-image">
+            </div>
+            
+            <!-- Video or Additional Media if available -->
+            <div id="prototype">
+                <p class="text-xl font-semibold text-center mb-6 fade-in">Primitive Paper Prototype</p>
+                <div class="flex justify-center mb-16 fade-in">
+                    <div class="w-full video-container">
+                        <iframe class="rounded-lg shadow-lg" 
+                            src="https://www.youtube.com/embed/JnAqFOxJzXg" 
+                            frameborder="0" allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
     
     <!-- Footer -->
     <footer class="bg-primary p-6 text-center text-textLight shadow-md w-full">
@@ -283,6 +360,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            // Animation on scroll
             const animateOnScroll = function() {
                 const elements = document.querySelectorAll('.fade-in');
                 
@@ -311,6 +389,47 @@
             
             // Check initially in case elements are already in view
             animateOnScroll();
+            
+            // Section navigation active state
+            const sectionLinks = document.querySelectorAll('.section-nav a');
+            const sections = document.querySelectorAll('section > div[id]');
+            
+            const setActiveLink = function() {
+                let currentSection = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (window.scrollY >= (sectionTop - 100)) {
+                        currentSection = section.getAttribute('id');
+                    }
+                });
+                
+                sectionLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + currentSection) {
+                        link.classList.add('active');
+                    }
+                });
+            };
+            
+            window.addEventListener('scroll', setActiveLink);
+            setActiveLink(); // Set initial state
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('.section-nav a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                });
+            });
             
             // Set up zoom effect for the last image
             const zoomContainer = document.querySelector('.zoom-container');
