@@ -412,31 +412,25 @@
                 });
             }
             
-            // Set up zoom effect for CV image
-            const zoomContainer = document.querySelector('.zoom-container');
-            const zoomImage = document.getElementById('zoomable-cv');
-            const zoomCursor = document.getElementById('zoom-cursor');
-            
-            if (zoomContainer && zoomImage && zoomCursor) {
-                zoomContainer.addEventListener('mousemove', function(e) {
-                    // Calculate mouse position relative to the container
-                    const rect = zoomContainer.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    
-                    // Calculate percentage position for transform-origin
-                    const xPercent = (x / rect.width) * 100;
-                    const yPercent = (y / rect.height) * 100;
-                    
-                    // Set the transform origin to the mouse position
-                    zoomImage.style.transformOrigin = `${xPercent}% ${yPercent}%`;
-                    
-                    // Update zoom cursor position
-                    zoomCursor.style.left = `${e.clientX}px`;
-                    zoomCursor.style.top = `${e.clientY}px`;
-                    zoomCursor.style.display = 'block';
-                });
-            }
+          // Set up zoom effect for CV image
+const zoomContainer = document.querySelector('.zoom-container');
+const zoomImage = document.getElementById('zoomable-cv');
+
+if (zoomContainer && zoomImage) {
+    zoomContainer.addEventListener('mousemove', function(e) {
+        // Calculate mouse position relative to the container
+        const rect = zoomContainer.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        // Calculate percentage position for transform-origin
+        const xPercent = (x / rect.width) * 100;
+        const yPercent = (y / rect.height) * 100;
+        
+        // Set the transform origin to the mouse position
+        zoomImage.style.transformOrigin = `${xPercent}% ${yPercent}%`;
+    });
+}
             
             // Scroll-based animation function
             function animateOnScroll() {
