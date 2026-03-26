@@ -1,531 +1,535 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AS Portfolio</title>
-    <link rel="icon" type="image/png" href="images/favicon.png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-        body {
-            font-family: 'Poppins', Arial, sans-serif;
-            overflow-x: hidden;
-            background-color: white;
-        }
-        .hero-image-container {
-            position: relative;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 12px solid #555dff;
-            box-shadow: 0px 25px 80px rgba(85, 93, 255, 0.6); /* Enhanced hero image shadow */
-        }
-        
-        @media (min-width: 768px) {
-            .hero-image-container {
-                width: 72px;
-                height: 72px;
-            }
-        }
-        
-        .hero-image, .hero-image-hover {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            transition: opacity 0.3s ease;
-        }
-        
-        .hero-image-hover {
-            opacity: 0;
-        }
-        
-        .hero-image-container:hover .hero-image {
-            opacity: 0;
-        }
-        
-        .hero-image-container:hover .hero-image-hover {
-            opacity: 1;
-        }
-        
-        .about-card {
-            background: white;
-            box-shadow: 0px 10px 30px rgba(85, 93, 255, 0.3); /* Matched shadow style */
-            border-radius: 16px;
-            padding: 4rem;
-            max-width: 900px;
-            margin: 0 auto;
-            opacity: 0;
-            transform: translateX(-100px);
-            animation: slideIn 1s ease-out forwards;
-        }
-        /* Add consistent section spacing */
-        .section-spacing {
-            padding-top: 6rem;
-            padding-bottom: 6rem;
-        }
-        
-        /* Animations */
-        @keyframes slideIn {
-            0% {
-                opacity: 0;
-                transform: translateX(-100px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* Zoom effect for CV image */
-        .zoom-container {
-            overflow: hidden;
-            border-radius: 16px;
-            position: relative;
-            margin-top: 1.5rem;
-            box-shadow: 0px 10px 30px rgba(85, 93, 255, 0.3);
-        }
-       
-        .zoom-image {
-            width: 100%;
-            height: auto;
-            transition: transform 0.5s ease;
-            transform-origin: 50% 50%;
-        }
-       
-        .zoom-container:hover .zoom-image {
-            transform: scale(2.0);
-        }
-        
-        .project-card {
-            opacity: 0;
-            animation: fadeIn 0.8s ease-out forwards;
-            box-shadow: 0px 10px 30px rgba(85, 93, 255, 0.3); /* Matched shadow style */
-        }
-        
-        /* Stagger the project animations */
-        .project-card:nth-child(1) { animation-delay: 0.1s; }
-        .project-card:nth-child(2) { animation-delay: 0.2s; }
-        .project-card:nth-child(3) { animation-delay: 0.3s; }
-        .project-card:nth-child(4) { animation-delay: 0.4s; }
-        .project-card:nth-child(5) { animation-delay: 0.5s; }
-        .project-card:nth-child(6) { animation-delay: 0.6s; }
-        
-        /* Figma embed container */
-        .figma-container {
-            width: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0px 10px 30px rgba(85, 93, 255, 0.3);
-            opacity: 0;
-            animation: fadeIn 1s ease-out 0.3s forwards;
-        }
-        
-        .figma-embed {
-            width: 100%;
-            height: 600px;
-            border: none;
-        }
-        
-        /* Updated hover effects for project cards to match hero button */
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0px 15px 35px rgba(85, 93, 255, 0.4);
-            background-color: black;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anis Slimani's Portfolio</title>
+  <meta name="description" content="Fullstack product designer specialising in complex SaaS flows, design systems, and conversion driven UX. Based in Paris.">
 
-        /* Mobile menu styling */
-        .mobile-menu {
-            display: none;
-            position: fixed;
-            top: 64px;
-            left: 0;
-            width: 100%;
-            z-index: 40;
-        }
-        
-        .mobile-menu.active {
-            display: block;
-        }
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
 
-        /* Mobile adjustments */
-        @media (max-width: 768px) {
-            .about-card {
-                padding: 1.5rem;
-                transform: none;
-            }
-            
-            .about-card p {
-                font-size: 0.95rem;
-                line-height: 1.6;
-            }
-            
-            .hero-image-container {
-                border-width: 8px;
-            }
-            
-            /* Improved spacing for mobile */
-            .section-spacing {
-                padding-top: 4rem;
-                padding-bottom: 4rem;
-            }
-            
-            /* Better text sizing for mobile */
-            h2 {
-                font-size: 1.75rem !important;
-            }
-            
-            .project-card h3 {
-                font-size: 1.25rem !important;
-            }
-        }
-        
-        /* New styles for larger screens (Macs, etc.) */
-        @media (min-width: 1440px) {
-            /* Make project grid larger for big screens */
-            #project-grid {
-                max-width: 1200px;
-                margin: 0 auto;
-            }
-            
-            /* Make project cards larger on big screens */
-            .project-card {
-                padding: 2rem !important;
-            }
-            
-            /* Make project images taller */
-            .project-card img {
-                height: 220px !important;
-                margin-bottom: 1rem;
-            }
-            
-            /* Increase project card text size */
-            .project-card h3 {
-                font-size: 1.75rem !important;
-                margin-bottom: 0.5rem;
-            }
-            
-            /* Make the type label larger */
-            .project-card small {
-                font-size: 1rem !important;
-                padding: 0.375rem 1rem !important;
-            }
-            
-            /* Adjust grid for larger screens to have more space between items */
-            .grid.gap-4, .grid.gap-6 {
-                gap: 2rem !important;
-            }
-        }
-    </style>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#555dff',
-                        secondary: '#bdcefc',
-                        highlight: 'black',
-                        dark: 'black',
-                        textLight: '#ffffff'
-                    },
-                    fontFamily: {
-                        sans: ['Poppins', 'Arial', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
+  <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="bg-white text-dark overflow-x-hidden">
-   <!-- Zoom cursor element -->
-   
-   <!-- Navigation Bar - Desktop --> 
-   <nav class="bg-primary p-4 fixed w-full top-0 flex justify-between items-center text-textLight z-50 shadow-lg">
-        <div class="flex items-center">
-            <img src="images/logo.png" alt="Logo" class="w-10 h-10 mr-2">
-            <h1 class="text-xl md:text-2xl font-bold">AS Portfolio</h1>
-        </div>
-        <div class="hidden md:block">
-            <a href="#about" class="px-4 hover:text-secondary transition duration-300">About</a>
-            <a href="#projects" class="px-4 hover:text-secondary transition duration-300">Projects</a>
-            <a href="#figma" class="px-4 hover:text-secondary transition duration-300">Figma Portfolio</a>
-        </div>
-        <button id="menu-toggle" class="md:hidden focus:outline-none" aria-label="Toggle Menu">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-        </button>
-    </nav>
+<body>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="mobile-menu bg-primary z-40 shadow-lg">
-        <div class="flex flex-col p-4">
-            <a href="#about" class="py-2 text-textLight hover:text-secondary transition duration-300">About</a>
-            <a href="#projects" class="py-2 text-textLight hover:text-secondary transition duration-300">Projects</a>
-            <a href="#figma" class="py-2 text-textLight hover:text-secondary transition duration-300">Figma Portfolio</a>
-        </div>
+<!-- Starfield fixed background, drawn by JS -->
+<canvas id="starfield" aria-hidden="true"></canvas>
+
+<!-- ── NAV ────────────────────────────────────────────────── -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-dot"></span>
+    Anis <span>Slimani</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#work" data-fr="Projets">Work</a></li>
+    <li><a href="#about" data-fr="À propos">About</a></li>
+    <li><a href="#services" data-fr="Services">Services</a></li>
+    <li><a href="#contact" data-fr="Contact">Contact</a></li>
+  </ul>
+  <button class="lang-toggle" aria-label="Switch language"><svg width="14" height="10" viewBox="0 0 21 15"><rect width="7" height="15" fill="#002395"/><rect x="7" width="7" height="15" fill="#fff"/><rect x="14" width="7" height="15" fill="#ED2939"/></svg> FR</button>
+  <a href="mailto:anisslimani013@gmail.com" class="btn-nav" data-fr="Me recruter">Hire me</a>
+  <button class="nav-burger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile nav overlay -->
+<div class="mobile-nav-overlay" aria-hidden="true">
+  <div class="mobile-nav-header">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-dot"></span>
+      Anis <span>Slimani</span>
+    </a>
+    <button class="mobile-nav-close" aria-label="Close menu">
+      <span></span><span></span>
+    </button>
+  </div>
+  <nav class="mobile-nav">
+    <a href="#work" data-fr="Projets">Work</a>
+    <a href="#about" data-fr="À propos">About</a>
+    <a href="#services" data-fr="Services">Services</a>
+    <a href="#contact" data-fr="Contact">Contact</a>
+  </nav>
+  <div class="mobile-nav-footer">
+    <a href="mailto:anisslimani013@gmail.com" class="mobile-nav-btn" data-fr="Me recruter">Hire me</a>
+    <button class="mobile-nav-btn lang-toggle" aria-label="Switch language"><svg width="14" height="10" viewBox="0 0 21 15"><rect width="7" height="15" fill="#002395"/><rect x="7" width="7" height="15" fill="#fff"/><rect x="14" width="7" height="15" fill="#ED2939"/></svg> FR</button>
+  </div>
+</div>
+
+
+<!-- ── HERO ───────────────────────────────────────────────── -->
+<section id="hero">
+
+  <div class="hero-left">
+    <div class="hero-eyebrow" data-fr-html="<span class='hero-eyebrow-dot'></span> Product Designer Full Stack · Design Systems · IA">
+      <span class="hero-eyebrow-dot"></span>
+      Full Stack Product Designer · Design Systems · AI
     </div>
 
-    <!-- Hero Section -->
-    <header id="hero" class="min-h-screen flex flex-col items-center justify-center text-center text-dark pt-24 pb-16 px-6 w-full section-spacing">
-        <div class="hero-image-container w-40 h-40 md:w-72 md:h-72 mb-8">
-            <img src="images/mepixel.png" alt="Anis Slimani" class="hero-image">
-            <img src="images/Anis.jpg" alt="Anis Slimani Hover" class="hero-image-hover">
-        </div>
-        <h2 class="text-2xl md:text-4xl lg:text-[3.375rem] text-primary font-extrabold leading-tight">Hi, I'm <span class="text-highlight">Anis Slimani.</span> <br><span class="text-primary text-xl md:text-3xl">Welcome to my portfolio.</span></h2>
-       <!-- <a href="#projects" class="mt-6 inline-block bg-primary text-textLight px-5 py-2 md:px-6 md:py-3 rounded-lg hover:bg-dark hover:text-secondary shadow-lg transition duration-300">View Projects</a> -->
-    </header>
+    <h1 class="hero-title" data-fr-html="La complexité,<br><em>simplifiée.</em>">
+      Designing complexity<br><em>into clarity.</em>
+    </h1>
 
-    <!-- About Section (Card Style) -->
-<section id="about" class="section-spacing w-full flex justify-center bg-cover bg-center bg-no-repeat px-4" style="background-image: url('images/background2.svg');">
-    <div class="about-card text-center text-dark">
-        <h2 class="text-2xl md:text-4xl font-bold text-primary mb-4 md:mb-8">About Me</h2>
-        
-        <!-- Education Card -->
-        <div class="bg-primary p-4 md:p-6 rounded-lg mb-4 md:mb-6 text-textLight" style="box-shadow: 0px 10px 30px rgba(85, 93, 255, 0.3);">
-            <h3 class="text-lg md:text-xl font-semibold mb-3">Educational Background</h3>
-            <p class="text-sm md:text-base leading-relaxed md:leading-loose text-left md:text-justify">
-                With a <span class="font-semibold">Bachelor's of Arts</span> in <span class="font-semibold">Visual Studies, Multimedia, and Digital Arts</span> from Université Gustave Eiffel, and a <span class="font-semibold">Master's of Science</span> in <span class="font-semibold">Human-Computer Interaction</span> from Université Paris-Saclay, I specialize in crafting innovative, interactive digital experiences for different sectors.
-            </p>
-        </div>
-        
-        <!-- Skills & Expertise Card -->
-        <div class="bg-primary p-4 md:p-6 rounded-lg mb-4 md:mb-6 text-textLight" style="box-shadow: 0px 10px 30px rgba(85, 93, 255, 0.3);">
-            <h3 class="text-lg md:text-xl font-semibold mb-3">Skills & Expertise</h3>
-            <p class="text-sm md:text-base leading-relaxed md:leading-loose text-left md:text-justify">
-                Over the years, I've developed expertise in design tools like <span class="font-semibold">Adobe Creative Suite</span> and <span class="font-semibold">Figma</span>, alongside programming with <span class="font-semibold">HTML, CSS, JavaScript, Python, and C#</span>. My work includes <span class="font-semibold">Visual design, UX/UI design, 3D modeling, motion design,</span> and <span class="font-semibold">web development</span>.
-            </p>
-        </div>
-        
-        <!-- CV/Resume Card -->
-        <div class="bg-primary p-4 md:p-6 rounded-lg mb-4 text-textLight" style="box-shadow: 0px 10px 30px rgba(85, 93, 255, 0.3);">
-            <h3 class="text-lg md:text-xl font-semibold mb-3">Professional Credentials</h3>
-            <p class="text-sm md:text-base leading-relaxed md:leading-loose text-left md:text-justify mb-4">
-                View my <span class="font-semibold">CV/Resume</span> below: 
-            </p>
-            
-            <!-- CV Image with Zoom Effect -->
-            <div class="zoom-container">
-                <img id="zoomable-cv" src="images/cv-preview.png" alt="CV Preview" class="zoom-image">
-            </div>
-        </div>
+    <p class="hero-sub" data-fr="Je transforme les produits digitaux complexes en expériences intuitives que les utilisateurs adoptent en toute confiance.">
+      I help companies transform high friction digital products into experiences people understand, trust, and move through with confidence.
+    </p>
+
+    <div class="hero-cta-row">
+      <a href="#work" class="btn-primary" data-fr="Voir mes projets →">View selected work →</a>
+      <a href="#about" class="btn-secondary" data-fr="À propos">About me</a>
     </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-photo-wrap">
+      <div class="hero-photo-glow"></div>
+      <div class="hero-photo">
+        <!--
+          YOUR PHOTO IS NOT SHOWING? Check:
+          1. File is inside assets/images/ folder
+          2. Filename matches exactly (case-sensitive on GitHub)
+          3. Try renaming your file to portrait.jpg and use that
+        -->
+        <img src="assets/images/portrait.jpg" alt="Anis Slimani"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="hero-photo-placeholder" style="display:none;">
+          <div class="hero-photo-placeholder-icon">↑</div>
+          Add portrait.jpg to assets/images/
+        </div>
+      </div>
+    </div>
+  </div>
+
 </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="section-spacing px-4 md:px-8 w-full">
-        <div class="max-w-5xl mx-auto">
-            <h2 class="text-2xl md:text-4xl font-bold text-center mb-4 md:mb-10 text-primary">My Projects</h2>
-            <p class="text-sm md:text-lg text-center mb-4 md:mb-8 text-dark">Projects centered around <span class="font-semibold">UX/UI Design Methodologies</span>, <span class="font-semibold">Figma Prototyping</span> and <span class="font-semibold">XR (AR/VR) development</span>.</p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6" id="project-grid">
-                <!-- Projects will be added by JavaScript -->
-            </div>
-        </div>
-    </section>
-    
-    <!-- Figma Portfolio Section -->
-    <section id="figma" class="section-spacing px-4 md:px-8 w-full">
-        <div class="max-w-5xl mx-auto">
-            <h2 class="text-2xl md:text-4xl font-bold text-center mb-4 md:mb-10 text-primary">Interactive Figma Portfolio</h2>
-            <p class="text-sm md:text-lg text-center mb-4 md:mb-8 text-dark">Explore my <span class="font-semibold">career</span> in this <span class="font-semibold text-highlight">Interactive Figma prototype</span>. Click through the different screens and elements.</p>
-            
-            <!-- Desktop Figma -->
-            <div class="figma-container hidden md:block">
-                <iframe class="figma-embed" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FoC9aV9zhsMMxL3bSX923K8%2FAS-Portfolio%3Fnode-id%3D1-2%26p%3Df%26t%3DKvGYkfQeNWuc79Om-8%26scaling%3Dscale-down-width%26content-scaling%3Dfixed%26page-id%3D0%253A1%26starting-point-node-id%3D1%253A2%26disable-default-keyboard-nav%3D1%26hotspot-hints%3D0%26hide-ui%3D1" allowfullscreen></iframe>
-            </div>
-            
-            <!-- Mobile Figma Link -->
-            <div class="md:hidden text-center">
-                <p class="text-sm mb-6 text-dark">View my interactive Figma portfolio on a larger screen or click below to open directly in Figma.</p>
-                <a href="https://www.figma.com/proto/oC9aV9zhsMMxL3bSX923K8/AS-Portfolio?node-id=1-2&p=f&t=KvGYkfQeNWuc79Om-8&scaling=scale-down-width&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A2&disable-default-keyboard-nav=1&hotspot-hints=0&hide-ui=1" 
-                   target="_blank" 
-                   class="inline-block bg-primary text-textLight px-5 py-2 rounded-lg hover:bg-dark hover:text-secondary shadow-lg transition duration-300">
-                   Open Figma Portfolio
-                </a>
-            </div>
-        </div>
-    </section>
 
-    <!-- Footer - Fixed Version -->
-    <footer class="bg-primary p-4 md:p-6 text-center text-textLight shadow-md w-full">
-        <p>&copy; 2025 Anis Slimani. All rights reserved.</p>
-    </footer>
-    
-    <script>
-        // Projects data
-        const projects = [
-            { title: "Circles", type: "Product Design", link: "project1.html", image: "images/project1.jpg" },
-            { title: "EduSphere", type: "AR Development and UX Research", link: "project2.html", image: "images/project2.jpg" },
-            { title: "QuantUX", type: "UI Design and UX Research", link: "project3.html", image: "images/project3.jpg" },
-            { title: "STEPSTRATE", type: "UX/UI Design", link: "project4.html", image: "images/project4.jpg" },
-            { title: "SMARTPORT", type: "Product Design", link: "project5.html", image: "images/project5.jpg" },
-            { title: "ChoreoSphere", type: "VR Development", link: "project6.html", image: "images/project6.jpg" }
-        ];
-        
-        // DOM Content Loaded event handler
-        document.addEventListener("DOMContentLoaded", function() {
-            // Add projects to the grid
-            const projectGrid = document.getElementById('project-grid');
-            
-            // Clear any existing content in the grid (fixes duplicate projects bug)
-            projectGrid.innerHTML = '';
-            
-            projects.forEach((project) => {
-                const projectCard = document.createElement('a');
-                projectCard.href = project.link;
-                projectCard.className = 'project-card block bg-primary p-4 md:p-6 rounded-lg text-center text-textLight transform transition duration-300 hover:bg-dark hover:text-secondary shadow-lg';
-                
-                projectCard.innerHTML = `
-                    <img src="${project.image}" alt="${project.title}" class="w-full h-32 md:h-36 object-cover rounded-lg mb-3 md:mb-4">
-                    <h3 class="text-lg md:text-2xl font-semibold">${project.title}</h3>
-                    <small class="block text-sm text-gray-300 mt-2 px-3 py-1 border border-gray-300 rounded-full inline-block">${project.type}</small>
-                `;
-                
-                projectGrid.appendChild(projectCard);
-            });
-            
-            // Mobile menu toggle
-            const menuToggle = document.getElementById('menu-toggle');
-            const mobileMenu = document.getElementById('mobile-menu');
-            
-            if (menuToggle && mobileMenu) {
-                menuToggle.addEventListener('click', function() {
-                    mobileMenu.classList.toggle('active');
-                });
-                
-                // Close mobile menu when clicking on a link
-                const mobileLinks = mobileMenu.querySelectorAll('a');
-                mobileLinks.forEach(link => {
-                    link.addEventListener('click', function() {
-                        mobileMenu.classList.remove('active');
-                    });
-                });
-            }
-            
-          // Set up zoom effect for CV image
-const zoomContainer = document.querySelector('.zoom-container');
-const zoomImage = document.getElementById('zoomable-cv');
+<!-- ── WORK ───────────────────────────────────────────────── -->
+<section id="work">
+  <div class="work-inner">
 
-if (zoomContainer && zoomImage) {
-    zoomContainer.addEventListener('mousemove', function(e) {
-        // Calculate mouse position relative to the container
-        const rect = zoomContainer.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        // Calculate percentage position for transform-origin
-        const xPercent = (x / rect.width) * 100;
-        const yPercent = (y / rect.height) * 100;
-        
-        // Set the transform origin to the mouse position
-        zoomImage.style.transformOrigin = `${xPercent}% ${yPercent}%`;
-    });
-}
-            
-            // Scroll-based animation function
-            function animateOnScroll() {
-                const aboutCard = document.querySelector('.about-card');
-                const projectCards = document.querySelectorAll('.project-card');
-                const figmaContainer = document.querySelector('.figma-container');
-                
-                // Check if elements are in viewport
-                function isInViewport(element) {
-                    if (!element) return false;
-                    const rect = element.getBoundingClientRect();
-                    return (
-                        rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.8
-                    );
-                }
-                
-                // Animate about card
-                if (aboutCard && isInViewport(aboutCard)) {
-                    aboutCard.style.animationPlayState = 'running';
-                }
-                
-                // Animate project cards
-                projectCards.forEach(card => {
-                    if (isInViewport(card)) {
-                        card.style.animationPlayState = 'running';
-                    }
-                });
-                
-                // Animate Figma container
-                if (figmaContainer && isInViewport(figmaContainer)) {
-                    figmaContainer.style.animationPlayState = 'running';
-                }
-            }
-            
-            // Initially pause animations
-            const elementsToAnimate = [
-                document.querySelector('.about-card'),
-                ...document.querySelectorAll('.project-card'),
-                document.querySelector('.figma-container')
-            ];
-            
-            elementsToAnimate.forEach(element => {
-                if (element) {
-                    element.style.animationPlayState = 'paused';
-                }
-            });
-            
-            // Listen for scroll events
-            window.addEventListener('scroll', animateOnScroll);
-            
-            // Check initially for elements already in view
-            animateOnScroll();
-            
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        const navHeight = document.querySelector('nav').offsetHeight;
-                        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight;
-                        
-                        window.scrollTo({
-                            top: targetPosition,
-                            behavior: 'smooth'
-                        });
-                        
-                        // Close mobile menu after clicking
-                        if (window.innerWidth <= 768 && mobileMenu.classList.contains('active')) {
-                            mobileMenu.classList.remove('active');
-                        }
-                    }
-                });
-            });
-            
-            // Fix for initial load
-            setTimeout(animateOnScroll, 300);
-            
-            // Handle resize events
-            window.addEventListener('resize', function() {
-                if (window.innerWidth > 768 && mobileMenu) {
-                    mobileMenu.classList.remove('active');
-                }
-            });
-        });
-    </script>
+    <div class="work-header reveal">
+      <div class="section-label" data-fr="Réalisations">Selected Cases</div>
+      <h2 data-fr-html="Projets<br><em>phares.</em>">Selected<br><em>work.</em></h2>
+      <p class="section-desc" data-fr="Projets réalisés chez Legalstart, couvrant le design produit, la recherche utilisateur et le développement frontend.">Projects from my time at Legalstart, covering product design, usability research, and frontend work.</p>
+    </div>
+
+    <!-- Stats strip between intro and case cards -->
+    <div class="work-stats-embed reveal reveal-d1">
+      <div class="stats-strip">
+        <div class="stats-strip-inner stagger-parent">
+          <div class="stat-item stagger-child">
+            <div class="stat-num">100+</div>
+            <div class="stat-label" data-fr="écrans produit redessinés dans un environnement SaaS en production">product screens redesigned in a live SaaS environment</div>
+          </div>
+          <div class="stat-item stagger-child">
+            <div class="stat-num">4.2 to 4.9</div>
+            <div class="stat-label" data-fr="amélioration de la clarté par des tests d'utilisabilité empiriques">clarity improvement via empirical usability testing</div>
+          </div>
+          <div class="stat-item stagger-child">
+            <div class="stat-num">+2%</div>
+            <div class="stat-label" data-fr="hausse moyenne de conversion sur 15 funnels">average conversion uplift across 15 funnels</div>
+          </div>
+          <div class="stat-item stagger-child">
+            <div class="stat-num">2K+</div>
+            <div class="stat-label" data-fr="utilisateurs mensuels impactés par le rebranding">monthly users impacted through rebranding work</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case cards -->
+    <div class="cases-list">
+
+      <!-- Case 1 Legalstart Rebranding -->
+      <a href="work/legalstart.html" class="case-card reveal-left">
+        <div class="case-body">
+          <div>
+            <div class="case-tags">
+              <span class="tag accent">SaaS Rebranding</span>
+              <span class="tag">Design Systems</span>
+              <span class="tag">Usability Research</span>
+              <span class="tag">Figma</span>
+            </div>
+            <h3 data-fr="Refonte SaaS : Design System et échelle">Rebranding a complex SaaS platform at scale</h3>
+            <p data-fr="Déploiement d'un nouveau design system et d'une identité visuelle sur le parcours de création d'entreprise (100+ écrans) au sein d'un SaaS en production. Travail transversal entre audit, conception de composants, modèles de mise en page et prototypage complet en synchronisation avec les développeurs et le CPO.">Deployed a new design system and visual identity across the company creation flow (100+ screens) in a live operational SaaS environment. Worked across audit, component design, layout templating, and complete flow prototyping in close synchronicity with developers and the CPO.</p>
+          </div>
+          <div>
+            <div class="case-metrics">
+              <div>
+                <div class="case-metric-val">4.8/5</div>
+                <div class="case-metric-key" data-fr="Facilité d'usage">Task ease</div>
+              </div>
+              <div>
+                <div class="case-metric-val">4.7/5</div>
+                <div class="case-metric-key" data-fr="Clarté des instructions">Instruction clarity</div>
+              </div>
+              <div>
+                <div class="case-metric-val">4.8/5</div>
+                <div class="case-metric-key" data-fr="Org. interface">Interface org.</div>
+              </div>
+            </div>
+            <span class="case-link" data-fr="Lire l'étude de cas →">Read case study →</span>
+          </div>
+        </div>
+        <div class="case-visual">
+          <img class="case-visual-img" src="assets/images/case-legalstart.png" alt="" onerror="this.style.display='none'">
+          <div class="case-mock">
+            <div class="mock-sidebar">
+              <div class="mock-sb-row" style="width:60%"></div>
+              <div class="mock-sb-row active" style="width:85%"></div>
+              <div class="mock-sb-row" style="width:70%"></div>
+              <div class="mock-sb-row" style="width:55%"></div>
+              <div class="mock-sb-row" style="width:75%"></div>
+              <div class="mock-sb-row" style="width:50%"></div>
+              <div class="mock-sb-row" style="width:65%"></div>
+            </div>
+            <div class="mock-main-area">
+              <div class="mock-heading"></div>
+              <div class="mock-line" style="width:92%"></div>
+              <div class="mock-line" style="width:78%"></div>
+              <div style="margin-top:8px; height:28px; background:rgba(255,255,255,0.04); border-radius:5px;"></div>
+              <div style="height:28px; background:rgba(204,204,255,0.06); border:1px solid rgba(204,204,255,0.14); border-radius:5px;"></div>
+              <div class="mock-input-row" style="margin-top:10px;">
+                <div class="mock-input"></div>
+                <div class="mock-btn-a"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Case 2 CRO / Funnels (flipped) -->
+      <a href="work/lafoy.html" class="case-card flipped reveal-right">
+        <div class="case-body">
+          <div>
+            <div class="case-tags">
+              <span class="tag accent">CRO · Funnels</span>
+              <span class="tag">Landing Pages</span>
+              <span class="tag">Analytics</span>
+              <span class="tag">Amplitude</span>
+            </div>
+            <h3 data-fr="Optimisation CRO des parcours de conversion">CRO driven funnel redesign</h3>
+            <p data-fr="Refonte complète de 15 parcours de conversion suite à des audits d'utilisabilité et des entretiens utilisateurs. Conception de landing pages optimisées pour la conversion, axées sur la hiérarchie, les signaux de confiance et la réduction de friction. Résultats suivis via Amplitude et données comportementales.">Complete redesign of 15 conversion funnels following usability audits and user interviews. Designed conversion optimized landing pages focused on hierarchy, trust signals, and friction reduction. Outcomes tracked through Amplitude and behavioural data.</p>
+          </div>
+          <div>
+            <div class="case-metrics">
+              <div>
+                <div class="case-metric-val">+2%</div>
+                <div class="case-metric-key" data-fr="Conversion moy.">Avg conversion</div>
+              </div>
+              <div>
+                <div class="case-metric-val">−5%</div>
+                <div class="case-metric-key" data-fr="Churn moy.">Avg churn</div>
+              </div>
+              <div>
+                <div class="case-metric-val">×15</div>
+                <div class="case-metric-key" data-fr="Funnels refaits">Funnels redesigned</div>
+              </div>
+            </div>
+            <span class="case-link" data-fr="Lire l'étude de cas →">Read case study →</span>
+          </div>
+        </div>
+        <div class="case-visual">
+          <img class="case-visual-img" src="assets/images/case-lafoy.png" alt="" onerror="this.style.display='none'">
+          <div class="case-mock">
+            <div class="mock-funnel">
+              <div class="mock-funnel-row" style="width:100%"></div>
+              <div class="mock-funnel-row" style="width:78%"></div>
+              <div class="mock-funnel-row" style="width:58%; opacity:0.8;"></div>
+              <div class="mock-funnel-row" style="width:40%; opacity:0.7;"></div>
+              <div class="mock-funnel-row" style="width:28%; opacity:0.6; background:rgba(204,204,255,0.18);"></div>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Case 3 Design Systems -->
+      <a href="work/ai-workflows.html" class="case-card reveal-left">
+        <div class="case-body">
+          <div>
+            <div class="case-tags">
+              <span class="tag accent">Design Systems</span>
+              <span class="tag">AI Workflows</span>
+              <span class="tag">Figma</span>
+              <span class="tag">Design Ops</span>
+            </div>
+            <h3 data-fr="Design System et workflows IA générative">Design system and AI assisted production workflow</h3>
+            <p data-fr="Construction et maintenance de composants Figma au sein d'un Design System évolutif, contribuant à un gain de 10% en vélocité d'équipe. Intégration de l'IA générative et de workflows MCP dans la production design, permettant la création et la variation de 50+ templates à grande échelle.">Built and maintained Figma components as part of an evolving design system, contributing to a 10% gain in team execution speed. Integrated generative AI and MCP driven workflows into design production, enabling creation and variation of 50+ templates at scale.</p>
+          </div>
+          <div>
+            <div class="case-metrics">
+              <div>
+                <div class="case-metric-val">+10%</div>
+                <div class="case-metric-key" data-fr="Vélocité équipe">Team velocity</div>
+              </div>
+              <div>
+                <div class="case-metric-val">50+</div>
+                <div class="case-metric-key" data-fr="Templates IA">AI templates</div>
+              </div>
+            </div>
+            <span class="case-link" data-fr="Lire l'étude de cas →">Read case study →</span>
+          </div>
+        </div>
+        <div class="case-visual">
+          <img class="case-visual-img" src="assets/images/case-ai.png" alt="" onerror="this.style.display='none'">
+          <div class="case-mock mock-dimmed">
+            <div class="mock-components">
+              <div class="mock-chip a"></div>
+              <div class="mock-chip"></div>
+              <div class="mock-chip a"></div>
+              <div class="mock-chip"></div>
+              <div class="mock-chip a"></div>
+              <div class="mock-chip"></div>
+              <div class="mock-chip"></div>
+              <div class="mock-chip a"></div>
+              <div class="mock-chip"></div>
+              <div class="mock-chip a"></div>
+              <div class="mock-chip"></div>
+              <div class="mock-chip"></div>
+            </div>
+          </div>
+        </div>
+      </a>
+
+    </div><!-- /cases-list -->
+  </div><!-- /work-inner -->
+</section>
+
+
+<!-- ── ABOUT ───────────────────────────────────────────────── -->
+<section id="about">
+  <div class="about-inner">
+
+    <div class="about-top-grid">
+
+      <!-- Left col: photo + skill cards -->
+      <div class="about-left-col">
+        <div class="about-photo reveal">
+          <img src="assets/images/about.jpg" alt="Anis Slimani"
+               onerror="this.onerror=null; this.style.display='none';">
+        </div>
+
+      </div>
+
+      <!-- Text -->
+      <div class="about-text reveal reveal-d1">
+        <div class="section-label" data-fr="Profil">About</div>
+        <h2 data-fr-html="Mon<br><em>approche.</em>">A bit about<br><em>how I work.</em></h2>
+
+        <p data-fr-html="Je suis <strong>Anis Slimani</strong>, product designer basé à Paris. J'ai récemment terminé mon Master en Interaction Homme Machine à l'Université Paris-Saclay, en parallèle d'un contrat d'un an chez Legalstart où j'ai travaillé sur des problèmes produit réels avec des contraintes réelles.">I'm <strong>Anis Slimani</strong>, a product designer based in Paris. I recently finished my MSc in Human Computer Interaction at Université Paris-Saclay, alongside a one year contract at Legalstart where I worked on real product problems with real constraints.</p>
+
+        <p data-fr="J'aime travailler sur des sujets réellement complexes : parcours à étapes, information dense, produits où chaque détail compte. J'aborde le design avec rigueur et structure, au delà de la simple intuition.">I like working on things that are genuinely complex: complex flows, dense information, products where getting the details wrong actually matters. I approach design with research and structure, not just intuition.</p>
+
+        <p data-fr="J'écris aussi du code frontend, ce qui me permet de comprendre ce qui est réaliste techniquement et de prototyper fidèlement plutôt que de simplement créer des maquettes figées.">I also write frontend code, which means I understand what's realistic to build and I can prototype things properly rather than just wireframing them.</p>
+
+        <p data-fr="Actuellement en recherche de mon prochain poste, idéalement au sein d'une équipe produit où le design est au cœur de la stratégie.">Currently looking for my next role, ideally in a product team where design is taken seriously.</p>
+
+        <div class="about-cta-row">
+          <a href="mailto:anisslimani013@gmail.com" class="btn-primary" data-fr="Me contacter →">Get in touch →</a>
+          <a href="https://www.linkedin.com/in/anisslimani" target="_blank" rel="noopener" class="btn-secondary">LinkedIn ↗</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ── SERVICES ────────────────────────────────────────────── -->
+<section id="services">
+  <div class="services-inner">
+    <div class="reveal">
+      <div class="section-label" data-fr="Compétences">How I contribute</div>
+      <h2 data-fr-html="Mon<br><em>expertise.</em>">What I can<br><em>help with.</em></h2>
+      <p class="section-desc" data-fr="Un mix de design, recherche et développement frontend selon les besoins du projet.">A mix of design, research, and frontend work depending on what the project needs.</p>
+    </div>
+
+    <div class="services-grid stagger-parent">
+
+      <a href="work/legalstart.html" class="service-block stagger-child">
+        <div class="service-block-num">01</div>
+        <h3 data-fr="Design de parcours complexes">Product redesign for complex flows</h3>
+        <p data-fr="Parcours SaaS à étapes, environnements réglementés, expériences à forte friction. Résultat fondé sur l'audit, aligné sur le système, prêt pour le développement.">Complex SaaS journeys, regulated environments, high friction experiences. Audit based, system aligned, dev ready output.</p>
+        <span class="service-block-link" data-fr="Voir le cas Legalstart →">See Legalstart case →</span>
+      </a>
+
+      <a href="work/lafoy.html" class="service-block stagger-child">
+        <div class="service-block-num">02</div>
+        <h3 data-fr="Conversion et optimisation CRO">Landing pages & funnel optimisation</h3>
+        <p data-fr="Design orienté CRO autour des signaux de confiance, de la hiérarchie et d'améliorations mesurables de la conversion. De l'audit à la mise en ligne.">CRO led design built around trust signals, hierarchy, and measurable conversion improvements. From audit to shipped page.</p>
+        <span class="service-block-link" data-fr="Voir le cas Lafoy →">See Lafoy case →</span>
+      </a>
+
+      <a href="work/legalstart.html#approach" class="service-block stagger-child">
+        <div class="service-block-num">03</div>
+        <h3 data-fr="Design systems & librairies Figma">Design systems & Figma libraries</h3>
+        <p data-fr="Architecture orientée composants qui s'adapte aux produits. Réduit les allers retours avec les développeurs et maintient la qualité dans le temps.">Component driven architecture that scales across products. Reduces back and forth with developers and maintains quality over time.</p>
+        <span class="service-block-link" data-fr="Voir le cas Legalstart →">See Legalstart case →</span>
+      </a>
+
+      <a href="work/legalstart.html#evaluation" class="service-block stagger-child">
+        <div class="service-block-num">04</div>
+        <h3 data-fr="Recherche et tests utilisateurs">UX audits & usability evaluation</h3>
+        <p data-fr="Analyse heuristique, simulation de parcours, tests CSUQ/SUS et synthèse de données comportementales. Des décisions de design basées sur des preuves.">Heuristic analysis, user flow simulation, CSUQ/SUS testing, and behavioural data synthesis. Evidence based design decisions.</p>
+        <span class="service-block-link" data-fr="Voir le cas Legalstart →">See Legalstart case →</span>
+      </a>
+
+      <a href="#hero" class="service-block stagger-child">
+        <div class="service-block-num">05</div>
+        <h3 data-fr="Développement frontend">Frontend implementation</h3>
+        <p data-fr="Je fais le pont entre design et développement. À l'aise pour passer d'un prototype Figma à du code fonctionnel sans gap de handoff et avec une itération plus rapide.">I bridge design and development. Comfortable taking a Figma prototype to working HTML/CSS/JS with no handoff gap and faster iteration.</p>
+        <ul>
+          <li>HTML · CSS · JavaScript</li>
+          <li>Node.js · Tailwind CSS</li>
+          <li>Git · component driven structure</li>
+        </ul>
+        <span class="service-block-link" data-fr="Vous le regardez →">You're looking at it →</span>
+      </a>
+
+      <a href="work/ai-workflows.html" class="service-block stagger-child">
+        <div class="service-block-num">06</div>
+        <h3 data-fr="Design Ops et IA générative">AI assisted design operations</h3>
+        <p data-fr="J'intègre l'IA générative et les workflows MCP pour accélérer l'exécution, soutenir l'idéation et scaler la production de modèles, transformant la répétition manuelle en qualité automatisée.">I integrate generative AI and MCP driven workflows to speed up execution, support ideation, and scale template production, turning manual repetition into automated quality.</p>
+        <ul>
+          <li>Prompt engineering for design tasks</li>
+          <li>MCP powered workflow automation</li>
+          <li>50+ templates produced via AI</li>
+        </ul>
+        <span class="service-block-link" data-fr="Voir le cas AI workflows →">See AI workflows case →</span>
+      </a>
+
+    <!-- Tech strip -->
+    <div class="tech-strip reveal">
+      <span class="tech-strip-label">Stack</span>
+      <div class="tech-strip-scroll">
+        <span class="tech-chip">Figma</span>
+        <span class="tech-chip">HTML</span>
+        <span class="tech-chip">CSS</span>
+        <span class="tech-chip">JavaScript</span>
+        <span class="tech-chip">Node.js</span>
+        <span class="tech-chip">Tailwind</span>
+        <span class="tech-chip">Amplitude</span>
+        <span class="tech-chip">Dovetail</span>
+        <span class="tech-chip">Git</span>
+        <span class="tech-chip">MCP / AI workflows</span>
+      </div>
+      <span class="tech-strip-arrow" aria-hidden="true">→</span>
+    </div>
+
+    </div><!-- /services-grid -->
+
+  </div>
+</section>
+
+
+<!-- ── CONTACT ─────────────────────────────────────────────── -->
+<section id="contact">
+  <div class="contact-inner">
+
+    <div class="contact-left reveal">
+      <div class="section-label" data-fr="Contact">Contact</div>
+      <h2 data-fr-html="Parlons-en<br><em>ensemble.</em>">Get in<br><em>touch.</em></h2>
+      <p data-fr="Basé à Paris, ouvert au remote. Parlons de ce que vous construisez.">Based in Paris, open to remote. Let's talk about what you're building.</p>
+
+      <div class="contact-links">
+        <a href="mailto:anisslimani013@gmail.com" class="contact-link">
+          <div class="contact-link-icon">@</div>
+          <div>
+            <div class="contact-link-label" data-fr="Courriel">Email</div>
+            <div class="contact-link-val">anisslimani013@gmail.com ↗</div>
+          </div>
+        </a>
+        <a href="https://www.linkedin.com/in/anisslimani" target="_blank" rel="noopener" class="contact-link">
+          <div class="contact-link-icon">in</div>
+          <div>
+            <div class="contact-link-label" data-fr="LinkedIn">LinkedIn</div>
+            <div class="contact-link-val">linkedin.com/in/anisslimani ↗</div>
+          </div>
+        </a>
+        <a href="https://www.figma.com/proto/oC9aV9zhsMMxL3bSX923K8/AS-Portfolio?node-id=1-2&p=f&t=KvGYkfQeNWuc79Om-8&scaling=scale-down-width&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A2&disable-default-keyboard-nav=1&hotspot-hints=0&hide-ui=1" target="_blank" rel="noopener" class="contact-link">
+          <div class="contact-link-icon">Aa</div>
+          <div>
+            <div class="contact-link-label" data-fr="Portfolio académique & artistique">Academic & Artistic Portfolio</div>
+            <div class="contact-link-val" data-fr="Voir sur Figma ↗">View on Figma ↗</div>
+          </div>
+        </a>
+        <a href="assets/cv-en.pdf" data-fr-href="assets/cv-fr.pdf" target="_blank" rel="noopener" class="contact-link">
+          <div class="contact-link-icon">🗎</div>
+          <div>
+            <div class="contact-link-label" data-fr="Curriculum Vitae">Resume / CV</div>
+            <div class="contact-link-val" data-fr="Ouvrir la version FR ↗">Open EN version ↗</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="contact-form reveal reveal-d1">
+      <h3 data-fr="Envoyer un message">Send a message</h3>
+      <p data-fr="Parlez-moi de votre défi produit et je vous réponds sous 24 heures.">Tell me about your product challenge and I'll reply within 24 hours.</p>
+
+      <!--
+        CONTACT FORM SETUP FORMSPREE
+        ─────────────────────────────────────────────────
+        1. Go to https://formspree.io free account
+        2. Create a new form, get your endpoint URL
+        3. Open assets/js/main.js
+        4. Replace FORMSPREE_ENDPOINT with your URL
+        ─────────────────────────────────────────────────
+      -->
+      <form id="contact-form" novalidate>
+        <div class="form-group">
+          <div class="form-field">
+            <label for="name" data-fr="Votre nom">Your name</label>
+            <input type="text" id="name" name="name" placeholder="Jane Dupont" data-fr-placeholder="Jean Dupont" required>
+          </div>
+          <div class="form-field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="jane@company.com" required>
+          </div>
+          <div class="form-field">
+            <label for="company" data-fr-html="Entreprise & poste <span style='opacity:.5;font-weight:400;'>(optionnel)</span>">Company & role <span style="opacity:.5;font-weight:400;">(optional)</span></label>
+            <input type="text" id="company" name="company" placeholder="Head of Product @ Acme" data-fr-placeholder="Head of Product @ Acme">
+          </div>
+          <div class="form-field">
+            <label for="message" data-fr="Ce sur quoi vous travaillez">What you're working on</label>
+            <textarea id="message" name="message" rows="4" placeholder="Brief context on your product, challenge, or opportunity…" data-fr-placeholder="Contexte rapide sur votre produit, défi ou opportunité…" required></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary form-submit-btn">
+          <span data-fr="Envoyer le message →">Send message →</span>
+        </button>
+
+        <p id="form-success" style="display:none; color:#ccccff; font-size:13px; margin-top:12px;" data-fr="Message envoyé ! Je vous recontacte très vite.">
+          Message sent! I'll be in touch soon.
+        </p>
+        <p id="form-error" style="display:none; color:#ff9999; font-size:13px; margin-top:12px;" data-fr="Une erreur est survenue. Contactez-moi directement à anisslimani013@gmail.com">
+          Something went wrong. Please email me directly at anisslimani013@gmail.com
+        </p>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ── FOOTER ──────────────────────────────────────────────── -->
+<footer>
+  <p class="footer-left" data-fr="© 2026 Anis Slimani. Tous droits réservés.">© 2026 Anis Slimani. All rights reserved.</p>
+  <nav class="footer-links" aria-label="Footer navigation">
+    <a href="#work" data-fr="Projets">Work</a>
+    <a href="#about" data-fr="À propos">About</a>
+    <a href="#services" data-fr="Services">Services</a>
+    <a href="mailto:anisslimani013@gmail.com" data-fr="Contact">Contact</a>
+    <a href="https://www.linkedin.com/in/anisslimani" target="_blank" rel="noopener">LinkedIn ↗</a>
+  </nav>
+</footer>
+
+<script src="assets/js/main.js"></script>
 </body>
 </html>
