@@ -23,6 +23,39 @@
   const LAYERS = 3;
   let dpr = 1;
 
+  /* Falling stars */
+  let fallingStars = [];
+
+  function spawnFallingStar() {
+    const angle = (Math.PI / 5) + (Math.random() - 0.5) * 0.25;
+    const speed = Math.random() * 3 + 5;
+    fallingStars.push({
+      x:     Math.random() * w * 0.45 + w * 0.05,
+      y:     Math.random() * h * 0.35 + h * 0.15,
+      vx:    Math.cos(angle) * speed,
+      vy:    Math.sin(angle) * speed,
+      trail: Math.random() * 50 + 90,
+      alpha: 0,
+      peak:  0.88 + Math.random() * 0.12,
+      phase: 'in',
+    });
+  }
+
+  // Rhythm: 1 … pause pause … 1 … pause pause pause pause … 1 … repeat
+  // Beat unit = 1.8 s  →  short gap = 2 beats (3.6 s), long gap = 4 beats (7.2 s)
+  const BEAT = 1800;
+  const RHYTHM = [2, 2, 4, 4]; // beats between each successive star
+  let rhythmIdx = 0;
+
+  function scheduleNext() {
+    const beats = RHYTHM[rhythmIdx % RHYTHM.length];
+    rhythmIdx++;
+    rhythmTimeout = setTimeout(() => { spawnFallingStar(); scheduleNext(); }, beats * BEAT);
+  }
+
+  // First star after animations settle, then rhythm kicks in
+  setTimeout(() => { spawnFallingStar(); scheduleNext(); }, 1800);
+
   window.addEventListener('mousemove', e => {
     targetMX = (e.clientX / window.innerWidth  - 0.5) * 2;
     targetMY = (e.clientY / window.innerHeight - 0.5) * 2;
@@ -106,16 +139,59 @@
       ctx.fill();
     });
 
+    /* ── Falling stars ── */
+    fallingStars = fallingStars.filter(s => s.alpha > 0 || s.phase === 'in');
+    fallingStars.forEach(s => {
+      // Fade in quickly, then fade out gradually
+      if (s.phase === 'in') {
+        s.alpha = Math.min(s.alpha + 0.06, s.peak);
+        if (s.alpha >= s.peak) s.phase = 'out';
+      } else {
+        s.alpha -= 0.012;
+      }
+
+      const len = Math.hypot(s.vx, s.vy);
+      const tx  = s.x - (s.vx / len) * s.trail;
+      const ty  = s.y - (s.vy / len) * s.trail;
+
+      const streak = ctx.createLinearGradient(tx, ty, s.x, s.y);
+      streak.addColorStop(0,   `rgba(220,220,255,0)`);
+      streak.addColorStop(0.6, `rgba(220,220,255,${(s.alpha * 0.3).toFixed(3)})`);
+      streak.addColorStop(1,   `rgba(255,255,255,${s.alpha.toFixed(3)})`);
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(tx, ty);
+      ctx.lineTo(s.x, s.y);
+      ctx.strokeStyle = streak;
+      ctx.lineWidth   = 1.2;
+      ctx.stroke();
+
+      // Bright tip
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, 1.2, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${s.alpha.toFixed(3)})`;
+      ctx.fill();
+      ctx.restore();
+
+      s.x += s.vx;
+      s.y += s.vy;
+      if (s.x > w + 20 || s.y > h + 20) s.alpha = 0;
+    });
+
     if (!paused) requestAnimationFrame(drawFrame);
   }
 
   let paused = false;
+  let rhythmTimeout = null;
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
       paused = true;
+      clearTimeout(rhythmTimeout);
     } else {
       paused = false;
       requestAnimationFrame(drawFrame);
+      scheduleNext();
     }
   });
 
@@ -422,6 +498,33 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
       if (error) error.style.display = 'block';
       btn.textContent = isFr ? 'Envoyer le message →' : 'Send message →';
       btn.disabled    = false;
+    }
+  });
+})();
+
+
+/* ── PAGE TRANSITIONS ─────────────────────────────────────── */
+
+(function initPageTransitions() {
+  // Fade out before navigating to internal .html pages
+  document.querySelectorAll('a[href]').forEach(link => {
+    const href = link.getAttribute('href');
+    if (!href) return;
+    if (href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('http') || link.target === '_blank') return;
+
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      document.body.style.transition = 'opacity 0.25s ease';
+      document.body.style.opacity = '0';
+      setTimeout(() => { window.location.href = link.href; }, 260);
+    });
+  });
+
+  // Restore opacity if navigating back (bfcache)
+  window.addEventListener('pageshow', e => {
+    if (e.persisted) {
+      document.body.style.transition = '';
+      document.body.style.opacity = '';
     }
   });
 })();
