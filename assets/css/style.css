@@ -638,7 +638,6 @@ section, footer, .page-hero, .case-content-wrap {
 
 #about {
   padding: 110px var(--pad-x);
-  background: rgba(8,8,16,0.6);
 }
 .about-inner { max-width: var(--max-w); margin: 0 auto; }
 
