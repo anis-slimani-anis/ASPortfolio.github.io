@@ -188,6 +188,7 @@
     if (document.hidden) {
       paused = true;
       clearTimeout(rhythmTimeout);
+      fallingStars = [];
     } else {
       paused = false;
       requestAnimationFrame(drawFrame);
