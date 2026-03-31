@@ -24,6 +24,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
 
   <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/images/portrait.jpg" as="image" fetchpriority="high">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -44,6 +45,7 @@
     <li><a href="#contact" data-fr="Contact">Contact</a></li>
   </ul>
   <button class="lang-toggle" aria-label="Switch language"><svg width="14" height="10" viewBox="0 0 21 15"><rect width="7" height="15" fill="#002395"/><rect x="7" width="7" height="15" fill="#fff"/><rect x="14" width="7" height="15" fill="#ED2939"/></svg> FR</button>
+  <button class="theme-toggle" aria-label="Toggle light mode"><span class="icon-moon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg> <span data-fr="Clair">Light</span></span><span class="icon-sun"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg> <span data-fr="Sombre">Dark</span></span></button>
   <a href="mailto:anisslimani013@gmail.com" class="btn-nav" data-fr="Me recruter">Hire me</a>
   <button class="nav-burger" aria-label="Open menu" aria-expanded="false">
     <span></span><span></span><span></span>
@@ -70,6 +72,7 @@
   <div class="mobile-nav-footer">
     <a href="mailto:anisslimani013@gmail.com" class="mobile-nav-btn" data-fr="Me recruter">Hire me</a>
     <button class="mobile-nav-btn lang-toggle" aria-label="Switch language"><svg width="14" height="10" viewBox="0 0 21 15"><rect width="7" height="15" fill="#002395"/><rect x="7" width="7" height="15" fill="#fff"/><rect x="14" width="7" height="15" fill="#ED2939"/></svg> FR</button>
+    <button class="mobile-nav-btn theme-toggle" aria-label="Toggle light mode"><span class="icon-moon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span><span class="icon-sun"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span></button>
   </div>
 </div>
 
@@ -92,7 +95,7 @@
     </p>
 
     <div class="hero-cta-row">
-      <a href="#work" class="btn-primary" data-fr="Voir mes projets →">View selected work →</a>
+      <a href="#contact" class="btn-primary" data-fr="Me contacter →">Contact me →</a>
       <a href="#about" class="btn-secondary" data-fr="À propos">About me</a>
     </div>
   </div>
@@ -108,6 +111,7 @@
           3. Try renaming your file to portrait.jpg and use that
         -->
         <img src="assets/images/portrait.jpg" alt="Anis Slimani"
+             fetchpriority="high" decoding="async"
              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
         <div class="hero-photo-placeholder" style="display:none;">
           <div class="hero-photo-placeholder-icon">↑</div>
@@ -162,7 +166,7 @@
         <div class="case-body">
           <div>
             <div class="case-tags">
-              <span class="tag accent">SaaS Rebranding</span>
+              <span class="tag">SaaS Rebranding</span>
               <span class="tag">Design Systems</span>
               <span class="tag">Usability Research</span>
               <span class="tag">Figma</span>
@@ -189,7 +193,7 @@
           </div>
         </div>
         <div class="case-visual">
-          <img class="case-visual-img" src="assets/images/case-legalstart.png" alt="" onerror="this.style.display='none'">
+          <img class="case-visual-img" src="assets/images/case-legalstart.png" alt="Legalstart SaaS rebranding" loading="lazy" decoding="async" onerror="this.style.display='none'">
           <div class="case-mock">
             <div class="mock-sidebar">
               <div class="mock-sb-row" style="width:60%"></div>
@@ -204,8 +208,8 @@
               <div class="mock-heading"></div>
               <div class="mock-line" style="width:92%"></div>
               <div class="mock-line" style="width:78%"></div>
-              <div style="margin-top:8px; height:28px; background:rgba(255,255,255,0.04); border-radius:5px;"></div>
-              <div style="height:28px; background:rgba(204,204,255,0.06); border:1px solid rgba(204,204,255,0.14); border-radius:5px;"></div>
+              <div style="margin-top:8px; height:28px; background:var(--accent-dim); border-radius:5px;"></div>
+              <div style="height:28px; background:var(--accent-dim); border:1px solid var(--accent-border); border-radius:5px;"></div>
               <div class="mock-input-row" style="margin-top:10px;">
                 <div class="mock-input"></div>
                 <div class="mock-btn-a"></div>
@@ -220,7 +224,7 @@
         <div class="case-body">
           <div>
             <div class="case-tags">
-              <span class="tag accent">CRO · Funnels</span>
+              <span class="tag">CRO · Funnels</span>
               <span class="tag">Landing Pages</span>
               <span class="tag">Analytics</span>
               <span class="tag">Amplitude</span>
@@ -232,29 +236,29 @@
             <div class="case-metrics">
               <div>
                 <div class="case-metric-val">+2%</div>
-                <div class="case-metric-key" data-fr="Conversion moy.">Avg conversion</div>
+                <div class="case-metric-key" data-fr="Conversion moyenne">Avg conversion</div>
               </div>
               <div>
                 <div class="case-metric-val">−5%</div>
-                <div class="case-metric-key" data-fr="Churn moy.">Avg churn</div>
+                <div class="case-metric-key" data-fr="Churn moyen">Avg churn</div>
               </div>
               <div>
                 <div class="case-metric-val">×15</div>
-                <div class="case-metric-key" data-fr="Funnels refaits">Funnels redesigned</div>
+                <div class="case-metric-key" data-fr="Parcours refondus">Funnels redesigned</div>
               </div>
             </div>
             <span class="case-link" data-fr="Lire l'étude de cas →">Read case study →</span>
           </div>
         </div>
         <div class="case-visual">
-          <img class="case-visual-img" src="assets/images/case-lafoy.png" alt="" onerror="this.style.display='none'">
+          <img class="case-visual-img" src="assets/images/case-lafoy.png" alt="Lafoy acquisition funnels" loading="lazy" decoding="async" onerror="this.style.display='none'">
           <div class="case-mock">
             <div class="mock-funnel">
               <div class="mock-funnel-row" style="width:100%"></div>
               <div class="mock-funnel-row" style="width:78%"></div>
               <div class="mock-funnel-row" style="width:58%; opacity:0.8;"></div>
               <div class="mock-funnel-row" style="width:40%; opacity:0.7;"></div>
-              <div class="mock-funnel-row" style="width:28%; opacity:0.6; background:rgba(204,204,255,0.18);"></div>
+              <div class="mock-funnel-row" style="width:28%; opacity:0.6; background:var(--accent-mid);"></div>
             </div>
           </div>
         </div>
@@ -265,7 +269,7 @@
         <div class="case-body">
           <div>
             <div class="case-tags">
-              <span class="tag accent">Design Systems</span>
+              <span class="tag">Design Systems</span>
               <span class="tag">AI Workflows</span>
               <span class="tag">Figma</span>
               <span class="tag">Design Ops</span>
@@ -288,7 +292,7 @@
           </div>
         </div>
         <div class="case-visual">
-          <img class="case-visual-img" src="assets/images/case-ai.png" alt="" onerror="this.style.display='none'">
+          <img class="case-visual-img" src="assets/images/case-ai.png" alt="AI-assisted design workflows" loading="lazy" decoding="async" onerror="this.style.display='none'">
           <div class="case-mock mock-dimmed">
             <div class="mock-components">
               <div class="mock-chip a"></div>
@@ -323,6 +327,7 @@
       <div class="about-left-col">
         <div class="about-photo reveal">
           <img src="assets/images/about.jpg" alt="Anis Slimani"
+               loading="lazy" decoding="async"
                onerror="this.onerror=null; this.style.display='none';">
         </div>
 
@@ -331,7 +336,7 @@
       <!-- Text -->
       <div class="about-text reveal reveal-d1">
         <div class="section-label" data-fr="Profil">About</div>
-        <h2 data-fr-html="Mon<br><em>approche.</em>">A bit about<br><em>me.</em></h2>
+        <h2 data-fr-html="Un peu sur<br><em>moi.</em>">A bit about<br><em>me.</em></h2>
 
         <p data-fr-html="Je suis <strong>Anis Slimani</strong>, product designer basé à Paris. J'ai récemment terminé mon Master en Interaction Homme Machine à l'Université Paris-Saclay, en parallèle d'un contrat d'un an chez Legalstart où j'ai travaillé sur des problèmes produit réels avec des contraintes réelles.">I'm <strong>Anis Slimani</strong>, a product designer based in Paris. I recently finished my MSc in Human Computer Interaction at Université Paris-Saclay, alongside a one year contract at Legalstart where I worked on real product problems with real constraints.</p>
 
@@ -356,8 +361,8 @@
 <section id="services">
   <div class="services-inner">
     <div class="reveal">
-      <div class="section-label" data-fr="Compétences">How I contribute</div>
-      <h2 data-fr-html="Mon<br><em>expertise.</em>">What I can<br><em>help with.</em></h2>
+      <div class="section-label" data-fr="Services">Services</div>
+      <h2 data-fr-html="Comment je<br><em>contribue.</em>">How I<br><em>contribute.</em></h2>
       <p class="section-desc" data-fr="Un mix de design, recherche et développement frontend selon les besoins du projet.">A mix of design, research, and frontend work depending on what the project needs.</p>
     </div>
 
@@ -394,25 +399,25 @@
       <a href="#hero" class="service-block stagger-child">
         <div class="service-block-num">05</div>
         <h3 data-fr="Développement frontend">Frontend implementation</h3>
-        <p data-fr="Je fais le pont entre design et développement. À l'aise pour passer d'un prototype Figma à du code fonctionnel sans gap de handoff et avec une itération plus rapide.">I bridge design and development. Comfortable taking a Figma prototype to working HTML/CSS/JS with no handoff gap and faster iteration.</p>
+        <p data-fr="Je fais le pont entre design et développement. À l'aise pour passer d'un prototype Figma à du code fonctionnel sans rupture dans la passation et avec une itération plus rapide.">I bridge design and development. Comfortable taking a Figma prototype to working HTML/CSS/JS with no handoff gap and faster iteration.</p>
         <ul>
           <li>HTML · CSS · JavaScript</li>
           <li>Node.js · Tailwind CSS</li>
           <li>Git · component driven structure</li>
         </ul>
-        <span class="service-block-link" data-fr="Vous le regardez →">You're looking at it →</span>
+        <span class="service-block-link" data-fr="Vous y êtes →">You're looking at it →</span>
       </a>
 
       <a href="work/ai-workflows.html" class="service-block stagger-child">
         <div class="service-block-num">06</div>
         <h3 data-fr="Design Ops et IA générative">AI assisted design operations</h3>
-        <p data-fr="J'intègre l'IA générative et les workflows MCP pour accélérer l'exécution, soutenir l'idéation et scaler la production de modèles, transformant la répétition manuelle en qualité automatisée.">I integrate generative AI and MCP driven workflows to speed up execution, support ideation, and scale template production, turning manual repetition into automated quality.</p>
+        <p data-fr="J'intègre l'IA générative et les workflows MCP pour accélérer l'exécution, soutenir l'idéation et démultiplier la production de modèles, transformant la répétition manuelle en qualité automatisée.">I integrate generative AI and MCP driven workflows to speed up execution, support ideation, and scale template production, turning manual repetition into automated quality.</p>
         <ul>
           <li>Prompt engineering for design tasks</li>
           <li>MCP powered workflow automation</li>
           <li>50+ templates produced via AI</li>
         </ul>
-        <span class="service-block-link" data-fr="Voir le cas AI workflows →">See AI workflows case →</span>
+        <span class="service-block-link" data-fr="Voir les workflows IA →">See AI workflows case →</span>
       </a>
 
     <!-- Tech strip -->
@@ -445,7 +450,7 @@
 
     <div class="contact-left reveal">
       <div class="section-label" data-fr="Contact">Contact</div>
-      <h2 data-fr-html="Parlons-en<br><em>ensemble.</em>">Get in<br><em>touch.</em></h2>
+      <h2 data-fr-html="Prenons<br><em>contact.</em>">Get in<br><em>touch.</em></h2>
       <p data-fr="Basé à Paris, ouvert au remote. Parlons de ce que vous construisez.">Based in Paris, open to remote. Let's talk about what you're building.</p>
 
       <div class="contact-links">
@@ -508,7 +513,7 @@
             <input type="text" id="company" name="company" placeholder="Head of Product @ Acme" data-fr-placeholder="Head of Product @ Acme">
           </div>
           <div class="form-field">
-            <label for="message" data-fr="Ce sur quoi vous travaillez">What you're working on</label>
+            <label for="message" data-fr="Votre projet">What you're working on</label>
             <textarea id="message" name="message" rows="4" placeholder="Brief context on your product, challenge, or opportunity…" data-fr-placeholder="Contexte rapide sur votre produit, défi ou opportunité…" required></textarea>
           </div>
         </div>
@@ -517,10 +522,10 @@
           <span data-fr="Envoyer le message →">Send message →</span>
         </button>
 
-        <p id="form-success" style="display:none; color:#ccccff; font-size:13px; margin-top:12px;" data-fr="Message envoyé ! Je vous recontacte très vite.">
+        <p id="form-success" style="display:none; color:var(--accent); font-size:13px; margin-top:12px;" data-fr="Message envoyé ! Je vous recontacte très vite.">
           Message sent! I'll be in touch soon.
         </p>
-        <p id="form-error" style="display:none; color:#ff9999; font-size:13px; margin-top:12px;" data-fr="Une erreur est survenue. Contactez-moi directement à anisslimani013@gmail.com">
+        <p id="form-error" style="display:none; color:#cc4444; font-size:13px; margin-top:12px;" data-fr="Une erreur est survenue. Écrivez-moi directement à anisslimani013@gmail.com">
           Something went wrong. Please email me directly at anisslimani013@gmail.com
         </p>
       </form>

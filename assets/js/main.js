@@ -14,12 +14,14 @@
   const canvas = document.getElementById('starfield');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+  canvas.style.willChange = 'transform';           // GPU-layer hint
   let stars = [];
   let w, h;
   let mouseX = 0, mouseY = 0;
   let targetMX = 0, targetMY = 0;
 
-  const STAR_COUNT = 400;
+  const STAR_COUNT = window.innerWidth < 860 ? 150 : 400;
   const LAYERS = 3;
   let dpr = 1;
 
@@ -46,20 +48,30 @@
   const BEAT = 1800;
   const RHYTHM = [2, 2, 4, 4]; // beats between each successive star
   let rhythmIdx = 0;
+  let rhythmTimeout = null;
+  let initTimeout = null;
 
   function scheduleNext() {
+    clearTimeout(rhythmTimeout);                    // prevent duplicate chains
     const beats = RHYTHM[rhythmIdx % RHYTHM.length];
     rhythmIdx++;
     rhythmTimeout = setTimeout(() => { spawnFallingStar(); scheduleNext(); }, beats * BEAT);
   }
 
   // First star after animations settle, then rhythm kicks in
-  setTimeout(() => { spawnFallingStar(); scheduleNext(); }, 1800);
+  initTimeout = setTimeout(() => { initTimeout = null; spawnFallingStar(); scheduleNext(); }, 1800);
 
   window.addEventListener('mousemove', e => {
     targetMX = (e.clientX / window.innerWidth  - 0.5) * 2;
     targetMY = (e.clientY / window.innerHeight - 0.5) * 2;
   }, { passive: true });
+
+  /* Debounced resize */
+  let resizeTimer = null;
+  function onResize() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(resize, 120);
+  }
 
   function resize() {
     dpr = window.devicePixelRatio || 1;
@@ -101,45 +113,77 @@
     stars.forEach(s => { s.alpha = s.baseA; s.x = s.ox; s.y = s.oy; });
   }
 
-  function drawFrame() {
+  /* Track frame timing to cap delta after long pauses */
+  let lastFrameTime = 0;
+
+  function drawFrame(timestamp) {
+    /* ── Delta-time guard ── */
+    if (!lastFrameTime) lastFrameTime = timestamp;
+    const dt = timestamp - lastFrameTime;
+    lastFrameTime = timestamp;
+    // If the gap is over 200ms (tab was hidden or lag spike), skip this frame
+    // to prevent twinkling/falling-star jumps
+    if (dt > 200) {
+      if (!paused) requestAnimationFrame(drawFrame);
+      return;
+    }
+
     mouseX += (targetMX - mouseX) * 0.06;
     mouseY += (targetMY - mouseY) * 0.06;
 
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+
     ctx.clearRect(0, 0, w, h);
 
-    const grad = ctx.createLinearGradient(0, 0, 0, h);
-    grad.addColorStop(0,    'rgba(0,0,0,1)');
-    grad.addColorStop(0.2,  'rgba(2,2,6,1)');
-    grad.addColorStop(0.65, 'rgba(4,4,10,1)');
-    grad.addColorStop(1,    'rgba(5,5,14,1)');
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, w, h);
+    if (isLight) {
+      /* ── Light mode: soft glows + dark purple particles (fixed canvas) ── */
 
-    const nebula = ctx.createRadialGradient(w * 0.58, h * 0.6, 0, w * 0.58, h * 0.6, w * 0.55);
-    nebula.addColorStop(0,   'rgba(180,180,255,0.02)');
-    nebula.addColorStop(0.5, 'rgba(150,150,240,0.008)');
-    nebula.addColorStop(1,   'transparent');
-    ctx.fillStyle = nebula;
-    ctx.fillRect(0, 0, w, h);
+      // Single soft glow — left side
+      const glow = ctx.createRadialGradient(w * 0.05, h * 0.4, 0, w * 0.05, h * 0.4, w * 0.3);
+      glow.addColorStop(0,   'rgba(160,140,240,0.19)');
+      glow.addColorStop(0.3, 'rgba(130,110,220,0.08)');
+      glow.addColorStop(0.6, 'rgba(100,80,200,0.03)');
+      glow.addColorStop(1,   'transparent');
+      ctx.fillStyle = glow;
+      ctx.fillRect(0, 0, w, h);
 
-    stars.forEach(s => {
-      s.x = s.ox + mouseX * s.parallaxStr;
-      s.y = s.oy + mouseY * s.parallaxStr;
+    } else {
+      /* ── Dark mode: sky gradient + nebula + stars ── */
+      const grad = ctx.createLinearGradient(0, 0, 0, h);
+      grad.addColorStop(0,    'rgba(0,0,0,1)');
+      grad.addColorStop(0.2,  'rgba(2,2,6,1)');
+      grad.addColorStop(0.65, 'rgba(4,4,10,1)');
+      grad.addColorStop(1,    'rgba(5,5,14,1)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, w, h);
 
-      if (!s.twinkling && Math.random() < 0.002) { s.twinkling = true; s.twinkDir = -1; }
-      if (s.twinkling) {
-        s.alpha += s.twinkDir * s.twinkSpeed;
-        if (s.alpha <= 0.01) { s.twinkDir = 1; s.alpha = 0.01; }
-        if (s.alpha >= s.baseA) { s.alpha = s.baseA; s.twinkling = false; }
-      }
+      const nebula = ctx.createRadialGradient(w * 0.58, h * 0.6, 0, w * 0.58, h * 0.6, w * 0.55);
+      nebula.addColorStop(0,   'rgba(180,180,255,0.02)');
+      nebula.addColorStop(0.5, 'rgba(150,150,240,0.008)');
+      nebula.addColorStop(1,   'transparent');
+      ctx.fillStyle = nebula;
+      ctx.fillRect(0, 0, w, h);
 
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(235,235,255,${s.alpha.toFixed(3)})`;
-      ctx.fill();
-    });
+      stars.forEach(s => {
+        s.x = s.ox + mouseX * s.parallaxStr;
+        s.y = s.oy + mouseY * s.parallaxStr;
 
-    /* ── Falling stars ── */
+        if (!s.twinkling && Math.random() < 0.002) { s.twinkling = true; s.twinkDir = -1; }
+        if (s.twinkling) {
+          s.alpha += s.twinkDir * s.twinkSpeed;
+          if (s.alpha <= 0.01) { s.twinkDir = 1; s.alpha = 0.01; }
+          if (s.alpha >= s.baseA) { s.alpha = s.baseA; s.twinkling = false; }
+        }
+
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(235,235,255,${s.alpha.toFixed(3)})`;
+        ctx.fill();
+      });
+    }
+
+    /* ── Falling stars (skip in light mode) ── */
+    if (isLight) { fallingStars = []; }
     fallingStars = fallingStars.filter(s => s.alpha > 0 || s.phase === 'in');
     fallingStars.forEach(s => {
       // Fade in quickly, then fade out gradually
@@ -183,22 +227,26 @@
   }
 
   let paused = false;
-  let rhythmTimeout = null;
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
       paused = true;
+      clearTimeout(initTimeout);                    // cancel initial timer too
       clearTimeout(rhythmTimeout);
       fallingStars = [];
     } else {
       paused = false;
+      lastFrameTime = 0;                            // reset so first frame is skipped cleanly
+      // Reset all twinkling so stars don't flash on return
+      stars.forEach(s => { s.alpha = s.baseA; s.twinkling = false; });
       requestAnimationFrame(drawFrame);
-      scheduleNext();
+      // Small delay before resuming shooting stars so the scene settles
+      setTimeout(() => { if (!paused) scheduleNext(); }, 1200);
     }
   });
 
-  window.addEventListener('resize', resize, { passive: true });
+  window.addEventListener('resize', onResize, { passive: true });
   resize();
-  drawFrame();
+  requestAnimationFrame(drawFrame);
 })();
 
 
@@ -320,14 +368,18 @@
   const footer = document.querySelector('footer');
   if (!content) return;
 
+  let ticking = false;
   function update() {
     const contentTop = content.getBoundingClientRect().top;
     const footerTop = footer ? footer.getBoundingClientRect().top : Infinity;
     const show = contentTop < 120 && footerTop > 200;
     btn.classList.toggle('visible', show);
+    ticking = false;
   }
 
-  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('scroll', () => {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }, { passive: true });
   update();
 })();
 
@@ -337,13 +389,17 @@
 (function initProgressBar() {
   const bar = document.querySelector('.progress-bar');
   if (!bar) return;
+  let ticking = false;
   function update() {
     const scrollTop  = window.scrollY;
     const docHeight  = document.documentElement.scrollHeight - window.innerHeight;
     const pct        = docHeight > 0 ? Math.min(100, (scrollTop / docHeight) * 100) : 0;
     bar.style.width  = pct + '%';
+    ticking = false;
   }
-  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('scroll', () => {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }, { passive: true });
   update();
 })();
 
@@ -446,6 +502,71 @@
 })();
 
 
+/* ── 6b. THEME TOGGLE (light / dark) ────────────────────────── */
+
+(function initThemeToggle() {
+  const toggles = document.querySelectorAll('.theme-toggle');
+  if (!toggles.length) return;
+
+  // Respect saved preference, then system preference, default dark
+  const saved = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  let theme = saved || (prefersDark ? 'dark' : 'dark'); // default dark
+
+  let switching = false;
+
+  function swapTheme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    localStorage.setItem('theme', t);
+    // Swap hero portrait — fallback to default if light image missing
+    document.querySelectorAll('.hero-photo img').forEach(img => {
+      if (!img.dataset.darkSrc) img.dataset.darkSrc = img.src;
+      if (t === 'light') {
+        const lightImg = new Image();
+        lightImg.onload = () => { img.src = lightImg.src; };
+        lightImg.onerror = () => { /* keep current src */ };
+        lightImg.src = 'assets/images/portrait-light.png';
+      } else {
+        img.src = img.dataset.darkSrc;
+      }
+    });
+  }
+
+  function apply(t, animate) {
+    theme = t;
+    if (!animate) { swapTheme(t); return; }
+
+    if (switching) return;
+    switching = true;
+
+    // Fade out
+    document.body.classList.add('theme-fading');
+    document.body.classList.remove('theme-revealing');
+
+    setTimeout(() => {
+      // Swap while invisible
+      swapTheme(t);
+
+      // Fade back in
+      requestAnimationFrame(() => {
+        document.body.classList.remove('theme-fading');
+        document.body.classList.add('theme-revealing');
+        setTimeout(() => {
+          document.body.classList.remove('theme-revealing');
+          switching = false;
+        }, 350);
+      });
+    }, 260);
+  }
+
+  toggles.forEach(btn => {
+    btn.addEventListener('click', () => apply(theme === 'dark' ? 'light' : 'dark', true));
+  });
+
+  if (saved) apply(saved, false);
+})();
+
+
 /* ── 7. CONTACT FORM ──────────────────────────────────────── */
 
 /*
@@ -507,6 +628,8 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
 /* ── PAGE TRANSITIONS ─────────────────────────────────────── */
 
 (function initPageTransitions() {
+  let navigating = false;
+
   // Fade out before navigating to internal .html pages
   document.querySelectorAll('a[href]').forEach(link => {
     const href = link.getAttribute('href');
@@ -514,18 +637,28 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
     if (href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('http') || link.target === '_blank') return;
 
     link.addEventListener('click', e => {
+      if (navigating) return;           // prevent double-clicks
       e.preventDefault();
+      navigating = true;
+      const dest = link.href;
       document.body.style.transition = 'opacity 0.25s ease';
       document.body.style.opacity = '0';
-      setTimeout(() => { window.location.href = link.href; }, 260);
+      // Navigate once, whichever fires first
+      let navigated = false;
+      const nav = () => {
+        if (navigated) return;
+        navigated = true;
+        window.location.href = dest;
+      };
+      document.body.addEventListener('transitionend', nav, { once: true });
+      setTimeout(nav, 300);             // fallback if transitionend doesn't fire
     });
   });
 
-  // Restore opacity if navigating back (bfcache)
-  window.addEventListener('pageshow', e => {
-    if (e.persisted) {
-      document.body.style.transition = '';
-      document.body.style.opacity = '';
-    }
+  // Restore opacity if navigating back (bfcache) or if navigation failed
+  window.addEventListener('pageshow', () => {
+    navigating = false;
+    document.body.style.transition = '';
+    document.body.style.opacity = '';
   });
 })();
