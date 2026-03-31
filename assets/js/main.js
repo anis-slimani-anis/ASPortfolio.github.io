@@ -21,7 +21,7 @@
   let mouseX = 0, mouseY = 0;
   let targetMX = 0, targetMY = 0;
 
-  const STAR_COUNT = window.innerWidth < 860 ? 150 : 400;
+  const STAR_COUNT = 400;
   const LAYERS = 3;
   let dpr = 1;
 
@@ -518,17 +518,11 @@
   function swapTheme(t) {
     document.documentElement.setAttribute('data-theme', t);
     localStorage.setItem('theme', t);
-    // Swap hero portrait — fallback to default if light image missing
+    // Swap hero portrait
     document.querySelectorAll('.hero-photo img').forEach(img => {
-      if (!img.dataset.darkSrc) img.dataset.darkSrc = img.src;
-      if (t === 'light') {
-        const lightImg = new Image();
-        lightImg.onload = () => { img.src = lightImg.src; };
-        lightImg.onerror = () => { /* keep current src */ };
-        lightImg.src = 'assets/images/portrait-light.png';
-      } else {
-        img.src = img.dataset.darkSrc;
-      }
+      img.src = t === 'light'
+        ? 'assets/images/portrait-light.png'
+        : 'assets/images/portrait.jpg';
     });
   }
 
