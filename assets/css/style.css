@@ -280,43 +280,15 @@ body::-webkit-scrollbar-button {
 }
 [data-theme="light"] .hero-title-fill {
   color: transparent;
-  background:
-    radial-gradient(circle at 13% 32%, rgba(255,255,255,0.90) 0, rgba(255,255,255,0.90) 0.9px, transparent 0.9px),
-    radial-gradient(circle at 28% 68%, rgba(255,255,255,0.48) 0, rgba(255,255,255,0.48) 0.6px, transparent 0.6px),
-    radial-gradient(circle at 47% 24%, rgba(255,255,255,0.72) 0, rgba(255,255,255,0.72) 0.8px, transparent 0.8px),
-    radial-gradient(circle at 66% 61%, rgba(255,255,255,0.40) 0, rgba(255,255,255,0.40) 0.55px, transparent 0.55px),
-    radial-gradient(circle at 81% 28%, rgba(255,255,255,0.84) 0, rgba(255,255,255,0.84) 0.95px, transparent 0.95px),
-    radial-gradient(circle at 91% 72%, rgba(255,255,255,0.56) 0, rgba(255,255,255,0.56) 0.7px, transparent 0.7px),
-    linear-gradient(135deg, #000000 0%, #020208 60%, #04040c 100%);
+  background: linear-gradient(135deg, #000000 0%, #020208 60%, #04040c 100%);
   background-repeat: no-repeat;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  isolation: isolate;
 }
 [data-theme="light"] .hero-title-fill::before,
 [data-theme="light"] .hero-title-fill::after {
-  content: attr(data-text);
-  position: absolute;
-  inset: 0;
-  color: transparent;
-  background-repeat: no-repeat;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  pointer-events: none;
-}
-[data-theme="light"] .hero-title-fill::before {
-  background:
-    radial-gradient(circle at 21% 42%, rgba(255,255,255,0.82) 0, rgba(255,255,255,0.82) 1.05px, transparent 1.05px),
-    radial-gradient(circle at 74% 57%, rgba(255,255,255,0.52) 0, rgba(255,255,255,0.52) 0.75px, transparent 0.75px);
-  animation: hero-title-star-twinkle 4.8s 0.8s ease-in-out infinite;
-}
-[data-theme="light"] .hero-title-fill::after {
-  background:
-    radial-gradient(circle at 39% 76%, rgba(255,255,255,0.44) 0, rgba(255,255,255,0.44) 0.7px, transparent 0.7px),
-    radial-gradient(circle at 88% 22%, rgba(255,255,255,0.72) 0, rgba(255,255,255,0.72) 0.95px, transparent 0.95px);
-  animation: hero-title-star-twinkle-soft 5.9s 1.9s ease-in-out infinite;
+  content: none;
 }
 [data-theme="light"] .stat-num,
 [data-theme="light"] .case-metric-val,
@@ -2019,14 +1991,6 @@ nav.work-header {
   0%, 65%, 100% { opacity: 1; transform: scale(1); }
   35%           { opacity: 0.08; transform: scale(0.5); }
 }
-@keyframes hero-title-star-twinkle {
-  0%, 72%, 100% { opacity: 0.88; }
-  36%           { opacity: 0.24; }
-}
-@keyframes hero-title-star-twinkle-soft {
-  0%, 68%, 100% { opacity: 0.58; }
-  34%           { opacity: 0.14; }
-}
 
 /* ── SCROLL ANIMATIONS ────────────────────────────────────── */
 
@@ -2110,12 +2074,6 @@ nav.work-header {
     opacity: 1 !important;
     filter: none !important;
     transform: none !important;
-  }
-  /* Hero fill: stop title-star twinkle */
-  [data-theme="light"] .hero-title-fill::before,
-  [data-theme="light"] .hero-title-fill::after {
-    animation: none !important;
-    opacity: 0.65;
   }
 }
 
