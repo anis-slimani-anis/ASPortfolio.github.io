@@ -28,3 +28,7 @@ assets/
 - Contact form uses Formspree — endpoint configured in `assets/js/main.js`
 - No framework, no package manager, no build step — plain files only
 - Three case studies linked from the work section
+
+## Recent handoff
+- See `CLAUDE-HANDOFF.md` for the April 2, 2026 QA and styling handoff.
+- That file summarizes recent theme, header, mobile nav, CTA, fallback, and cleanup work plus current follow-up notes.

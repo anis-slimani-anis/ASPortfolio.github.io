@@ -9,10 +9,12 @@
 
 
 /* ── 1. STARFIELD ─────────────────────────────────────────── */
+const motionQuery = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+const prefersReducedMotion = () => motionQuery ? motionQuery.matches : false;
 
 (function initStarfield() {
   const canvas = document.getElementById('starfield');
-  if (!canvas) return;
+  if (!canvas || prefersReducedMotion()) return;
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
   canvas.style.willChange = 'transform';           // GPU-layer hint
@@ -21,7 +23,7 @@
   let mouseX = 0, mouseY = 0;
   let targetMX = 0, targetMY = 0;
 
-  const STAR_COUNT = 400;
+  const STAR_DENSITY = 0.00016;
   const LAYERS = 3;
   let dpr = 1;
 
@@ -43,10 +45,10 @@
     });
   }
 
-  // Rhythm: 1 … pause pause … 1 … pause pause pause pause … 1 … repeat
-  // Beat unit = 1.8 s  →  short gap = 2 beats (3.6 s), long gap = 4 beats (7.2 s)
-  const BEAT = 1800;
-  const RHYTHM = [2, 2, 4, 4]; // beats between each successive star
+  // Rhythm: occasional single stars with long rests between
+  // Beat unit = 2.2 s  →  gaps of 4–8 beats (8.8 s – 17.6 s)
+  const BEAT = 2200;
+  const RHYTHM = [4, 8, 6, 10]; // beats between each successive star
   let rhythmIdx = 0;
   let rhythmTimeout = null;
   let initTimeout = null;
@@ -74,7 +76,7 @@
   }
 
   function resize() {
-    dpr = window.devicePixelRatio || 1;
+    dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     w = window.innerWidth;
     h = window.innerHeight;
     canvas.width  = Math.round(w * dpr);
@@ -86,9 +88,10 @@
   }
 
   function buildStars() {
-    stars = Array.from({ length: STAR_COUNT }, (_, i) => {
+    const starCount = Math.max(90, Math.min(360, Math.round(w * h * STAR_DENSITY)));
+    stars = Array.from({ length: starCount }, (_, i) => {
       const layer  = Math.floor(Math.random() * LAYERS);
-      const bright = i < STAR_COUNT * 0.1; // top 10% are crisp bright stars
+      const bright = i < starCount * 0.1; // top 10% are crisp bright stars
       const yMin   = h * 0.22;
       return {
         ox:         Math.random() * w,
@@ -140,9 +143,9 @@
 
       // Single soft glow — left side
       const glow = ctx.createRadialGradient(w * 0.05, h * 0.4, 0, w * 0.05, h * 0.4, w * 0.3);
-      glow.addColorStop(0,   'rgba(160,140,240,0.19)');
-      glow.addColorStop(0.3, 'rgba(130,110,220,0.08)');
-      glow.addColorStop(0.6, 'rgba(100,80,200,0.03)');
+      glow.addColorStop(0,   'rgba(150,170,245,0.09)');
+      glow.addColorStop(0.3, 'rgba(118,140,228,0.035)');
+      glow.addColorStop(0.6, 'rgba(92,112,205,0.012)');
       glow.addColorStop(1,   'transparent');
       ctx.fillStyle = glow;
       ctx.fillRect(0, 0, w, h);
@@ -253,6 +256,19 @@
 /* ── 2. SCROLL REVEAL + DIRECTIONAL ANIMATIONS ────────────── */
 
 (function initReveal() {
+  const revealEls = document.querySelectorAll('.reveal, .reveal-scale');
+  const directionalEls = document.querySelectorAll('.reveal-left, .reveal-right');
+  const staggerParents = document.querySelectorAll('.stagger-parent');
+
+  if (prefersReducedMotion() || !('IntersectionObserver' in window)) {
+    revealEls.forEach(el => el.classList.add('visible'));
+    directionalEls.forEach(el => el.classList.add('visible'));
+    staggerParents.forEach(parent => {
+      parent.querySelectorAll('.stagger-child').forEach(child => child.classList.add('visible'));
+    });
+    return;
+  }
+
   // Standard reveal
   const revealObs = new IntersectionObserver(
     entries => entries.forEach(e => {
@@ -264,7 +280,7 @@
     { threshold: 0.05, rootMargin: '0px 0px -16px 0px' }
   );
 
-  document.querySelectorAll('.reveal, .reveal-scale').forEach(el => revealObs.observe(el));
+  revealEls.forEach(el => revealObs.observe(el));
 
   // Directional reveals (left/right)
   const dirObs = new IntersectionObserver(
@@ -277,7 +293,7 @@
     { threshold: 0.04, rootMargin: '0px 0px -8px 0px' }
   );
 
-  document.querySelectorAll('.reveal-left, .reveal-right').forEach(el => dirObs.observe(el));
+  directionalEls.forEach(el => dirObs.observe(el));
 
   // Staggered children
   const staggerObs = new IntersectionObserver(
@@ -293,7 +309,7 @@
     { threshold: 0.1 }
   );
 
-  document.querySelectorAll('.stagger-parent').forEach(el => staggerObs.observe(el));
+  staggerParents.forEach(el => staggerObs.observe(el));
 })();
 
 
@@ -302,7 +318,7 @@
 (function initActiveNav() {
   const sections = document.querySelectorAll('section[id], div[id]');
   const navLinks = document.querySelectorAll('.nav-links a');
-  if (!navLinks.length) return;
+  if (!navLinks.length || !('IntersectionObserver' in window)) return;
 
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
@@ -326,14 +342,19 @@
   const burger  = document.querySelector('.nav-burger');
   const overlay = document.querySelector('.mobile-nav-overlay');
   const closeBtn = overlay ? overlay.querySelector('.mobile-nav-close') : null;
+  let scrollY = 0;
   if (!burger || !overlay) return;
+  if ('inert' in overlay) overlay.inert = true;
 
   function open() {
+    scrollY = window.scrollY || window.pageYOffset || 0;
     burger.classList.add('active');
     overlay.classList.add('open');
     burger.setAttribute('aria-expanded', 'true');
     overlay.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    if ('inert' in overlay) overlay.inert = false;
+    document.body.classList.add('mobile-nav-open');
+    document.body.style.top = `-${scrollY}px`;
   }
 
   function close() {
@@ -341,7 +362,10 @@
     overlay.classList.remove('open');
     burger.setAttribute('aria-expanded', 'false');
     overlay.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+    if ('inert' in overlay) overlay.inert = true;
+    document.body.classList.remove('mobile-nav-open');
+    document.body.style.top = '';
+    window.scrollTo(0, scrollY);
   }
 
   burger.addEventListener('click', () => {
@@ -349,6 +373,12 @@
   });
 
   if (closeBtn) closeBtn.addEventListener('click', close);
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) close();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) close();
+  });
 
   overlay.querySelectorAll('.mobile-nav a, .mobile-nav-footer a').forEach(link => {
     link.addEventListener('click', close);
@@ -380,6 +410,7 @@
   window.addEventListener('scroll', () => {
     if (!ticking) { ticking = true; requestAnimationFrame(update); }
   }, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
   update();
 })();
 
@@ -400,6 +431,7 @@
   window.addEventListener('scroll', () => {
     if (!ticking) { ticking = true; requestAnimationFrame(update); }
   }, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
   update();
 })();
 
@@ -408,7 +440,7 @@
 
 (function initCaseNav() {
   const nav = document.querySelector('.work-header');
-  if (!nav) return;
+  if (!nav || !('IntersectionObserver' in window)) return;
   const links    = nav.querySelectorAll('.work-header-link');
   const sections = Array.from(links).map(l => {
     const id = l.getAttribute('href').replace('#', '');
@@ -440,7 +472,7 @@
   if (!arrow || !scroll) return;
 
   arrow.addEventListener('click', () => {
-    scroll.scrollBy({ left: 120, behavior: 'smooth' });
+    scroll.scrollBy({ left: 120, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
   });
 
   // Hide arrow when scrolled to the end
@@ -492,6 +524,7 @@
     document.documentElement.lang = target;
     localStorage.setItem('lang', target);
     lang = target;
+    document.dispatchEvent(new CustomEvent('site:langchange', { detail: { lang: target } }));
   }
 
   toggles.forEach(t => {
@@ -508,16 +541,21 @@
   const toggles = document.querySelectorAll('.theme-toggle');
   if (!toggles.length) return;
 
-  // Respect saved preference, then system preference, default dark
   const saved = localStorage.getItem('theme');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  let theme = saved || (prefersDark ? 'dark' : 'dark'); // default dark
+  let theme = document.documentElement.getAttribute('data-theme') || saved || 'dark';
 
   let switching = false;
+  function syncThemeToggleState(t) {
+    toggles.forEach(btn => {
+      btn.setAttribute('aria-pressed', t === 'light' ? 'true' : 'false');
+      btn.setAttribute('aria-label', t === 'light' ? 'Switch to dark mode' : 'Switch to light mode');
+    });
+  }
 
   function swapTheme(t) {
     document.documentElement.setAttribute('data-theme', t);
     localStorage.setItem('theme', t);
+    syncThemeToggleState(t);
     // Swap hero portrait
     document.querySelectorAll('.hero-photo img').forEach(img => {
       img.src = t === 'light'
@@ -528,7 +566,7 @@
 
   function apply(t, animate) {
     theme = t;
-    if (!animate) { swapTheme(t); return; }
+    if (!animate || prefersReducedMotion()) { swapTheme(t); return; }
 
     if (switching) return;
     switching = true;
@@ -557,6 +595,7 @@
     btn.addEventListener('click', () => apply(theme === 'dark' ? 'light' : 'dark', true));
   });
 
+  syncThemeToggleState(theme);
   if (saved) apply(saved, false);
 })();
 
@@ -580,40 +619,74 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
   const form = document.getElementById('contact-form');
   if (!form) return;
 
-  const btn     = form.querySelector('.form-submit-btn');
+  const btn = form.querySelector('.form-submit-btn');
+  const label = btn?.querySelector('span') || btn;
   const success = document.getElementById('form-success');
-  const error   = document.getElementById('form-error');
+  const error = document.getElementById('form-error');
+  if (!btn) return;
+
+  const copy = {
+    en: { idle: 'Send message \u2192', sending: 'Sending...', sent: 'Message sent' },
+    fr: { idle: 'Envoyer le message \u2192', sending: 'Envoi en cours...', sent: 'Message envoy\u00E9' },
+  };
+
+  function currentLang() {
+    return document.documentElement.lang === 'fr' ? 'fr' : 'en';
+  }
+
+  function setLabel(state) {
+    label.textContent = copy[currentLang()][state];
+  }
+
+  function hideStatus(node) {
+    if (node) node.hidden = true;
+  }
+
+  function showStatus(node) {
+    if (node) node.hidden = false;
+  }
+
+  form.addEventListener('input', () => {
+    hideStatus(success);
+    hideStatus(error);
+    if (!btn.disabled) setLabel('idle');
+  });
 
   form.addEventListener('submit', async e => {
     e.preventDefault();
-    const name    = form.querySelector('[name="name"]').value.trim();
-    const email   = form.querySelector('[name="email"]').value.trim();
+    if (!form.reportValidity()) return;
+    const name = form.querySelector('[name="name"]').value.trim();
+    const email = form.querySelector('[name="email"]').value.trim();
     const company = form.querySelector('[name="company"]').value.trim();
     const message = form.querySelector('[name="message"]').value.trim();
-    if (!name || !email || !message) return;
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
 
-    const isFr = document.documentElement.lang === 'fr';
-    btn.textContent = isFr ? 'Envoi en cours…' : 'Sending…';
-    btn.disabled    = true;
-    if (error)   error.style.display = 'none';
-    if (success) success.style.display = 'none';
+    btn.disabled = true;
+    btn.setAttribute('aria-busy', 'true');
+    setLabel('sending');
+    hideStatus(error);
+    hideStatus(success);
 
     try {
       const res = await fetch(FORMSPREE_ENDPOINT, {
-        method:  'POST',
+        method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body:    JSON.stringify({ name, email, company, message }),
+        body: JSON.stringify({ name, email, company, message }),
       });
       if (res.ok) {
         form.reset();
-        if (success) success.style.display = 'block';
-        btn.textContent = isFr ? 'Message envoyé' : 'Message sent';
+        showStatus(success);
+        setLabel('sent');
+        setTimeout(() => {
+          btn.disabled = false;
+          btn.setAttribute('aria-busy', 'false');
+          setLabel('idle');
+        }, 1600);
       } else { throw new Error(); }
     } catch {
-      if (error) error.style.display = 'block';
-      btn.textContent = isFr ? 'Envoyer le message →' : 'Send message →';
-      btn.disabled    = false;
+      btn.disabled = false;
+      btn.setAttribute('aria-busy', 'false');
+      showStatus(error);
+      setLabel('idle');
     }
   });
 })();
@@ -628,10 +701,12 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
   document.querySelectorAll('a[href]').forEach(link => {
     const href = link.getAttribute('href');
     if (!href) return;
-    if (href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('http') || link.target === '_blank') return;
+    if (href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('http') || link.target === '_blank' || link.hasAttribute('download')) return;
 
     link.addEventListener('click', e => {
-      if (navigating) return;           // prevent double-clicks
+      if (navigating || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const destUrl = new URL(link.href, window.location.href);
+      if (destUrl.pathname === window.location.pathname || prefersReducedMotion()) return;
       e.preventDefault();
       navigating = true;
       const dest = link.href;
@@ -655,4 +730,77 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
     document.body.style.transition = '';
     document.body.style.opacity = '';
   });
+})();
+
+
+/* ── HERO WORD CAROUSEL ─────────────────────────────────────── */
+(function initHeroWordCarousel() {
+  const SEQUENCE = {
+    en: ['usability', 'trust', 'flow', 'impact', 'intuition', 'clarity'],
+    fr: ['optimisée', 'intuitive', 'fluide', 'impactante', 'clarifiée', 'simplifiée'],
+  };
+  const HOLD_MS = 1500;
+  const OUT_MS  = 180;
+  let runToken = 0;
+  let holdTimer = null;
+  let outTimer = null;
+
+  function getLang() {
+    return document.documentElement.lang === 'fr' ? 'fr' : 'en';
+  }
+
+  function prefersReducedMotion() {
+    return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  function run() {
+    runToken++;
+    clearTimeout(holdTimer);
+    clearTimeout(outTimer);
+
+    const el = document.querySelector('.hero-word-carousel');
+    if (!el) return;
+
+    // Announce word changes to screen readers
+    el.setAttribute('aria-live', 'polite');
+    el.setAttribute('aria-atomic', 'true');
+
+    const words = SEQUENCE[getLang()];
+    let idx = 0;
+    const token = runToken;
+
+    function next() {
+      // If element was replaced by lang toggle, stop this sequence
+      if (token !== runToken || !document.contains(el)) return;
+
+      if (prefersReducedMotion()) {
+        // Instant swap — no animation
+        el.textContent = words[idx];
+        idx++;
+        if (idx < words.length) holdTimer = setTimeout(next, HOLD_MS);
+        return;
+      }
+
+      el.classList.add('is-out');
+      outTimer = setTimeout(() => {
+        if (token !== runToken || !document.contains(el)) return;
+        el.textContent = words[idx];
+        el.classList.remove('is-out');
+        el.classList.add('is-in');
+        void el.offsetHeight;
+        el.classList.remove('is-in');
+        idx++;
+        if (idx < words.length) holdTimer = setTimeout(next, HOLD_MS);
+      }, OUT_MS);
+    }
+
+    holdTimer = setTimeout(next, HOLD_MS);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run);
+  } else {
+    run();
+  }
+  document.addEventListener('site:langchange', run);
 })();

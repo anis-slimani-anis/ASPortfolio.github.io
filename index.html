@@ -87,8 +87,8 @@
       Full Stack Product Designer · Design Systems · AI
     </div>
 
-    <h1 class="hero-title" data-fr-html="La complexité,<br><em>simplifiée.</em>">
-      Designing complexity<br><em>into clarity.</em>
+    <h1 class="hero-title" data-fr-html="<span class='hero-title-fill' data-text='La complexité,'>La complexité,</span><br><em><span class='hero-word-carousel'>simplifiée</span>.</em>">
+      <span class="hero-title-fill" data-text="Designing complexity">Designing complexity</span><br><em>into <span class="hero-word-carousel">clarity</span>.</em>
     </h1>
 
     <p class="hero-sub" data-fr="Je transforme les produits digitaux complexes en expériences intuitives que les utilisateurs adoptent en toute confiance.">
@@ -293,8 +293,8 @@
           </div>
         </div>
         <div class="case-visual">
-          <img class="case-visual-img" src="assets/images/case-ai.png" alt="AI-assisted design workflows" loading="lazy" decoding="async" onerror="this.style.display='none'">
-          <div class="case-mock mock-dimmed">
+          <img class="case-visual-img case-visual-img--lower" src="assets/images/case-ai.png" alt="AI-assisted design workflows" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <div class="case-mock">
             <div class="mock-components">
               <div class="mock-chip a"></div>
               <div class="mock-chip"></div>
@@ -510,7 +510,7 @@
             <input type="email" id="email" name="email" placeholder="jane@company.com" required>
           </div>
           <div class="form-field">
-            <label for="company" data-fr-html="Entreprise & poste <span style='opacity:.5;font-weight:400;'>(optionnel)</span>">Company & role <span style="opacity:.5;font-weight:400;">(optional)</span></label>
+            <label for="company" data-fr-html="Entreprise & poste <span class='field-optional'>(optionnel)</span>">Company & role <span class="field-optional">(optional)</span></label>
             <input type="text" id="company" name="company" placeholder="Head of Product @ Acme" data-fr-placeholder="Head of Product @ Acme">
           </div>
           <div class="form-field">
@@ -519,14 +519,14 @@
           </div>
         </div>
 
-        <button type="submit" class="btn-primary form-submit-btn">
+        <button type="submit" class="btn-primary form-submit-btn" aria-busy="false">
           <span data-fr="Envoyer le message →">Send message →</span>
         </button>
 
-        <p id="form-success" style="display:none; color:var(--accent); font-size:13px; margin-top:12px;" data-fr="Message envoyé ! Je vous recontacte très vite.">
+        <p id="form-success" class="form-status form-status--success" hidden data-fr="Message envoyé ! Je vous recontacte très vite.">
           Message sent! I'll be in touch soon.
         </p>
-        <p id="form-error" style="display:none; color:#cc4444; font-size:13px; margin-top:12px;" data-fr="Une erreur est survenue. Écrivez-moi directement à anisslimani013@gmail.com">
+        <p id="form-error" class="form-status form-status--error" hidden data-fr="Une erreur est survenue. Écrivez-moi directement à anisslimani013@gmail.com">
           Something went wrong. Please email me directly at anisslimani013@gmail.com
         </p>
       </form>

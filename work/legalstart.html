@@ -44,6 +44,7 @@
   </div>
   <button class="lang-toggle" aria-label="Switch language"><svg width="14" height="10" viewBox="0 0 21 15"><rect width="7" height="15" fill="#002395"/><rect x="7" width="7" height="15" fill="#fff"/><rect x="14" width="7" height="15" fill="#ED2939"/></svg> FR</button>
   <button class="theme-toggle" aria-label="Toggle light mode"><span class="icon-moon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg> <span data-fr="Clair">Light</span></span><span class="icon-sun"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg> <span data-fr="Sombre">Dark</span></span></button>
+  <a href="mailto:anisslimani013@gmail.com" class="btn-nav" data-fr="Me recruter">Hire me</a>
   <button class="nav-burger" aria-label="Open menu" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
@@ -67,14 +68,15 @@
     <a href="#outcomes" data-fr="Résultats">Outcomes</a>
     <a href="#reflections" data-fr="Réflexions">Reflections</a>
   </nav>
-  <div class="mobile-nav-footer">
-    <a href="../index.html#work" class="mobile-nav-btn" data-fr="← Retour aux projets">← Back to work</a>
+  <div class="mobile-nav-footer mobile-nav-footer-work">
+    <a href="../index.html#work" class="mobile-nav-btn" data-fr="← Retour">← Back</a>
+    <a href="mailto:anisslimani013@gmail.com" class="mobile-nav-btn" data-fr="Me recruter">Hire me</a>
     <button class="mobile-nav-btn lang-toggle" aria-label="Switch language"><svg width="14" height="10" viewBox="0 0 21 15"><rect width="7" height="15" fill="#002395"/><rect x="7" width="7" height="15" fill="#fff"/><rect x="14" width="7" height="15" fill="#ED2939"/></svg> FR</button>
     <button class="mobile-nav-btn theme-toggle" aria-label="Toggle light mode"><span class="icon-moon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span><span class="icon-sun"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span></button>
   </div>
 </div>
 <div class="page-hero">
-  <div class="case-tags" style="margin-bottom:20px;">
+  <div class="case-tags">
     <span class="tag" data-fr="Refonte SaaS">SaaS Rebranding</span>
     <span class="tag">Design Systems</span>
     <span class="tag" data-fr="Recherche en utilisabilité">Usability Research</span>
@@ -113,7 +115,7 @@
     <span class="case-confidential-icon">⚠</span>
     <span data-fr="Une partie de ce projet est soumise à un accord de confidentialité. Certains visuels ont été floutés ou retirés.">Parts of this work are under NDA. Some visuals have been blurred or removed to respect confidentiality.</span>
   </div>
-  <a href="../index.html#work" class="back-to-work" data-fr="← Retour aux projets">← Back to work</a>
+  <a href="../index.html#work" class="back-to-work" data-fr="← Retour">← Back</a>
 
   <div id="context" class="case-section reveal">
     <h2 data-fr="Contexte">Context</h2>
@@ -137,7 +139,7 @@
 
     <div class="img-block reveal">
       <div class="case-img-wrap">
-        <img class="case-img" src="../assets/images/legalstart-1.jpg" alt="Audit board" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <img class="case-img" src="../assets/images/legalstart-1.jpg" alt="Audit board" loading="lazy" decoding="async" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
         <div class="case-img-placeholder">
           <div class="img-placeholder-tool" data-fr="Extrait d'audit">Audit extract</div>
           <div class="img-placeholder-title" data-fr="Audit initial : cartographie des parcours et inventaire des composants par type de service">Early audit: flow mapping and component inventory across service types</div>
@@ -152,7 +154,7 @@
 
     <div class="img-block reveal">
       <div class="case-img-wrap">
-        <img class="case-img" src="../assets/images/legalstart-2.png" alt="Layout templates" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <img class="case-img" src="../assets/images/legalstart-2.png" alt="Layout templates" loading="lazy" decoding="async" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
         <div class="case-img-placeholder">
           <div class="img-placeholder-tool" data-fr="Figma">Figma</div>
           <div class="img-placeholder-title" data-fr="Trois templates de mise en page : formulaire principal, modale et écran récapitulatif">Three layout templates: main form, modal overlay, and recap screen</div>
@@ -191,7 +193,7 @@
 
     <div class="img-block reveal">
       <div class="case-img-wrap">
-        <img class="case-img" src="../assets/images/legalstart-3.png" alt="Component library" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <img class="case-img" src="../assets/images/legalstart-3.png" alt="Component library" loading="lazy" decoding="async" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
         <div class="case-img-placeholder">
           <div class="img-placeholder-tool" data-fr="Figma">Figma</div>
           <div class="img-placeholder-title" data-fr="Vue d'ensemble de la refonte du parcours d'immatriculation (partiellement censuré)">Company registration flow redesign overview (partially censored)</div>
@@ -242,7 +244,7 @@
         <div class="outcome-label" data-fr="Nouveaux composants livrés au Design System">New components delivered to the design system</div>
       </div>
     </div>
-    <p style="margin-top: 28px;" data-fr="Au-delà des métriques, le résultat structurel est un système que l'équipe peut étendre. Chaque futur écran du parcours dispose d'un template à suivre et d'une bibliothèque de composants à exploiter. La refonte n'est pas quelque chose à refaire. C'est une fondation.">Beyond the metrics, the structural output was a system the team could extend. Any future screen in the service flow has a template to follow and a component library to draw from. The rebrand is not something that needs to be redone. It is a foundation.</p>
+    <p class="case-copy-gap" data-fr="Au-delà des métriques, le résultat structurel est un système que l'équipe peut étendre. Chaque futur écran du parcours dispose d'un template à suivre et d'une bibliothèque de composants à exploiter. La refonte n'est pas quelque chose à refaire. C'est une fondation.">Beyond the metrics, the structural output was a system the team could extend. Any future screen in the service flow has a template to follow and a component library to draw from. The rebrand is not something that needs to be redone. It is a foundation.</p>
   </div>
 
   <div id="reflections" class="case-section reveal">
@@ -258,7 +260,7 @@
 </div>
 
 <footer>
-  <p class="footer-left" data-fr="© 2026 Anis Slimani. Tous droits réservés.">© 2026 Anis Slimani.</p>
+  <p class="footer-left" data-fr="© 2026 Anis Slimani. Tous droits réservés.">© 2026 Anis Slimani. All rights reserved.</p>
   <nav class="footer-links" aria-label="Footer navigation">
     <a href="../index.html#work" data-fr="Projets">Work</a>
     <a href="../index.html#about" data-fr="À propos">About</a>
