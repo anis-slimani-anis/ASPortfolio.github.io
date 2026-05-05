@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sips --version)",
+      "Bash(ffmpeg -hide_banner -codecs)",
+      "Bash(sips --formats)",
+      "Bash(ffmpeg -y -i /Users/admin/Documents/GitHub/ASPortfolio.github.io/assets/images/about.jpg -vf 'scale='\\\\''min\\(1200,iw\\)'\\\\'':-2:flags=lanczos' -c:v libwebp -quality 82 -lossless 0 /Users/admin/Documents/GitHub/ASPortfolio.github.io/assets/images/about.webp)",
+      "Bash(sips -s format webp -s formatOptions 82 /Users/admin/Documents/GitHub/ASPortfolio.github.io/assets/images/case-ai.png --out /tmp/test-out.webp)",
+      "Read(//tmp/**)",
+      "Bash(python3 -c \"from PIL import Image; print\\('pillow ok'\\)\")",
+      "Bash(node -e \"require\\('sharp'\\); console.log\\('sharp ok'\\)\")",
+      "Bash(python3 -c \"import struct, zlib; print\\('stdlib ok'\\)\")",
+      "Bash(brew list *)",
+      "Bash(brew install *)"
+    ]
+  }
+}

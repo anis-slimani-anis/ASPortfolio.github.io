@@ -302,6 +302,11 @@ body::-webkit-scrollbar-button {
 /* Light mode — starfield stays visible (JS draws light particles) */
 [data-theme="light"] .hero-photo-glow { display: none; }
 
+/* Portrait theme swap — CSS-driven, no JS src change needed */
+.hero-photo .portrait-light { display: none; }
+[data-theme="light"] .hero-photo .portrait-dark  { display: none; }
+[data-theme="light"] .hero-photo .portrait-light { display: block; }
+
 /* Light mode hero photo — fade only the bottom edge */
 [data-theme="light"] .hero-photo img {
   -webkit-mask-image: linear-gradient(to bottom, black 95%, transparent 100%);

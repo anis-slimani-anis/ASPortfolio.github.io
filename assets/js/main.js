@@ -556,12 +556,6 @@ const prefersReducedMotion = () => motionQuery ? motionQuery.matches : false;
     document.documentElement.setAttribute('data-theme', t);
     localStorage.setItem('theme', t);
     syncThemeToggleState(t);
-    // Swap hero portrait
-    document.querySelectorAll('.hero-photo img').forEach(img => {
-      img.src = t === 'light'
-        ? 'assets/images/portrait-light.png'
-        : 'assets/images/portrait.jpg';
-    });
   }
 
   function apply(t, animate) {

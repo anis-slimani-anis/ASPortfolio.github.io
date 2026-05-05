@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <script>(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})();</script>
+  <script>(function(){var t=localStorage.getItem('theme')||'dark';if(t)document.documentElement.setAttribute('data-theme',t);var l=document.createElement('link');l.rel='preload';l.as='image';l.fetchPriority='high';l.href='assets/images/'+(t==='light'?'portrait-light':'portrait')+'.webp';document.head.appendChild(l);})();</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anis Slimani's Portfolio</title>
-  <meta name="description" content="Fullstack product designer specialising in complex SaaS flows, design systems, and conversion driven UX. Based in Paris.">
+  <title>Anis Slimani · Full Stack Product Designer</title>
+  <meta name="description" content="Full Stack product designer specialising in complex SaaS flows, design systems, and conversion driven UX. Based in Paris.">
 
   <!-- Open Graph -->
   <meta property="og:title"       content="Anis Slimani · Full Stack Product Designer">
@@ -25,7 +25,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
 
   <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
-  <link rel="preload" href="assets/images/portrait.jpg" as="image" fetchpriority="high">
+  <noscript><link rel="preload" href="assets/images/portrait.webp" as="image" fetchpriority="high"></noscript>
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -105,19 +105,11 @@
     <div class="hero-photo-wrap">
       <div class="hero-photo-glow"></div>
       <div class="hero-photo">
-        <!--
-          YOUR PHOTO IS NOT SHOWING? Check:
-          1. File is inside assets/images/ folder
-          2. Filename matches exactly (case-sensitive on GitHub)
-          3. Try renaming your file to portrait.jpg and use that
-        -->
-        <img src="assets/images/portrait.jpg" alt="Anis Slimani"
+        <img class="portrait-dark" src="assets/images/portrait.webp" alt="Anis Slimani"
              fetchpriority="high" decoding="async"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="hero-photo-placeholder" style="display:none;">
-          <div class="hero-photo-placeholder-icon">↑</div>
-          Add portrait.jpg to assets/images/
-        </div>
+             onerror="this.style.display='none';">
+        <img class="portrait-light" src="assets/images/portrait-light.webp" alt="Anis Slimani"
+             fetchpriority="low" decoding="async">
       </div>
     </div>
   </div>
@@ -132,7 +124,7 @@
     <div class="work-header reveal">
       <div class="section-label" data-fr="Projets">Selected Cases</div>
       <h2 data-fr-html="Projets<br><em>phares.</em>">Selected<br><em>work.</em></h2>
-      <p class="section-desc" data-fr="Projets réalisés chez Legalstart, couvrant le design produit, la recherche utilisateur et le développement frontend.">Projects from my time at Legalstart, covering product design, usability research, and frontend work.</p>
+      <p class="section-desc" data-fr="Design produit, recherche utilisateur et développement frontend sur des projets réels avec des contraintes réelles.">Product design, usability research, and frontend work — on real products, with real constraints.</p>
     </div>
 
     <!-- Stats strip between intro and case cards -->
@@ -144,8 +136,8 @@
             <div class="stat-label" data-fr="écrans produit redessinés dans un environnement SaaS en production">product screens redesigned in a live SaaS environment</div>
           </div>
           <div class="stat-item stagger-child">
-            <div class="stat-num">4.2 to 4.9</div>
-            <div class="stat-label" data-fr="amélioration de la clarté par des tests d'utilisabilité empiriques">clarity improvement via empirical usability testing</div>
+            <div class="stat-num">4.2 → 4.9</div>
+            <div class="stat-label" data-fr="score de clarté CSUQ (échelle 7 pts) après tests d'utilisabilité">clarity score (CSUQ, 7-pt scale) post usability testing</div>
           </div>
           <div class="stat-item stagger-child">
             <div class="stat-num">+2%</div>
@@ -194,7 +186,7 @@
           </div>
         </div>
         <div class="case-visual">
-          <img class="case-visual-img" src="assets/images/case-legalstart.png" alt="Legalstart SaaS rebranding" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <img class="case-visual-img" src="assets/images/case-legalstart.webp" alt="Legalstart SaaS rebranding" loading="lazy" decoding="async" onerror="this.style.display='none'">
           <div class="case-mock">
             <div class="mock-sidebar">
               <div class="mock-sb-row" style="width:60%"></div>
@@ -252,7 +244,7 @@
           </div>
         </div>
         <div class="case-visual">
-          <img class="case-visual-img" src="assets/images/case-lafoy.png" alt="Lafoy acquisition funnels" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <img class="case-visual-img" src="assets/images/case-lafoy.webp" alt="Lafoy acquisition funnels" loading="lazy" decoding="async" onerror="this.style.display='none'">
           <div class="case-mock">
             <div class="mock-funnel">
               <div class="mock-funnel-row" style="width:100%"></div>
@@ -275,8 +267,8 @@
               <span class="tag">Figma</span>
               <span class="tag">Design Ops</span>
             </div>
-            <h3 data-fr="Design System et workflows IA générative">Design system and AI assisted production workflow</h3>
-            <p data-fr="Construction et maintenance de composants Figma au sein d'un Design System évolutif, contribuant à un gain de 10% en vélocité d'équipe. Intégration de l'IA générative et de workflows MCP dans la production design, permettant la création et la variation de 50+ templates à grande échelle.">Built and maintained Figma components as part of an evolving design system, contributing to a 10% gain in team execution speed. Integrated generative AI and MCP driven workflows into design production, enabling creation and variation of 50+ templates at scale.</p>
+            <h3 data-fr="Design System et workflows IA générative">Building a design system and scaling production with AI</h3>
+            <p data-fr="Construction et maintenance de composants Figma au sein d'un Design System évolutif, contribuant à un gain de 10% en vélocité d'équipe. Intégration de l'IA générative et de workflows MCP dans la production design, permettant la création et la variation de 50+ templates à grande échelle.">Built and maintained the Figma component library as part of an evolving design system, contributing to a 10% gain in team execution speed. Used generative AI and MCP driven workflows to scale template production, turning manual repetition into automated quality.</p>
           </div>
           <div>
             <div class="case-metrics">
@@ -293,7 +285,7 @@
           </div>
         </div>
         <div class="case-visual">
-          <img class="case-visual-img case-visual-img--lower" src="assets/images/case-ai.png" alt="AI-assisted design workflows" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <img class="case-visual-img case-visual-img--lower" src="assets/images/case-ai.webp" alt="AI-assisted design workflows" loading="lazy" decoding="async" onerror="this.style.display='none'">
           <div class="case-mock">
             <div class="mock-components">
               <div class="mock-chip a"></div>
@@ -327,7 +319,7 @@
       <!-- Left col: photo + skill cards -->
       <div class="about-left-col">
         <div class="about-photo reveal">
-          <img src="assets/images/about.jpg" alt="Anis Slimani"
+          <img src="assets/images/about.webp" alt="Anis Slimani"
                loading="lazy" decoding="async"
                onerror="this.onerror=null; this.style.display='none';">
         </div>
