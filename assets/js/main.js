@@ -320,10 +320,12 @@ const prefersReducedMotion = () => motionQuery ? motionQuery.matches : false;
   const navLinks = document.querySelectorAll('.nav-links a');
   if (!navLinks.length || !('IntersectionObserver' in window)) return;
 
+  const hashLinks = Array.from(navLinks).filter(l => l.getAttribute('href').startsWith('#'));
+
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        navLinks.forEach(link => {
+        hashLinks.forEach(link => {
           link.classList.remove('active');
           if (link.getAttribute('href') === '#' + entry.target.id) {
             link.classList.add('active');

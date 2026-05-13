@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script>(function(){var t=localStorage.getItem('theme')||'dark';if(t)document.documentElement.setAttribute('data-theme',t);})();</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CV · Anis Slimani</title>
+  <meta name="description" content="CV of Anis Slimani — Full-Stack Product Designer based in Paris.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+  <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    /* CV page layout */
+    #cv {
+      padding: calc(var(--nav-h, 64px) + 40px) var(--pad-x) 60px;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* A4 paper card */
+    .cv-page {
+      width: 100%;
+      max-width: 760px;
+      background: #ffffff;
+      border-radius: var(--radius-xl);
+      padding: 52px 56px;
+      box-shadow: 0 4px 40px rgba(0,0,0,0.18);
+      color: #333333;
+      font-family: 'DM Sans', system-ui, sans-serif;
+    }
+
+    /* CV typography — scoped to .cv-page */
+    .cv-page * { box-sizing: border-box; }
+    .cv-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding-bottom: 20px;
+      border-bottom: 1.5px solid #080029;
+      margin-bottom: 0;
+    }
+    .cv-name {
+      font-size: 28pt;
+      font-weight: 300;
+      letter-spacing: -0.3px;
+      line-height: 1;
+      color: #080029;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .cv-role {
+      font-size: 7.5pt;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #3E3E3E;
+      margin-top: 6px;
+    }
+    .cv-contacts {
+      text-align: right;
+      font-size: 8pt;
+      color: #888888;
+      line-height: 1.75;
+    }
+    .cv-contacts a { color: #888888; text-decoration: none; }
+
+    .cv-section {
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 0.5px solid #DEDEDE;
+    }
+    .cv-header-row + .cv-section { border-top: none; padding-top: 0; }
+    .cv-section-label {
+      font-size: 6.5pt;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #080029;
+      margin-bottom: 14px;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .cv-profile { font-size: 9pt; font-weight: 300; color: #333333; line-height: 1.6; }
+
+    .cv-skills-row { display: flex; margin-bottom: 8px; }
+    .cv-skills-row:last-child { margin-bottom: 0; }
+    .cv-skills-cat { font-size: 7.5pt; font-weight: 600; color: #080029; min-width: 100px; flex-shrink: 0; padding-top: 1px; }
+    .cv-skills-val { font-size: 8.5pt; font-weight: 300; color: #333333; line-height: 1.5; }
+
+    .cv-exp { margin-bottom: 18px; }
+    .cv-exp:last-child { margin-bottom: 0; }
+    .cv-exp-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1px; }
+    .cv-company { font-size: 10.5pt; font-weight: 600; color: #080029; }
+    .cv-dates { font-size: 8pt; font-weight: 300; color: #888888; white-space: nowrap; }
+    .cv-exp-role {
+      font-size: 7.5pt;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #3E3E3E;
+      margin-bottom: 10px;
+    }
+    .cv-exp-loc { font-weight: 300; color: #888888; letter-spacing: 0; text-transform: none; }
+    .cv-bullets { list-style: none; padding: 0; }
+    .cv-bullets li {
+      font-size: 8.5pt;
+      font-weight: 300;
+      color: #333333;
+      line-height: 1.55;
+      padding-left: 10px;
+      position: relative;
+      margin-bottom: 3px;
+    }
+    .cv-bull { position: absolute; left: 0; color: #DEDEDE; font-size: 8pt; line-height: 1.55; }
+    .cv-bullets strong { font-weight: 500; color: #333333; }
+
+    .cv-edu { margin-bottom: 14px; }
+    .cv-edu:last-child { margin-bottom: 0; }
+    .cv-edu-top { display: flex; justify-content: space-between; align-items: baseline; }
+    .cv-school { font-size: 10pt; font-weight: 600; color: #080029; }
+    .cv-edu-dates { font-size: 8pt; font-weight: 300; color: #888888; white-space: nowrap; }
+    .cv-edu-meta { font-size: 8pt; font-weight: 300; color: #3E3E3E; margin-top: 1px; }
+    .cv-edu-field { font-size: 8.5pt; font-weight: 400; color: #333333; }
+
+    .cv-lang-row { display: flex; flex-wrap: wrap; gap: 6px 24px; }
+    .cv-lang-item { font-size: 8.5pt; font-weight: 400; color: #333333; }
+    .cv-lang-level { font-size: 7.5pt; font-weight: 300; color: #888888; margin-left: 2px; }
+
+    .cv-ref { font-size: 8.5pt; font-weight: 300; color: #888888; }
+
+    @media (max-width: 600px) {
+      .cv-page { padding: 32px 24px; }
+      .cv-header-row { flex-direction: column; gap: 12px; }
+      .cv-contacts { text-align: left; }
+      .cv-name { font-size: 22pt; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="starfield" aria-hidden="true"></canvas>
+
+<!-- ── NAV ────────────────────────────────────────────────── -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-dot"></span>
+    Anis <span>Slimani</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#work" data-fr="Projets">Work</a></li>
+    <li><a href="index.html#about" data-fr="À propos">About</a></li>
+    <li><a href="index.html#services" data-fr="Services">Services</a></li>
+    <li><a href="index.html#contact" data-fr="Contact">Contact</a></li>
+    <li><a href="cv.html" class="active" data-fr="CV">CV</a></li>
+  </ul>
+  <button class="lang-toggle" aria-label="Switch language"><svg width="14" height="10" viewBox="0 0 21 15"><rect width="7" height="15" fill="#002395"/><rect x="7" width="7" height="15" fill="#fff"/><rect x="14" width="7" height="15" fill="#ED2939"/></svg> FR</button>
+  <button class="theme-toggle" aria-label="Toggle light mode"><span class="icon-moon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg> <span data-fr="Clair">Light</span></span><span class="icon-sun"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg> <span data-fr="Sombre">Dark</span></span></button>
+  <a href="mailto:anisslimani013@gmail.com" class="btn-nav" data-fr="Me recruter">Hire me</a>
+  <button class="nav-burger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile nav overlay -->
+<div class="mobile-nav-overlay" aria-hidden="true">
+  <div class="mobile-nav-header">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-dot"></span>
+      Anis <span>Slimani</span>
+    </a>
+    <button class="mobile-nav-close" aria-label="Close menu">
+      <span></span><span></span>
+    </button>
+  </div>
+  <nav class="mobile-nav">
+    <a href="index.html#work" data-fr="Projets">Work</a>
+    <a href="index.html#about" data-fr="À propos">About</a>
+    <a href="index.html#services" data-fr="Services">Services</a>
+    <a href="index.html#contact" data-fr="Contact">Contact</a>
+    <a href="cv.html" data-fr="CV">CV</a>
+  </nav>
+  <div class="mobile-nav-footer">
+    <a href="mailto:anisslimani013@gmail.com" class="mobile-nav-btn" data-fr="Me recruter">Hire me</a>
+    <button class="mobile-nav-btn lang-toggle" aria-label="Switch language"><svg width="14" height="10" viewBox="0 0 21 15"><rect width="7" height="15" fill="#002395"/><rect x="7" width="7" height="15" fill="#fff"/><rect x="14" width="7" height="15" fill="#ED2939"/></svg> FR</button>
+    <button class="mobile-nav-btn theme-toggle" aria-label="Toggle light mode"><span class="icon-moon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span><span class="icon-sun"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span></button>
+  </div>
+</div>
+
+
+<!-- ── CV CONTENT ──────────────────────────────────────────── -->
+<section id="cv">
+  <div class="cv-page">
+
+    <div class="cv-header-row">
+      <div>
+        <h1 class="cv-name">Anis Slimani</h1>
+        <p class="cv-role" data-fr="Designer Produit Full-Stack">Full-Stack Product Designer</p>
+      </div>
+      <div class="cv-contacts">
+        <div><a href="https://anis-slimani-anis.github.io/ASPortfolio.github.io">ASPortfolio.github.io</a></div>
+        <div><a href="mailto:anisslimani013@gmail.com">anisslimani013@gmail.com</a></div>
+        <div><a href="https://linkedin.com/in/anisslimani">linkedin.com/in/anisslimani</a></div>
+        <div>Paris, France</div>
+      </div>
+    </div>
+
+    <div class="cv-section">
+      <h2 class="cv-section-label" data-fr="Profil">Profile</h2>
+      <p class="cv-profile" data-fr="Designer produit full-stack spécialisé dans les interfaces à fort enjeu business, de la refonte de funnels LegalTech à l'échelle à la création d'expériences luxe de bout en bout. Approche native IA, culture du chiffre et capacité à opérer seul de la stratégie au handoff.">Full-stack product designer specialising in high-stakes digital interfaces, from scaling LegalTech funnels to building luxury e-commerce from the ground up. Native AI approach, data-driven mindset, able to operate solo from strategy to handoff.</p>
+    </div>
+
+    <div class="cv-section">
+      <h2 class="cv-section-label" data-fr="Compétences">Skills</h2>
+      <div class="cv-skills-row">
+        <span class="cv-skills-cat" data-fr="Design">Design</span>
+        <span class="cv-skills-val" data-fr="Design Systems (Figma), Architecture Component-First, Accessibilité (WCAG), UX Research &amp; Validation Empirique">Design Systems (Figma), Component-First Architecture, Accessibility (WCAG), UX Research &amp; Empirical Validation</span>
+      </div>
+      <div class="cv-skills-row">
+        <span class="cv-skills-cat" data-fr="Tech &amp; Data">Tech &amp; Data</span>
+        <span class="cv-skills-val" data-fr="HTML/CSS, JavaScript, notions React, Git, Product Analytics (Amplitude / Dovetail), Optimisation Conversion (CRO)">HTML/CSS, JavaScript, basic React, Git, Product Analytics (Amplitude / Dovetail), CRO</span>
+      </div>
+      <div class="cv-skills-row">
+        <span class="cv-skills-cat" data-fr="IA &amp; Ops">AI &amp; Ops</span>
+        <span class="cv-skills-val" data-fr="Prompt Engineering, Workflow Automation, Gen-UI, Prototypage rapide assisté par IA, Claude Code, MCP">Prompt Engineering, Workflow Automation, Gen-UI, AI-assisted rapid prototyping, Claude Code, MCP</span>
+      </div>
+    </div>
+
+    <div class="cv-section">
+      <h2 class="cv-section-label" data-fr="Expériences">Experience</h2>
+
+      <div class="cv-exp">
+        <div class="cv-exp-top">
+          <span class="cv-company">Legalstart</span>
+          <span class="cv-dates" data-fr="Avr 2025 · Avr 2026">Apr 2025 · Apr 2026</span>
+        </div>
+        <p class="cv-exp-role" data-fr="Full-stack Product Designer · CDD <span class='cv-exp-loc'>· Paris, France</span>">Full-stack Product Designer · Fixed-Term <span class="cv-exp-loc">· Paris, France</span></p>
+        <ul class="cv-bullets">
+          <li><span class="cv-bull">·</span><strong data-fr="Rebranding produit :">Product Rebranding:</strong> <span data-fr="Designer principal sur la refonte du parcours Création/Immatriculation, challengeant les directions en collaboration transverse. +100 écrans pour 2 000 utilisateurs mensuels, score de clarté de 4,2 à 4,9/5.">Led the redesign of the Creation/Registration flow as primary designer, challenging and validating directions cross-functionally. 100+ screens for 2,000 monthly active users, clarity score up from 4.2 to 4.9/5.</span></li>
+          <li><span class="cv-bull">·</span><strong data-fr="Funnel de conversion :">Conversion Funnel:</strong> <span data-fr="Audit de 15 funnels d'acquisition et entretiens utilisateurs pour identifier les frictions, contribuant à une réduction du churn de 5% et une hausse de conversion de 2%.">Audited 15 acquisition funnels and ran user interviews to surface friction points, contributing to 5% churn reduction and 2% conversion increase.</span></li>
+          <li><span class="cv-bull">·</span><strong data-fr="Design system :">Design System:</strong> <span data-fr="Maintenance et extension de la bibliothèque Figma en parallèle du rebranding, gain de 10% de vélocité pour l'équipe design.">Maintained and extended the Figma component library alongside the rebranding, delivering 10% velocity gain for the design team.</span></li>
+          <li><span class="cv-bull">·</span><strong data-fr="Workflow IA :">AI Workflow:</strong> <span data-fr="Intégration d'outils génératifs et MCP dans le workflow, production de 50+ templates à l'échelle.">Integrated generative AI and MCP tooling into the design workflow, scaling template production to 50+.</span></li>
+        </ul>
+      </div>
+
+      <div class="cv-exp">
+        <div class="cv-exp-top">
+          <span class="cv-company">Principotes</span>
+          <span class="cv-dates" data-fr="Avr 2026 · Juin 2026">Apr 2026 · Jun 2026</span>
+        </div>
+        <p class="cv-exp-role" data-fr="Full-stack Product Designer · Freelance <span class='cv-exp-loc'>· Paris, France (Full Remote)</span>">Full-stack Product Designer · Freelance <span class="cv-exp-loc">· Paris, France (Full Remote)</span></p>
+        <ul class="cv-bullets">
+          <li><span class="cv-bull">·</span><strong data-fr="Système de design :">Design System:</strong> <span data-fr="Système production-ready livré en autonomie, 18 component sets et 149 variantes avec double identité de marque et basculement jour/nuit par tokens.">Production-ready system delivered solo, 18 component sets and 149 variants with dual brand identity and token-based Day/Night switching.</span></li>
+          <li><span class="cv-bull">·</span><strong data-fr="Web Design :">Web Design:</strong> <span data-fr="30 frames haute-fidélité sur 13 pages en desktop (1440px) et mobile (390px), couvrant les deux modes de marque.">30 high-fidelity frames across 13 pages at desktop (1440px) and mobile (390px), covering both brand modes end to end.</span></li>
+          <li><span class="cv-bull">·</span><strong data-fr="Implémentation :">Implementation:</strong> <span data-fr="Utilisation de l'IA pour relier design et développement en codant directement les modifications des composants et d'interface via Claude Code, garantissant la fidélité du front-end sans gap de handoff traditionnel.">Leveraged AI to bridge design and development by coding component changes and UI fixes directly using Claude Code, ensuring front-end fidelity without a traditional handoff gap.</span></li>
+          <li><span class="cv-bull">·</span><strong data-fr="E-commerce &amp; ops :">E-commerce &amp; Ops:</strong> <span data-fr="Déploiement e-commerce post-lancement, intégration POS et SevenRooms, montée en charge opérationnelle complète juin 2026.">Post-launch e-commerce rollout, POS and SevenRooms integration, full operational scale-up June 2026.</span></li>
+          <li><span class="cv-bull">·</span><strong data-fr="Identité de marque :">Brand Identity:</strong> <span data-fr="Identité visuelle complète de zéro, du logotype aux assets 3D, positionnement luxe en moins de 6 semaines.">Full visual identity from scratch, logotype to 3D assets, luxury positioning in under 6 weeks.</span></li>
+        </ul>
+      </div>
+
+      <div class="cv-exp">
+        <div class="cv-exp-top">
+          <span class="cv-company">ILAR</span>
+          <span class="cv-dates" data-fr="Mai 2024 · Août 2024">May 2024 · Aug 2024</span>
+        </div>
+        <p class="cv-exp-role" data-fr="UX/UI Designer · Stage <span class='cv-exp-loc'>· Tirana, Albanie</span>">UX/UI Designer · Internship <span class="cv-exp-loc">· Tirana, Albania</span></p>
+        <ul class="cv-bullets">
+          <li><span class="cv-bull">·</span><strong data-fr="Design system :">Design System:</strong> <span data-fr="Création autonome de la bibliothèque visuelle et des composants UI pour amorcer la transformation digitale d'une entreprise traditionnelle.">Full visual library and UI components built autonomously to initiate the digital transformation of a traditional business.</span></li>
+          <li><span class="cv-bull">·</span><strong data-fr="Direction créative :">Creative Direction:</strong> <span data-fr="Conception des templates de pages clés et pilotage des décisions UX/UI en l'absence de culture produit interne.">Designed key page templates and owned all UX/UI decisions independently in the absence of existing product culture.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cv-section">
+      <h2 class="cv-section-label" data-fr="Formation">Education</h2>
+      <div class="cv-edu">
+        <div class="cv-edu-top">
+          <span class="cv-school">Université Paris-Saclay</span>
+          <span class="cv-edu-dates" data-fr="2025 · 2026">2025 · 2026</span>
+        </div>
+        <p class="cv-edu-meta" data-fr="Master (MSc) · Bac +5 · Essonne, France">Master's (MSc) · Bac +5 · Essonne, France</p>
+        <p class="cv-edu-field">Human-Computer Interaction</p>
+      </div>
+      <div class="cv-edu">
+        <div class="cv-edu-top">
+          <span class="cv-school">Université Gustave Eiffel</span>
+          <span class="cv-edu-dates" data-fr="2020 · 2023">2020 · 2023</span>
+        </div>
+        <p class="cv-edu-meta" data-fr="Licence · Bac +3 · Champs-sur-Marne, France">Bachelor's · Bac +3 · Champs-sur-Marne, France</p>
+        <p class="cv-edu-field" data-fr="Études visuelles, Médias et Arts Numériques">Visual Studies, Media &amp; Digital Arts</p>
+      </div>
+    </div>
+
+    <div class="cv-section">
+      <h2 class="cv-section-label" data-fr="Langues">Languages</h2>
+      <div class="cv-lang-row">
+        <span class="cv-lang-item" data-fr="Français <span class='cv-lang-level'>C1</span>">French <span class="cv-lang-level">C1</span></span>
+        <span class="cv-lang-item" data-fr="Anglais <span class='cv-lang-level'>C2</span>">English <span class="cv-lang-level">C2</span></span>
+        <span class="cv-lang-item" data-fr="Albanais <span class='cv-lang-level'>Langue maternelle</span>">Albanian <span class="cv-lang-level">Native</span></span>
+        <span class="cv-lang-item" data-fr="Espagnol <span class='cv-lang-level'>A2</span>">Spanish <span class="cv-lang-level">A2</span></span>
+      </div>
+    </div>
+
+    <div class="cv-section">
+      <h2 class="cv-section-label" data-fr="Références">References</h2>
+      <p class="cv-ref" data-fr="Disponibles sur demande.">Available upon request.</p>
+    </div>
+
+    <div style="margin-top: 28px; padding-top: 16px; border-top: 0.5px solid #DEDEDE; display: flex; justify-content: flex-end;">
+      <a href="assets/cv-ats.html" target="_blank" rel="noopener" style="font-size: 11px; font-weight: 500; color: #888; text-decoration: none; letter-spacing: 0.04em;" data-fr="Version PDF ATS →">ATS PDF version →</a>
+    </div>
+
+  </div>
+</section>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

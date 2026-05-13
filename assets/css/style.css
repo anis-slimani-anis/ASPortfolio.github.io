@@ -1085,11 +1085,11 @@ section, footer, .page-hero, .case-content-wrap {
 .case-visual-img--float {
   object-fit: contain;
   object-position: center;
-  inset: 28px;
-  width: calc(100% - 56px);
-  height: calc(100% - 56px);
+  inset: 20px;
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
 }
-.case-visual--dark { background: #0e0e0e; }
+.case-visual--dark { background: var(--bg3); }
 .mock-dimmed { opacity: 0.15; transform: translateY(-6px); }
 .case-visual::before {
   content: '';
@@ -1160,9 +1160,9 @@ section, footer, .page-hero, .case-content-wrap {
 
 .about-top-grid {
   display: grid;
-  grid-template-columns: 1fr 1.3fr;
+  grid-template-columns: 1fr 1.1fr;
   gap: 64px;
-  align-items: start;
+  align-items: stretch;
 }
 
 .about-left-col {
@@ -1171,8 +1171,9 @@ section, footer, .page-hero, .case-content-wrap {
 }
 
 .about-photo {
+  flex: 1;
+  min-height: 420px;
   width: 100%;
-  aspect-ratio: 3 / 4;
   border-radius: var(--radius-xl);
   background: var(--surface);
   border: 1px solid var(--border-light);
@@ -1369,6 +1370,18 @@ section, footer, .page-hero, .case-content-wrap {
   border: 1px solid rgba(204,204,255,0.10);
   border-radius: var(--radius-xl);
   padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+}
+.contact-form form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-top: 4px;
+}
+.form-submit-btn {
+  margin-top: 0;
 }
 .contact-form h3 {
   font-family: var(--font-body);
@@ -1409,7 +1422,6 @@ section, footer, .page-hero, .case-content-wrap {
 .form-field textarea::placeholder { color: rgba(238,238,248,0.38); }
 
 .form-submit-btn {
-  margin-top: 24px;
   border: none;
   cursor: pointer;
   width: 100%;

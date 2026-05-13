@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Anis Slimani — CV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #080029;
+    --dark: #1c1c1c;
+    --mid:  #444;
+    --dim:  #888;
+    --rule: #d0d0d0;
+    --f:    'DM Sans', Arial, sans-serif;
+  }
+
+  @media print {
+    @page { size: A4; margin: 0; }
+    html, body { background: #fff; }
+    .save-btn { display: none; }
+  }
+
+  @media screen {
+    body { background: #e0e0e0; padding: 24px 0 48px; }
+    .save-btn {
+      display: block;
+      width: 210mm;
+      margin: 0 auto 12px;
+      text-align: right;
+    }
+    .save-btn button {
+      font-family: var(--f);
+      font-size: 11px;
+      font-weight: 500;
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      padding: 7px 18px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .page { box-shadow: 0 2px 28px rgba(0,0,0,0.14); }
+  }
+
+  .page {
+    width: 210mm;
+    margin: 0 auto;
+    background: #fff;
+    padding: 14mm 16mm 14mm;
+    font-family: var(--f);
+    font-size: 9pt;
+    line-height: 1.52;
+    color: var(--dark);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Header */
+  h1 { font-size: 24pt; font-weight: 300; color: var(--navy); letter-spacing: -0.3px; line-height: 1.05; }
+  .cv-title { font-size: 7pt; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--mid); margin: 4px 0 8px; }
+  address {
+    font-style: normal;
+    font-size: 8.5pt;
+    font-weight: 300;
+    color: var(--dim);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 18px;
+  }
+  address a { color: var(--dim); text-decoration: none; }
+  hr { border: none; border-top: 1.5px solid var(--navy); margin: 10px 0 0; }
+  hr + section { border-top: none; padding-top: 0; }
+
+  /* Sections */
+  section {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 0.5px solid var(--rule);
+  }
+  h2 {
+    font-size: 6.5pt;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+
+  /* Profile */
+  .profile { font-size: 9pt; font-weight: 300; line-height: 1.6; }
+
+  /* Skills */
+  .skill { display: flex; margin-bottom: 4px; }
+  .skill:last-child { margin-bottom: 0; }
+  .sk { font-size: 8pt; font-weight: 600; color: var(--navy); width: 76px; flex-shrink: 0; padding-top: 1px; }
+  .sv { font-size: 8.5pt; font-weight: 300; line-height: 1.5; }
+
+  /* Experience */
+  .exp { margin-bottom: 13px; }
+  .exp:last-child { margin-bottom: 0; }
+  .exp-row { display: flex; justify-content: space-between; align-items: baseline; }
+  h3 { font-size: 10.5pt; font-weight: 600; color: var(--navy); }
+  .dates { font-size: 8pt; font-weight: 300; color: var(--dim); white-space: nowrap; }
+  .role {
+    font-size: 7pt;
+    font-weight: 500;
+    letter-spacing: 1.3px;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin: 2px 0 6px;
+  }
+  .loc { font-weight: 300; letter-spacing: 0; text-transform: none; color: var(--dim); }
+  ul { list-style: none; padding: 0; }
+  li {
+    font-size: 8.5pt;
+    font-weight: 300;
+    padding-left: 11px;
+    position: relative;
+    margin-bottom: 4px;
+    line-height: 1.55;
+  }
+  .bull { position: absolute; left: 0; color: var(--dim); font-size: 8pt; line-height: 1.5; }
+  li strong { font-weight: 600; color: var(--dark); }
+
+  /* Education */
+  .edu { margin-bottom: 7px; }
+  .edu:last-child { margin-bottom: 0; }
+  .edu-row { display: flex; justify-content: space-between; align-items: baseline; }
+  .school { font-size: 10pt; font-weight: 600; color: var(--navy); }
+  .edu-dates { font-size: 8pt; font-weight: 300; color: var(--dim); }
+  .edu-meta { font-size: 8pt; font-weight: 300; color: var(--mid); margin-top: 1px; }
+  .edu-field { font-size: 8.5pt; font-weight: 400; color: var(--dark); }
+
+  /* Languages */
+  .langs { display: flex; flex-wrap: wrap; gap: 2px 22px; }
+  .lang { font-size: 8.5pt; font-weight: 400; }
+  .lv { font-size: 8pt; font-weight: 300; color: var(--dim); margin-left: 2px; }
+
+  .ref { font-size: 8.5pt; font-weight: 300; color: var(--dim); }
+</style>
+</head>
+<body>
+
+<div class="save-btn"><button onclick="window.print()">Save as PDF →</button></div>
+
+<div class="page">
+
+  <h1>Anis Slimani</h1>
+  <p class="cv-title">Full-Stack Product Designer</p>
+  <address>
+    <span>Paris, France</span>
+    <a href="mailto:anisslimani013@gmail.com">anisslimani013@gmail.com</a>
+    <a href="https://linkedin.com/in/anisslimani">linkedin.com/in/anisslimani</a>
+    <a href="https://anis-slimani-anis.github.io/ASPortfolio.github.io">ASPortfolio.github.io</a>
+  </address>
+  <hr />
+
+  <section>
+    <h2>Profile</h2>
+    <p class="profile">Full-stack product designer specialising in complex digital interfaces. From LegalTech SaaS rebranding at scale to building a luxury web product from blank brief to V1. Native AI approach, data-driven, solo-capable from strategy to handoff.</p>
+  </section>
+
+  <section>
+    <h2>Skills</h2>
+    <div class="skill">
+      <span class="sk">Design</span>
+      <span class="sv">Design Systems (Figma), Component-First Architecture, Accessibility (WCAG 2.1), UX Research, Empirical Validation</span>
+    </div>
+    <div class="skill">
+      <span class="sk">Tech</span>
+      <span class="sv">HTML, CSS, JavaScript, React (basic), Git, Product Analytics (Amplitude, Dovetail), CRO</span>
+    </div>
+    <div class="skill">
+      <span class="sk">AI &amp; Ops</span>
+      <span class="sv">Prompt Engineering, Claude Code, MCP, Generative UI, AI-Assisted Prototyping, Workflow Automation, Design Ops</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Experience</h2>
+
+    <div class="exp">
+      <div class="exp-row">
+        <h3>Legalstart</h3>
+        <span class="dates">Apr 2025 – Apr 2026</span>
+      </div>
+      <p class="role">Full-Stack Product Designer · Fixed-Term <span class="loc">· Paris, France</span></p>
+      <ul>
+        <li><span class="bull">•</span><strong>Rebranding:</strong> Led redesign of company creation flow (100+ screens, 2K MAU); clarity score 4.2 → 4.9/5 (CSUQ).</li>
+        <li><span class="bull">•</span><strong>CRO:</strong> Audited 15 acquisition funnels; user research contributed to 5% churn reduction and 2% conversion increase.</li>
+        <li><span class="bull">•</span><strong>Design System:</strong> Maintained and extended Figma component library during rebrand; 10% team velocity gain.</li>
+        <li><span class="bull">•</span><strong>AI Workflow:</strong> Integrated generative AI and MCP tooling; scaled template output to 50+ assets.</li>
+      </ul>
+    </div>
+
+    <div class="exp">
+      <div class="exp-row">
+        <h3>Principotes Ksamil</h3>
+        <span class="dates">Apr 2026 – Jun 2026</span>
+      </div>
+      <p class="role">Full-Stack Product Designer · Freelance <span class="loc">· Remote</span></p>
+      <ul>
+        <li><span class="bull">•</span><strong>Design System:</strong> 18 component sets, 149 variants, dual brand identity, token-based Day/Night switching — delivered solo.</li>
+        <li><span class="bull">•</span><strong>Web Design:</strong> 30 high-fidelity frames across 13 pages, desktop (1440px) and mobile (390px), both brand modes.</li>
+        <li><span class="bull">•</span><strong>Implementation:</strong> Wrote and fixed component-level UI code with Claude Code; front-end fidelity without a handoff gap.</li>
+        <li><span class="bull">•</span><strong>Brand Identity:</strong> Full visual identity from scratch — logotype, 3D animated hero, print collateral — in under 6 weeks.</li>
+      </ul>
+    </div>
+
+    <div class="exp">
+      <div class="exp-row">
+        <h3>ILAR</h3>
+        <span class="dates">May 2024 – Aug 2024</span>
+      </div>
+      <p class="role">UX/UI Designer · Internship <span class="loc">· Tirana, Albania</span></p>
+      <ul>
+        <li><span class="bull">•</span><strong>Design System:</strong> Built full visual library and UI components autonomously to initiate digital transformation.</li>
+        <li><span class="bull">•</span><strong>Creative Direction:</strong> Designed page templates and owned all UX/UI decisions independently.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Education</h2>
+    <div class="edu">
+      <div class="edu-row">
+        <span class="school">Université Paris-Saclay</span>
+        <span class="edu-dates">2025 – 2026</span>
+      </div>
+      <p class="edu-meta">MSc · Bac +5 · Essonne, France</p>
+      <p class="edu-field">Human-Computer Interaction</p>
+    </div>
+    <div class="edu">
+      <div class="edu-row">
+        <span class="school">Université Gustave Eiffel</span>
+        <span class="edu-dates">2020 – 2023</span>
+      </div>
+      <p class="edu-meta">Bachelor's · Bac +3 · Champs-sur-Marne, France</p>
+      <p class="edu-field">Visual Studies, Media and Digital Arts</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Languages</h2>
+    <div class="langs">
+      <span class="lang">French <span class="lv">C1</span></span>
+      <span class="lang">English <span class="lv">C2</span></span>
+      <span class="lang">Albanian <span class="lv">Native</span></span>
+      <span class="lang">Spanish <span class="lv">A2</span></span>
+    </div>
+  </section>
+
+  <section>
+    <h2>References</h2>
+    <p class="ref">Available upon request.</p>
+  </section>
+
+</div>
+</body>
+</html>
