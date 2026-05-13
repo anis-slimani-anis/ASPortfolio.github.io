@@ -22,6 +22,7 @@
 /* ── 1. VARIABLES & RESET ─────────────────────────────────── */
 
 :root {
+  color-scheme: dark;
   --bg:            #000000;
   --bg2:           #090909;
   --bg3:           #0e0e0e;
@@ -74,6 +75,7 @@
 
 /* ── Light mode ── */
 [data-theme="light"] {
+  color-scheme: light;
   --bg:            #ffffff;
   --bg2:           #ffffff;
   --bg3:           #f7f7fc;
@@ -2278,6 +2280,8 @@ nav.work-header {
   overflow-y: auto;
   overscroll-behavior: contain;
   transition: opacity 0.35s cubic-bezier(0.16,1,0.3,1), visibility 0.35s;
+  padding-top: 56px;
+  padding-bottom: 94px;
 }
 .mobile-nav-overlay.open {
   opacity: 1;
@@ -2356,14 +2360,6 @@ nav.work-header {
   gap: 10px;
   padding: 24px var(--pad-x);
   border-top: 1px solid var(--border);
-}
-.mobile-nav-footer.mobile-nav-footer-work {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-.mobile-nav-footer.mobile-nav-footer-work .mobile-nav-btn {
-  width: 100%;
-  min-width: 0;
 }
 .mobile-nav-btn {
   flex: 1;
@@ -2552,7 +2548,7 @@ nav.work-header {
   /* ── About ── */
   #about { padding: 64px var(--pad-x); }
   .about-top-grid { grid-template-columns: 1fr; gap: 32px; }
-  .about-photo { aspect-ratio: 3/2; max-width: 100%; width: 100%; }
+  .about-photo { aspect-ratio: 3/2; max-width: 100%; width: 100%; min-height: unset; flex: unset; }
   .about-text { padding-top: 0; }
   .about-text p { font-size: 15px; }
 

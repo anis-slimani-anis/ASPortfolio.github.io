@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <script>(function(){var t=localStorage.getItem('theme')||'dark';if(t)document.documentElement.setAttribute('data-theme',t);})();</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
   <title>CV · Anis Slimani</title>
   <meta name="description" content="CV of Anis Slimani — Full-Stack Product Designer based in Paris.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -130,8 +131,13 @@
 
     @media (max-width: 600px) {
       .cv-page { padding: 32px 24px; }
-      .cv-header-row { flex-direction: column; gap: 12px; }
-      .cv-contacts { text-align: left; }
+      .cv-header-row { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .cv-contacts {
+        text-align: left;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1px 14px;
+      }
       .cv-name { font-size: 22pt; }
     }
   </style>
