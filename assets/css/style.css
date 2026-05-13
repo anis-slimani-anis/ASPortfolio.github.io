@@ -75,7 +75,7 @@
 
 /* ── Light mode ── */
 [data-theme="light"] {
-  color-scheme: light;
+  color-scheme: only light;
   --bg:            #ffffff;
   --bg2:           #ffffff;
   --bg3:           #f7f7fc;
