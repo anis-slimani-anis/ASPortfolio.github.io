@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <script>(function(){var t=localStorage.getItem('theme')||'dark';if(t)document.documentElement.setAttribute('data-theme',t);var l=document.createElement('link');l.rel='preload';l.as='image';l.fetchPriority='high';l.href='assets/images/'+(t==='light'?'portrait-light':'portrait')+'.webp';document.head.appendChild(l);})();</script>
+  <script>(function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);document.documentElement.style.colorScheme=t==='light'?'only light':'dark';var l=document.createElement('link');l.rel='preload';l.as='image';l.fetchPriority='high';l.href='assets/images/'+(t==='light'?'portrait-light':'portrait')+'.webp';document.head.appendChild(l);})();</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="color-scheme" content="light dark">
   <title>Anis Slimani · Full Stack Product Designer</title>

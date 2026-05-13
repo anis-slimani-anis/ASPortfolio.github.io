@@ -556,6 +556,7 @@ const prefersReducedMotion = () => motionQuery ? motionQuery.matches : false;
 
   function swapTheme(t) {
     document.documentElement.setAttribute('data-theme', t);
+    document.documentElement.style.colorScheme = t === 'light' ? 'only light' : 'dark';
     localStorage.setItem('theme', t);
     syncThemeToggleState(t);
   }
