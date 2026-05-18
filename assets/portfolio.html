@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Anis Slimani — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet" />
+<style>
+
+*, *::before, *::after {
+  box-sizing: border-box; margin: 0; padding: 0;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+:root {
+  --bg:       #04000e;
+  --bg2:      #0c0820;
+  --bg3:      #14102c;
+  --surface:  #1a1630;
+  --accent:   #ccccff;
+  --accent2:  #9898dd;
+  --text:     #eeeef8;
+  --mid:      rgba(238,238,248,0.72);
+  --muted:    rgba(238,238,248,0.46);
+  --dim:      rgba(238,238,248,0.28);
+  --border:   rgba(204,204,255,0.10);
+  --border2:  rgba(204,204,255,0.20);
+  --f:        'DM Sans', Arial, sans-serif;
+}
+
+@media print {
+  @page { size: A4 landscape; margin: 0; }
+  html, body { background: var(--bg); }
+  .save-btn { display: none; }
+  .page { page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+}
+
+@media screen {
+  body { background: #1a1a2e; padding: 20px 0 48px; }
+  .save-btn {
+    width: 297mm;
+    margin: 0 auto 12px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .save-btn button {
+    font-family: var(--f);
+    font-size: 11px;
+    font-weight: 500;
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    padding: 8px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+  }
+  .save-btn button:hover { opacity: 0.88; }
+  .page { box-shadow: 0 8px 60px rgba(0,0,0,0.6); margin-bottom: 16px; }
+}
+
+.page {
+  width: 297mm;
+  height: 210mm;
+  margin: 0 auto;
+  background: var(--bg);
+  font-family: var(--f);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+  overflow: hidden;
+}
+/* Ambient glow blobs — painted via ::before on each page */
+.page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(ellipse 220px 180px at 22% 55%, rgba(204,204,255,0.028) 0%, transparent 100%),
+    radial-gradient(ellipse 180px 140px at 78% 22%, rgba(204,204,255,0.022) 0%, transparent 100%),
+    radial-gradient(ellipse 260px 160px at 52% 88%, rgba(204,204,255,0.018) 0%, transparent 100%),
+    radial-gradient(ellipse 150px 200px at 88% 70%, rgba(204,204,255,0.020) 0%, transparent 100%);
+}
+.cover, .work-page, .profile-page { position: relative; z-index: 1; }
+
+/* ─── SHARED LABEL ─── */
+.label {
+  font-size: 6pt;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 3.5mm;
+}
+.label-rule {
+  border: none;
+  border-top: 0.5px solid var(--border2);
+  margin-bottom: 4mm;
+}
+
+
+/* ════════════════ PAGE 1 — COVER ════════════════ */
+
+.cover {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+}
+
+/* Left: text */
+.cover-left {
+  padding: 14mm 12mm 14mm 16mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 0.5px solid var(--border);
+  position: relative;
+}
+
+/* Subtle ambient glow top-left */
+.cover-left::before {
+  content: '';
+  position: absolute;
+  top: -20mm;
+  left: -10mm;
+  width: 120mm;
+  height: 120mm;
+  background: radial-gradient(ellipse, rgba(204,204,255,0.05) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.cover-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 6.5pt;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 0.5px solid var(--border2);
+  border-radius: 20px;
+  padding: 3px 10px;
+  width: fit-content;
+  margin-bottom: 5mm;
+}
+.cover-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+.cover-name {
+  font-size: 46pt;
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: -1.5px;
+  color: var(--text);
+  margin-bottom: 6mm;
+}
+.cover-name em {
+  font-style: normal;
+  display: block;
+  color: transparent;
+  -webkit-text-stroke: 1.2px rgba(204,204,255,0.55);
+}
+
+.cover-tagline {
+  font-size: 11pt;
+  font-weight: 300;
+  color: var(--mid);
+  line-height: 1.7;
+  max-width: 105mm;
+  margin-bottom: auto;
+}
+.cover-tagline strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.cover-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.cover-contact-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+}
+.cover-chip {
+  font-size: 7pt;
+  font-weight: 300;
+  color: var(--muted);
+  background: var(--bg2);
+  border: 0.5px solid var(--border);
+  border-radius: 3px;
+  padding: 2px 7px;
+  text-decoration: none;
+}
+.cover-chip:hover { color: var(--text); }
+
+/* Right: portrait */
+.cover-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: var(--bg2);
+}
+
+/* Large ambient glow behind portrait */
+.cover-right::before {
+  content: '';
+  position: absolute;
+  width: 90mm;
+  height: 90mm;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(204,204,255,0.08) 0%, transparent 70%);
+}
+
+.cover-portrait-wrap {
+  position: relative;
+  z-index: 1;
+}
+.cover-portrait {
+  width: 70mm;
+  height: 70mm;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  border: 1px solid rgba(204,204,255,0.18);
+  display: block;
+}
+
+/* Corner decoration — page number */
+.cover-page-num {
+  position: absolute;
+  bottom: 6mm;
+  right: 8mm;
+  font-size: 6pt;
+  font-weight: 300;
+  color: var(--dim);
+  letter-spacing: 0.1em;
+}
+
+
+/* ════════════════ PAGE 2 — WORK ════════════════ */
+
+.work-page {
+  padding: 11mm 14mm 10mm;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Stats strip */
+.stats-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 0.5px solid var(--border2);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 5mm;
+}
+.stat {
+  padding: 3.5mm 4mm;
+  border-right: 0.5px solid var(--border);
+}
+.stat:last-child { border-right: none; }
+.stat-num {
+  display: block;
+  font-size: 16pt;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.5px;
+  line-height: 1;
+  margin-bottom: 2px;
+}
+.stat-label {
+  display: block;
+  font-size: 5.5pt;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+/* 2×2 case grid */
+.cases-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 3.5mm;
+  flex: 1;
+}
+
+.case-card {
+  background: var(--bg2);
+  border: 0.5px solid var(--border);
+  border-radius: 8px;
+  padding: 4mm 5mm;
+  display: flex;
+  flex-direction: column;
+  gap: 2mm;
+  position: relative;
+  overflow: hidden;
+}
+/* Subtle top accent line */
+.case-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1.5px;
+  background: linear-gradient(90deg, var(--accent), transparent 70%);
+  opacity: 0.4;
+}
+
+.case-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.case-company {
+  font-size: 7pt;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.case-dates {
+  font-size: 6pt;
+  font-weight: 300;
+  color: var(--dim);
+  white-space: nowrap;
+}
+.case-title {
+  font-size: 8pt;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.3;
+}
+.case-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 3px;
+}
+.case-tag {
+  font-size: 5pt;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 1px 5px;
+  border: 0.5px solid var(--border2);
+  border-radius: 2px;
+  color: var(--accent2);
+}
+.case-desc {
+  font-size: 6.5pt;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.6;
+  flex: 1;
+}
+.case-metrics {
+  display: flex;
+  gap: 5mm;
+  margin-top: auto;
+  padding-top: 2mm;
+  border-top: 0.5px solid var(--border);
+}
+.case-mval {
+  display: block;
+  font-size: 13pt;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+.case-mkey {
+  display: block;
+  font-size: 5pt;
+  font-weight: 400;
+  color: var(--dim);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-top: 2px;
+}
+
+/* Page label badge */
+.page-badge {
+  position: absolute;
+  top: 8mm;
+  right: 14mm;
+  font-size: 6pt;
+  font-weight: 300;
+  color: var(--dim);
+  letter-spacing: 0.1em;
+}
+
+
+/* ════════════════ PAGE 3 — PROFILE ════════════════ */
+
+.profile-page {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+}
+
+.profile-left {
+  padding: 12mm 10mm 12mm 14mm;
+  border-right: 0.5px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 5mm;
+}
+.profile-right {
+  padding: 12mm 14mm 12mm 10mm;
+  display: flex;
+  flex-direction: column;
+  gap: 5mm;
+}
+
+/* Section block */
+.sec-label {
+  font-size: 6pt;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 3mm;
+  padding-bottom: 2.5mm;
+  border-bottom: 0.5px solid var(--border2);
+}
+
+/* Skills */
+.skill-row {
+  display: flex;
+  margin-bottom: 3px;
+}
+.skill-row:last-child { margin-bottom: 0; }
+.skill-cat {
+  font-size: 6.5pt;
+  font-weight: 600;
+  color: var(--text);
+  width: 16mm;
+  flex-shrink: 0;
+  padding-top: 1px;
+}
+.skill-val {
+  font-size: 7pt;
+  font-weight: 300;
+  color: var(--mid);
+  line-height: 1.55;
+}
+
+/* Education */
+.edu-item {
+  margin-bottom: 3mm;
+}
+.edu-item:last-child { margin-bottom: 0; }
+.edu-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.edu-school {
+  font-size: 8pt;
+  font-weight: 600;
+  color: var(--text);
+}
+.edu-dates {
+  font-size: 6.5pt;
+  font-weight: 300;
+  color: var(--dim);
+  white-space: nowrap;
+}
+.edu-meta {
+  font-size: 6.5pt;
+  font-weight: 300;
+  color: var(--muted);
+  margin-top: 1px;
+}
+
+/* Languages */
+.lang-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px 12px;
+}
+.lang-item {
+  font-size: 7.5pt;
+  font-weight: 400;
+  color: var(--text);
+}
+.lang-level {
+  font-size: 6.5pt;
+  font-weight: 300;
+  color: var(--muted);
+  margin-left: 2px;
+}
+
+/* About text */
+.about-text {
+  font-size: 7.5pt;
+  font-weight: 300;
+  color: var(--mid);
+  line-height: 1.75;
+}
+.about-text strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* Services list */
+.service-item {
+  display: flex;
+  gap: 3mm;
+  margin-bottom: 3.5mm;
+  align-items: flex-start;
+}
+.service-item:last-child { margin-bottom: 0; }
+.service-num {
+  font-size: 6.5pt;
+  font-weight: 700;
+  color: var(--accent);
+  opacity: 0.5;
+  flex-shrink: 0;
+  padding-top: 1px;
+  width: 6mm;
+}
+.service-name {
+  font-size: 7.5pt;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 1px;
+}
+.service-desc {
+  font-size: 6.5pt;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+/* Contact footer strip */
+.profile-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg2);
+  border-top: 0.5px solid var(--border);
+  padding: 3mm 14mm;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.profile-footer-note {
+  font-size: 6.5pt;
+  font-weight: 300;
+  color: var(--muted);
+  font-style: italic;
+}
+.profile-footer-links {
+  display: flex;
+  gap: 8mm;
+}
+.profile-footer-link {
+  font-size: 7pt;
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+
+</style>
+</head>
+<body>
+
+<div class="save-btn">
+  <button onclick="window.print()">Save as PDF →</button>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     PAGE 1 — COVER
+══════════════════════════════════════ -->
+<div class="page">
+<div class="cover">
+
+  <div class="cover-left">
+
+    <div>
+      <div class="cover-eyebrow">
+        <span class="cover-dot"></span>
+        Full Stack Product Designer · AI
+      </div>
+
+      <h1 class="cover-name">
+        Anis
+        <em>Slimani.</em>
+      </h1>
+    </div>
+
+    <p class="cover-tagline">
+      I help companies transform <strong>high friction digital products</strong> into experiences people understand, trust, and move through with confidence. Product design, UX research, and frontend work — from strategy to shipped code.
+    </p>
+
+    <div class="cover-contact">
+      <div style="font-size:5.5pt; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--dim); margin-bottom:3px;">Contact</div>
+      <div class="cover-contact-row">
+        <a href="https://anisslimani.com" class="cover-chip">anisslimani.com</a>
+        <a href="mailto:anisslimani013@gmail.com" class="cover-chip">anisslimani013@gmail.com</a>
+        <a href="https://linkedin.com/in/anisslimani" class="cover-chip">linkedin.com/in/anisslimani</a>
+        <span class="cover-chip">Paris, France</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cover-right">
+    <div class="cover-portrait-wrap">
+      <img src="images/portrait.webp" class="cover-portrait" alt="Anis Slimani">
+    </div>
+  </div>
+
+</div>
+<span class="cover-page-num">01 / 03</span>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     PAGE 2 — SELECTED WORK
+══════════════════════════════════════ -->
+<div class="page">
+<div class="work-page">
+
+  <span class="page-badge">02 / 03</span>
+
+  <div class="label" style="margin-bottom:3mm;">Selected Work</div>
+
+  <!-- Stats -->
+  <div class="stats-strip">
+    <div class="stat">
+      <span class="stat-num">100+</span>
+      <span class="stat-label">product screens redesigned in a live SaaS environment</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">4.2→4.9</span>
+      <span class="stat-label">clarity score post usability testing (CSUQ protocol)</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">+2%</span>
+      <span class="stat-label">average conversion uplift across 15 funnels</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">2K+</span>
+      <span class="stat-label">monthly users impacted through rebranding work</span>
+    </div>
+  </div>
+
+  <!-- 2×2 Cases -->
+  <div class="cases-grid">
+
+    <!-- Case 1 -->
+    <div class="case-card">
+      <div class="case-head">
+        <span class="case-company">Principotes Ksamil</span>
+        <span class="case-dates">Apr – Jun 2026</span>
+      </div>
+      <div class="case-title">Product Lead on a luxury hospitality web product, blank brief to V1</div>
+      <div class="case-tags">
+        <span class="case-tag">Branding</span>
+        <span class="case-tag">Design System</span>
+        <span class="case-tag">Web Design</span>
+        <span class="case-tag">3D & Motion</span>
+        <span class="case-tag">Frontend</span>
+      </div>
+      <p class="case-desc">Full product scope on a dual-identity luxury beach destination in Albania. Brand identity from scratch, 3D animated hero, full Figma design system (60+ components), high-fidelity designs across 13 pages, and direct frontend implementation oversight. Solo role with full product and dev team accountability.</p>
+      <div class="case-metrics">
+        <div><span class="case-mval">2</span><span class="case-mkey">Brand modes</span></div>
+        <div><span class="case-mval">30</span><span class="case-mkey">Frames delivered</span></div>
+        <div><span class="case-mval">149</span><span class="case-mkey">DS variants</span></div>
+        <div><span class="case-mval">6wk</span><span class="case-mkey">Brief to launch</span></div>
+      </div>
+    </div>
+
+    <!-- Case 2 -->
+    <div class="case-card">
+      <div class="case-head">
+        <span class="case-company">Legalstart</span>
+        <span class="case-dates">Apr 2025 – Apr 2026</span>
+      </div>
+      <div class="case-title">Rebranding a complex SaaS platform at scale</div>
+      <div class="case-tags">
+        <span class="case-tag">SaaS Rebranding</span>
+        <span class="case-tag">Design System</span>
+        <span class="case-tag">Usability Research</span>
+        <span class="case-tag">Figma</span>
+      </div>
+      <p class="case-desc">Deployed a new design system and visual identity across the company creation flow (100+ screens) in a live operational SaaS. Worked across audit, component design, layout templating, and complete flow prototyping in close synchronicity with developers and the CPO. CSUQ validated post-launch.</p>
+      <div class="case-metrics">
+        <div><span class="case-mval">4.8/5</span><span class="case-mkey">Task ease</span></div>
+        <div><span class="case-mval">4.7/5</span><span class="case-mkey">Instruction clarity</span></div>
+        <div><span class="case-mval">4.8/5</span><span class="case-mkey">Interface org.</span></div>
+      </div>
+    </div>
+
+    <!-- Case 3 -->
+    <div class="case-card">
+      <div class="case-head">
+        <span class="case-company">Legalstart</span>
+        <span class="case-dates">Apr 2025 – Apr 2026</span>
+      </div>
+      <div class="case-title">CRO driven funnel redesign across 15 acquisition flows</div>
+      <div class="case-tags">
+        <span class="case-tag">CRO · Funnels</span>
+        <span class="case-tag">Landing Pages</span>
+        <span class="case-tag">Analytics</span>
+        <span class="case-tag">Amplitude</span>
+      </div>
+      <p class="case-desc">Complete redesign of 15 conversion funnels following usability audits and user interviews. Designed conversion optimised landing pages built around hierarchy, trust signals, and friction reduction. All outcomes tracked through Amplitude and behavioural data analysis.</p>
+      <div class="case-metrics">
+        <div><span class="case-mval">+2%</span><span class="case-mkey">Avg conversion</span></div>
+        <div><span class="case-mval">−5%</span><span class="case-mkey">Avg churn</span></div>
+        <div><span class="case-mval">×15</span><span class="case-mkey">Funnels redesigned</span></div>
+      </div>
+    </div>
+
+    <!-- Case 4 -->
+    <div class="case-card">
+      <div class="case-head">
+        <span class="case-company">Legalstart</span>
+        <span class="case-dates">Apr 2025 – Apr 2026</span>
+      </div>
+      <div class="case-title">Building a design system and scaling production with AI</div>
+      <div class="case-tags">
+        <span class="case-tag">Design Systems</span>
+        <span class="case-tag">AI Workflows</span>
+        <span class="case-tag">Figma</span>
+        <span class="case-tag">Design Ops</span>
+      </div>
+      <p class="case-desc">Built and maintained the Figma component library as part of an evolving design system, contributing to a 10% gain in team execution speed. Used generative AI and MCP driven workflows to scale template production, turning manual repetition into automated quality at 50+ outputs.</p>
+      <div class="case-metrics">
+        <div><span class="case-mval">+10%</span><span class="case-mkey">Team velocity</span></div>
+        <div><span class="case-mval">50+</span><span class="case-mkey">AI templates</span></div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     PAGE 3 — PROFILE
+══════════════════════════════════════ -->
+<div class="page">
+<div class="profile-page">
+
+  <!-- LEFT: About + Skills + Education -->
+  <div class="profile-left">
+
+    <div class="sec">
+      <div class="sec-label">About</div>
+      <p class="about-text">I'm <strong>Anis Slimani</strong>, a product designer based in Paris. I've led a luxury venue from blank brief to shipped website, and redesigned complex SaaS flows inside a live operational product. Both required the same discipline: understand the system completely before touching it.<br><br>I like working on things that are genuinely complex — multi-step flows, dense information, products where getting the details wrong actually matters. I write frontend code and work directly with AI tools in production. That combination lets me close the gap between what's designed and what ships.</p>
+    </div>
+
+    <div class="sec">
+      <div class="sec-label">Skills</div>
+      <div class="skill-row">
+        <span class="skill-cat">Design</span>
+        <span class="skill-val">Design Systems (Figma), Component-First Architecture, Accessibility (WCAG 2.1), UX Research, Empirical Validation, Prototyping</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-cat">Tech</span>
+        <span class="skill-val">HTML, CSS, JavaScript, React (basic), Git, Product Analytics (Amplitude, Dovetail), CRO</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-cat">AI &amp; Ops</span>
+        <span class="skill-val">Prompt Engineering, Workflow Automation, Generative UI, AI-Assisted Prototyping, Claude Code, MCP, Design Ops</span>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-label">Education</div>
+      <div class="edu-item">
+        <div class="edu-head">
+          <span class="edu-school">Université Paris-Saclay</span>
+          <span class="edu-dates">2025 – 2026</span>
+        </div>
+        <div class="edu-meta">Master of Science (MSc) · Bac +5 · Human-Computer Interaction</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-head">
+          <span class="edu-school">Université Gustave Eiffel</span>
+          <span class="edu-dates">2020 – 2023</span>
+        </div>
+        <div class="edu-meta">Bachelor's Degree · Bac +3 · Visual Studies, Media &amp; Digital Arts</div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-label">Languages</div>
+      <div class="lang-row">
+        <span class="lang-item">French <span class="lang-level">C1</span></span>
+        <span class="lang-item">English <span class="lang-level">C2</span></span>
+        <span class="lang-item">Albanian <span class="lang-level">Native</span></span>
+        <span class="lang-item">Spanish <span class="lang-level">A2</span></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT: Services + Experience -->
+  <div class="profile-right">
+
+    <div class="sec">
+      <div class="sec-label">What I do</div>
+      <div class="service-item">
+        <span class="service-num">01</span>
+        <div class="service-content">
+          <div class="service-name">Product redesign for complex flows</div>
+          <div class="service-desc">Complex SaaS journeys, regulated environments, high friction experiences. Audit based, system aligned, dev ready output.</div>
+        </div>
+      </div>
+      <div class="service-item">
+        <span class="service-num">02</span>
+        <div class="service-content">
+          <div class="service-name">Landing pages &amp; funnel optimisation</div>
+          <div class="service-desc">CRO led design built around trust signals, hierarchy, and measurable conversion improvements. From audit to shipped page.</div>
+        </div>
+      </div>
+      <div class="service-item">
+        <span class="service-num">03</span>
+        <div class="service-content">
+          <div class="service-name">Design systems &amp; Figma libraries</div>
+          <div class="service-desc">Component driven architecture that scales across products. Reduces back and forth with developers and maintains quality over time.</div>
+        </div>
+      </div>
+      <div class="service-item">
+        <span class="service-num">04</span>
+        <div class="service-content">
+          <div class="service-name">UX audits &amp; usability evaluation</div>
+          <div class="service-desc">Heuristic analysis, user flow simulation, CSUQ/SUS testing, and behavioural data synthesis. Evidence based design decisions.</div>
+        </div>
+      </div>
+      <div class="service-item">
+        <span class="service-num">05</span>
+        <div class="service-content">
+          <div class="service-name">Frontend implementation</div>
+          <div class="service-desc">I bridge design and development. From Figma to shipped code, no handoff gap. HTML · CSS · JavaScript · Git · component driven structure.</div>
+        </div>
+      </div>
+      <div class="service-item">
+        <span class="service-num">06</span>
+        <div class="service-content">
+          <div class="service-name">AI assisted design operations</div>
+          <div class="service-desc">Generative AI and MCP driven workflows to speed up execution, support ideation, and scale template production.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Footer strip -->
+<div class="profile-footer">
+  <span class="profile-footer-note">Currently looking for my next role — open to full-time and contract, Paris or remote.</span>
+  <div class="profile-footer-links">
+    <a href="https://anisslimani.com" class="profile-footer-link">anisslimani.com</a>
+    <a href="mailto:anisslimani013@gmail.com" class="profile-footer-link">anisslimani013@gmail.com</a>
+    <a href="https://linkedin.com/in/anisslimani" class="profile-footer-link">linkedin.com/in/anisslimani</a>
+  </div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  const rand = (a, b) => a + Math.random() * (b - a);
+  /* A4 landscape ≈ 1122 × 794 CSS px at 96 dpi */
+  const W = 1122, H = 794;
+  const s = [];
+
+  /* 220 dim periwinkle stars */
+  for (let i = 0; i < 220; i++) {
+    const x = Math.floor(rand(0, W));
+    const y = Math.floor(rand(0, H));
+    const a = rand(0.10, 0.52).toFixed(2);
+    s.push(`${x}px ${y}px 0 0 rgba(204,204,255,${a})`);
+  }
+  /* 24 brighter white accent stars */
+  for (let i = 0; i < 24; i++) {
+    const x = Math.floor(rand(0, W));
+    const y = Math.floor(rand(0, H));
+    const a = rand(0.50, 0.88).toFixed(2);
+    const blur = Math.random() > 0.6 ? '1px' : '0px';
+    s.push(`${x}px ${y}px ${blur} 0 rgba(255,255,255,${a})`);
+  }
+
+  const shadow = s.join(',');
+
+  /* Inject a shared CSS class */
+  const style = document.createElement('style');
+  style.textContent = [
+    '.star-layer{',
+      'position:absolute;top:0;left:0;',
+      'width:1px;height:1px;',
+      'z-index:0;pointer-events:none;',
+      '-webkit-print-color-adjust:exact;',
+      'print-color-adjust:exact;',
+      `box-shadow:${shadow};`,
+    '}'
+  ].join('');
+  document.head.appendChild(style);
+
+  /* Add one star-layer div per page */
+  document.querySelectorAll('.page').forEach(function (p) {
+    const d = document.createElement('div');
+    d.className = 'star-layer';
+    p.insertBefore(d, p.firstChild);
+  });
+})();
+</script>
+</body>
+</html>
