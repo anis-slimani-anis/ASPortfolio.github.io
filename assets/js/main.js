@@ -139,16 +139,8 @@ const prefersReducedMotion = () => motionQuery ? motionQuery.matches : false;
     ctx.clearRect(0, 0, w, h);
 
     if (isLight) {
-      /* ── Light mode: soft glows + dark purple particles (fixed canvas) ── */
-
-      // Single soft glow — left side
-      const glow = ctx.createRadialGradient(w * 0.05, h * 0.4, 0, w * 0.05, h * 0.4, w * 0.3);
-      glow.addColorStop(0,   'rgba(150,170,245,0.09)');
-      glow.addColorStop(0.3, 'rgba(118,140,228,0.035)');
-      glow.addColorStop(0.6, 'rgba(92,112,205,0.012)');
-      glow.addColorStop(1,   'transparent');
-      ctx.fillStyle = glow;
-      ctx.fillRect(0, 0, w, h);
+      /* ── Light mode: transparent canvas, no background fill ── */
+      /* Canvas stays clear — white body background shows through cleanly */
 
     } else {
       /* ── Dark mode: sky gradient + nebula + stars ── */
@@ -333,7 +325,7 @@ const prefersReducedMotion = () => motionQuery ? motionQuery.matches : false;
         });
       }
     });
-  }, { threshold: 0.3 });
+  }, { rootMargin: '-15% 0px -15% 0px', threshold: 0 });
 
   sections.forEach(s => observer.observe(s));
 })();
@@ -729,6 +721,59 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
   });
 })();
 
+
+/* ── CARD SPOTLIGHT + TILT ──────────────────────────────────── */
+
+(function initCardEffects() {
+  if (!window.matchMedia('(hover: hover)').matches) return;
+  const cards = document.querySelectorAll('.case-card, .service-block');
+  if (!cards.length) return;
+
+  const BASE_T  = 'border-color 0.25s, box-shadow 0.2s';
+  const ENTER_T = BASE_T + ', transform 0.35s ease-out';
+  const MOVE_T  = BASE_T + ', transform 0.08s ease-out';
+  const LEAVE_T = BASE_T + ', transform 0.4s ease-out';
+
+  function reset(card) {
+    card.style.transition = LEAVE_T;
+    card.style.transform  = '';
+    card.style.setProperty('--cx', '50%');
+    card.style.setProperty('--cy', '50%');
+  }
+
+  cards.forEach(card => {
+    let moved = false;
+
+    card.addEventListener('mouseenter', () => {
+      moved = false;
+      card.style.transition = ENTER_T;
+    });
+
+    card.addEventListener('mousemove', e => {
+      const r  = card.getBoundingClientRect();
+      const x  = e.clientX - r.left;
+      const y  = e.clientY - r.top;
+      const rx = ((y / r.height) - 0.5) * -5;
+      const ry = ((x / r.width)  - 0.5) *  7;
+
+      card.style.setProperty('--cx', (x / r.width  * 100).toFixed(1) + '%');
+      card.style.setProperty('--cy', (y / r.height * 100).toFixed(1) + '%');
+
+      if (!moved) { card.style.transition = MOVE_T; moved = true; }
+      card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+    });
+
+    card.addEventListener('mouseleave', () => reset(card));
+  });
+
+  /* Reset on scroll — prevents stuck tilts when page scrolls under cursor */
+  window.addEventListener('scroll', () => {
+    cards.forEach(card => {
+      card.style.transition = '';
+      card.style.transform  = '';
+    });
+  }, { passive: true });
+})();
 
 /* ── HERO WORD CAROUSEL ─────────────────────────────────────── */
 (function initHeroWordCarousel() {
