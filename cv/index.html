@@ -17,7 +17,8 @@
     #cv {
       padding: calc(var(--nav-h, 64px) + 40px) var(--pad-x) 60px;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
     }
 
     /* A4 paper card */
@@ -128,6 +129,27 @@
     .cv-lang-level { font-size: 7.5pt; font-weight: 300; color: #888888; margin-left: 2px; }
 
     .cv-ref { font-size: 8.5pt; font-weight: 300; color: #888888; }
+    .cv-download-bar {
+      width: 100%;
+      max-width: 760px;
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 12px;
+      padding: 0 8px;
+    }
+    .cv-dl-btn {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: #888888;
+      background: none;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      padding: 0;
+    }
+    .cv-dl-btn:hover { color: #444; }
+    @media print { .cv-download-bar { display: none; } }
 
     [data-theme="light"] .cv-page {
       box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 14px rgba(0,0,0,0.05);
@@ -164,7 +186,7 @@
     <li><a href="/cv/" class="active" data-fr="CV">CV</a></li>
   </ul>
   <button class="lang-toggle" aria-label="Switch language"><svg width="14" height="10" viewBox="0 0 21 15"><rect width="7" height="15" fill="#002395"/><rect x="7" width="7" height="15" fill="#fff"/><rect x="14" width="7" height="15" fill="#ED2939"/></svg> FR</button>
-  <button class="theme-toggle" aria-label="Toggle light mode"><span class="icon-moon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg> <span data-fr="Clair">Light</span></span><span class="icon-sun"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg> <span data-fr="Sombre">Dark</span></span></button>
+  <button class="theme-toggle" aria-label="Toggle light mode"><span class="icon-moon"><span data-fr="Clair">Light</span></span><span class="icon-sun"><span data-fr="Sombre">Dark</span></span></button>
   <a href="mailto:anisslimani013@gmail.com" class="btn-nav" data-fr="Me recruter">Hire me</a>
   <button class="nav-burger" aria-label="Open menu" aria-expanded="false">
     <span></span><span></span><span></span>
@@ -192,13 +214,16 @@
   <div class="mobile-nav-footer">
     <a href="mailto:anisslimani013@gmail.com" class="mobile-nav-btn" data-fr="Me recruter">Hire me</a>
     <button class="mobile-nav-btn lang-toggle" aria-label="Switch language"><svg width="14" height="10" viewBox="0 0 21 15"><rect width="7" height="15" fill="#002395"/><rect x="7" width="7" height="15" fill="#fff"/><rect x="14" width="7" height="15" fill="#ED2939"/></svg> FR</button>
-    <button class="mobile-nav-btn theme-toggle" aria-label="Toggle light mode"><span class="icon-moon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span><span class="icon-sun"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span></button>
+    <button class="mobile-nav-btn theme-toggle" aria-label="Toggle light mode"><span class="icon-moon"><span data-fr="Clair">Light</span></span><span class="icon-sun"><span data-fr="Sombre">Dark</span></span></button>
   </div>
 </div>
 
 
 <!-- ── CV CONTENT ──────────────────────────────────────────── -->
 <section id="cv">
+  <div class="cv-download-bar">
+    <button onclick="window.print()" class="cv-dl-btn" data-fr="Télécharger PDF →">Download PDF →</button>
+  </div>
   <div class="cv-page">
 
     <div class="cv-header-row">

@@ -45,7 +45,7 @@
     <a href="#reflections" class="work-header-link" data-fr="Réflexions">Reflections</a>
   </div>
   <button class="lang-toggle" aria-label="Switch language"><svg width="14" height="10" viewBox="0 0 21 15"><rect width="7" height="15" fill="#002395"/><rect x="7" width="7" height="15" fill="#fff"/><rect x="14" width="7" height="15" fill="#ED2939"/></svg> FR</button>
-  <button class="theme-toggle" aria-label="Toggle light mode"><span class="icon-moon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg> <span data-fr="Clair">Light</span></span><span class="icon-sun"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg> <span data-fr="Sombre">Dark</span></span></button>
+  <button class="theme-toggle" aria-label="Toggle light mode"><span class="icon-moon"><span data-fr="Clair">Light</span></span><span class="icon-sun"><span data-fr="Sombre">Dark</span></span></button>
   <a href="mailto:anisslimani013@gmail.com" class="btn-nav" data-fr="Me recruter">Hire me</a>
   <button class="nav-burger" aria-label="Open menu" aria-expanded="false">
     <span></span><span></span><span></span>
@@ -74,7 +74,7 @@
   <div class="mobile-nav-footer">
     <a href="mailto:anisslimani013@gmail.com" class="mobile-nav-btn" data-fr="Me recruter">Hire me</a>
     <button class="mobile-nav-btn lang-toggle" aria-label="Switch language"><svg width="14" height="10" viewBox="0 0 21 15"><rect width="7" height="15" fill="#002395"/><rect x="7" width="7" height="15" fill="#fff"/><rect x="14" width="7" height="15" fill="#ED2939"/></svg> FR</button>
-    <button class="mobile-nav-btn theme-toggle" aria-label="Toggle light mode"><span class="icon-moon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span><span class="icon-sun"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span></button>
+    <button class="mobile-nav-btn theme-toggle" aria-label="Toggle light mode"><span class="icon-moon"><span data-fr="Clair">Light</span></span><span class="icon-sun"><span data-fr="Sombre">Dark</span></span></button>
   </div>
 </div>
 
@@ -118,6 +118,7 @@
 
 <div class="case-content-wrap">
   <a href="/#work" class="back-to-work" data-fr="← Retour">← Back</a>
+  <a href="/work/legalstart/" class="next-project" data-fr="Legalstart →">Legalstart →</a>
 
   <div class="img-block">
     <img class="case-img--bare" src="/assets/images/principotes-hero.webp" alt="Principotes Ksamil: Day and Night homepage designs" onerror="this.style.display='none'" loading="eager" decoding="async">
@@ -142,10 +143,30 @@
 
     <p data-fr="C'était mon premier rôle de lead designer unique sur un produit de sa conception jusqu'à son lancement. Le périmètre était bien plus large que le titre ne le laisse entendre. En pratique, cela signifiait prendre en charge simultanément chaque couche du produit :">This was my first role as the sole lead designer on a product from inception to ship. The scope was significantly wider than the title suggests. In practice, it meant owning every layer of the product simultaneously:</p>
 
+    <div class="img-block reveal">
+      <img class="case-img--bare" src="/assets/images/principotes-figma-structure.webp" alt="Principotes Figma file structure" onerror="this.style.display='none'" loading="lazy" decoding="async">
+    </div>
+
     <div class="decision-list">
 
       <div class="decision-item reveal">
         <div class="decision-num">01</div>
+        <div class="decision-body">
+          <h4 data-fr="Design system">Design system</h4>
+          <p data-fr="Design system Figma complet construit de zéro : architecture de tokens (couleurs, espacements, rayons, typographie, 17 styles de texte), composants de navigation (14 variantes sur Jour/Nuit × Desktop/Mobile × état), système de cards complet (8 types, chacun avec variantes Desktop et Mobile), système de boutons, inputs, toggle, footer, timeline, motifs et pages d'icônes et d'images. Chaque composant lié aux tokens pour le basculement automatique Jour/Nuit. Aucune valeur hexadécimale dans les composants. Uniquement des variables sémantiques.">Full Figma design system built from scratch: token architecture (colors, spacing, radius, typography, 17 text styles), navigation components (14 variants across Day/Night × Desktop/Mobile × state), full card system (8 card types, each with Desktop and Mobile variants), button system, inputs, toggle, footer, timeline, motifs, and icon and image pages. Every component token-bound for automatic Day/Night swap. No hex values in components. Strictly semantic variables throughout.</p>
+        </div>
+      </div>
+
+      <div class="decision-item reveal">
+        <div class="decision-num">02</div>
+        <div class="decision-body">
+          <h4 data-fr="Wireframes">Wireframes</h4>
+          <p data-fr="13 pages en modes Jour et Nuit : Accueil, Découvrir, Restaurant, Plage et Lounge, Bien-être, Expériences, Suites, Galerie (Jour), Accueil, Événements et Nuits, Galerie, Réserver (Nuit), plus des pages Restaurant et Réservation unifiées. Desktop 1440px et mobile 390px pour chaque page. L'UX de réservation s'inspirait du modèle Scorpios : l'espace d'abord (choisissez votre spot sur une carte), puis les options en sidebar. Le panier restait unifié entre les deux modes.">13 pages across Day and Night modes: Homepage, Discover, Restaurant, Beach &amp; Lounge, Wellness, Experiences, Suites, Gallery (Day), Homepage, Events &amp; Nightlife, Gallery, Reserve Now (Night), plus unified Restaurant and Reservation pages. Desktop 1440px and mobile 390px for each. The reservation UX followed a Scorpios-inspired space-first flow: pick your beach spot on a map, then surface add-ons in a sidebar. Basket unified across both modes.</p>
+        </div>
+      </div>
+
+      <div class="decision-item reveal">
+        <div class="decision-num">03</div>
         <div class="decision-body">
           <h4 data-fr="Identité de marque et identité visuelle">Branding &amp; visual identity</h4>
           <p data-fr-html="Deux identités de marque conçues de zéro : <strong>Principotes</strong> (luxe bohème raffiné : chaleureux, organique, éditorial) et <strong>La Guerre</strong> (obsidienne, or, cramoisi : énergie de boîte de nuit avec la retenue de la haute couture). La dualité jour/nuit devait donner l'impression de deux univers distincts, pas simplement de deux palettes. La typographie, les systèmes de motifs, l'architecture des tokens et l'interaction du toggle Jour/Nuit faisaient tous partie de cette couche.">Two brand identities designed from zero: <strong>Principotes</strong> (refined bohemian luxury: warm, organic, editorial) and <strong>La Guerre</strong> (obsidian, gold, crimson: nightclub energy with haute-couture restraint). The day/night duality had to feel like two distinct worlds, not two colour schemes. Typography, motif systems, token architecture, and the Day/Night toggle interaction were all part of this layer.</p>
@@ -154,7 +175,7 @@
       </div>
 
       <div class="decision-item reveal">
-        <div class="decision-num">02</div>
+        <div class="decision-num">04</div>
         <div class="decision-body">
           <h4 data-fr="Design graphique et print">Graphic design &amp; print</h4>
           <p data-fr="Supports de marque conçus dans Figma : menus, affiches d'événements, signalétique et assets print alignés sur les deux identités. Ce travail a nécessité d'intervenir sur l'ensemble de la chaîne du design graphique : mise en page, systèmes de motifs (vague, méandre, rameau d'olivier, vigne mosaïque, fleur azul) et contraintes d'impression, en parallèle du travail sur le produit digital.">Brand collateral designed in Figma: menus, event posters, in-venue signage, and print-ready assets aligned to both brand identities. This required working across the full graphic design stack: layout, motif systems (wave, meander, olive sprig, mosaic vine, azul flower), and print constraints, alongside the digital product work.</p>
@@ -162,30 +183,10 @@
       </div>
 
       <div class="decision-item reveal">
-        <div class="decision-num">03</div>
+        <div class="decision-num">05</div>
         <div class="decision-body">
           <h4 data-fr="3D et motion">3D &amp; motion</h4>
           <p data-fr="Animation 3D sur mesure réalisée dans Blender pour le hero du site : une scène animée de la plage de Ksamil, conçue pour être la première chose que voit un visiteur. Le brief motion était méditatif et lent : le rythme des Aman Hotels, pas l'énergie publicitaire. C'était le flux de travail le plus techniquement isolé, entièrement hors de Figma, et celui où le contexte physique de la marque (la vraie plage, la vraie lumière) a le plus directement informé le résultat.">Custom 3D animation built in Blender for the website hero: an animated Ksamil beach scene designed to be the first thing a visitor sees. The motion brief was meditative and slow: Aman Hotels pacing, not advertising energy. This was the most technically isolated workstream, entirely outside Figma, and the one where the brand's physical context (the actual beach, the actual light) most directly informed the output.</p>
-        </div>
-      </div>
-
-      <div class="img-block reveal">
-        <img class="case-img--bare" src="/assets/images/principotes-3D.webp" alt="Principotes 3D animation in Blender" onerror="this.style.display='none'" loading="lazy" decoding="async">
-      </div>
-
-      <div class="decision-item reveal">
-        <div class="decision-num">04</div>
-        <div class="decision-body">
-          <h4 data-fr="Wireframes">Wireframes</h4>
-          <p data-fr="13 pages en modes Jour et Nuit : Accueil, Découvrir, Restaurant, Plage et Lounge, Bien-être, Expériences, Suites, Galerie (Jour), Accueil, Événements et Nuits, Galerie, Réserver (Nuit), plus des pages Restaurant et Réservation unifiées. Desktop 1440px et mobile 390px pour chaque page. L'UX de réservation s'inspirait du modèle Scorpios : l'espace d'abord (choisissez votre spot sur une carte), puis les options en sidebar. Le panier restait unifié entre les deux modes.">13 pages across Day and Night modes: Homepage, Discover, Restaurant, Beach &amp; Lounge, Wellness, Experiences, Suites, Gallery (Day), Homepage, Events &amp; Nightlife, Gallery, Reserve Now (Night), plus unified Restaurant and Reservation pages. Desktop 1440px and mobile 390px for each. The reservation UX followed a Scorpios-inspired space-first flow: pick your beach spot on a map, then surface add-ons in a sidebar. Basket unified across both modes.</p>
-        </div>
-      </div>
-
-      <div class="decision-item reveal">
-        <div class="decision-num">05</div>
-        <div class="decision-body">
-          <h4 data-fr="Design system">Design system</h4>
-          <p data-fr="Design system Figma complet construit de zéro : architecture de tokens (couleurs, espacements, rayons, typographie, 17 styles de texte), composants de navigation (14 variantes sur Jour/Nuit × Desktop/Mobile × état), système de cards complet (8 types, chacun avec variantes Desktop et Mobile), système de boutons, inputs, toggle, footer, timeline, motifs et pages d'icônes et d'images. Chaque composant lié aux tokens pour le basculement automatique Jour/Nuit. Aucune valeur hexadécimale dans les composants. Uniquement des variables sémantiques.">Full Figma design system built from scratch: token architecture (colors, spacing, radius, typography, 17 text styles), navigation components (14 variants across Day/Night × Desktop/Mobile × state), full card system (8 card types, each with Desktop and Mobile variants), button system, inputs, toggle, footer, timeline, motifs, and icon and image pages. Every component token-bound for automatic Day/Night swap. No hex values in components. Strictly semantic variables throughout.</p>
         </div>
       </div>
 
@@ -200,7 +201,7 @@
     </div>
 
     <div class="img-block reveal">
-      <img class="case-img--bare" src="/assets/images/principotes-figma-structure.webp" alt="Principotes Figma file structure" onerror="this.style.display='none'" loading="lazy" decoding="async">
+      <img class="case-img--bare" src="/assets/images/principotes-3D.webp" alt="Principotes 3D animation in Blender" onerror="this.style.display='none'" loading="lazy" decoding="async">
     </div>
   </div>
 
