@@ -2584,12 +2584,21 @@ nav.work-header {
   padding-left: 12px;
   padding-right: 12px;
 }
-.mobile-nav-footer .theme-toggle .icon-moon,
-.mobile-nav-footer .theme-toggle .icon-sun {
+.mobile-nav-footer .theme-toggle .icon-moon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 16px;
+}
+.mobile-nav-footer .theme-toggle .icon-sun {
+  display: none;
+}
+[data-theme="light"] .mobile-nav-footer .theme-toggle .icon-moon {
+  display: none;
+}
+[data-theme="light"] .mobile-nav-footer .theme-toggle .icon-sun {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media (max-width: 1024px) {
@@ -2675,6 +2684,7 @@ nav.work-header {
   /* Block canvas glow in hero on mobile light — glow starts from work section */
   [data-theme="light"] #hero {
     background: var(--bg);
+    gap: 24px;
   }
   .hero-left { padding-right: 0; align-items: center; text-align: center; position: relative; z-index: 2; }
   .hero-eyebrow { font-size: 10px; margin-top: 0; margin-bottom: 24px; }
