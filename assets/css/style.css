@@ -444,6 +444,7 @@ body::-webkit-scrollbar-button {
   border: none !important;
   border-bottom: 1px dashed rgba(0,0,0,0.14) !important;
   background: transparent !important;
+  box-shadow: none !important;
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
@@ -451,9 +452,9 @@ body::-webkit-scrollbar-button {
   border-bottom: none !important;
 }
 [data-theme="light"] .contact-link-icon {
-  border-radius: 2px !important;
-  background: rgba(0,0,0,0.05) !important;
-  border-color: rgba(0,0,0,0.10) !important;
+  background: transparent !important;
+  border: none !important;
+  color: rgba(0,0,0,0.45) !important;
 }
 /* Receipt form inputs — underline only, no input box */
 [data-theme="light"] .contact-form .form-field input,
@@ -814,13 +815,15 @@ h1 em, h2 em {
 }
 [data-theme="light"] .lang-toggle:hover,
 [data-theme="light"] .theme-toggle:hover,
-[data-theme="light"] .contact-link:hover,
 [data-theme="light"] .mobile-nav-btn:hover,
 [data-theme="light"] .btn-secondary:hover {
   background: #f0f4ff;
   border-color: rgba(74,74,72,0.50);
   color: #4a4a48;
   box-shadow: 0 2px 6px rgba(74,74,72,0.10);
+}
+[data-theme="light"] .contact-link:hover {
+  background: rgba(0,0,0,0.03) !important;
 }
 
 /* ── 4. STARFIELD ─────────────────────────────────────────── */
