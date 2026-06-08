@@ -231,6 +231,7 @@ const prefersReducedMotion = () => motionQuery ? motionQuery.matches : false;
     } else {
       paused = false;
       lastFrameTime = 0;                            // reset so first frame is skipped cleanly
+      fallingStars = [];                            // flush any stars that queued while hidden
       // Reset all twinkling so stars don't flash on return
       stars.forEach(s => { s.alpha = s.baseA; s.twinkling = false; });
       requestAnimationFrame(drawFrame);
@@ -603,8 +604,6 @@ const prefersReducedMotion = () => motionQuery ? motionQuery.matches : false;
      e.g. https://formspree.io/f/xyzabc12
 */
 
-/* ── 5. CONTACT FORM ───────────────────────────────────────── */
-
 const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
 
 (function initForm() {
@@ -770,11 +769,15 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
   });
 
   /* Reset on scroll — prevents stuck tilts when page scrolls under cursor */
+  let tiltResetTicking = false;
   window.addEventListener('scroll', () => {
-    cards.forEach(card => {
-      card.style.transition = '';
-      card.style.transform  = '';
-    });
+    if (!tiltResetTicking) {
+      tiltResetTicking = true;
+      requestAnimationFrame(() => {
+        cards.forEach(card => { card.style.transition = ''; card.style.transform = ''; });
+        tiltResetTicking = false;
+      });
+    }
   }, { passive: true });
 })();
 
@@ -792,10 +795,6 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
 
   function getLang() {
     return document.documentElement.lang === 'fr' ? 'fr' : 'en';
-  }
-
-  function prefersReducedMotion() {
-    return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }
 
   function run() {
@@ -899,6 +898,10 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
     if (!rafId && el) rafId = requestAnimationFrame(tick);
   }, { passive: true });
 
-  document.addEventListener('DOMContentLoaded', sync);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', sync);
+  } else {
+    sync();
+  }
   document.addEventListener('site:themechange', sync);
 })();
