@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anis Slimani — Lead Product Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #f4f4f6;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      color: #333;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .page-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px 60px;
+    }
+
+    .dl-bar {
+      width: 100%;
+      max-width: 760px;
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 12px;
+    }
+    .dl-btn {
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 500;
+      color: #888;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+    .dl-btn:hover { color: #333; }
+
+    .cv {
+      width: 100%;
+      max-width: 760px;
+      background: #fff;
+      border-radius: 12px;
+      padding: 52px 56px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08), 0 8px 32px rgba(0,0,0,0.06);
+      color: #333;
+    }
+
+    /* ── Header ── */
+    .cv-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding-bottom: 18px;
+      border-bottom: 1.5px solid #080029;
+    }
+    .cv-name {
+      font-size: 28pt;
+      font-weight: 300;
+      letter-spacing: -0.3px;
+      line-height: 1;
+      color: #080029;
+    }
+    .cv-title {
+      font-size: 7.5pt;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #3e3e3e;
+      margin-top: 6px;
+    }
+    .cv-contacts {
+      text-align: right;
+      font-size: 8pt;
+      color: #888;
+      line-height: 1.75;
+    }
+    .cv-contacts a { color: #888; text-decoration: none; }
+
+    /* ── Section ── */
+    .cv-section {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 0.5px solid #ddd;
+    }
+    .cv-header + .cv-section { border-top: none; padding-top: 0; }
+    .cv-label {
+      font-size: 6.5pt;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #080029;
+      margin-bottom: 12px;
+    }
+
+    /* ── Profile ── */
+    .cv-profile { font-size: 9pt; font-weight: 300; line-height: 1.6; }
+
+    /* ── Skills ── */
+    .cv-skill { display: flex; margin-bottom: 6px; }
+    .cv-skill:last-child { margin-bottom: 0; }
+    .cv-skill-cat {
+      font-size: 7.5pt;
+      font-weight: 600;
+      color: #080029;
+      min-width: 110px;
+      flex-shrink: 0;
+      padding-top: 1px;
+    }
+    .cv-skill-val { font-size: 8.5pt; font-weight: 300; line-height: 1.5; }
+
+    /* ── Experience ── */
+    .cv-exp { margin-bottom: 16px; }
+    .cv-exp:last-child { margin-bottom: 0; }
+    .cv-exp-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 1px;
+    }
+    .cv-company { font-size: 10.5pt; font-weight: 600; color: #080029; }
+    .cv-dates { font-size: 8pt; font-weight: 300; color: #888; white-space: nowrap; }
+    .cv-role {
+      font-size: 7.5pt;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #3e3e3e;
+      margin-bottom: 8px;
+    }
+    .cv-loc { font-weight: 300; color: #888; letter-spacing: 0; text-transform: none; }
+    .cv-bullets { list-style: none; }
+    .cv-bullets li {
+      font-size: 8.5pt;
+      font-weight: 300;
+      line-height: 1.55;
+      padding-left: 10px;
+      position: relative;
+      margin-bottom: 3px;
+    }
+    .cv-bull { position: absolute; left: 0; color: #ccc; font-size: 8pt; line-height: 1.55; }
+    .cv-bullets strong { font-weight: 500; }
+
+    /* ── Education ── */
+    .cv-edu { margin-bottom: 12px; }
+    .cv-edu:last-child { margin-bottom: 0; }
+    .cv-edu-top { display: flex; justify-content: space-between; align-items: baseline; }
+    .cv-school { font-size: 10pt; font-weight: 600; color: #080029; }
+    .cv-edu-dates { font-size: 8pt; font-weight: 300; color: #888; white-space: nowrap; }
+    .cv-edu-meta { font-size: 8pt; font-weight: 300; color: #3e3e3e; margin-top: 1px; }
+    .cv-edu-field { font-size: 8.5pt; font-weight: 400; }
+
+    /* ── Languages ── */
+    .cv-langs { display: flex; flex-wrap: wrap; gap: 6px 24px; }
+    .cv-lang { font-size: 8.5pt; font-weight: 400; }
+    .cv-lang-lv { font-size: 7.5pt; font-weight: 300; color: #888; margin-left: 2px; }
+
+    /* ── Print ── */
+    @media print {
+      @page { size: A4; margin: 0; }
+      body { background: #fff !important; }
+      .page-wrap { padding: 0 !important; display: block !important; }
+      .dl-bar { display: none !important; }
+      .cv {
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        max-width: none !important;
+        width: 100% !important;
+        padding: 11mm 13mm !important;
+      }
+      .cv-name { color: #080029 !important; }
+      .cv-section { margin-top: 9px !important; padding-top: 7px !important; }
+      .cv-label { margin-bottom: 7px !important; }
+      .cv-skill { margin-bottom: 4px !important; }
+      .cv-exp { margin-bottom: 10px !important; }
+      .cv-role { margin-bottom: 6px !important; }
+      .cv-bullets li { margin-bottom: 2px !important; }
+      .cv-edu { margin-bottom: 8px !important; }
+      .cv-header { padding-bottom: 11px !important; }
+    }
+
+    @media (max-width: 600px) {
+      .cv { padding: 32px 24px; border-radius: 0; }
+      .cv-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .cv-contacts { text-align: left; display: flex; flex-wrap: wrap; gap: 0 14px; }
+      .cv-name { font-size: 22pt; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <div class="dl-bar">
+    <button onclick="window.print()" class="dl-btn">Download PDF &rarr;</button>
+  </div>
+
+  <div class="cv">
+
+    <div class="cv-header">
+      <div>
+        <h1 class="cv-name">Anis Slimani</h1>
+        <p class="cv-title">Lead Product Manager</p>
+      </div>
+      <div class="cv-contacts">
+        <div><a href="https://anisslimani.com">anisslimani.com</a></div>
+        <div><a href="mailto:anisslimani013@gmail.com">anisslimani013@gmail.com</a></div>
+        <div><a href="https://linkedin.com/in/anisslimani">linkedin.com/in/anisslimani</a></div>
+        <div>Paris, France</div>
+      </div>
+    </div>
+
+    <div class="cv-section">
+      <h2 class="cv-label">Profile</h2>
+      <p class="cv-profile">Product manager with a strong design and technical background, experienced in owning 0-to-1 launches, managing end-to-end roadmaps, and driving measurable growth in SaaS and LegalTech environments. Comfortable leading cross-functional teams, running discovery, and shipping data-informed decisions at pace. Native AI tooling approach.</p>
+    </div>
+
+    <div class="cv-section">
+      <h2 class="cv-label">Skills</h2>
+      <div class="cv-skill">
+        <span class="cv-skill-cat">Product</span>
+        <span class="cv-skill-val">Roadmap Planning, User Story Mapping, OKR Frameworks, Discovery and Validation, A/B Testing, CRO, Stakeholder Management</span>
+      </div>
+      <div class="cv-skill">
+        <span class="cv-skill-cat">Analytics</span>
+        <span class="cv-skill-val">Amplitude, Dovetail, Funnel Analysis, Cohort Tracking, CSUQ / SUS, User Interviews, Heuristic Evaluation</span>
+      </div>
+      <div class="cv-skill">
+        <span class="cv-skill-cat">Design</span>
+        <span class="cv-skill-val">Figma, Design Systems, Wireframing, Prototyping, Accessibility (WCAG), Design Tokens</span>
+      </div>
+      <div class="cv-skill">
+        <span class="cv-skill-cat">Tech</span>
+        <span class="cv-skill-val">HTML/CSS, JavaScript, basic React, Git, AI Workflow Automation, Prompt Engineering, Claude Code</span>
+      </div>
+    </div>
+
+    <div class="cv-section">
+      <h2 class="cv-label">Experience</h2>
+
+      <div class="cv-exp">
+        <div class="cv-exp-top">
+          <span class="cv-company">Principotes</span>
+          <span class="cv-dates">Apr 2026 &ndash; Present</span>
+        </div>
+        <p class="cv-role">Lead Product Manager <span class="cv-loc">&middot; Paris, France (Full-Remote)</span></p>
+        <ul class="cv-bullets">
+          <li><span class="cv-bull">&middot;</span><strong>Product System:</strong> Owned delivery of a production-ready system solo — 9 components, 28 screens, dual brand identity and token-based switching — shipped in under 6 weeks.</li>
+          <li><span class="cv-bull">&middot;</span><strong>E-commerce &amp; Ops:</strong> Led post-launch e-commerce rollout, POS and SevenRooms integration, and full operational scale-up through June 2026.</li>
+          <li><span class="cv-bull">&middot;</span><strong>Brand Strategy:</strong> Directed full visual identity from scratch — logotype to 3D assets — defining luxury positioning end to end.</li>
+          <li><span class="cv-bull">&middot;</span><strong>Implementation:</strong> Bridged product and engineering by coding component changes and UI fixes directly via AI tooling, ensuring front-end fidelity with no handoff gap.</li>
+        </ul>
+      </div>
+
+      <div class="cv-exp">
+        <div class="cv-exp-top">
+          <span class="cv-company">Legalstart</span>
+          <span class="cv-dates">Apr 2025 &ndash; Apr 2026</span>
+        </div>
+        <p class="cv-role">Product Designer (PM hat) <span class="cv-loc">&middot; Paris, France</span></p>
+        <ul class="cv-bullets">
+          <li><span class="cv-bull">&middot;</span><strong>Product Rebranding:</strong> Led the redesign of the Creation/Registration flow as primary designer, challenging and validating directions cross-functionally. 100+ screens for 2,000 monthly active users, clarity score up from 4.2 to 4.9/5.</li>
+          <li><span class="cv-bull">&middot;</span><strong>Conversion Funnel:</strong> Audited 15 acquisition funnels and ran user interviews to surface friction points, contributing to 5% churn reduction and 2% conversion increase.</li>
+          <li><span class="cv-bull">&middot;</span><strong>Design System:</strong> Maintained and extended the Figma component library alongside the rebranding, delivering 10% velocity gain for the team.</li>
+          <li><span class="cv-bull">&middot;</span><strong>AI Workflow:</strong> Integrated generative AI and MCP tooling into the workflow, scaling template production to 50+.</li>
+        </ul>
+      </div>
+
+      <div class="cv-exp">
+        <div class="cv-exp-top">
+          <span class="cv-company">ILAR</span>
+          <span class="cv-dates">May 2024 &ndash; Aug 2024</span>
+        </div>
+        <p class="cv-role">Product Designer &middot; Internship <span class="cv-loc">&middot; Tirana, Albania</span></p>
+        <ul class="cv-bullets">
+          <li><span class="cv-bull">&middot;</span><strong>0-to-1:</strong> Full visual library and UI components built autonomously to initiate the digital transformation of a traditional business.</li>
+          <li><span class="cv-bull">&middot;</span><strong>Product Ownership:</strong> Designed key page templates and owned all UX/UI decisions independently in the absence of existing product culture.</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="cv-section">
+      <h2 class="cv-label">Education</h2>
+      <div class="cv-edu">
+        <div class="cv-edu-top">
+          <span class="cv-school">Universit&eacute; Paris-Saclay</span>
+          <span class="cv-edu-dates">2023 &ndash; 2025</span>
+        </div>
+        <p class="cv-edu-meta">Master's (MSc) &middot; Essonne, France</p>
+        <p class="cv-edu-field">Human-Computer Interaction</p>
+      </div>
+      <div class="cv-edu">
+        <div class="cv-edu-top">
+          <span class="cv-school">Universit&eacute; Gustave Eiffel</span>
+          <span class="cv-edu-dates">2020 &ndash; 2023</span>
+        </div>
+        <p class="cv-edu-meta">Bachelor's &middot; Champs-sur-Marne, France</p>
+        <p class="cv-edu-field">Visual Studies, Media &amp; Digital Arts</p>
+      </div>
+    </div>
+
+    <div class="cv-section">
+      <h2 class="cv-label">Languages</h2>
+      <div class="cv-langs">
+        <span class="cv-lang">French <span class="cv-lang-lv">Professional C1</span></span>
+        <span class="cv-lang">English <span class="cv-lang-lv">EFSET C2, CLUE C1</span></span>
+        <span class="cv-lang">Albanian <span class="cv-lang-lv">Native language</span></span>
+        <span class="cv-lang">Spanish <span class="cv-lang-lv">A2</span></span>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

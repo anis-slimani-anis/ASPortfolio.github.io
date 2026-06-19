@@ -159,7 +159,7 @@
         border-radius: 0 !important;
         max-width: none !important;
         width: 100% !important;
-        padding: 12mm 14mm !important;
+        padding: 9mm 12mm !important;
       }
       /* Fix: light-mode gradient text makes name invisible in print */
       h1, h2, h3, .cv-name {
@@ -169,14 +169,15 @@
         color: #080029 !important;
       }
       /* Vertical rhythm — fits one A4 page with breathing room */
-      .cv-header-row { padding-bottom: 13px !important; }
-      .cv-section { margin-top: 10px !important; padding-top: 8px !important; }
-      .cv-section-label { margin-bottom: 8px !important; }
+      .cv-header-row { padding-bottom: 14px !important; }
+      .cv-section { margin-top: 12px !important; padding-top: 9px !important; }
+      .cv-section-label { margin-bottom: 9px !important; }
       .cv-skills-row { margin-bottom: 4px !important; }
       .cv-exp { margin-bottom: 12px !important; }
       .cv-exp-role { margin-bottom: 7px !important; }
-      .cv-bullets li { margin-bottom: 2px !important; }
+      .cv-bullets li { margin-bottom: 3px !important; }
       .cv-edu { margin-bottom: 9px !important; }
+      .cv-lang-row { gap: 4px 14px !important; flex-wrap: nowrap !important; }
     }
 
     [data-theme="light"] .cv-page {
@@ -289,20 +290,7 @@
     </div>
 
     <div class="cv-section">
-      <h2 class="cv-section-label" data-fr="Expériences">Experience</h2>
-
-      <div class="cv-exp">
-        <div class="cv-exp-top">
-          <span class="cv-company">Legalstart</span>
-          <span class="cv-dates" data-fr="Avr 2025 · Avr 2026">Apr 2025 · Apr 2026</span>
-        </div>
-        <p class="cv-exp-role" data-fr-html="Full-stack Product Designer · CDD <span class='cv-exp-loc'>· Paris, France</span>">Full-stack Product Designer · Fixed-Term <span class="cv-exp-loc">· Paris, France</span></p>
-        <ul class="cv-bullets">
-          <li><span class="cv-bull">·</span><strong data-fr="Rebranding produit :">Product Rebranding:</strong> <span data-fr="Lead designer sur la refonte du parcours Création/Immatriculation — 100+ écrans, 2K MAU — avec validation transverse et tests empiriques. Score de clarté 4,2 → 4,9/5 (CSUQ).">Led redesign of the Creation/Registration flow as primary designer — 100+ screens, 2K MAU — with cross-functional validation, lifting clarity from 4.2 to 4.9/5 (CSUQ).</span></li>
-          <li><span class="cv-bull">·</span><strong data-fr="CRO &amp; Funnels :">CRO &amp; Funnels:</strong> <span data-fr="Audit de 15 funnels et entretiens utilisateurs pour cartographier les frictions ; contribution à 5% de churn en moins et +2% de conversion, suivi Amplitude.">Audited 15 acquisition funnels and ran user interviews to map friction, contributing to 5% churn reduction and +2% conversion — tracked in Amplitude.</span></li>
-          <li><span class="cv-bull">·</span><strong data-fr="Design system &amp; IA :">Design System &amp; AI:</strong> <span data-fr="Extension de la bibliothèque Figma en parallèle du rebranding — gain de 10% de vélocité — et production de 50+ templates via outils génératifs et MCP.">Extended the Figma component library through the live rebranding — 10% team velocity gain — and scaled template output to 50+ assets using generative AI and MCP tooling.</span></li>
-        </ul>
-      </div>
+      <h2 class="cv-section-label" data-fr="Expérience">Experience</h2>
 
       <div class="cv-exp">
         <div class="cv-exp-top">
@@ -311,9 +299,24 @@
         </div>
         <p class="cv-exp-role" data-fr-html="Full-stack Product Designer · Freelance <span class='cv-exp-loc'>· Paris, France (Full Remote)</span>">Full-stack Product Designer · Freelance <span class="cv-exp-loc">· Paris, France (Full Remote)</span></p>
         <ul class="cv-bullets">
-          <li><span class="cv-bull">·</span><strong data-fr="Identité &amp; système :">Brand &amp; System:</strong> <span data-fr="Système de marque complet livré seul en moins de 6 semaines — logotype, hero 3D animé, 18 component sets (149 variantes), basculement Jour/Nuit par tokens.">Delivered a full brand system solo in under 6 weeks — logotype, 3D animated hero, 18 component sets with 149 variants, and token-based Day/Night switching.</span></li>
-          <li><span class="cv-bull">·</span><strong data-fr="Web Design :">Web Design:</strong> <span data-fr="30 frames haute-fidélité sur 13 pages en desktop (1440px) et mobile (390px), les deux modes de marque, prêts au handoff.">Produced 30 high-fidelity frames across 13 pages at desktop (1440px) and mobile (390px), both brand modes, developer-ready.</span></li>
-          <li><span class="cv-bull">·</span><strong data-fr="Implémentation :">Implementation:</strong> <span data-fr="Relier design et développement en codant directement les modifications UI via Claude Code — fidélité front-end garantie, sans gap de passation.">Bridged design and development by writing and fixing component-level code directly via Claude Code, ensuring pixel-accurate front-end with no handoff gap.</span></li>
+          <li><span class="cv-bull">·</span><strong data-fr="Système de design :">Design System:</strong> <span data-fr="Système production-ready livré en autonomie, 9 composants et 28 écrans avec double identité de marque et basculement par tokens.">Production-ready system delivered solo — 9 components and 28 screens with dual brand identity and token-based switching.</span></li>
+          <li><span class="cv-bull">·</span><strong data-fr="Implémentation :">Implementation:</strong> <span data-fr="Utilisation de l'IA pour relier design et développement en codant directement les modifications des composants et d'interface, garantissant la fidélité du front-end.">Leveraged AI to bridge design and development by coding component changes and UI fixes directly, ensuring front-end fidelity.</span></li>
+          <li><span class="cv-bull">·</span><strong data-fr="E-commerce &amp; Ops :">E-commerce &amp; Ops:</strong> <span data-fr="Déploiement e-commerce post-lancement, intégration POS et SevenRooms, montée en charge opérationnelle complète juin 2026.">Post-launch e-commerce rollout, POS and SevenRooms integration, full operational scale-up June 2026.</span></li>
+          <li><span class="cv-bull">·</span><strong data-fr="Identité de marque :">Brand Identity:</strong> <span data-fr="Identité visuelle complète de zéro, du logotype aux assets 3D, positionnement luxe en moins de 6 semaines.">Full visual identity from scratch, logotype to 3D assets, luxury positioning in under 6 weeks.</span></li>
+        </ul>
+      </div>
+
+      <div class="cv-exp">
+        <div class="cv-exp-top">
+          <span class="cv-company">Legalstart</span>
+          <span class="cv-dates" data-fr="Avr 2025 · Avr 2026">Apr 2025 · Apr 2026</span>
+        </div>
+        <p class="cv-exp-role" data-fr-html="Full-stack Product Designer · CDD <span class='cv-exp-loc'>· Paris, France</span>">Full-stack Product Designer · Fixed-Term <span class="cv-exp-loc">· Paris, France</span></p>
+        <ul class="cv-bullets">
+          <li><span class="cv-bull">·</span><strong data-fr="Rebranding produit :">Product Rebranding:</strong> <span data-fr="Designer principal sur la refonte du parcours Création/Immatriculation, challengeant les directions en collaboration transverse. +100 écrans pour 2 000 utilisateurs mensuels, score de clarté de 4,2 à 4,9/5.">Led the redesign of the Creation/Registration flow as primary designer, challenging and validating directions cross-functionally. 100+ screens for 2,000 monthly active users, clarity score up from 4.2 to 4.9/5.</span></li>
+          <li><span class="cv-bull">·</span><strong data-fr="Funnel de conversion :">Conversion Funnel:</strong> <span data-fr="Audit de 15 funnels d'acquisition et entretiens utilisateurs pour identifier les frictions, contribuant à une réduction du churn de 5% et une hausse de conversion de 2%.">Audited 15 acquisition funnels and ran user interviews to surface friction points, contributing to 5% churn reduction and 2% conversion increase.</span></li>
+          <li><span class="cv-bull">·</span><strong data-fr="Design system :">Design System:</strong> <span data-fr="Maintenance et extension de la bibliothèque Figma en parallèle du rebranding, gain de 10% de vélocité pour l'équipe design.">Maintained and extended the Figma component library alongside the rebranding, delivering 10% velocity gain for the design team.</span></li>
+          <li><span class="cv-bull">·</span><strong data-fr="Workflow IA :">AI Workflow:</strong> <span data-fr="Intégration d'outils génératifs et MCP dans le workflow design, production de 50+ templates à l'échelle.">Integrated generative AI and MCP tooling into the design workflow, scaling template production to 50+.</span></li>
         </ul>
       </div>
 
@@ -324,7 +327,8 @@
         </div>
         <p class="cv-exp-role" data-fr-html="UX/UI Designer · Stage <span class='cv-exp-loc'>· Tirana, Albanie</span>">UX/UI Designer · Internship <span class="cv-exp-loc">· Tirana, Albania</span></p>
         <ul class="cv-bullets">
-          <li><span class="cv-bull">·</span><strong data-fr="UX/UI :">UX/UI:</strong> <span data-fr="Prise en charge autonome de l'ensemble UX/UI — bibliothèque visuelle, composants et templates — pour amorcer la transformation digitale d'une entreprise sans culture produit existante.">Owned all UX/UI decisions autonomously — visual library, UI components, and page templates — initiating the digital transformation of a business with no existing design culture.</span></li>
+          <li><span class="cv-bull">·</span><strong data-fr="Design system :">Design System:</strong> <span data-fr="Création autonome de la bibliothèque visuelle et des composants UI pour amorcer la transformation digitale d'une entreprise traditionnelle.">Full visual library and UI components built autonomously to initiate the digital transformation of a traditional business.</span></li>
+          <li><span class="cv-bull">·</span><strong data-fr="Direction créative :">Creative Direction:</strong> <span data-fr="Conception des templates de pages clés et pilotage des décisions UX/UI en l'absence de culture produit interne.">Designed key page templates and owned all UX/UI decisions independently in the absence of existing product culture.</span></li>
         </ul>
       </div>
     </div>
@@ -334,7 +338,7 @@
       <div class="cv-edu">
         <div class="cv-edu-top">
           <span class="cv-school">Université Paris-Saclay</span>
-          <span class="cv-edu-dates" data-fr="2025 · 2026">2025 · 2026</span>
+          <span class="cv-edu-dates" data-fr="2023 · 2025">2023 · 2025</span>
         </div>
         <p class="cv-edu-meta" data-fr="Master (MSc) · Bac +5 · Essonne, France">Master's (MSc) · Bac +5 · Essonne, France</p>
         <p class="cv-edu-field">Human-Computer Interaction</p>
@@ -352,17 +356,13 @@
     <div class="cv-section">
       <h2 class="cv-section-label" data-fr="Langues">Languages</h2>
       <div class="cv-lang-row">
-        <span class="cv-lang-item" data-fr-html="Français <span class='cv-lang-level'>C1</span>">French <span class="cv-lang-level">C1</span></span>
-        <span class="cv-lang-item" data-fr-html="Anglais <span class='cv-lang-level'>C2</span>">English <span class="cv-lang-level">C2</span></span>
-        <span class="cv-lang-item" data-fr-html="Albanais <span class='cv-lang-level'>Langue maternelle</span>">Albanian <span class="cv-lang-level">Native</span></span>
+        <span class="cv-lang-item" data-fr-html="Français <span class='cv-lang-level'>Professionnel C1</span>">French <span class="cv-lang-level">Professional C1</span></span>
+        <span class="cv-lang-item" data-fr-html="Anglais <span class='cv-lang-level'>EFSET C2, CLUE C1</span>">English <span class="cv-lang-level">EFSET C2, CLUE C1</span></span>
+        <span class="cv-lang-item" data-fr-html="Albanais <span class='cv-lang-level'>Langue maternelle</span>">Albanian <span class="cv-lang-level">Native language</span></span>
         <span class="cv-lang-item" data-fr-html="Espagnol <span class='cv-lang-level'>A2</span>">Spanish <span class="cv-lang-level">A2</span></span>
       </div>
     </div>
 
-    <div class="cv-section">
-      <h2 class="cv-section-label" data-fr="Références">References</h2>
-      <p class="cv-ref" data-fr="Disponibles sur demande.">Available upon request.</p>
-    </div>
 
 
   </div>
