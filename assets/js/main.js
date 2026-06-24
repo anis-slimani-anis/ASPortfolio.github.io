@@ -784,8 +784,8 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
 /* ── HERO WORD CAROUSEL ─────────────────────────────────────── */
 (function initHeroWordCarousel() {
   const SEQUENCE = {
-    en: ['usability', 'trust', 'flow', 'impact', 'intuition', 'clarity'],
-    fr: ['optimisée', 'intuitive', 'fluide', 'impactante', 'clarifiée', 'simplifiée'],
+    en: ['impact', 'flow', 'trust', 'clarity'],
+    fr: ['transformée', 'clarifiée', 'fluide', 'impactante', 'simplifiée'],
   };
   const HOLD_MS = 1500;
   const OUT_MS  = 180;

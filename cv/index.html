@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="color-scheme" content="light dark">
   <title>CV · Anis Slimani</title>
-  <meta name="description" content="CV of Anis Slimani — Full-Stack Product Designer based in Paris.">
+  <meta name="description" content="CV of Anis Slimani, Product Manager and Product Designer based in Paris.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -151,7 +151,7 @@
     .cv-dl-btn:hover { color: #444; }
     @media print {
       @page { size: A4; margin: 0; }
-      #starfield, .nav, .mobile-nav-overlay, .cv-download-bar { display: none !important; }
+      #starfield, .nav, .mobile-nav-overlay, .cv-download-bar, .cv-role-toggle { display: none !important; }
       body { background: #fff !important; animation: none !important; }
       #cv { padding: 0 !important; display: block !important; }
       .cv-page {
@@ -169,14 +169,14 @@
         color: #080029 !important;
       }
       /* Vertical rhythm — fits one A4 page with breathing room */
-      .cv-header-row { padding-bottom: 14px !important; }
-      .cv-section { margin-top: 12px !important; padding-top: 9px !important; }
-      .cv-section-label { margin-bottom: 9px !important; }
-      .cv-skills-row { margin-bottom: 4px !important; }
-      .cv-exp { margin-bottom: 12px !important; }
-      .cv-exp-role { margin-bottom: 7px !important; }
-      .cv-bullets li { margin-bottom: 3px !important; }
-      .cv-edu { margin-bottom: 9px !important; }
+      .cv-header-row { padding-bottom: 12px !important; }
+      .cv-section { margin-top: 9px !important; padding-top: 7px !important; }
+      .cv-section-label { margin-bottom: 8px !important; }
+      .cv-skills-row { margin-bottom: 3px !important; }
+      .cv-exp { margin-bottom: 10px !important; }
+      .cv-exp-role { margin-bottom: 6px !important; }
+      .cv-bullets li { margin-bottom: 2px !important; }
+      .cv-edu { margin-bottom: 7px !important; }
       .cv-lang-row { gap: 4px 14px !important; flex-wrap: nowrap !important; }
     }
 
@@ -195,6 +195,50 @@
       }
       .cv-name { font-size: 22pt; }
     }
+
+    /* ── Role toggle */
+    .cv-role-toggle {
+      width: 100%;
+      max-width: 760px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .cv-role-btn {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: transparent;
+      color: rgba(255,255,255,0.45);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .cv-role-btn.active {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      border-color: rgba(255,255,255,0.35);
+    }
+    [data-theme="light"] .cv-role-btn {
+      border-color: rgba(0,0,0,0.14);
+      color: rgba(0,0,0,0.4);
+    }
+    [data-theme="light"] .cv-role-btn.active {
+      background: rgba(0,0,0,0.06);
+      color: rgba(0,0,0,0.75);
+      border-color: rgba(0,0,0,0.28);
+    }
+    .cv-role-divider {
+      width: 1px;
+      height: 14px;
+      background: rgba(255,255,255,0.12);
+      margin: 0 2px;
+    }
+    [data-theme="light"] .cv-role-divider { background: rgba(0,0,0,0.1); }
   </style>
 </head>
 <body>
@@ -250,15 +294,139 @@
 
 <!-- ── CV CONTENT ──────────────────────────────────────────── -->
 <section id="cv">
+  <div class="cv-role-toggle">
+    <button class="cv-role-btn active" data-role="pd">Product Designer</button>
+    <span class="cv-role-divider" aria-hidden="true"></span>
+    <button class="cv-role-btn" data-role="pm">Product Manager</button>
+  </div>
   <div class="cv-download-bar">
     <button onclick="window.print()" class="cv-dl-btn" data-fr="Télécharger PDF →">Download PDF →</button>
   </div>
-  <div class="cv-page">
+
+  <!-- ── PM CV ── -->
+  <div class="cv-page" id="cv-pm">
 
     <div class="cv-header-row">
       <div>
         <h1 class="cv-name">Anis Slimani</h1>
-        <p class="cv-role" data-fr="Designer Produit Full-Stack">Full-Stack Product Designer</p>
+        <p class="cv-role" data-fr="Product Manager">Product Manager</p>
+      </div>
+      <div class="cv-contacts">
+        <div><a href="https://anisslimani.com">anisslimani.com</a></div>
+        <div><a href="mailto:anisslimani013@gmail.com">anisslimani013@gmail.com</a></div>
+        <div><a href="https://linkedin.com/in/anisslimani">linkedin.com/in/anisslimani</a></div>
+        <div>Paris, France</div>
+      </div>
+    </div>
+
+    <div class="cv-section">
+      <h2 class="cv-section-label" data-fr="Profil">Profile</h2>
+      <p class="cv-profile" data-fr="Product manager avec un solide ancrage design et technique, expérimenté dans le lancement de produits 0-to-1, la gestion de roadmaps bout en bout et la croissance mesurable en environnements SaaS et LegalTech. À l'aise pour piloter des équipes cross-fonctionnelles, mener la discovery et prendre des décisions data-driven. Approche native IA.">Product manager with a strong design and technical background, experienced in owning 0-to-1 launches, managing end-to-end roadmaps, and driving measurable growth in SaaS and LegalTech environments. Comfortable leading cross-functional teams, running discovery, and shipping data-informed decisions at pace. Native AI tooling approach.</p>
+    </div>
+
+    <div class="cv-section">
+      <h2 class="cv-section-label" data-fr="Compétences">Skills</h2>
+      <div class="cv-skills-row">
+        <span class="cv-skills-cat" data-fr="Produit">Product</span>
+        <span class="cv-skills-val" data-fr="Roadmap, User Story Mapping, OKR, Discovery et Validation, A/B Testing, CRO, Gestion des parties prenantes">Roadmap Planning, User Story Mapping, OKR Frameworks, Discovery &amp; Validation, A/B Testing, CRO, Stakeholder Management</span>
+      </div>
+      <div class="cv-skills-row">
+        <span class="cv-skills-cat" data-fr="Analytics">Analytics</span>
+        <span class="cv-skills-val" data-fr="Amplitude, Dovetail, Analyse de funnel, Cohortes, CSUQ / SUS, Entretiens utilisateurs, Évaluation heuristique">Amplitude, Dovetail, Funnel Analysis, Cohort Tracking, CSUQ / SUS, User Interviews, Heuristic Evaluation</span>
+      </div>
+      <div class="cv-skills-row">
+        <span class="cv-skills-cat" data-fr="Design">Design</span>
+        <span class="cv-skills-val" data-fr="Figma, Design Systems, Wireframing, Prototypage, Accessibilité (WCAG), Design Tokens">Figma, Design Systems, Wireframing, Prototyping, Accessibility (WCAG), Design Tokens</span>
+      </div>
+      <div class="cv-skills-row">
+        <span class="cv-skills-cat" data-fr="Tech">Tech</span>
+        <span class="cv-skills-val" data-fr="HTML/CSS, JavaScript, notions React, Git, Jira, Confluence, Automatisation IA, Claude Code">HTML/CSS, JavaScript, basic React, Git, Jira, Confluence, AI Workflow Automation, Claude Code</span>
+      </div>
+    </div>
+
+    <div class="cv-section">
+      <h2 class="cv-section-label" data-fr="Expérience">Experience</h2>
+
+      <div class="cv-exp">
+        <div class="cv-exp-top">
+          <span class="cv-company">Principotes</span>
+          <span class="cv-dates" data-fr="Avr 2026 · Présent">Apr 2026 · Present</span>
+        </div>
+        <p class="cv-exp-role" data-fr-html="Product Manager · Freelance <span class='cv-exp-loc'>· Paris, France (Full Remote)</span>">Product Manager · Freelance <span class="cv-exp-loc">· Paris, France (Full Remote)</span></p>
+        <ul class="cv-bullets">
+          <li><span class="cv-bull">·</span><strong data-fr="Système produit :">Product System:</strong> <span data-fr="Système production-ready livré en autonomie, 9 composants, 28 écrans, double identité de marque et basculement par tokens, en moins de 6 semaines.">Owned delivery of a production-ready system solo: 9 components, 28 screens, dual brand identity and token-based switching, shipped in under 6 weeks.</span></li>
+          <li><span class="cv-bull">·</span><strong data-fr="E-commerce &amp; Ops :">E-commerce &amp; Ops:</strong> <span data-fr="Déploiement e-commerce post-lancement, intégration POS et SevenRooms, montée en charge opérationnelle complète juin 2026.">Led post-launch e-commerce rollout, POS and SevenRooms integration, and full operational scale-up through June 2026.</span></li>
+          <li><span class="cv-bull">·</span><strong data-fr="Artefacts PM :">PM Artifacts:</strong> <span data-fr="Board Jira complet (52 issues, 16 epics) et espace PM Confluence (personas, JTBD, journey map, RICE, decision records).">Built full Jira board (52 issues, 16 epics) and Confluence PM space (personas, JTBD, journey map, RICE, decision records).</span></li>
+          <li><span class="cv-bull">·</span><strong data-fr="Implémentation :">Implementation:</strong> <span data-fr="Liaison produit et développement en codant directement les modifications via l'IA, garantissant la fidélité du front-end sans gap de handoff.">Bridged product and engineering by coding component changes and UI fixes directly via AI tooling, ensuring front-end fidelity with no handoff gap.</span></li>
+        </ul>
+      </div>
+
+      <div class="cv-exp">
+        <div class="cv-exp-top">
+          <span class="cv-company">Legalstart</span>
+          <span class="cv-dates" data-fr="Avr 2025 · Avr 2026">Apr 2025 · Apr 2026</span>
+        </div>
+        <p class="cv-exp-role" data-fr-html="Product Designer · CDD <span class='cv-exp-loc'>· Paris, France</span>">Product Designer · Fixed-Term <span class="cv-exp-loc">· Paris, France</span></p>
+        <ul class="cv-bullets">
+          <li><span class="cv-bull">·</span><strong data-fr="Rebranding produit :">Product Rebranding:</strong> <span data-fr="Designer principal sur la refonte du parcours Création/Immatriculation. 100+ écrans pour 2 000 utilisateurs mensuels, score de clarté de 4,2 à 4,9/5.">Led the redesign of the Creation/Registration flow as primary designer, challenging and validating directions cross-functionally. 100+ screens for 2,000 MAU, clarity score up from 4.2 to 4.9/5.</span></li>
+          <li><span class="cv-bull">·</span><strong data-fr="Funnel de conversion :">Conversion Funnel:</strong> <span data-fr="Audit de 15 funnels d'acquisition et entretiens utilisateurs, contribuant à une réduction du churn de 5% et une hausse de conversion de 2%.">Audited 15 acquisition funnels and ran user interviews to surface friction points, contributing to 5% churn reduction and 2% conversion increase.</span></li>
+          <li><span class="cv-bull">·</span><strong data-fr="Design System :">Design System:</strong> <span data-fr="Maintenance et extension de la bibliothèque Figma en parallèle du rebranding, gain de vélocité de 10%.">Maintained and extended the Figma component library alongside the rebranding, delivering 10% velocity gain for the team.</span></li>
+          <li><span class="cv-bull">·</span><strong data-fr="Workflow IA :">AI Workflow:</strong> <span data-fr="Intégration d'outils génératifs et MCP dans le workflow, production de 50+ templates à l'échelle.">Integrated generative AI and MCP tooling into the workflow, scaling template production to 50+.</span></li>
+        </ul>
+      </div>
+
+      <div class="cv-exp">
+        <div class="cv-exp-top">
+          <span class="cv-company">ILAR</span>
+          <span class="cv-dates" data-fr="Mai 2024 · Août 2024">May 2024 · Aug 2024</span>
+        </div>
+        <p class="cv-exp-role" data-fr-html="Product Designer · Stage <span class='cv-exp-loc'>· Tirana, Albanie</span>">Product Designer · Internship <span class="cv-exp-loc">· Tirana, Albania</span></p>
+        <ul class="cv-bullets">
+          <li><span class="cv-bull">·</span><strong data-fr="0-to-1 :">0-to-1:</strong> <span data-fr="Bibliothèque visuelle et composants UI construits en autonomie pour amorcer la transformation digitale d'une entreprise traditionnelle.">Full visual library and UI components built autonomously to initiate the digital transformation of a traditional business.</span></li>
+          <li><span class="cv-bull">·</span><strong data-fr="Propriété produit :">Product Ownership:</strong> <span data-fr="Conception des templates clés et pilotage de toutes les décisions UX/UI en l'absence de culture produit interne.">Designed key page templates and owned all UX/UI decisions independently in the absence of existing product culture.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cv-section">
+      <h2 class="cv-section-label" data-fr="Formation">Education</h2>
+      <div class="cv-edu">
+        <div class="cv-edu-top">
+          <span class="cv-school">Université Paris-Saclay</span>
+          <span class="cv-edu-dates" data-fr="2023 · 2025">2023 · 2025</span>
+        </div>
+        <p class="cv-edu-meta" data-fr="Master (MSc) · Bac +5 · Essonne, France">Master's (MSc) · Bac +5 · Essonne, France</p>
+        <p class="cv-edu-field">Human-Computer Interaction</p>
+      </div>
+      <div class="cv-edu">
+        <div class="cv-edu-top">
+          <span class="cv-school">Université Gustave Eiffel</span>
+          <span class="cv-edu-dates" data-fr="2020 · 2023">2020 · 2023</span>
+        </div>
+        <p class="cv-edu-meta" data-fr="Licence · Bac +3 · Champs-sur-Marne, France">Bachelor's · Bac +3 · Champs-sur-Marne, France</p>
+        <p class="cv-edu-field" data-fr="Études visuelles, Médias et Arts Numériques">Visual Studies, Media &amp; Digital Arts</p>
+      </div>
+    </div>
+
+    <div class="cv-section">
+      <h2 class="cv-section-label" data-fr="Langues">Languages</h2>
+      <div class="cv-lang-row">
+        <span class="cv-lang-item" data-fr-html="Français <span class='cv-lang-level'>Professionnel C1</span>">French <span class="cv-lang-level">Professional C1</span></span>
+        <span class="cv-lang-item" data-fr-html="Anglais <span class='cv-lang-level'>EFSET C2, CLUE C1</span>">English <span class="cv-lang-level">EFSET C2, CLUE C1</span></span>
+        <span class="cv-lang-item" data-fr-html="Albanais <span class='cv-lang-level'>Langue maternelle</span>">Albanian <span class="cv-lang-level">Native language</span></span>
+        <span class="cv-lang-item" data-fr-html="Espagnol <span class='cv-lang-level'>A2</span>">Spanish <span class="cv-lang-level">A2</span></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── PD CV ── -->
+  <div class="cv-page" id="cv-pd" hidden>
+
+    <div class="cv-header-row">
+      <div>
+        <h1 class="cv-name">Anis Slimani</h1>
+        <p class="cv-role" data-fr="Product Designer">Product Designer</p>
       </div>
       <div class="cv-contacts">
         <div><a href="https://anisslimani.com">anisslimani.com</a></div>
@@ -297,9 +465,9 @@
           <span class="cv-company">Principotes</span>
           <span class="cv-dates" data-fr="Avr 2026 · Juin 2026">Apr 2026 · Jun 2026</span>
         </div>
-        <p class="cv-exp-role" data-fr-html="Full-stack Product Designer · Freelance <span class='cv-exp-loc'>· Paris, France (Full Remote)</span>">Full-stack Product Designer · Freelance <span class="cv-exp-loc">· Paris, France (Full Remote)</span></p>
+        <p class="cv-exp-role" data-fr-html="Product Manager · Freelance <span class='cv-exp-loc'>· Paris, France (Full Remote)</span>">Product Manager · Freelance <span class="cv-exp-loc">· Paris, France (Full Remote)</span></p>
         <ul class="cv-bullets">
-          <li><span class="cv-bull">·</span><strong data-fr="Système de design :">Design System:</strong> <span data-fr="Système production-ready livré en autonomie, 9 composants et 28 écrans avec double identité de marque et basculement par tokens.">Production-ready system delivered solo — 9 components and 28 screens with dual brand identity and token-based switching.</span></li>
+          <li><span class="cv-bull">·</span><strong data-fr="Système de design :">Design System:</strong> <span data-fr="Système production-ready livré en autonomie, 9 composants et 28 écrans avec double identité de marque et basculement par tokens.">Production-ready system delivered solo: 9 components and 28 screens with dual brand identity and token-based switching.</span></li>
           <li><span class="cv-bull">·</span><strong data-fr="Implémentation :">Implementation:</strong> <span data-fr="Utilisation de l'IA pour relier design et développement en codant directement les modifications des composants et d'interface, garantissant la fidélité du front-end.">Leveraged AI to bridge design and development by coding component changes and UI fixes directly, ensuring front-end fidelity.</span></li>
           <li><span class="cv-bull">·</span><strong data-fr="E-commerce &amp; Ops :">E-commerce &amp; Ops:</strong> <span data-fr="Déploiement e-commerce post-lancement, intégration POS et SevenRooms, montée en charge opérationnelle complète juin 2026.">Post-launch e-commerce rollout, POS and SevenRooms integration, full operational scale-up June 2026.</span></li>
           <li><span class="cv-bull">·</span><strong data-fr="Identité de marque :">Brand Identity:</strong> <span data-fr="Identité visuelle complète de zéro, du logotype aux assets 3D, positionnement luxe en moins de 6 semaines.">Full visual identity from scratch, logotype to 3D assets, luxury positioning in under 6 weeks.</span></li>
@@ -311,7 +479,7 @@
           <span class="cv-company">Legalstart</span>
           <span class="cv-dates" data-fr="Avr 2025 · Avr 2026">Apr 2025 · Apr 2026</span>
         </div>
-        <p class="cv-exp-role" data-fr-html="Full-stack Product Designer · CDD <span class='cv-exp-loc'>· Paris, France</span>">Full-stack Product Designer · Fixed-Term <span class="cv-exp-loc">· Paris, France</span></p>
+        <p class="cv-exp-role" data-fr-html="Product Designer · CDD <span class='cv-exp-loc'>· Paris, France</span>">Product Designer · Fixed-Term <span class="cv-exp-loc">· Paris, France</span></p>
         <ul class="cv-bullets">
           <li><span class="cv-bull">·</span><strong data-fr="Rebranding produit :">Product Rebranding:</strong> <span data-fr="Designer principal sur la refonte du parcours Création/Immatriculation, challengeant les directions en collaboration transverse. +100 écrans pour 2 000 utilisateurs mensuels, score de clarté de 4,2 à 4,9/5.">Led the redesign of the Creation/Registration flow as primary designer, challenging and validating directions cross-functionally. 100+ screens for 2,000 monthly active users, clarity score up from 4.2 to 4.9/5.</span></li>
           <li><span class="cv-bull">·</span><strong data-fr="Funnel de conversion :">Conversion Funnel:</strong> <span data-fr="Audit de 15 funnels d'acquisition et entretiens utilisateurs pour identifier les frictions, contribuant à une réduction du churn de 5% et une hausse de conversion de 2%.">Audited 15 acquisition funnels and ran user interviews to surface friction points, contributing to 5% churn reduction and 2% conversion increase.</span></li>
@@ -369,5 +537,28 @@
 </section>
 
 <script src="/assets/js/main.js"></script>
+<script>
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var role = params.get('role') || 'pd';
+
+  function showRole(r) {
+    document.getElementById('cv-pm').hidden = (r !== 'pm');
+    document.getElementById('cv-pd').hidden = (r !== 'pd');
+    document.querySelectorAll('.cv-role-btn').forEach(function (btn) {
+      btn.classList.toggle('active', btn.dataset.role === r);
+    });
+    var url = new URL(window.location.href);
+    url.searchParams.set('role', r);
+    history.replaceState(null, '', url.toString());
+  }
+
+  document.querySelectorAll('.cv-role-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () { showRole(btn.dataset.role); });
+  });
+
+  showRole(role);
+})();
+</script>
 </body>
 </html>
