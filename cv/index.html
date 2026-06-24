@@ -129,29 +129,23 @@
     .cv-lang-level { font-size: 7.5pt; font-weight: 300; color: #888888; margin-left: 2px; }
 
     .cv-ref { font-size: 8.5pt; font-weight: 300; color: #888888; }
-    .cv-download-bar {
-      width: 100%;
-      max-width: 760px;
-      display: flex;
-      justify-content: flex-end;
-      margin-bottom: 12px;
-      padding: 0 8px;
-    }
     .cv-dl-btn {
       font-family: 'DM Sans', sans-serif;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 500;
-      color: #888888;
-      background: none;
-      border: none;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid var(--accent-border);
+      border-radius: 8px;
       cursor: pointer;
-      letter-spacing: 0.02em;
-      padding: 0;
+      padding: 11px 22px;
+      transition: background 0.2s, border-color 0.2s;
+      white-space: nowrap;
     }
-    .cv-dl-btn:hover { color: #444; }
+    .cv-dl-btn:hover { background: var(--accent-mid); border-color: rgba(204,204,255,0.45); }
     @media print {
       @page { size: A4; margin: 0; }
-      #starfield, .nav, .mobile-nav-overlay, .cv-download-bar, .cv-role-toggle { display: none !important; }
+      #starfield, .nav, .mobile-nav-overlay, .cv-controls { display: none !important; }
       body { background: #fff !important; animation: none !important; }
       #cv { padding: 0 !important; display: block !important; }
       .cv-page {
@@ -196,49 +190,70 @@
       .cv-name { font-size: 22pt; }
     }
 
-    /* ── Role toggle */
-    .cv-role-toggle {
+    /* ── Controls row */
+    .cv-controls {
       width: 100%;
       max-width: 760px;
       display: flex;
       align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .cv-role-toggle {
+      display: flex;
+      align-items: center;
       gap: 8px;
-      margin-bottom: 10px;
     }
     .cv-role-btn {
       font-family: 'DM Sans', sans-serif;
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      padding: 5px 14px;
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: transparent;
-      color: rgba(255,255,255,0.45);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 11px 22px;
+      border-radius: 8px;
+      border: 1px solid var(--accent-border);
+      background: var(--accent-dim);
+      color: var(--accent);
       cursor: pointer;
       transition: background 0.15s, color 0.15s, border-color 0.15s;
+      white-space: nowrap;
     }
     .cv-role-btn.active {
-      background: rgba(255,255,255,0.1);
-      color: #fff;
-      border-color: rgba(255,255,255,0.35);
-    }
-    [data-theme="light"] .cv-role-btn {
-      border-color: rgba(0,0,0,0.14);
-      color: rgba(0,0,0,0.4);
+      background: var(--accent);
+      color: #07070f;
+      border-color: var(--accent);
     }
     [data-theme="light"] .cv-role-btn.active {
-      background: rgba(0,0,0,0.06);
-      color: rgba(0,0,0,0.75);
-      border-color: rgba(0,0,0,0.28);
+      background: #4a4a48;
+      color: #ffffff;
+      border-color: #4a4a48;
     }
     .cv-role-divider {
       width: 1px;
-      height: 14px;
-      background: rgba(255,255,255,0.12);
+      height: 18px;
+      background: var(--border);
       margin: 0 2px;
+      flex-shrink: 0;
     }
-    [data-theme="light"] .cv-role-divider { background: rgba(0,0,0,0.1); }
+
+    @media (max-width: 860px) {
+      .cv-controls {
+        flex-direction: column;
+        gap: 8px;
+      }
+      .cv-role-toggle {
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+      }
+      .cv-role-divider { display: none; }
+      .cv-role-btn, .cv-dl-btn {
+        width: 100%;
+        text-align: center;
+        display: block;
+        padding: 13px 22px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -294,12 +309,12 @@
 
 <!-- ── CV CONTENT ──────────────────────────────────────────── -->
 <section id="cv">
-  <div class="cv-role-toggle">
-    <button class="cv-role-btn active" data-role="pd">Product Designer</button>
-    <span class="cv-role-divider" aria-hidden="true"></span>
-    <button class="cv-role-btn" data-role="pm">Product Manager</button>
-  </div>
-  <div class="cv-download-bar">
+  <div class="cv-controls">
+    <div class="cv-role-toggle">
+      <button class="cv-role-btn active" data-role="pd">Product Designer</button>
+      <span class="cv-role-divider" aria-hidden="true"></span>
+      <button class="cv-role-btn" data-role="pm">Product Manager</button>
+    </div>
     <button onclick="window.print()" class="cv-dl-btn" data-fr="Télécharger PDF →">Download PDF →</button>
   </div>
 
