@@ -53,6 +53,7 @@
       color: var(--ink);
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
     button { font-family: inherit; border: none; background: none; cursor: pointer; }
     button:focus-visible, input:focus-visible + .tog-track {
@@ -143,9 +144,10 @@
     .hero-card {
       background: linear-gradient(140deg, #F2F0FF 0%, var(--v-soft) 100%);
       border-radius: 20px;
-      padding: 20px 24px;
+      padding: 20px;
       position: relative;
       z-index: 1;
+      font-size: 15px;
     }
     .hero-img {
       flex-shrink: 0;
@@ -644,14 +646,14 @@
     <div class="hero-top">
       <div class="hero-text">
         <h1>Le malus, et <em>trois façons</em> de l'aborder</h1>
-        <p class="hero-sub">Lors d'un entretien chez Dalma <span style="opacity:0.45;font-size:0.9em">(Valentine Basser)</span>, on m'a expliqué le malus, cette hausse de cotisation qui revient à chaque échéance. Le sujet m'a happé. J'ai voulu comprendre comment il fonctionne, puis j'ai lu des dizaines d'avis clients pour voir ce que les gens ressentent quand le prix grimpe.</p>
+        <p class="hero-sub">Lors d'un entretien chez Dalma <span style="opacity:0.45;font-size:0.9em">(Valentine Basser)</span>, on m'a expliqué le malus, cette hausse de cotisation qui revient à chaque échéance. Le sujet m'a accroché. J'ai voulu comprendre comment il fonctionne, puis j'ai lu des dizaines d'avis clients pour voir ce que les gens ressentent quand le prix grimpe.</p>
       </div>
       <div class="hero-img" aria-hidden="true">
         <img src="/assets/images/dalmahero.svg" alt="">
       </div>
     </div>
     <div class="hero-card">
-      <p class="hero-sub">En toute honnêteté : je débute, et je n'ai pas le recul d'une équipe qui vit ces sujets au quotidien. Le malus est sûrement bien mieux maîtrisé en interne, et je sais que le sujet est déjà en travaux. Ce carnet n'a donc aucune prétention. Ce ne sont pas des réponses, juste une manière de réfléchir à voix haute sur un problème qui m'a passionné, avec l'envie d'apprendre au contact d'une équipe et d'un management expérimentés.</p>
+      <p class="hero-sub">En toute honnêteté : je suis encore junior, et je n'ai pas le recul d'une équipe qui vit ces sujets au quotidien. Le malus est sûrement bien mieux maîtrisé en interne, et je sais que le sujet est déjà en travaux. Ce carnet n'a donc aucune prétention. Ce ne sont pas des réponses, juste une manière de réfléchir à voix haute sur un problème qui m'a passionné, avec l'envie d'apprendre au contact d'une équipe et d'un management expérimentés.</p>
     </div>
   </section>
 
@@ -666,7 +668,7 @@
       <span class="chip"><strong>12 mois</strong>avant que l'engagement ne tombe</span>
     </div>
     <div class="prose">
-      <p>Le malus, cette hausse à chaque échéance, est le premier motif de mécontentement dans les avis. Le problème n'est pas la hausse elle-même, inévitable, mais la façon dont elle arrive : sans explication, sans alternative, souvent avec une seule issue proposée, résilier. Le renouvellement est vécu comme une facturation, pas comme un moment de relation.</p>
+      <p>Le malus, cette hausse à chaque échéance, est le premier motif de mécontentement dans les avis. Les avis publics sont sans ambiguïté. Sur Trustpilot notamment, un assuré décrit une hausse de 26 % la deuxième année pour la même couverture, motivée par l'âge de son animal. Le problème n'est pas la hausse elle-même, inévitable, mais la façon dont elle arrive : sans explication, sans alternative, souvent avec une seule issue proposée, résilier. Le renouvellement est vécu comme une facturation, pas comme un moment de relation.</p>
     </div>
   </section>
 
@@ -801,6 +803,7 @@
           </div>
         </div>
         </div>
+        <p style="font-size:14.5px;line-height:1.75;color:rgba(28,27,46,0.50);margin-top:24px">D'après ce que j'ai pu comprendre côté produit, Dalma applique déjà en partie cette logique : après un certain âge, la couverture semble ajustée plutôt que le tarif sans cesse augmenté. L'idée ne serait donc pas de réinventer, mais de rendre ce choix visible et volontaire, plus tôt, plutôt qu'automatique et tardif.</p>
       </div>
     </div>
   </section>
@@ -877,7 +880,7 @@
 
   <footer class="footer">
     Chiffres illustratifs. Réflexion indépendante, non affiliée à Dalma.<br>
-    Réalisé par Anis Slimani · HTML, CSS, JavaScript · Claude Code
+    Réalisé par Anis Slimani · HTML, CSS, JavaScript · Claude Code · <a href="https://anisslimani.com" style="color:inherit;text-decoration:underline;text-underline-offset:3px">anisslimani.com</a>
   </footer>
 
 </div>
