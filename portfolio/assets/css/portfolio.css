@@ -1,0 +1,815 @@
+/* ============================================================
+   ANIS SLIMANI — Academic & Artistic Portfolio (/portfolio/)
+   ============================================================
+   Rebuilt from the Figma file "AS Portfolio" (oC9aV9zhsMMxL3bSX923K8).
+   Separate visual language from the main site (Space Mono / Space
+   Grotesk, white paper aesthetic) — shares only the dark/light
+   preference stored by the main site's theme toggle.
+   ============================================================ */
+
+:root {
+  --glow:         #8b99fb;   /* default logo bloom; overridden per discipline */
+  --pf-bg:        #ffffff;
+  --pf-ink:       #24203e;
+  --pf-ink-mid:   rgba(36,32,62,0.72);
+  --pf-line:      rgba(36,32,62,0.14);
+  /* Post-it sheet colours from about_blob.svg */
+  --pf-blue:      #8b99fb;
+  --pf-blue-dark: #2022c2;
+
+  --ux:     #b3447a; --ux-bg:     #f3d3e4;
+  --game:   #047823; --game-bg:   #cfe9d5;
+  --xr:     #9506d3; --xr-bg:     #e3d1ea;
+  --fab:    #a80fa8; --fab-bg:    #f6dcff;
+  --hci:    #484848; --hci-bg:    #dedede;
+  --art:    #3c9f90; --art-bg:    #d9f2ee;
+  --photo:  #e30004; --photo-bg:  #ffdcdc;
+  --video:  #b28303; --video-bg:  #f8efc0;
+  --dv:     #e36600; --dv-bg:     #ffe6d4;
+  --gdvm:   #0353ba; --gdvm-bg:   #d3ebf7;
+
+  --font-mono:    'Space Mono', ui-monospace, monospace;
+  --font-grotesk: 'Space Grotesk', sans-serif;
+}
+
+.pf-root, .pf-root *, .pf-root *::before, .pf-root *::after {
+  box-sizing: border-box;
+}
+/* Only zero what actually needs zeroing. A blanket `padding: 0` here
+   outranks component rules (0,1,1 vs 0,1,0) and silently eats their
+   padding, which caused a string of layout bugs. */
+.pf-root p, .pf-root h1, .pf-root h2, .pf-root h3 {
+  margin: 0;
+}
+.pf-root ul, .pf-root li {
+  margin: 0;
+  padding: 0;
+}
+.pf-root {
+  color-scheme: light;
+  background: var(--pf-bg);
+  color: var(--pf-ink);
+  font-family: var(--font-grotesk);
+  min-height: 100vh;
+  /* `clip` rather than `hidden`: hidden makes this a scroll container,
+     which silently breaks position:sticky on the mobile header. */
+  overflow-x: clip;
+}
+.pf-root a { color: inherit; text-decoration: none; }
+.pf-root img { max-width: 100%; display: block; }
+
+.pf-root :focus-visible {
+  outline: 2px solid var(--xr);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pf-root * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+/* ── Shared chrome: logo mark / title / nav link ── */
+
+.pf-brand {
+  position: absolute;
+  left: 31px;
+  top: 42px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 5;
+}
+.pf-brand img { width: 60px; height: 60px; }
+
+/* Logo mark drawn in CSS so the bloom can take the page's discipline
+   colour (--glow); black core, gradient halo, same falloff as logo.svg. */
+.pf-logo {
+  flex: none;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(circle closest-side,
+    #0d0b14 0 43.75%,
+    color-mix(in srgb, var(--glow) 92%, transparent) 44%,
+    color-mix(in srgb, var(--glow) 55%, transparent) 53%,
+    color-mix(in srgb, var(--glow) 22%, transparent) 66%,
+    color-mix(in srgb, var(--glow)  6%, transparent) 82%,
+    transparent 100%);
+}
+.pf-brand-text p { line-height: 1.3; }
+.pf-brand-name {
+  font-family: var(--font-mono);
+  font-size: 28px;
+}
+.pf-brand-role {
+  font-size: 13px;
+  color: var(--pf-ink-mid);
+}
+
+.pf-nav-link {
+  position: absolute;
+  top: 69px;
+  right: 64px;
+  font-size: 18px;
+  z-index: 5;
+  padding: 4px 2px;
+}
+.pf-nav-link:hover { text-decoration: underline; }
+
+/* ── Desktop stage (1920x1080 canvas, scaled to fit) ── */
+
+.pf-stage-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1920 / 1080;
+  overflow: hidden;
+}
+.pf-stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  transform-origin: top left;
+}
+
+/* Mobile reflow list — hidden on desktop */
+.pf-mobile {
+  display: none;
+}
+
+@media (max-width: 820px) {
+  .pf-stage-wrap { display: none; }
+  .pf-mobile { display: block; }
+}
+
+/* ── Landing constellation ── */
+
+.pf-vertices {
+  position: absolute;
+  max-width: none;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+.pf-disc-label {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 20px;
+  line-height: 1.25;
+}
+.pf-disc-swatch {
+  position: absolute;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.pf-card {
+  position: static;
+}
+.pf-card:focus-visible .pf-card-shape,
+.pf-card:focus-visible .pf-card-photo {
+  outline: 2px solid var(--xr);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.pf-card-shape {
+  position: absolute;
+  display: block;
+}
+/* The sticky-note SVGs carry drop-shadow bleed on their canvas, so the image
+   is drawn at its natural size and allowed to overflow the paper bounds. */
+.pf-card-shape img {
+  position: absolute;
+  max-width: none;
+}
+.pf-card-photo {
+  position: absolute;
+  box-shadow: 0 4px 4px rgba(0,0,0,0.25);
+  overflow: hidden;
+  border-radius: 2px;
+}
+.pf-card-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.pf-card-title {
+  position: absolute;
+  font-family: var(--font-grotesk);
+  font-weight: 400;
+  line-height: 1.15;
+  text-align: center;
+  transform: translateX(-50%);
+}
+.pf-card:hover .pf-card-photo,
+.pf-card:focus-visible .pf-card-photo {
+  filter: brightness(1.06);
+}
+.pf-card:hover .pf-card-shape,
+.pf-card:focus-visible .pf-card-shape {
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,0.18));
+}
+
+/* ── Mobile: same sticky-note language as the desktop constellation ──
+   Each card is a pastel paper sheet with a folded bottom-right corner,
+   the project title in its discipline colour above a shadowed photo.
+   The paper/fold tones are derived from the discipline colour so the
+   two breakpoints read as one design. */
+
+.pf-mobile-group {
+  position: relative;
+  padding: 30px 20px 10px;
+}
+/* The pastel wash that sits behind each cluster on desktop */
+.pf-mobile-group::before {
+  content: "";
+  position: absolute;
+  inset: 4% -14% 2%;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in oklab, var(--disc) 11%, transparent),
+    transparent 72%
+  );
+  pointer-events: none;
+}
+.pf-mobile-group > * { position: relative; }
+
+.pf-mobile-group h2 {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 400;      /* h2 defaults to bold; desktop labels are regular */
+  line-height: 1.25;
+  margin-bottom: 20px;
+  color: var(--disc);
+}
+.pf-mobile-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+/* Tones are sampled from the Figma sticky notes: paper ≈10% of the
+   discipline colour, stroke ≈22%, fold ≈40%. */
+/* Paper / stroke / fold sampled straight from the Figma sticky-note SVGs
+   rather than derived, so the mobile notes match the board exactly. */
+/* Project pages tint the logo bloom to their discipline. These are the
+   sticky-note fold tones, not the label colours: the label colours are
+   deep (--ux is a magenta) and read as red rather than a soft bloom. */
+.pf-root[data-disc="ux"]    { --glow: #e8acca; }
+.pf-root[data-disc="game"]  { --glow: #90bd9c; }
+.pf-root[data-disc="xr"]    { --glow: #c9acd6; }
+.pf-root[data-disc="fab"]   { --glow: #e094e7; }
+.pf-root[data-disc="hci"]   { --glow: #bababa; }
+.pf-root[data-disc="art"]   { --glow: #94e7db; }
+.pf-root[data-disc="photo"] { --glow: #ffb3b4; }
+.pf-root[data-disc="video"] { --glow: #edcf7f; }
+.pf-root[data-disc="dv"]    { --glow: #ffbb83; }
+.pf-root[data-disc="gdvm"]  { --glow: #b9e5f3; }
+
+.pf-mobile-group[data-disc="ux"]    { --disc: var(--ux);    --paper:#FFE7F3; --edge:#FFC8E3; --fold-c:#E8ACCA; }
+.pf-mobile-group[data-disc="game"]  { --disc: var(--game);  --paper:#EFFFF3; --edge:#AED2B8; --fold-c:#90BD9C; }
+.pf-mobile-group[data-disc="xr"]    { --disc: var(--xr);    --paper:#FAEEFF; --edge:#C590DC; --fold-c:#C9ACD6; }
+.pf-mobile-group[data-disc="fab"]   { --disc: var(--fab);   --paper:#FCDEFF; --edge:#AF77B4; --fold-c:#E094E7; }
+.pf-mobile-group[data-disc="hci"]   { --disc: var(--hci);   --paper:#F4F4F4; --edge:#A1A1A1; --fold-c:#BABABA; }
+.pf-mobile-group[data-disc="art"]   { --disc: var(--art);   --paper:#D8FFF9; --edge:#ADE5DC; --fold-c:#94E7DB; }
+.pf-mobile-group[data-disc="photo"] { --disc: var(--photo); --paper:#FFDCDC; --edge:#AE696A; --fold-c:#FFB3B4; }
+.pf-mobile-group[data-disc="video"] { --disc: var(--video); --paper:#FDF8CA; --edge:#B8B276; --fold-c:#EDCF7F; }
+.pf-mobile-group[data-disc="dv"]    { --disc: var(--dv);    --paper:#FFEEE1; --edge:#F3C095; --fold-c:#FFBB83; }
+.pf-mobile-group[data-disc="gdvm"]  { --disc: var(--gdvm);  --paper:#E8FAFF; --edge:#9EC8D5; --fold-c:#B9E5F3; }
+
+.pf-mobile-card {
+  /* Notch is slightly wider than tall, as in the source (27.1 × 23.6) */
+  --fold-w: 26px;
+  --fold-h: 23px;
+  position: relative;
+  display: block;
+  padding: 16px 16px 30px;
+  /* Stacked hard shadows trace the stroke along the notched silhouette,
+     including the diagonal fold edge, which a plain border cannot follow.
+     The clip lives on ::before because clip-path is applied *after* filter
+     and would otherwise cut the stroke and shadow off. */
+  filter:
+    drop-shadow( 1px 0 0 var(--edge))
+    drop-shadow(-1px 0 0 var(--edge))
+    drop-shadow(0  1px 0 var(--edge))
+    drop-shadow(0 -1px 0 var(--edge))
+    drop-shadow(0 3px 5px rgba(0,0,0,0.16));
+}
+/* Paper: full sheet with a rectangular bite out of the bottom-right */
+.pf-mobile-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--paper);
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - var(--fold-h)),
+    calc(100% - var(--fold-w)) calc(100% - var(--fold-h)),
+    calc(100% - var(--fold-w)) 100%,
+    0 100%
+  );
+}
+.pf-mobile-card > * { position: relative; }
+/* Fold: darker triangle filling the upper-left half of that bite, so the
+   two together read as a diagonally turned-up corner. */
+.pf-mobile-card::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: var(--fold-w);
+  height: var(--fold-h);
+  background: var(--fold-c);
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+/* Slight off-axis tilt, like the hand-placed notes on the desktop board */
+.pf-mobile-card:nth-child(4n+1) { transform: rotate(-1.3deg); }
+.pf-mobile-card:nth-child(4n+2) { transform: rotate(1.1deg); }
+.pf-mobile-card:nth-child(4n+3) { transform: rotate(0.9deg); }
+.pf-mobile-card:nth-child(4n+4) { transform: rotate(-1deg); }
+.pf-mobile-card span {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 16px;       /* same title-to-card ratio as desktop */
+  font-weight: 400;      /* matches .pf-card-title on desktop */
+  line-height: 1.2;
+  text-align: center;
+  color: var(--disc);
+  text-wrap: balance;
+}
+.pf-mobile-card img {
+  width: 100%;
+  height: auto;
+  box-shadow: 0 4px 4px rgba(0,0,0,0.25);
+}
+
+/* ── Mobile header: compact brand + hamburger ── */
+
+.pf-mheader { display: none; }
+
+@media (max-width: 820px) {
+  .pf-mheader {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 20px;
+    background: color-mix(in srgb, var(--pf-bg) 82%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+  .pf-mheader .pf-brand {
+    position: static;
+    gap: 10px;
+  }
+  .pf-mheader .pf-brand img,
+  .pf-mheader .pf-logo { width: 34px; height: 34px; }
+  .pf-mheader .pf-brand-name { font-size: 19px; line-height: 1.15; }
+  .pf-mheader .pf-brand-role { font-size: 11px; line-height: 1.3; }
+}
+
+.pf-burger {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-content: center;
+  gap: 4px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.pf-burger span {
+  display: block;
+  width: 17px;
+  height: 1.5px;
+  background: var(--pf-ink);
+  transition: transform 0.2s ease, opacity 0.15s ease;
+}
+.pf-burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+.pf-burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.pf-burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+
+/* Full-width sheet dropping out of the sticky header, rather than a
+   floating popover that reads as detached once the header is pinned. */
+.pf-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  padding: 4px 20px 20px;
+  background: var(--pf-bg);
+  animation: pf-menu-in 0.18s ease;
+}
+/* Header goes solid too while the sheet is open, so there's no seam */
+.pf-mheader:has(.pf-menu:not([hidden])) {
+  background: var(--pf-bg);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.pf-menu[hidden] { display: none; }
+.pf-menu a {
+  display: block;
+  padding: 10px 0;
+  font-family: var(--font-mono);
+  font-size: 22px;
+  text-align: center;
+  color: var(--pf-ink);
+}
+.pf-menu a:active { opacity: 0.6; }
+
+@keyframes pf-menu-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ── Project pages ───────────────────────────────────────────
+   Same fitted 1920×1080 stage as the landing, reflowing to a single
+   column below 820px in the order title → media → text → credits. */
+
+.pf-proj-title {
+  position: absolute;
+  left: 125px;
+  top: 52px;
+  font-family: var(--font-mono);
+  font-size: 36px;
+  font-weight: 400;      /* h1 defaults to bold; the frames use Regular */
+  line-height: 1.15;
+  z-index: 5;
+}
+.pf-proj-body {
+  position: absolute;
+  font-size: 20px;
+  /* Figma uses `normal` leading; 1.5 overflowed the frames' text slots
+     and pushed paragraphs into neighbouring artwork. */
+  line-height: 1.35;
+  /* Was justify + hyphens:auto — on these narrow measures that opened big
+     gaps between words and broke half the lines with hyphens. */
+  text-align: left;
+}
+.pf-proj-body b { font-weight: 700; }
+
+.pf-proj-img {
+  position: absolute;
+  overflow: hidden;
+}
+.pf-proj-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.pf-proj-img--shadow { box-shadow: 6px 8px 9px rgba(0,0,0,0.65); }
+.pf-proj-img--border { border: 1px solid var(--pf-ink); }
+
+/* Sticky-note sheet sitting behind a photo, as on some frames */
+.pf-proj-sheet { position: absolute; }
+.pf-proj-sheet img { position: absolute; max-width: none; }
+
+.pf-proj-mark {
+  position: absolute;
+  max-width: none;
+  pointer-events: none;
+}
+
+/* Hand-drawn credit slip */
+.pf-note { position: absolute; }
+/* The slip SVG carries drop-shadow bleed, so it is drawn at natural size
+   and allowed to overflow, like the sticky-note shapes. */
+.pf-note img { position: absolute; max-width: none; }
+/* Vertically centred in the slip, so a credit that wraps to two lines
+   stays inside the paper instead of running past the bottom edge. */
+.pf-note p {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+/* Responsive 16:9 embed */
+.pf-video {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #0d0b14;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.pf-video iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* In-frame embed: sits in the open centre band, where the Figma video
+   plugin placeholder lives. Height comes from the 16:9 aspect-ratio. */
+.pf-stage .pf-video { position: absolute; }
+
+/* PROTO Collective contact sheet: hovering (or focusing) a frame pops the
+   full-resolution photo up over the sheet, rather than opening a new tab. */
+.pf-proto-shot {
+  position: absolute;
+  width: 237px;
+  height: 157.961px;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+.pf-proto-shot img { width: 100%; height: 100%; object-fit: cover; }
+.pf-proto-shot:hover img,
+.pf-proto-shot:focus-visible img { filter: brightness(1.08); }
+
+.pf-proto-peek {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: 3vmin;
+  background: rgba(13,11,20,0.82);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.16s ease;
+  pointer-events: none;
+}
+.pf-proto-peek[data-open="true"] { opacity: 1; visibility: visible; }
+.pf-proto-peek img {
+  max-width: 94vw;
+  max-height: 94vh;
+  width: auto;
+  height: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.pf-proto-vol {
+  position: absolute;
+  font-size: 32px;
+}
+
+/* Centre column of the contact sheet: clear hierarchy rather than three
+   equal-weight paragraphs of mixed inline sizes. */
+.pf-proto-copy { font-size: 15px; }
+.pf-root .pf-proto-h {
+  font-size: 30px;
+  line-height: 1.15;
+  margin-bottom: 18px;
+}
+.pf-root .pf-proto-lead {
+  font-size: 16px;
+  line-height: 1.45;
+  margin-bottom: 30px;
+}
+.pf-root .pf-proto-series {
+  font-family: var(--font-mono);
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.35;
+  color: var(--photo);
+  margin-bottom: 8px;
+}
+.pf-root .pf-proto-note {
+  line-height: 1.5;
+  margin-bottom: 30px;
+}
+.pf-root .pf-proto-note:last-child { margin-bottom: 0; }
+
+@media (max-width: 820px) {
+  .pf-proto-sheet { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .pf-proto-sheet button { display: block; padding: 0; border: 0; background: none; cursor: zoom-in; }
+  .pf-proto-sheet img { width: 100%; aspect-ratio: 3/2; object-fit: cover; }
+  .pf-proj-mobile h2 {
+    font-family: var(--font-mono);
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--pf-ink-mid);
+  }
+}
+
+/* Prev / next project pager, shown at both breakpoints */
+.pf-pager {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 48px 48px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+.pf-pager a { display: block; max-width: 45%; color: var(--pf-ink-mid); }
+.pf-pager .pf-pager-next { margin-left: auto; text-align: right; }
+.pf-pager a:hover { color: var(--pf-ink); }
+
+@media (max-width: 820px) {
+  .pf-pager { padding: 0 20px 40px; gap: 16px; font-size: 12px; }
+}
+
+/* Mobile reflow */
+.pf-proj-mobile { display: none; }
+
+@media (max-width: 820px) {
+  .pf-proj-mobile { display: block; padding: 0 20px 72px; }
+  /* .pf-root-scoped so it outranks the `.pf-root p` margin reset */
+  .pf-root .pf-proj-mobile > * + * { margin-top: 28px; }
+  .pf-proj-mobile .pf-mheader { margin: 0 -20px 4px; }
+  .pf-proj-mobile h1 {
+    font-family: var(--font-mono);
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+  .pf-proj-mobile p {
+    font-size: 16px;
+    line-height: 1.75;
+  }
+  .pf-proj-mobile figure { margin: 0; }
+  .pf-proj-mobile figure img { width: 100%; height: auto; border-radius: 3px; }
+  .pf-proj-gallery { display: grid; gap: 16px; }
+  /* Same pink slip as the desktop frame. The SVG is authored with
+     preserveAspectRatio="none", so it is meant to stretch to the box. */
+  .pf-proj-mobile .pf-proj-credit {
+    font-family: var(--font-mono);
+    font-style: italic;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--pf-ink);
+    /* Generous right/bottom padding keeps the text clear of the cut corner */
+    padding: 18px 46px 40px 22px;
+    background: url("../images/note_box.svg") no-repeat;
+    background-size: 100% 100%;
+  }
+  /* Match the slip to the page's discipline instead of always using the
+     pink UX sheet. */
+  .pf-root[data-disc="game"]  .pf-proj-credit { background-image: url("../images/note_game.svg"); }
+  .pf-root[data-disc="xr"]    .pf-proj-credit { background-image: url("../images/note_xr.svg"); }
+  .pf-root[data-disc="dv"]    .pf-proj-credit { background-image: url("../images/note_dv.svg"); }
+  .pf-root[data-disc="gdvm"]  .pf-proj-credit { background-image: url("../images/note_gdvm.svg"); }
+  .pf-root[data-disc="photo"] .pf-proj-credit { background-image: url("../images/note_photo.svg"); }
+  .pf-root[data-disc="video"] .pf-proj-credit { background-image: url("../images/note_video.svg"); }
+  .pf-root[data-disc="hci"]   .pf-proj-credit { background-image: url("../images/note_hci.svg"); }
+  .pf-root[data-disc="art"]   .pf-proj-credit { background-image: url("../images/note_art.svg"); }
+  .pf-root[data-disc="fab"]   .pf-proj-credit { background-image: url("../images/note_fab.svg"); }
+  .pf-proj-back {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 16px;
+  }
+}
+
+/* ── About page ── */
+
+.pf-about-stage {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  padding: 160px 6% 120px;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 64px;
+  align-items: start;
+}
+.pf-about-copy { max-width: 62ch; }
+/* Scoped with .pf-root so these outrank the `.pf-root p` margin reset */
+.pf-root .pf-about-copy > * + * { margin-top: 34px; }
+.pf-about-lead {
+  font-family: var(--font-mono);
+  font-size: clamp(26px, 3vw, 36px);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.pf-root .pf-about-lead + * { margin-top: 40px; }
+.pf-about-body {
+  font-size: clamp(16px, 1.25vw, 18px);
+  line-height: 1.8;
+  color: var(--pf-ink);
+}
+.pf-about-bio {
+  font-size: clamp(15px, 1.1vw, 17px);
+  line-height: 1.8;
+  color: var(--pf-ink-mid);
+}
+
+/* Structured facts, so the page is scannable rather than a wall of prose.
+   Separated by a short hairline rather than a full-width rule. */
+.pf-about-meta {
+  position: relative;
+  margin-top: 52px;
+  padding-top: 40px;
+  display: grid;
+  gap: 22px;
+}
+.pf-about-meta::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 34px;
+  height: 1px;
+  background: var(--pf-blue);
+}
+.pf-about-meta > div {
+  display: grid;
+  grid-template-columns: 108px 1fr;
+  gap: 16px;
+  align-items: baseline;
+}
+.pf-about-meta dt {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pf-blue-dark);
+}
+.pf-about-meta dd {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* Portrait at full width over a soft periwinkle bloom. The post-it sheet
+   was dropped here: at this photo size it could only ever read as a
+   lopsided blue frame rather than a document. */
+.pf-about-media {
+  position: relative;
+  justify-self: center;
+  width: 100%;
+  max-width: 470px;
+}
+/* .pf-root-scoped so this outranks the `.pf-root img { max-width:100% }`
+   reset, which would otherwise clamp the bloom back to the photo width. */
+.pf-root .pf-about-glow {
+  position: absolute;
+  top: -24%;
+  left: -24%;
+  width: 148%;
+  height: 148%;
+  z-index: 0;
+  pointer-events: none;
+  max-width: none;
+}
+.pf-about-photo {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  box-shadow: 0 18px 40px rgba(36,32,62,0.20), 0 2px 6px rgba(36,32,62,0.10);
+}
+.pf-about-photo img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 820px) {
+  /* The absolutely-placed desktop chrome is replaced by the sticky header */
+  .pf-root > .pf-brand,
+  .pf-root > .pf-nav-link { display: none; }
+
+  .pf-about-stage {
+    grid-template-columns: 1fr;
+    padding: 28px 20px 72px;
+    gap: 32px;
+    min-height: 0;
+  }
+  .pf-about-media { order: -1; justify-self: center; max-width: 270px; margin: 34px auto 44px; }
+  .pf-about-lead { font-size: 23px; }
+  .pf-root .pf-about-copy > * + * { margin-top: 26px; }
+  .pf-root .pf-about-lead + * { margin-top: 30px; }
+  .pf-about-meta { margin-top: 40px; padding-top: 32px; gap: 20px; }
+  .pf-about-glow { inset: -12%; width: 124%; height: 124%; }
+  .pf-about-meta > div { grid-template-columns: 1fr; gap: 4px; }
+  .pf-nav-link { right: 24px; }
+}
+
+@media (max-width: 480px) {
+  .pf-brand-name { font-size: 22px; }
+  .pf-brand-role { font-size: 11px; }
+  .pf-mobile-cards { grid-template-columns: 1fr 1fr; }
+}
+
+/* Caption above an embedded piece (e.g. the playable AI Act Game versions) */
+.pf-embed-label {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  color: var(--pf-ink-mid);
+}
+@media (max-width: 820px) {
+  .pf-root .pf-embed-label-m {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--pf-ink-mid);
+    margin-bottom: -14px;
+  }
+}
