@@ -6,18 +6,35 @@
 <meta name="color-scheme" content="light">
 <title>Academic &amp; Artistic Portfolio · Anis Slimani</title>
 <meta name="description" content="A constellation of academic and personal projects across UX, game development, extended reality, fabrication, data visualization, graphic design, robotics, installations, photography, and video.">
-<meta name="robots" content="noindex">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <link rel="icon" href="assets/images/favicon.svg?v=2" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/portfolio.css?v=47">
+<link rel="stylesheet" href="assets/css/portfolio.css?v=59">
 </head>
 <body>
 
 <div class="pf-root">
+
+    <header class="pf-mheader">
+    <div class="pf-brand">
+      <span class="pf-logo"></span>
+      <div class="pf-brand-text">
+        <p class="pf-brand-name">Anis Slimani</p>
+        <p class="pf-brand-role">Inter-disciplinary Creative</p>
+      </div>
+    </div>
+    <button class="pf-burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="pf-menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="pf-menu" id="pf-menu" hidden>
+      <a href="about.html">About</a>
+      <a href="https://anisslimani.com" target="_blank" rel="noopener">Website</a>
+      <a href="https://www.linkedin.com/in/anisslimani" target="_blank" rel="noopener">LinkedIn</a>
+    </nav>
+    </header>
 
   <div class="pf-stage-wrap">
     <div class="pf-stage">
@@ -29,9 +46,21 @@
           <p class="pf-brand-role">Inter-disciplinary Creative</p>
         </div>
       </div>
-      <a class="pf-nav-link" href="about.html">About</a>
+      <nav class="pf-nav" aria-label="Portfolio navigation">
+        <a class="pf-nav-link" href="about.html">About</a>
+        <a class="pf-nav-link" href="https://anisslimani.com" target="_blank" rel="noopener">Website</a>
+        <a class="pf-nav-link" href="https://www.linkedin.com/in/anisslimani" target="_blank" rel="noopener">LinkedIn</a>
+      </nav>
 
-      <img class="pf-vertices" style="left:157px;top:135.96px;width:1630.33px;height:865.4px;" src="assets/images/vertices.svg" alt="" aria-hidden="true">
+      <img class="pf-vertices" data-dir="tb" style="left:415.53px;top:607.62px;width:165.8px;height:380.33px;" src="assets/images/conn_lascaux_connector.svg?v=3" alt="" aria-hidden="true">
+      <img class="pf-vertices" data-dir="rl" style="left:155px;top:133.96px;width:796.33px;height:182.33px;" src="assets/images/conn_edu_connector.svg?v=3" alt="" aria-hidden="true">
+      <img class="pf-vertices" data-dir="rl" style="left:404px;top:242.97px;width:184.33px;height:92.32px;" src="assets/images/conn_doors_connector.svg?v=3" alt="" aria-hidden="true">
+      <img class="pf-vertices" data-dir="rl" style="left:404px;top:262.96px;width:320.33px;height:287.33px;" src="assets/images/conn_spamsweep_connector.svg?v=3" alt="" aria-hidden="true">
+      <img class="pf-vertices" data-dir="bt" style="left:1257.67px;top:262.96px;width:93.93px;height:277.33px;" src="assets/images/conn_aero_connector.svg?v=3" alt="" aria-hidden="true">
+      <img class="pf-vertices" data-dir="tb" style="left:1729.12px;top:403.62px;width:60.21px;height:533.33px;" src="assets/images/conn_proust_connector.svg?v=3" alt="" aria-hidden="true">
+      <img class="pf-vertices" data-dir="tb" style="left:1692.67px;top:361.62px;width:32.78px;height:575.33px;" src="assets/images/conn_proto_connector.svg?v=3" alt="" aria-hidden="true">
+      <img class="pf-vertices" data-dir="lr" style="left:752.67px;top:836.62px;width:955.33px;height:166.73px;" src="assets/images/conn_kopshti_connector.svg?v=3" alt="" aria-hidden="true">
+      <img class="pf-vertices" data-dir="tb" style="left:667.45px;top:392.41px;width:84.1px;height:104.1px;" src="assets/images/conn_l_s_connector.svg?v=3" alt="" aria-hidden="true">
 
       <!-- Discipline swatches + labels -->
       <img class="pf-disc-swatch" style="left:67px;top:259px;width:364px;height:355px;" src="assets/images/ellipse_ux.svg" alt="">
@@ -294,21 +323,6 @@
 
   <!-- ══ Mobile reflow: grouped list by discipline ══ -->
   <div class="pf-mobile">
-    <header class="pf-mheader">
-      <div class="pf-brand">
-        <span class="pf-logo"></span>
-        <div class="pf-brand-text">
-          <p class="pf-brand-name">Anis Slimani</p>
-          <p class="pf-brand-role">Inter-disciplinary Creative</p>
-        </div>
-      </div>
-      <button class="pf-burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="pf-menu">
-        <span></span><span></span><span></span>
-      </button>
-      <nav class="pf-menu" id="pf-menu" hidden>
-        <a href="about.html">About</a>
-      </nav>
-    </header>
 
     <div class="pf-mobile-group" data-disc="ux">
       <h2>UX / Interaction Design</h2>
@@ -396,8 +410,21 @@
 
   </div>
 
+
+  <footer class="pf-footer">
+    <div class="pf-footer-inner">
+      <p class="pf-footer-mark">&copy; 2026 Anis Slimani. All rights reserved.</p>
+      <p class="pf-footer-note">Every project shown here, together with its images, video and writing, is the property of Anis Slimani and of the collaborators credited alongside it. Please ask before reusing any of it.</p>
+      <nav class="pf-footer-links" aria-label="Elsewhere">
+        <a href="https://anisslimani.com" target="_blank" rel="noopener">Website &#8599;</a>
+        <a href="https://www.linkedin.com/in/anisslimani" target="_blank" rel="noopener">LinkedIn &#8599;</a>
+        <a href="mailto:anisslimani013@gmail.com">Email &#8599;</a>
+      </nav>
+    </div>
+  </footer>
+
 </div>
 
-<script src="assets/js/portfolio.js?v=47"></script>
+<script src="assets/js/portfolio.js?v=59"></script>
 </body>
 </html>

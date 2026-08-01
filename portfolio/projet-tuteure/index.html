@@ -6,18 +6,36 @@
 <meta name="color-scheme" content="light">
 <title>Projet Tuteuré · Anis Slimani</title>
 <meta name="description" content="Mass-Education, a public health campaign merging Pop Art aesthetics with Cold War propaganda techniques during the COVID-19 pandemic.">
-<meta name="robots" content="noindex">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <link rel="icon" href="../assets/images/favicon.svg?v=2" type="image/svg+xml">
-<link rel="stylesheet" href="../assets/css/portfolio.css?v=47">
+<link rel="stylesheet" href="../assets/css/portfolio.css?v=59">
 </head>
 <body>
 
 <div class="pf-root" data-disc="gdvm">
+
+    <header class="pf-mheader">
+    <div class="pf-brand">
+      <span class="pf-logo"></span>
+      <div class="pf-brand-text">
+        <p class="pf-brand-name">Anis Slimani</p>
+        <p class="pf-brand-role">Inter-disciplinary Creative</p>
+      </div>
+    </div>
+    <button class="pf-burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="pf-menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="pf-menu" id="pf-menu" hidden>
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+      <a href="https://anisslimani.com" target="_blank" rel="noopener">Website</a>
+      <a href="https://www.linkedin.com/in/anisslimani" target="_blank" rel="noopener">LinkedIn</a>
+    </nav>
+    </header>
 
   <!-- ══ Desktop: the frame, fitted ══ -->
   <div class="pf-stage-wrap">
@@ -25,7 +43,11 @@
 
       <div class="pf-brand"><span class="pf-logo"></span></div>
       <h1 class="pf-proj-title">Projet Tuteur&eacute;</h1>
-      <a class="pf-nav-link" href="../index.html">Home</a>
+      <nav class="pf-nav" aria-label="Portfolio navigation">
+        <a class="pf-nav-link" href="../index.html">Home</a>
+        <a class="pf-nav-link" href="https://anisslimani.com" target="_blank" rel="noopener">Website</a>
+        <a class="pf-nav-link" href="https://www.linkedin.com/in/anisslimani" target="_blank" rel="noopener">LinkedIn</a>
+      </nav>
 
       <span class="pf-proj-sheet" style="left:62px;top:191px;width:531px;height:435px;">
         <img style="left:-9.61px;top:-1.61px;width:550.22px;height:454.2px;" src="../assets/images/sheet_gdvm_b.svg" alt="" aria-hidden="true">
@@ -71,22 +93,6 @@
 
   <!-- ══ Mobile: single column ══ -->
   <div class="pf-proj-mobile">
-    <header class="pf-mheader">
-      <div class="pf-brand">
-        <span class="pf-logo"></span>
-        <div class="pf-brand-text">
-          <p class="pf-brand-name">Anis Slimani</p>
-          <p class="pf-brand-role">Inter-disciplinary Creative</p>
-        </div>
-      </div>
-      <button class="pf-burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="pf-menu">
-        <span></span><span></span><span></span>
-      </button>
-      <nav class="pf-menu" id="pf-menu" hidden>
-        <a href="../index.html">Home</a>
-        <a href="../about.html">About</a>
-      </nav>
-    </header>
 
     <h1>Projet Tuteur&eacute;</h1>
 
@@ -116,8 +122,21 @@
     <a class="pf-pager-next" href="../proto-collective/index.html">PROTO Collective &rarr;</a>
   </nav>
 
+
+  <footer class="pf-footer">
+    <div class="pf-footer-inner">
+      <p class="pf-footer-mark">&copy; 2026 Anis Slimani. All rights reserved.</p>
+      <p class="pf-footer-note">Every project shown here, together with its images, video and writing, is the property of Anis Slimani and of the collaborators credited alongside it. Please ask before reusing any of it.</p>
+      <nav class="pf-footer-links" aria-label="Elsewhere">
+        <a href="https://anisslimani.com" target="_blank" rel="noopener">Website &#8599;</a>
+        <a href="https://www.linkedin.com/in/anisslimani" target="_blank" rel="noopener">LinkedIn &#8599;</a>
+        <a href="mailto:anisslimani013@gmail.com">Email &#8599;</a>
+      </nav>
+    </div>
+  </footer>
+
 </div>
 
-<script src="../assets/js/portfolio.js?v=47"></script>
+<script src="../assets/js/portfolio.js?v=59"></script>
 </body>
 </html>

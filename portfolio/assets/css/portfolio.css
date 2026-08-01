@@ -7,6 +7,27 @@
    preference stored by the main site's theme toggle.
    ============================================================ */
 
+html, body {
+  /* The reset below only reaches inside .pf-root, so body kept its default
+     8px margin and the white html canvas showed through as a frame on all
+     four edges of every page. */
+  margin: 0;
+  padding: 0;
+  background: #fbfbfd;
+  overscroll-behavior: none;          /* no rubber-band past the ends */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139,153,251,0.45) transparent;
+}
+html::-webkit-scrollbar { width: 10px; height: 10px; }
+html::-webkit-scrollbar-track { background: transparent; }
+html::-webkit-scrollbar-thumb {
+  background: rgba(139,153,251,0.42);
+  border-radius: 8px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+html::-webkit-scrollbar-thumb:hover { background: rgba(139,153,251,0.62); background-clip: content-box; }
+
 :root {
   --glow:         #8b99fb;   /* default logo bloom; overridden per discipline */
   --pf-bg:        #ffffff;
@@ -106,15 +127,52 @@
   color: var(--pf-ink-mid);
 }
 
-.pf-nav-link {
+.pf-nav {
   position: absolute;
-  top: 69px;
+  top: 65px;
   right: 64px;
-  font-size: 18px;
   z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+/* About is the one page with no 1920 stage, so its chrome was rendering at
+   1:1 while every other page's sits inside the scaled stage and shrinks
+   with the viewport. --pf-s (set in JS from the same width the stage uses)
+   puts it at exactly the size it is everywhere else. */
+.pf-root > .pf-brand {
+  left: calc(31px * var(--pf-s, 1));
+  top: calc(42px * var(--pf-s, 1));
+  transform: scale(var(--pf-s, 1));
+  transform-origin: top left;
+}
+.pf-root > .pf-nav {
+  right: calc(64px * var(--pf-s, 1));
+  top: calc(65px * var(--pf-s, 1));
+  transform: scale(var(--pf-s, 1));
+  transform-origin: top right;
+}
+.pf-nav-link {
+  position: relative;
+  font-size: 18px;
   padding: 4px 2px;
 }
-.pf-nav-link:hover { text-decoration: underline; }
+/* Rule grows from the left rather than a blunt text-decoration flick */
+.pf-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  scale: 0 1;
+  transform-origin: left;
+  transition: scale 0.28s cubic-bezier(0.2,0.7,0.2,1);
+}
+.pf-nav-link:hover::after,
+.pf-nav-link:focus-visible::after { scale: 1 1; }
 
 /* ── Desktop stage (1920x1080 canvas, scaled to fit) ── */
 
@@ -774,7 +832,7 @@
 @media (max-width: 820px) {
   /* The absolutely-placed desktop chrome is replaced by the sticky header */
   .pf-root > .pf-brand,
-  .pf-root > .pf-nav-link { display: none; }
+  .pf-root > .pf-nav { display: none; }
 
   .pf-about-stage {
     grid-template-columns: 1fr;
@@ -812,4 +870,253 @@
     color: var(--pf-ink-mid);
     margin-bottom: -14px;
   }
+}
+
+/* ══ 2026 pass: paper stock, depth, settle-on-load ══════════════════
+   The board should feel like lit paper on a desk rather than artwork
+   on flat #fff: a warm off-white with soft light pooling, a faint
+   grain over everything, and sheets that settle into place on load. */
+
+.pf-root {
+  /* Sized in viewport units, not pixels: fixed px pools kept their size on
+     a 2560-wide display and the light stopped reading as light at all.
+     With `background-attachment: fixed` the painting area is the viewport,
+     so these scale with the screen instead of shrinking into it. */
+  background:
+    radial-gradient(62vw 64vh at 15% -10%, #fffefb 0%, transparent 62%),
+    radial-gradient(54vw 58vh at 103% -4%, #f9f8ff 0%, transparent 58%),
+    radial-gradient(48vw 46vh at 88% 34%,  #fdf7fb 0%, transparent 66%),
+    radial-gradient(70vw 62vh at 50% 116%, #f2f1f9 0%, transparent 64%),
+    #fbfbfd;
+  background-attachment: fixed;
+}
+/* Paper grain. Very low opacity: felt, not seen. */
+.pf-root::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.038;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Sheets lift off the surface instead of sitting flat on it */
+.pf-card-shape, .pf-proj-sheet, .pf-note {
+  filter: drop-shadow(0 7px 14px rgba(36,32,62,0.09));
+}
+/* Softer, warmer than the flat 65% black in the frames */
+.pf-proj-img--shadow { box-shadow: 0 12px 26px rgba(36,32,62,0.26), 0 2px 5px rgba(36,32,62,0.16); }
+.pf-card-photo       { box-shadow: 0 5px 10px rgba(36,32,62,0.22); }
+.pf-video            { box-shadow: 0 14px 34px rgba(36,32,62,0.18); }
+
+/* Choreographed load: the connector lines draw themselves in first while
+   the pastel washes bloom and breathe, and only then do the sheets settle
+   onto the board. `translate`/`rotate`/`scale` are animated as independent
+   properties so per-card inline rotations survive. */
+
+/* Each connector draws toward the point it aims at */
+@keyframes pf-draw-rl { from { clip-path: inset(0 0 0 100%); opacity: 0.75; } to { clip-path: inset(0); opacity: 0.9; } }
+@keyframes pf-bloom { from { opacity: 0; scale: 0.88; } to { opacity: 0.55; scale: 1; } }
+/* No rotate wobble: the overshoot was what read as glitchy */
+@keyframes pf-drop {
+  from { opacity: 0; translate: 0 -8px; scale: 1.01; }
+  to   { opacity: 1; translate: 0 0; scale: 1; }
+}
+@keyframes pf-rise {
+  from { opacity: 0; translate: 0 7px; }
+  to   { opacity: 1; translate: 0 0; }
+}
+@keyframes pf-pop  { 0% { opacity: 0; scale: 0.5; } 65% { opacity: 1; scale: 1.06; } 100% { opacity: 1; scale: 1; } }
+
+/* 1. connector lines draw across the empty board, each one uncovering
+      from its right edge toward its left */
+.pf-stage .pf-vertices {
+  animation: pf-draw-rl 1.15s cubic-bezier(0.33,0.02,0.16,1) both;
+  animation-delay: var(--d, 140ms);
+}
+/* 2. the washes bloom, then breathe gently underneath everything */
+.pf-stage .pf-disc-swatch {
+  animation: pf-bloom 1.2s cubic-bezier(0.16,0.66,0.2,1) both;
+  animation-delay: var(--d, 0ms);
+}
+/* 3. sheets settle, flooding with colour as they land */
+.pf-stage .pf-card-shape,
+.pf-stage .pf-proj-sheet,
+.pf-stage .pf-note {
+  animation: pf-drop 0.85s cubic-bezier(0.16,0.66,0.2,1) both;
+  animation-delay: var(--d, 0ms);
+}
+.pf-stage .pf-card-title,
+.pf-stage .pf-card-photo,
+.pf-stage .pf-proj-img,
+.pf-stage .pf-video,
+.pf-stage .pf-proto-shot {
+  animation: pf-drop 0.8s cubic-bezier(0.16,0.66,0.2,1) both;
+  animation-delay: var(--d, 0ms);
+}
+.pf-stage .pf-disc-label,
+.pf-stage .pf-proj-body,
+.pf-stage .pf-proj-title,
+.pf-mobile-card,
+.pf-proj-mobile > * {
+  animation: pf-rise 0.66s cubic-bezier(0.16,0.68,0.2,1) both;
+  animation-delay: var(--d, 0ms);
+}
+/* 4. hand-drawn marks land last */
+.pf-stage .pf-proj-mark {
+  animation: pf-pop 0.45s cubic-bezier(0.3,1.35,0.5,1) both;
+  animation-delay: var(--d, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pf-stage *, .pf-mobile-card, .pf-proj-mobile > * { animation: none !important; }
+}
+
+/* ══ Footer ═════════════════════════════════════════════════════════ */
+
+.pf-footer {
+  position: relative;
+  z-index: 2;
+  margin-top: 32px;
+  padding: 32px 64px 34px;
+  border-top: 1px solid rgba(36,32,62,0.08);
+  background: linear-gradient(180deg, transparent, rgba(139,153,251,0.06));
+}
+/* Reads across the page rather than stacking down the middle: mark left,
+   the notice taking the width it needs, links right. */
+.pf-footer-inner {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 56px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+.pf-root .pf-footer-mark {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--pf-ink);
+}
+.pf-root .pf-footer-note {
+  flex: 1 1 auto;
+  max-width: 62ch;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--pf-ink-mid);
+}
+.pf-footer-links {
+  flex: none;
+  display: flex;
+  gap: 24px;
+  font-size: 13px;
+  font-family: var(--font-mono);
+}
+.pf-footer-links a {
+  color: var(--pf-ink-mid);
+  padding: 4px 2px;
+  transition: color 0.2s ease;
+}
+.pf-footer-links a:hover { color: var(--pf-ink); }
+
+/* ══ Mobile: give the column the depth the desktop board gets ═══════ */
+
+@media (max-width: 820px) {
+  /* Pooled light behind the column, the mobile answer to the pastel washes
+     on the desktop board. This is a genuinely fixed layer rather than
+     `background-attachment: fixed`, which iOS Safari ignores: there the
+     colour would scroll away and leave most of the page flat white.
+     `isolation` gives .pf-root a stacking context so z-index:-1 sits above
+     its own background but below every card, note and header. */
+  .pf-root {
+    background: #fcfbfe;
+    isolation: isolate;
+  }
+  .pf-root::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(88vw 40vh at 6% 2%,    rgba(232,172,202,0.34), transparent 68%),
+      radial-gradient(84vw 38vh at 98% 22%,  rgba(166,171,246,0.30), transparent 66%),
+      radial-gradient(96vw 42vh at 12% 62%,  rgba(148,231,219,0.26), transparent 68%),
+      radial-gradient(84vw 40vh at 96% 88%,  rgba(255,187,131,0.24), transparent 68%),
+      radial-gradient(70vw 34vh at 40% 108%, rgba(201,172,214,0.22), transparent 70%);
+  }
+
+  /* Header is translucent over the top of the page and goes fully opaque
+     once anything scrolls under it, so text never shows through it. */
+  .pf-mheader {
+    background: color-mix(in srgb, var(--pf-bg) 74%, transparent);
+    transition: background 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    border-bottom: 1px solid transparent;
+  }
+  .pf-mheader[data-stuck="true"] {
+    background: var(--pf-bg);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-bottom-color: rgba(36,32,62,0.08);
+    box-shadow: 0 6px 22px rgba(36,32,62,0.07);
+  }
+
+  /* The cluster wash was barely there; this is the mobile echo of the
+     pastel bloom sitting behind each group on the board. */
+  .pf-mobile-group::before {
+    inset: -2% -22% -2%;
+    background: radial-gradient(
+      closest-side,
+      color-mix(in oklab, var(--disc) 20%, transparent),
+      color-mix(in oklab, var(--disc) 7%, transparent) 58%,
+      transparent 76%
+    );
+    filter: blur(6px);
+  }
+  /* Discipline heading gets the same bloom the desktop labels sit in */
+  .pf-mobile-group h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .pf-mobile-group h2::before {
+    content: "";
+    flex: none;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--fold-c);
+    box-shadow: 0 0 12px 3px color-mix(in srgb, var(--fold-c) 65%, transparent);
+  }
+
+  /* Paper catches the light across its top-left, and casts a tinted rather
+     than a flat grey shadow, which is what sells it as a real sheet. */
+  .pf-mobile-card::before {
+    background:
+      linear-gradient(157deg, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0) 46%),
+      var(--paper);
+  }
+  .pf-mobile-card {
+    filter:
+      drop-shadow( 1px 0 0 var(--edge))
+      drop-shadow(-1px 0 0 var(--edge))
+      drop-shadow(0  1px 0 var(--edge))
+      drop-shadow(0 -1px 0 var(--edge))
+      drop-shadow(0 4px 7px color-mix(in srgb, var(--fold-c) 42%, transparent))
+      drop-shadow(0 10px 18px rgba(36,32,62,0.13));
+  }
+  .pf-mobile-card:active { translate: 0 1px; }
+  .pf-mobile-card img { box-shadow: 0 3px 8px rgba(36,32,62,0.24); }
+
+  /* Too narrow to read across, so the footer stacks again here */
+  .pf-footer { padding: 40px 20px 38px; margin-top: 26px; }
+  .pf-footer-inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 14px;
+  }
+  .pf-root .pf-footer-note { font-size: 12.5px; max-width: none; }
+  .pf-footer-links { gap: 18px; margin-top: 4px; }
 }

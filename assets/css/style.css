@@ -3016,3 +3016,129 @@ nav.work-header {
   .footer-links a { font-size: 11px; }
   .footer-links { gap: 12px; }
 }
+
+/* ── 15. LAB: doorway to the paper portfolio ─────────────────
+   No panel, no frame: the notes sit directly on the page in both
+   themes. At rest they are a single squared-up deck; on hover they
+   fan out around their epicentre, each carrying its own discipline
+   glow. Nothing to mismatch the background, so no height problem. */
+
+#lab { padding: 120px 0; overflow: hidden; }
+.lab-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 56px;
+  align-items: center;
+}
+/* tighter vertical rhythm through the copy */
+.lab-copy h2 { margin-bottom: 14px; }
+/* .section-desc ships with a 64px bottom margin; the CTA needs to sit close */
+.lab-copy .section-desc { margin-top: 0; margin-bottom: 0; max-width: 46ch; }
+.lab-cta { margin-top: 26px; display: inline-block; }
+
+.lab-stack {
+  position: relative;
+  display: block;
+  isolation: isolate;
+  height: clamp(340px, 34vw, 460px);
+  --rad: clamp(118px, 15.5vw, 205px);
+}
+/* Soft halo that breathes under the pile: an invitation to hover that
+   shares no properties with the notes, so nothing can fight it. */
+.lab-stack::after {
+  content: "";
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 46%; aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(139,153,251,0.30), transparent 72%);
+  filter: blur(14px);
+  z-index: -1;
+  animation: lab-halo 4.2s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes lab-halo {
+  0%, 100% { opacity: 0.45; scale: 0.94; }
+  50%      { opacity: 0.85; scale: 1.06; }
+}
+.lab-stack:hover::after { opacity: 0; animation: none; transition: opacity 0.4s ease; }
+
+.lab-note {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(104px, 12vw, 150px);
+  margin: calc(clamp(104px, 12vw, 150px) * -0.42) 0 0 calc(clamp(104px, 12vw, 150px) * -0.5);
+  padding: 7px 7px 14px;
+  background: var(--paper);
+  z-index: var(--z, 1);          /* explicit stacking: Circles sits above Proust */
+  rotate: var(--r);
+  translate: 0 0;
+  box-shadow: 0 6px 16px rgba(20,18,35,0.22), 0 1px 3px rgba(20,18,35,0.16);
+  transition:
+    translate 0.62s cubic-bezier(0.2,0.8,0.2,1),
+    rotate    0.62s cubic-bezier(0.2,0.8,0.2,1),
+    scale     0.45s ease,
+    box-shadow 0.5s ease;
+  transition-delay: calc(var(--i) * 24ms);
+  will-change: translate, rotate;
+}
+.lab-note img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+
+/* Fan out around the epicentre, each note lighting its own colour */
+.lab-stack:hover .lab-note,
+.lab-stack:focus-visible .lab-note {
+  translate: calc(cos(var(--a)) * var(--rad) * var(--rf)) calc(sin(var(--a)) * var(--rad) * var(--rf));
+  rotate: calc(var(--r) * 0.75);
+  scale: 1.03;
+  box-shadow:
+    0 0 34px 6px rgba(var(--glow), 0.55),
+    0 10px 26px rgba(20,18,35,0.28);
+}
+/* the pile lifts as a whole */
+.lab-stack:hover { }
+
+/* Dark mode: the glows carry more of the work */
+:root:not([data-theme="light"]) .lab-stack:hover .lab-note {
+  box-shadow:
+    0 0 46px 10px rgba(var(--glow), 0.65),
+    0 12px 30px rgba(0,0,0,0.55);
+}
+
+/* No hover on touch: show the fan by default */
+@media (hover: none) {
+  .lab-stack::after { display: none; }        /* nothing to invite on touch */
+  .lab-note {
+    transition: none;
+    translate: calc(cos(var(--a)) * var(--rad) * var(--rf)) calc(sin(var(--a)) * var(--rad) * var(--rf));
+    rotate: calc(var(--r) * 0.75);
+    box-shadow: 0 0 26px 4px rgba(var(--glow), 0.45), 0 8px 20px rgba(20,18,35,0.24);
+  }
+}
+@media (max-width: 900px) {
+  #lab { padding: 88px 0; }
+  /* copy centred, CTA full width, and a clear gap below the deck */
+  .lab-inner { grid-template-columns: 1fr; gap: 56px; }
+  .lab-copy { text-align: center; align-items: center; }
+  .lab-copy .section-label { align-self: center; }
+  .lab-copy .section-desc { margin-left: auto; margin-right: auto; }
+  .lab-cta { width: 100%; text-align: center; align-self: stretch; }
+  .lab-stack { order: -1; margin-bottom: 8px; }
+  .lab-stack { height: clamp(300px, 78vw, 400px); --rad: clamp(96px, 27vw, 150px); }
+  .lab-note { width: clamp(86px, 24vw, 120px); margin: calc(clamp(86px,24vw,120px) * -0.42) 0 0 calc(clamp(86px,24vw,120px) * -0.5); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lab-note { transition: none; }
+}
+
+/* Light-sweep when crossing from the dark site into the paper room */
+.lab-sweep {
+  position: fixed; inset: 0; z-index: 9999;
+  background: #fbfbfd; opacity: 0; pointer-events: none;
+  transition: opacity 0.42s ease;
+}
+.lab-sweep.on { opacity: 1; }

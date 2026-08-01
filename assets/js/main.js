@@ -905,3 +905,24 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
   }
   document.addEventListener('site:themechange', sync);
 })();
+
+/* Crossing into /portfolio/ : brief light sweep so the jump from the dark
+   site into the paper board reads as authored, not as a broken stylesheet. */
+(function () {
+  var links = document.querySelectorAll('a[href="/portfolio/"]');
+  if (!links.length) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var sweep = document.createElement('div');
+  sweep.className = 'lab-sweep';
+  document.body.appendChild(sweep);
+
+  links.forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+      e.preventDefault();
+      sweep.classList.add('on');
+      setTimeout(function () { window.location.href = a.getAttribute('href'); }, 380);
+    });
+  });
+})();

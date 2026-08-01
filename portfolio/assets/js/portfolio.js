@@ -10,6 +10,10 @@
       var scale = wrap.clientWidth / STAGE_W;
       stage.style.transform = 'scale(' + scale + ')';
     });
+    // Pages without a stage (About) scale their chrome off the same ratio,
+    // so the logo and nav are the same size on every page.
+    document.documentElement.style.setProperty(
+      '--pf-s', (document.documentElement.clientWidth / STAGE_W).toFixed(5));
   }
 
   if ('ResizeObserver' in window) {
@@ -17,11 +21,47 @@
     document.querySelectorAll('.pf-stage-wrap').forEach(function (wrap) {
       ro.observe(wrap);
     });
-  } else {
-    window.addEventListener('resize', scaleStages);
   }
+  // About has no stage for the observer to watch, so it needs this to keep
+  // --pf-s in step with the viewport.
+  window.addEventListener('resize', scaleStages);
 
   scaleStages();
+
+  // Choreograph the load. Everything after the washes is staggered in DOM
+  // order, which is what keeps a card's sheet ahead of its own title —
+  // staggering per class let late sheets land after early titles.
+  ['.pf-stage', '.pf-mobile', '.pf-proj-mobile'].forEach(function (sel) {
+    var scope = document.querySelector(sel);
+    if (!scope) return;
+
+    scope.querySelectorAll('.pf-disc-swatch').forEach(function (el, i) {
+      el.style.setProperty('--d', (200 + i * 55) + 'ms');
+    });
+
+    // Connectors animate clip-path, which repaints: sequence them so only
+    // one is drawing at a time rather than all nine together.
+    scope.querySelectorAll('.pf-vertices').forEach(function (el, i) {
+      el.style.setProperty('--d', (140 + i * 90) + 'ms');
+    });
+
+    var seq = scope.querySelectorAll(
+      '.pf-card-shape, .pf-card-photo, .pf-card-title,' +
+      '.pf-proj-sheet, .pf-proj-img, .pf-note, .pf-video, .pf-proj-body,' +
+      '.pf-proj-title, .pf-proj-mark, .pf-proto-shot, .pf-mobile-card'
+    );
+    seq.forEach(function (el, i) {
+      el.style.setProperty('--d', Math.min(900 + i * 14, 1700) + 'ms');
+    });
+
+    // A card's label is part of its note, not a separate arrival: give it
+    // the same delay as the sheet so the two land together.
+    scope.querySelectorAll('.pf-card').forEach(function (card) {
+      var sheet = card.querySelector('.pf-card-shape');
+      var title = card.querySelector('.pf-card-title');
+      if (sheet && title) title.style.setProperty('--d', sheet.style.getPropertyValue('--d'));
+    });
+  });
 
   // PROTO Collective: hover/focus pops the full-resolution photo up
   var shots = document.querySelectorAll('.pf-proto-shot[data-full], .pf-proto-shot-m[data-full]');
@@ -85,6 +125,24 @@
     });
     window.addEventListener('blur', hide);
     document.addEventListener('scroll', hide, { passive: true });
+  }
+
+  // Sticky header goes fully opaque as soon as anything scrolls under it.
+  // Read in a rAF so the scroll handler itself never measures layout.
+  var headers = document.querySelectorAll('.pf-mheader');
+  if (headers.length) {
+    var queued = false;
+    var syncStuck = function () {
+      queued = false;
+      var stuck = window.scrollY > 4;
+      headers.forEach(function (h) { h.setAttribute('data-stuck', String(stuck)); });
+    };
+    window.addEventListener('scroll', function () {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(syncStuck);
+    }, { passive: true });
+    syncStuck();
   }
 
   // Mobile hamburger menu
