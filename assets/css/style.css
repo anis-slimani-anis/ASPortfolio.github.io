@@ -3046,8 +3046,8 @@ nav.work-header {
   height: clamp(340px, 34vw, 460px);
   --rad: clamp(118px, 15.5vw, 205px);
 }
-/* Soft halo that breathes under the pile: an invitation to hover that
-   shares no properties with the notes, so nothing can fight it. */
+/* Soft static glow under the pile, so it sits on the page rather than
+   floating on it. The invitation to hover is the ruffle below, not this. */
 .lab-stack::after {
   content: "";
   position: absolute;
@@ -3057,15 +3057,11 @@ nav.work-header {
   border-radius: 50%;
   background: radial-gradient(closest-side, rgba(139,153,251,0.30), transparent 72%);
   filter: blur(14px);
+  opacity: 0.6;
   z-index: -1;
-  animation: lab-halo 4.2s ease-in-out infinite;
   pointer-events: none;
 }
-@keyframes lab-halo {
-  0%, 100% { opacity: 0.45; scale: 0.94; }
-  50%      { opacity: 0.85; scale: 1.06; }
-}
-.lab-stack:hover::after { opacity: 0; animation: none; transition: opacity 0.4s ease; }
+.lab-stack:hover::after { opacity: 0; transition: opacity 0.4s ease; }
 
 .lab-note {
   position: absolute;
@@ -3085,9 +3081,33 @@ nav.work-header {
     scale     0.45s ease,
     box-shadow 0.5s ease;
   transition-delay: calc(var(--i) * 24ms);
-  will-change: translate, rotate;
+  will-change: transform, translate, rotate;
 }
 .lab-note img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+
+/* A ruffle through the pile every few seconds: each note slides a short way
+   along the direction it will fan out to, then drops back, so you can see
+   what hovering does before you do it. Deliberately animates `transform`
+   while the fan-out uses the independent `translate`/`rotate`/`scale`
+   properties: the two multiply together instead of one overriding the
+   other, which is what wrecked the earlier attempts at this cue. */
+@keyframes lab-peek {
+  0%        { transform: none; }
+  8%        { transform:
+                translate(calc(cos(var(--a)) * var(--rad) * var(--rf) * 0.2),
+                          calc(sin(var(--a)) * var(--rad) * var(--rf) * 0.2))
+                rotate(calc(var(--r) * -1.5)); }
+  20%, 100% { transform: none; }
+}
+.lab-note {
+  /* Tight stagger on purpose: the notes overlap as they go, so it reads as
+     one quick wave rolling through the pile rather than notes taking turns.
+     Positive delays, so nothing sits displaced on load. */
+  animation: lab-peek 6.5s cubic-bezier(0.32,0.72,0.28,1) infinite;
+  animation-delay: calc(var(--i) * 0.13s);
+}
+.lab-stack:hover .lab-note,
+.lab-stack:focus-visible .lab-note { animation: none; }
 
 /* Fan out around the epicentre, each note lighting its own colour */
 .lab-stack:hover .lab-note,
@@ -3109,10 +3129,18 @@ nav.work-header {
     0 12px 30px rgba(0,0,0,0.55);
 }
 
-/* No hover on touch: show the fan by default */
-@media (hover: none) {
+@media (prefers-reduced-motion: reduce) {
+  .lab-note { animation: none; }
+}
+
+/* No hover to give: show the fan by default, always. Gated on width as
+   well as pointer type, because a narrow window on a machine with a mouse
+   still reports `hover: hover` and was falling through to the stacked
+   desktop version. */
+@media (hover: none), (max-width: 900px) {
   .lab-stack::after { display: none; }        /* nothing to invite on touch */
   .lab-note {
+    animation: none;                          /* no hover to preview */
     transition: none;
     translate: calc(cos(var(--a)) * var(--rad) * var(--rf)) calc(sin(var(--a)) * var(--rad) * var(--rf));
     rotate: calc(var(--r) * 0.75);
