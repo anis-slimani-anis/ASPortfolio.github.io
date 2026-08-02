@@ -814,6 +814,13 @@ html::-webkit-scrollbar-thumb:hover { background: rgba(139,153,251,0.62); backgr
 }
 /* .pf-root-scoped so this outranks the `.pf-root img { max-width:100% }`
    reset, which would otherwise clamp the bloom back to the photo width. */
+/* The bloom is sized in % of its containing block. That used to be the
+   portrait alone; once the campus prints joined the column it stretched to
+   148% of the whole thing and hung 86px below the footer, which is what was
+   adding dead scroll to the bottom of the page. This pins it back. */
+.pf-about-portrait {
+  position: relative;
+}
 .pf-root .pf-about-glow {
   position: absolute;
   top: -24%;
@@ -994,7 +1001,7 @@ html::-webkit-scrollbar-thumb:hover { background: rgba(139,153,251,0.62); backgr
    the notice taking the width it needs, links right. */
 .pf-footer-inner {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: 56px;
   max-width: 1600px;
