@@ -1,0 +1,15 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "portfolio",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-I",
+        "-c",
+        "import functools;from http.server import HTTPServer, SimpleHTTPRequestHandler;h=functools.partial(SimpleHTTPRequestHandler, directory='/private/tmp/claude-501/-Users-admin-Documents-GitHub-ASPortfolio-github-io/7ec59c9d-0466-44c5-8869-d198f1083d8f/scratchpad/site');HTTPServer(('127.0.0.1', 4180), h).serve_forever()"
+      ],
+      "port": 4180
+    }
+  ]
+}

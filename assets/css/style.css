@@ -1197,6 +1197,18 @@ section, footer, .page-hero, .case-content-wrap {
   color: var(--accent);
   background: var(--accent-dim);
 }
+.case-eyebrow {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+}
+.case-eyebrow strong {
+  font-weight: 700;
+  color: var(--accent);
+}
 .case-body h3 { margin-bottom: 18px; }
 .case-body p {
   font-size: 17px;
@@ -1230,10 +1242,10 @@ section, footer, .page-hero, .case-content-wrap {
   font-weight: 500;
   color: var(--accent);
   margin-top: 24px;
-  opacity: 0.6;
-  transition: opacity 0.2s;
+  opacity: 1;
+  transition: gap 0.2s;
 }
-.case-card:hover .case-link { opacity: 1; }
+.case-card:hover .case-link { gap: 10px; }
 
 .case-visual {
   background: var(--bg3);
@@ -2742,6 +2754,7 @@ nav.work-header {
   .contact-link { width: 100%; }
   .case-body { text-align: left; align-items: flex-start; }
   .case-tags { justify-content: flex-start; }
+  .case-eyebrow { text-align: left; }
   .case-link { margin-left: 0; margin-right: 0; }
 
   /* ── Nav ── */
@@ -2801,6 +2814,7 @@ nav.work-header {
   .case-card.flipped { direction: ltr; }
   .case-visual { min-height: 180px; order: -1; }
   .case-body { padding: 24px 20px; }
+  .case-eyebrow { margin-bottom: 12px; }
   .case-body h3 { font-size: 18px; }
   .case-body p { font-size: 15px; }
   .case-metrics { gap: 16px; }
