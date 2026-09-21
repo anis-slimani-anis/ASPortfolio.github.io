@@ -1,0 +1,168 @@
+/* SNCF Connect journey redesign, design tokens
+   Exported from Figma file loA6bfeV7VKqkWsik9iaLr, collection "Tokens".
+   Two tiers: primitives never change between modes, semantics flip. */
+
+:root {
+  /* ---- primitives, identical in both modes ---- */
+  --color-blue-50: #f2f5fd;
+  --color-blue-100: #d7ebfa;
+  --color-blue-200: #c6d2e4;
+  --color-blue-300: #85c1ed;
+  --color-blue-400: #5aa9e6;
+  --color-blue-500: #3089d2;
+  --color-blue-600: #0073ae;
+  --color-blue-700: #1c5585;
+  --color-blue-800: #153f62;
+  --color-blue-900: #0f1b2d;
+
+  --color-orange-50: #fff8f1;
+  --color-orange-100: #fdf1e7;
+  --color-orange-200: #f9dcc0;
+  --color-orange-300: #f5c184;
+  --color-orange-400: #f0a23c;
+  --color-orange-500: #c2670a;
+  --color-orange-600: #a0560b;
+  --color-orange-700: #ae4713;
+  --color-orange-800: #613408;
+  --color-orange-900: #422306;
+
+  --color-red-50: #fff5f5;
+  --color-red-100: #fdecee;
+  --color-red-200: #fbcfd2;
+  --color-red-300: #f7a3a3;
+  --color-red-400: #ff6b6b;
+  --color-red-500: #c8102e;
+  --color-red-600: #b3132a;
+  --color-red-700: #8f0f21;
+  --color-red-800: #6b0b19;
+  --color-red-900: #470710;
+
+  --color-neutral-50: #ffffff;
+  --color-neutral-100: #f1f5fc;
+  --color-neutral-200: #f0f2f5;
+  --color-neutral-300: #e3e9f2;
+  --color-neutral-400: #c9d2df;
+  --color-neutral-500: #9aa5b4;
+  --color-neutral-600: #5a6472;
+  --color-neutral-700: #2c3542;
+  --color-neutral-800: #1a2434;
+  --color-neutral-900: #171c25;
+
+  /* ---- spacing, measured from the reference screens ---- */
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-5: 5px;
+  --space-6: 6px;
+  --space-8: 8px;
+  --space-10: 10px;
+  --space-12: 12px;
+  --space-14: 14px;
+  --space-16: 16px;
+  --space-18: 18px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-26: 26px;
+  --space-30: 30px;
+  --space-40: 40px;
+  --space-64: 64px;
+  --space-156: 156px; /* desktop page gutter */
+
+  /* ---- radius ---- */
+  --radius-chip: 4px;
+  --radius-md: 8px;
+  --radius-card: 12px;
+  --radius-strip: 14px;
+  --radius-pill: 999px;
+
+  /* ---- semantics, DAY ---- */
+  --surface-base: var(--color-neutral-100);
+  --surface-card: var(--color-neutral-50);
+  --surface-hero: var(--color-blue-900);
+  --surface-accent-soft: var(--color-blue-50);
+  --surface-strip-planned: var(--color-orange-100);
+  --surface-strip-critical: var(--color-red-100);
+  --surface-strip-info: var(--color-blue-100);
+  --surface-strip-unknown: var(--color-neutral-200);
+  --surface-strip-alt: var(--color-orange-50);
+
+  --text-primary: var(--color-neutral-900);
+  --text-secondary: var(--color-neutral-600);
+  --text-muted: var(--color-neutral-500);
+  --text-inverse: var(--color-neutral-50);
+  --text-inverse-secondary: var(--color-blue-200);
+  --text-on-accent: var(--color-neutral-50);
+  --text-on-planned: var(--color-orange-600);
+  --text-on-critical: var(--color-red-600);
+
+  --accent-primary: var(--color-blue-600);
+  --accent-reco: #1668d8;
+  --accent-best-price: #f1c83c;
+
+  --disruption-critical: var(--color-red-500);
+  --disruption-planned: var(--color-orange-500);
+  --disruption-planned-strong: var(--color-orange-700);
+  --disruption-info: var(--color-blue-500);
+  --disruption-unknown: var(--color-neutral-600);
+
+  --border-default: var(--color-neutral-300);
+
+  /* ---- elevation, tinted navy, never pure black ---- */
+  --elevation-100: 0 1px 2px rgba(15, 27, 45, 0.06), 0 1px 3px rgba(15, 27, 45, 0.04);
+  --elevation-200: 0 2px 4px rgba(15, 27, 45, 0.08), 0 4px 8px rgba(15, 27, 45, 0.05);
+  --elevation-300: 0 4px 8px rgba(15, 27, 45, 0.10), 0 12px 20px rgba(15, 27, 45, 0.07);
+  --elevation-400: 0 8px 16px rgba(15, 27, 45, 0.12), 0 24px 40px rgba(15, 27, 45, 0.10);
+
+  /* ---- type, Nunito Sans ---- */
+  --font-family: "Nunito Sans", system-ui, sans-serif;
+}
+
+[data-theme="night"] {
+  --surface-base: var(--color-blue-900);
+  --surface-card: var(--color-neutral-800);
+  --surface-accent-soft: var(--color-blue-800);
+  --surface-strip-planned: var(--color-orange-900);
+  --surface-strip-critical: var(--color-red-900);
+  --surface-strip-info: var(--color-blue-800);
+  --surface-strip-unknown: var(--color-neutral-700);
+  --surface-strip-alt: var(--color-orange-900);
+
+  --text-primary: var(--color-neutral-50);
+  --text-secondary: var(--color-neutral-500);
+  --text-muted: var(--color-neutral-600);
+  --text-inverse: var(--color-neutral-900);
+  --text-inverse-secondary: var(--color-neutral-600);
+  --text-on-planned: var(--color-orange-300);
+  --text-on-critical: var(--color-red-300);
+
+  --accent-primary: var(--color-blue-400);
+
+  --disruption-critical: var(--color-red-400);
+  --disruption-planned: var(--color-orange-400);
+  --disruption-planned-strong: var(--color-orange-300);
+  --disruption-info: var(--color-blue-400);
+  --disruption-unknown: var(--color-neutral-500);
+
+  --border-default: var(--color-neutral-700);
+}
+
+/* ---- text styles, sizes measured on the reference screens ---- */
+.t-display-lg { font: 800 30px/40px var(--font-family); }
+.t-display-md { font: 800 22px/30px var(--font-family); }
+.t-title-lg   { font: 800 24px/32px var(--font-family); }
+.t-title-md   { font: 800 20px/28px var(--font-family); }
+.t-price-md   { font: 800 19px/26px var(--font-family); }
+.t-time-md    { font: 800 18px/25px var(--font-family); }
+.t-body-lg    { font: 400 16px/24px var(--font-family); }
+.t-body-md    { font: 400 15px/22px var(--font-family); }
+.t-body-sm    { font: 400 14px/20px var(--font-family); }
+.t-body-xs    { font: 400 13px/18px var(--font-family); }
+.t-action-md  { font: 600 15px/21px var(--font-family); }
+.t-label-md   { font: 700 14px/19px var(--font-family); }
+.t-label-sm   { font: 700 13px/18px var(--font-family); }
+.t-label-xs   { font: 700 12px/16px var(--font-family); }
+.t-nav-md     { font: 500 14px/19px var(--font-family); }
+
+/* ---- grids ---- */
+/* desktop 1440: 12 cols, 156 margin, 24 gutter, 72 col, 1128 content
+   tablet   768: 8 cols,  48 margin, 16 gutter, 70 col,  672 content
+   mobile   393: 4 cols,  16 margin,  8 gutter, 84.25 col, 361 content */
