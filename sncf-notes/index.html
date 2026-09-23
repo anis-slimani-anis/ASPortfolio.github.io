@@ -97,21 +97,26 @@
       opacity: 0.8;
       margin-bottom: 14px;
     }
-    /* Inside a numbered section, the eyebrow becomes the deck's own kicker
-       pill: a numeral badge borrowed from the presentation's own language. */
+    /* Inside a numbered section, the eyebrow gets a plain numeral prefix,
+       one quiet repeating device rather than a badge on every heading. */
     .section .eyebrow {
       counter-increment: sect;
-      display: inline-flex; align-items: center; gap: 8px;
-      opacity: 1; margin-bottom: 16px;
-      padding: 5px 14px 5px 6px; border-radius: var(--r-pill);
-      background: var(--best-price); color: var(--blue-900);
+      display: flex; align-items: baseline; gap: 10px;
+      opacity: 1; margin-bottom: 12px;
     }
     .section .eyebrow::before {
       content: counter(sect, decimal-leading-zero);
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 20px; height: 20px; border-radius: 50%;
-      background: var(--blue-900); color: var(--best-price);
-      font-size: 10px;
+      font-weight: 800; color: var(--neutral-400); letter-spacing: 0;
+    }
+
+    /* One deliberate accent, not a repeating one: the case-study kicker on
+       the cover, the way the deck itself uses gold once, not everywhere. */
+    .kicker {
+      display: inline-flex; align-items: center;
+      padding: 5px 12px; border-radius: var(--r-pill);
+      background: var(--best-price); color: var(--blue-900);
+      font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 16px;
     }
 
     .top-row {
@@ -169,12 +174,20 @@
     .rule { height: 1px; background: var(--line); margin: 4px 0; }
 
     /* ── Sections ── */
-    .section { padding: 44px 0; opacity: 0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .section { padding: 48px 0; opacity: 0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .section.in { opacity: 1; transform: none; }
-    .section h2 { font: 800 24px/1.3 var(--font); margin-bottom: 14px; letter-spacing: -0.01em; }
+    .section h2 { font: 800 26px/1.3 var(--font); margin-bottom: 16px; letter-spacing: -0.01em; }
     .prose p { font-size: 16px; line-height: 1.7; color: var(--ink); max-width: 68ch; }
     .prose p + p { margin-top: 14px; }
     .prose p.muted { color: var(--muted); }
+    /* One larger opening line per section: the hierarchy device, instead of
+       more imagery, that gives a long page somewhere for the eye to land. */
+    .prose p.lead {
+      font-size: 19px; font-weight: 600; line-height: 1.5;
+      color: var(--ink); margin-bottom: 4px;
+    }
+    .section.card.navy .prose p.lead { color: #fff; }
+    .section.card.sky .prose p.lead { color: var(--blue-900); }
 
     /* Card sections: a couple of chapters staged in the deck's own colours,
        the same rounded-card device the deck itself uses throughout. */
@@ -182,8 +195,8 @@
       padding: 36px 24px; border-radius: 22px; margin: 8px 0;
     }
     .section.card.navy { background: var(--blue-900); color: var(--blue-100); }
-    .section.card.navy .eyebrow { background: var(--sky); color: var(--blue-900); }
-    .section.card.navy .eyebrow::before { background: var(--blue-900); color: var(--sky); }
+    .section.card.navy .eyebrow { color: var(--sky); }
+    .section.card.navy .eyebrow::before { color: rgba(255,255,255,0.35); }
     .section.card.navy h2 { color: #fff; }
     .section.card.navy .prose p { color: var(--blue-100); }
     .section.card.navy .prose p.muted { color: var(--neutral-500); }
@@ -193,8 +206,8 @@
     .section.card.navy .proof-label { color: var(--blue-100); opacity: 0.8; }
 
     .section.card.sky { background: var(--sky); color: var(--blue-900); }
-    .section.card.sky .eyebrow { background: var(--blue-900); color: var(--sky); }
-    .section.card.sky .eyebrow::before { background: var(--sky); color: var(--blue-900); }
+    .section.card.sky .eyebrow { color: var(--blue-900); }
+    .section.card.sky .eyebrow::before { color: rgba(15,27,45,0.4); }
     .section.card.sky h2 { color: var(--blue-900); }
     .section.card.sky .prose p { color: var(--blue-800); }
     .section.card.sky .gallery img { border-color: rgba(15,27,45,0.18); }
@@ -375,6 +388,43 @@
     @media (min-width: 860px) {
       .hero h1 { font: 800 52px/1.14 var(--font); }
     }
+
+    /* ── Section nav: reading aid for a long page, desktop only.
+       A rail with a dot per section, the current one filled in, rather than
+       floating text with no structure of its own. ── */
+    .toc { display: none; }
+    @media (min-width: 1240px) {
+      .toc {
+        display: block;
+        position: fixed; top: 50%; left: calc(50% + 482px);
+        transform: translateY(-50%);
+        width: 172px; max-height: 74vh; overflow-y: auto;
+      }
+    }
+    .toc-title {
+      font-size: 10px; font-weight: 800; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--faint);
+      margin: 0 0 14px 20px;
+    }
+    .toc-list { position: relative; }
+    .toc-rail {
+      position: absolute; left: 4px; top: 6px; bottom: 6px; width: 1px;
+      background: var(--line);
+    }
+    .toc-link {
+      position: relative; display: block;
+      padding: 6px 0 6px 20px;
+      font-size: 12.5px; font-weight: 600; line-height: 1.35;
+      color: var(--faint); text-decoration: none;
+    }
+    .toc-link::before {
+      content: ''; position: absolute; left: 0px; top: 50%;
+      width: 9px; height: 9px; margin-top: -5px; border-radius: 50%;
+      background: var(--bg); border: 1.5px solid var(--line);
+    }
+    .toc-link:hover { color: var(--ink); }
+    .toc-link.active { color: var(--blue-600); font-weight: 800; }
+    .toc-link.active::before { border-color: var(--blue-600); background: var(--blue-600); }
   </style>
 </head>
 <body>
@@ -390,9 +440,27 @@
     <p class="top-label">Product case study · Anis Slimani</p>
   </div>
 
+  <nav class="toc" aria-label="Section navigation">
+    <p class="toc-title">Contents</p>
+    <div class="toc-list">
+      <span class="toc-rail" aria-hidden="true"></span>
+      <a class="toc-link" href="#spark">Where it started</a>
+      <a class="toc-link" href="#problem">The problem</a>
+      <a class="toc-link" href="#discovery">Discovery</a>
+      <a class="toc-link" href="#redesign">The redesign</a>
+      <a class="toc-link" href="#slides">The slides</a>
+      <a class="toc-link" href="#dropped">Deliberately dropped</a>
+      <a class="toc-link" href="#a11y">Accessibility</a>
+      <a class="toc-link" href="#validation">What I tested</a>
+      <a class="toc-link" href="#ai">Where AI helped</a>
+      <a class="toc-link" href="#shipped">Shipped</a>
+    </div>
+  </nav>
+
   <!-- Hero -->
   <section class="hero">
     <img class="hero-logo" src="images/logo-sncf-connect.svg" alt="SNCF Connect">
+    <span class="kicker">Case study</span>
     <span class="eyebrow">Results redesign</span>
     <h1>The disruption was already known. It just never reached the results page.</h1>
     <p class="hero-sub">SNCF Connect writes clear, specific copy about engineering works and replacement coaches. On the results page (the screen where the booking decision actually happens), almost none of it survives. This is a redesign of that one flow, coded end to end rather than left in Figma, built for an interview with NTT DATA.</p>
@@ -416,11 +484,12 @@
   <div class="rule"></div>
 
   <!-- Where it started -->
-  <section class="section reveal">
+  <section class="section reveal" id="spark">
     <span class="eyebrow">Where it started</span>
     <h2>A route that wasn't offered</h2>
     <div class="prose">
-      <p>This isn't the first time I've designed for transit. <strong>Smartport</strong> was a seven-week team project during my studies: user story interviews, low-fidelity paper prototypes, and the freedom to design our own product with no existing app to imitate and no client constraints, just the problem of navigating an unfamiliar station and finding your way. It's where I first learned that journey planning hides a lot of smaller, harder problems underneath the obvious one, and it's the reason transit kept pulling me back since (<a href="https://anisslimani.com/#lab" target="_blank" rel="noopener">see academic and art work ↗</a>, <a href="https://anisslimani.com/portfolio/smartport/" target="_blank" rel="noopener">see Smartport ↗</a>).</p>
+      <p class="lead">This isn't the first time I've designed for transit.</p>
+      <p><strong>Smartport</strong> was a seven-week team project during my studies: user story interviews, low-fidelity paper prototypes, and the freedom to design our own product with no existing app to imitate and no client constraints, just the problem of navigating an unfamiliar station and finding your way. It's where I first learned that journey planning hides a lot of smaller, harder problems underneath the obvious one, and it's the reason transit kept pulling me back since (<a href="https://anisslimani.com/#lab" target="_blank" rel="noopener">see academic and art work ↗</a>, <a href="https://anisslimani.com/portfolio/smartport/" target="_blank" rel="noopener">see Smartport ↗</a>).</p>
       <p>The spark for this specific case study was much more recent. Using Citymapper to get to a friend's place, my usual route wasn't being suggested: the app kept recommending others instead. I didn't know why, and it was frustrating enough that I found myself thinking: <em>what if I could just build my own route?</em> It turned out the line had engineering works. That question, what if the traveller could see and shape their own trajet instead of being quietly rerouted around a problem nobody told them about, is what stuck with me.</p>
       <p>I started sketching that idea for <strong>Brief to Ship</strong>, a personal series I'm building about turning a brief into something actually shipped. Two days later, this exact scenario landed as a real brief, from a different direction entirely: a redesign of SNCF Connect's disruption handling, built for an interview with NTT DATA. The idea I'd already started chasing for myself turned out to be the brief I was handed to solve for real.</p>
     </div>
@@ -429,10 +498,11 @@
   <div class="rule"></div>
 
   <!-- The problem -->
-  <section class="section reveal">
+  <section class="section reveal" id="problem">
     <span class="eyebrow">The problem</span>
     <h2>Real information, wrong moment</h2>
     <div class="prose">
+      <p class="lead">The information exists. It just never reaches the moment of choice.</p>
       <p>On SNCF Connect, planned engineering works and the replacement coaches they force are real, well-documented disruptions. The copy exists and it's specific. The problem is where it lives: past the results list, past the point where it could still change a decision. A traveller can book a journey, only discover the replacement coach once they open the details (or worse, on the day), and never get the chance to choose differently while it still mattered.</p>
       <p>The primary case I designed for: <strong>Marc, 45</strong>, an occasional long-distance traveller going from Massy to Marseille. He isn't chasing the cheapest fare across every disruption type. He just wants to know, from the results list alone, which journeys are affected and how, without opening every single one to find out.</p>
     </div>
@@ -441,10 +511,11 @@
   <div class="rule"></div>
 
   <!-- Discovery -->
-  <section class="section reveal">
+  <section class="section reveal" id="discovery">
     <span class="eyebrow">Discovery</span>
     <h2>Simple at first glance was the warning sign</h2>
     <div class="prose">
+      <p class="lead">Looking too easy was the first sign I was missing something.</p>
       <p>At first read, the brief looked simple: show disruptions in the results. That simplicity made me nervous rather than comfortable: when something looks obvious this early, it's usually because I haven't found the harder problem underneath it yet. So instead of moving straight to screens, I spent longer than the topic seemed to warrant on discovery: mapping the existing flow end to end, reading how SNCF Connect currently communicates travaux in its own copy, and deliberately testing a few different discovery methodologies against each other instead of defaulting to the one I usually reach for.</p>
       <p>I also asked a former colleague from Legalstart (someone whose research instincts I trust) what she reaches for when she has to get up to speed on a product she doesn't know well. Comparing her approach to my own turned out to be as useful as the discovery itself: it's easy to assume your default method is the right one until you watch someone else's.</p>
       <p class="muted">FigJam carried most of that synthesis: screenshots, quotes and half-formed ideas on one board before any of it became a screen.</p>
@@ -454,11 +525,12 @@
   <div class="rule"></div>
 
   <!-- The redesign -->
-  <section class="section reveal">
+  <section class="section reveal" id="redesign">
     <span class="eyebrow">The redesign</span>
     <h2>One severity language, used everywhere</h2>
     <div class="prose">
-      <p>The fix isn't a new feature. It's a language: one severity system (icon, label and colour, always together, never colour alone) carried consistently across every place a traveller makes a decision. Below are the actual pieces from the shipped prototype, not mockups.</p>
+      <p class="lead">The fix isn't a new feature. It's a language.</p>
+      <p>One severity system (icon, label and colour, always together, never colour alone) carried consistently across every place a traveller makes a decision. Below are the actual pieces from the shipped prototype, not mockups.</p>
     </div>
 
     <div class="proof-grid two">
@@ -558,11 +630,12 @@
   <div class="rule"></div>
 
   <!-- The slides -->
-  <section class="section card sky reveal">
+  <section class="section card sky reveal" id="slides">
     <span class="eyebrow">The slides</span>
     <h2>A visual language borrowed, not invented</h2>
     <div class="prose">
-      <p>For the deck and this write-up, I didn't want to invent a presentation style from a blank page. While researching the brand I came across an SNCF Connect design book, and its own way of showing before-and-after work stuck with me: two cards linked by a single curved line, and a day/night toggle used to hold both themes in one frame instead of two separate screenshots. That became the reference for how I built my own slides.</p>
+      <p class="lead">I didn't want to invent a presentation style from a blank page.</p>
+      <p>While researching the brand I came across an SNCF Connect design book, and its own way of showing before-and-after work stuck with me: two cards linked by a single curved line, and a day/night toggle used to hold both themes in one frame instead of two separate screenshots. That became the reference for how I built my own slides.</p>
     </div>
     <div class="gallery" style="margin-top:22px;">
       <figure>
@@ -580,7 +653,7 @@
   <div class="rule"></div>
 
   <!-- What I didn't build -->
-  <section class="section card navy reveal">
+  <section class="section card navy reveal" id="dropped">
     <span class="eyebrow">Deliberately dropped</span>
     <h2>What I chose not to build</h2>
     <div class="dropped">
@@ -602,11 +675,12 @@
   <div class="rule"></div>
 
   <!-- Accessibility -->
-  <section class="section reveal">
+  <section class="section reveal" id="a11y">
     <span class="eyebrow">Accessibility, not an afterthought</span>
     <h2>Severity never rests on colour alone</h2>
     <div class="prose">
-      <p>Every severity is icon <strong>and</strong> text label <strong>and</strong> colour, never colour on its own. Each result card is an <code>&lt;article&gt;</code> whose accessible name states departure, arrival, the disruption if any, duration, then price, in that order, so the disruption is never the last thing a screen reader announces. The filter is a real checkbox with a state, not a styled div pretending to be one. The detail drawer is a focus-trapped dialog, reachable by keyboard, that names the affected leg explicitly rather than relying on colour in the rail alone.</p>
+      <p class="lead">Severity is icon <strong>and</strong> text label <strong>and</strong> colour. Never colour on its own.</p>
+      <p>Each result card is an <code>&lt;article&gt;</code> whose accessible name states departure, arrival, the disruption if any, duration, then price, in that order, so the disruption is never the last thing a screen reader announces. The filter is a real checkbox with a state, not a styled div pretending to be one. The detail drawer is a focus-trapped dialog, reachable by keyboard, that names the affected leg explicitly rather than relying on colour in the rail alone.</p>
       <p class="muted">Verified programmatically, not just eyeballed: every visible text node, its actual composited background through every ancestor, checked against the correct WCAG threshold for its size and weight, across every route, both themes, both breakpoints, drawers open and closed. Zero contrast failures.</p>
     </div>
   </section>
@@ -614,10 +688,11 @@
   <div class="rule"></div>
 
   <!-- Validation -->
-  <section class="section reveal">
+  <section class="section reveal" id="validation">
     <span class="eyebrow">What I tested</span>
     <h2>Five people, one comparison</h2>
     <div class="prose">
+      <p class="lead">Today's site, watched side by side with the redesign.</p>
       <p>A small moderated usability test, five participants plus a pilot, mobile web, today's SNCF Connect against the redesign, same scenario each time.</p>
     </div>
     <div class="stat-row">
@@ -636,7 +711,7 @@
   <div class="rule"></div>
 
   <!-- AI -->
-  <section class="section reveal">
+  <section class="section reveal" id="ai">
     <span class="eyebrow">Where AI helped, and where it didn't</span>
     <h2>A brief to ship, honestly reported</h2>
     <div class="ai-list">
@@ -662,6 +737,7 @@
     <span class="eyebrow">Shipped, not just Figma</span>
     <h2>Proof it runs in a real browser</h2>
     <div class="prose">
+      <p class="lead">This isn't a Figma flow. It runs in a real browser.</p>
       <p>One scripted scenario, played end to end: Massy TGV to Marseille Saint-Charles, a weekend of engineering works, a replacement coach between Avignon and Marseille, about fifty minutes added. Five screens (landing, autocomplete, passengers, results, and the mobile pre-departure alert), French UI throughout, because it's SNCF's product, not mine.</p>
     </div>
 
@@ -708,6 +784,16 @@
     });
   }, { threshold: 0.06 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  const tocLinks = new Map();
+  document.querySelectorAll('.toc-link').forEach(a => tocLinks.set(a.hash.slice(1), a));
+  const tocObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const link = tocLinks.get(e.target.id);
+      if (link) link.classList.toggle('active', e.isIntersecting);
+    });
+  }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+  document.querySelectorAll('.section[id]').forEach(el => tocObserver.observe(el));
 </script>
 
 </body>
