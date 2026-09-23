@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-/* Hash routing: the site is static on GitHub Pages under /sncf-redesign/, so a
+/* Hash routing: the site is static on GitHub Pages under /sncf/, so a
    shared deep link has to resolve without any server rewrite. */
 export type Route = { path: string; params: URLSearchParams }
 

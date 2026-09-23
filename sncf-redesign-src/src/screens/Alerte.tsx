@@ -4,54 +4,51 @@ import { go } from '../lib/router'
 import { DATE_DISRUPTED } from '../lib/types'
 
 /* 05 ALERTE PRE-DEPART, node 612:2942.
-   Presented as a device mockup rather than as a full-bleed page: this screen is
-   a simulation of a push the traveller gets outside the app, and framing it in a
-   phone makes that legible instead of looking like app chrome. The demo controls
-   (severity switch, return) sit outside the frame, where they belong. */
+   This screen only ever renders below 1024px (App.tsx redirects desktop back
+   to the results), so the audience is always an actual phone-width viewport.
+   It used to frame the lock screen in a device mockup, which made sense for a
+   preview embedded in something wider, but on a real phone that produced a
+   phone-shaped rectangle inside the phone's own screen: shrunk below the real
+   viewport height and clipped at the bottom. Full-bleed instead, so it reads
+   like the lock screen it is simulating rather than a screenshot of one. */
 export function Alerte() {
   const [type, setType] = useState<'works' | 'delay'>('works')
   const back = () => go(`/resultats?date=${DATE_DISRUPTED}`)
 
   return (
     <main className="sim">
-      <h1 className="sim__note">
-        Simulation : la notification reçue avant le départ
-      </h1>
+      <div className="lock">
+        <div className="lock__bg" aria-hidden="true" />
 
-      <div className="phone">
-        <div className="phone__bezel">
-          <span className="phone__notch" aria-hidden="true" />
-          <div className="phone__screen">
-            <div className="lock__bg" aria-hidden="true" />
+        <div className="lock__top">
+          <p className="sim__note">
+            Simulation : la notification reçue avant le départ
+          </p>
+          <p className="lock__clock">10:24</p>
+          <p className="lock__date">samedi 26 septembre</p>
 
-            <div className="lock__top">
-              <p className="lock__clock">10:24</p>
-              <p className="lock__date">samedi 26 septembre</p>
-
-              <div className="push">
-                <span className="push__app">SNCF CONNECT</span>
-                <p className="push__title">
-                  {type === 'works'
-                    ? 'Travaux sur votre trajet de demain'
-                    : 'Retard annoncé sur votre trajet'}
-                </p>
-                <p className="push__body">
-                  {type === 'works'
-                    ? 'Un car de substitution remplace le train entre Avignon et Marseille. Touchez pour voir les alternatives.'
-                    : 'Retard moyen estimé à 20 minutes. Touchez pour voir les alternatives.'}
-                </p>
-              </div>
-            </div>
-
-            <div className="lock__sheet">
-              <DisruptionAlert type={type} onAlternatives={back} />
-            </div>
+          <div className="push">
+            <span className="push__app">SNCF CONNECT</span>
+            <p className="push__title">
+              {type === 'works'
+                ? 'Travaux sur votre trajet de demain'
+                : 'Retard annoncé sur votre trajet'}
+            </p>
+            <p className="push__body">
+              {type === 'works'
+                ? 'Un car de substitution remplace le train entre Avignon et Marseille. Touchez pour voir les alternatives.'
+                : 'Retard moyen estimé à 20 minutes. Touchez pour voir les alternatives.'}
+            </p>
           </div>
+        </div>
+
+        <div className="lock__sheet">
+          <DisruptionAlert type={type} onAlternatives={back} />
         </div>
       </div>
 
-      {/* Controls live at the bottom: easier to reach, and clearly not part of
-          the simulated phone. */}
+      {/* Demo controls: not part of the simulated notification, so they sit in
+          their own bar with a surface of their own. */}
       <div className="sim__bar">
         <div className="sim__switch" role="group" aria-label="Type d’alerte">
           {(['works', 'delay'] as const).map((t) => (

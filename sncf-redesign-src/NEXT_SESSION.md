@@ -3,7 +3,7 @@
 State: every screen in `04 Final Screens` is built and responsive.
 0 contrast failures across `/`, `/recherche`, `/voyageurs`, the three results
 states and `/alerte`, at 1440 and 393, day and night, drawers open and closed.
-Build output is commit-ready in `../sncf-redesign/`.
+Build output is commit-ready in `../sncf/`.
 
 ## Demo window
 
@@ -55,7 +55,7 @@ near-black, silently passing whatever sits on it.
 - `PillButton` (`control/button-pill`) is no longer referenced by any screen
 - The works banner expands rather than opening the drawer, unlike the strips,
   the alteration line and `Détail du trajet`
-- Deploy: commit `sncf-redesign/` and push; lands at anisslimani.com/sncf-redesign/
+- Deploy: commit `sncf/` and push; lands at anisslimani.com/sncf/
 
 ## Reference
 

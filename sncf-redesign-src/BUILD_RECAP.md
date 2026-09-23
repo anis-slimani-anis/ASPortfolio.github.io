@@ -4,8 +4,8 @@ A record of what this prototype is, how it is put together, and which decisions
 were deliberate. Written for whoever picks it up next, including you in three
 months.
 
-Live at `anisslimani.com/sncf-redesign/`. Source in `sncf-redesign-src/`,
-build output committed in `sncf-redesign/`.
+Live at `anisslimani.com/sncf/`. Source in `sncf-redesign-src/`,
+build output committed in `sncf/`.
 
 ---
 
@@ -36,16 +36,16 @@ Five routes:
 
 ```bash
 npm install
-npm run dev      # http://localhost:5173/sncf-redesign/
-npm run build    # writes to ../sncf-redesign/
+npm run dev      # http://localhost:5173/sncf/
+npm run build    # writes to ../sncf/
 ```
 
-Deployment is a git push. `sncf-redesign/` is committed to `main`, GitHub Pages
+Deployment is a git push. `sncf/` is committed to `main`, GitHub Pages
 serves it, and `main` is the deploy branch, so there is no separate pipeline.
 
 `vite.config.ts` carries the two lines that make that work: `base:
-'/sncf-redesign/'` so every asset URL is absolute under the subpath, and
-`build.outDir: '../sncf-redesign'` so the build lands where Pages will find it.
+'/sncf/'` so every asset URL is absolute under the subpath, and
+`build.outDir: '../sncf'` so the build lands where Pages will find it.
 
 ---
 

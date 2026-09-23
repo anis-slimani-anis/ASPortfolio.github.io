@@ -834,40 +834,26 @@ input { font: inherit; }
 }
 
 /* ── 05 pre-departure alert, node 612:2942 ─────────────────────────
-   Shown inside a phone mockup so it reads as a simulated push rather than as
-   the app's own chrome. */
+   Full-bleed. This screen only ever renders below 1024px (App.tsx redirects
+   desktop straight back to the results), so its whole audience is a real
+   phone-width viewport, and it should fill it like the lock screen it is
+   simulating rather than be boxed into a device mockup smaller than the
+   actual screen. */
 .sim {
-  display: flex; flex-direction: column; align-items: center;
-  gap: var(--space-16);
-  min-height: 100vh;
-  padding: var(--space-20) var(--space-16) var(--space-24);
+  display: flex; flex-direction: column;
+  min-height: 100dvh;
   background: var(--surface-base);
 }
-.sim__note {
-  margin: 0; max-width: 34ch; text-align: center;
-  font: 600 14px/20px var(--font-family); color: var(--text-secondary);
-}
-
-.phone { display: flex; justify-content: center; width: 100%; }
-.phone__bezel {
+.lock {
   position: relative;
-  padding: 10px;
-  border-radius: 44px;
-  background: var(--color-neutral-900);
-  box-shadow: var(--elevation-400), inset 0 0 0 2px rgba(255, 255, 255, 0.08);
+  display: flex; flex-direction: column;
+  padding-top: max(var(--space-24), env(safe-area-inset-top));
 }
-.phone__notch {
-  position: absolute; z-index: 2; top: 18px; left: 50%; transform: translateX(-50%);
-  width: 108px; height: 24px; border-radius: var(--radius-pill);
-  background: var(--color-neutral-900);
-}
-.phone__screen {
-  position: relative; overflow: hidden;
-  display: flex; flex-direction: column; justify-content: space-between;
-  aspect-ratio: 393 / 800;
-  height: min(calc(100dvh - 236px), 720px);
-  width: auto;
-  border-radius: 34px;
+.sim__note {
+  position: relative; margin: 0 0 var(--space-20); text-align: center;
+  padding-inline: var(--space-16);
+  font: 700 11px/16px var(--font-family); letter-spacing: 0.04em;
+  text-transform: uppercase; color: var(--color-neutral-50); opacity: 0.75;
 }
 
 .lock__bg {
@@ -877,7 +863,7 @@ input { font: inherit; }
     radial-gradient(100% 70% at 90% 20%, var(--color-blue-600), transparent 55%),
     var(--color-blue-900);
 }
-.lock__top { position: relative; padding: var(--space-40) var(--space-14) 0; text-align: center; color: var(--color-neutral-50); }
+.lock__top { position: relative; padding: 0 var(--space-16); text-align: center; color: var(--color-neutral-50); }
 .lock__clock { margin: 0; font: 200 54px/1 var(--font-family); letter-spacing: -0.02em; }
 .lock__date { margin: var(--space-5) 0 var(--space-24); font: 400 14px/20px var(--font-family); opacity: 0.8; }
 .push {
@@ -889,12 +875,14 @@ input { font: inherit; }
 .push__app { font: 700 10px/14px var(--font-family); letter-spacing: 0.08em; opacity: 0.85; }
 .push__title { margin: 0; font: 800 14px/20px var(--font-family); }
 .push__body { margin: 0; font: 400 13px/18px var(--font-family); opacity: 0.9; }
-.lock__sheet { position: relative; padding: var(--space-10); }
+.lock__sheet { position: relative; padding: var(--space-24) var(--space-16) var(--space-32); }
 
-/* demo controls, outside the frame and within thumb reach */
+/* demo controls: not part of the simulated notification, so they sit below it
+   in the page's own surface rather than the lock screen's. */
 .sim__bar {
   display: flex; flex-direction: column; align-items: center; gap: var(--space-12);
-  width: 100%; max-width: 372px;
+  padding: var(--space-16);
+  padding-bottom: max(var(--space-16), env(safe-area-inset-bottom));
 }
 .sim__switch {
   display: inline-flex; gap: var(--space-4); padding: var(--space-4);
@@ -905,13 +893,11 @@ input { font: inherit; }
   font: 600 14px/20px var(--font-family); color: var(--accent-primary);
 }
 .sim__tab--on { background: var(--accent-primary); color: var(--text-on-accent); }
-.sim__back { width: 100%; }
+.sim__back { width: 100%; white-space: nowrap; }
 
-@media (min-width: 1024px) {
-  .sim { gap: var(--space-20); padding-block: var(--space-30) var(--space-40); }
-  .sim__note { font: 600 15px/21px var(--font-family); }
-  .phone__screen { height: min(calc(100dvh - 268px), 760px); }
-  .sim__bar { flex-direction: row; justify-content: center; max-width: none; }
+@media (min-width: 600px) {
+  .lock__top, .lock__sheet, .sim__bar { max-width: 420px; margin-inline: auto; width: 100%; }
+  .sim__bar { flex-direction: row; justify-content: center; }
   .sim__back { width: auto; }
 }
 
@@ -923,10 +909,6 @@ input { font: inherit; }
   margin: 0; padding: var(--space-8) var(--space-12); border-radius: var(--radius-md);
   background: var(--surface-strip-alt); color: var(--disruption-planned-strong);
   font: 700 14px/20px var(--font-family);
-}
-@media (min-width: 1024px) {
-  .lock__sheet { max-width: 420px; margin-inline: auto; width: 100%; }
-  .lock__top { max-width: 420px; margin-inline: auto; }
 }
 
 /* the landing sitting behind the autocomplete scrim */

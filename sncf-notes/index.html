@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>SNCF Connect: The Process</title>
+  <meta name="description" content="A disruption-first redesign of the SNCF Connect results flow, built end to end and shipped as a working prototype. Case study for an NTT DATA interview.">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="240x240" href="images/favicon.png">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wdth,wght,YTLC@0,6..12,75..125,200..1000,440..540&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Tokens, lifted from the prototype's own tokens.css ── */
+    :root {
+      --blue-50:  #f2f5fd;
+      --blue-100: #d7ebfa;
+      --blue-400: #5aa9e6;
+      --blue-500: #3089d2;
+      --blue-600: #0073ae;
+      --blue-700: #1c5585;
+      --blue-800: #153f62;
+      --blue-900: #0f1b2d;
+
+      --orange-50:  #fff8f1;
+      --orange-100: #fdf1e7;
+      --orange-400: #f0a23c;
+      --orange-600: #a0560b;
+      --orange-700: #ae4713;
+
+      --red-500: #c8102e;
+
+      --neutral-50:  #ffffff;
+      --neutral-100: #f1f5fc;
+      --neutral-300: #e3e9f2;
+      --neutral-500: #9aa5b4;
+      --neutral-600: #5a6472;
+      --neutral-900: #171c25;
+
+      --best-price: #f1c83c;
+      --sky: #8de8fe;
+
+      --r-pill: 999px;
+      --r-card: 12px;
+      --r-strip: 14px;
+      --r-md: 8px;
+
+      --ink: var(--neutral-900);
+      --muted: var(--neutral-600);
+      --faint: var(--neutral-500);
+      --bg: var(--neutral-50);
+      --soft: var(--blue-50);
+      --line: var(--neutral-300);
+      --font: "Nunito Sans", system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; -webkit-text-size-adjust: 100%; scroll-behavior: smooth; background: var(--bg); overscroll-behavior: none; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { color: var(--blue-600); }
+    button { font-family: inherit; border: none; background: none; cursor: pointer; }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--blue-600); outline-offset: 3px; }
+    img { max-width: 100%; display: block; }
+
+    .page { max-width: 900px; margin: 0 auto; padding: 0 24px; counter-reset: sect; }
+
+    /* ── Disclaimer ── */
+    .disclaimer {
+      background: var(--blue-900);
+      color: var(--blue-100);
+      padding: 9px 24px;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+
+    /* ── Eyebrow, one system, used everywhere ── */
+    .eyebrow {
+      display: block;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--blue-600);
+      opacity: 0.8;
+      margin-bottom: 14px;
+    }
+    /* Inside a numbered section, the eyebrow becomes the deck's own kicker
+       pill: a numeral badge borrowed from the presentation's own language. */
+    .section .eyebrow {
+      counter-increment: sect;
+      display: inline-flex; align-items: center; gap: 8px;
+      opacity: 1; margin-bottom: 16px;
+      padding: 5px 14px 5px 6px; border-radius: var(--r-pill);
+      background: var(--best-price); color: var(--blue-900);
+    }
+    .section .eyebrow::before {
+      content: counter(sect, decimal-leading-zero);
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--blue-900); color: var(--best-price);
+      font-size: 10px;
+    }
+
+    .top-row {
+      display: flex; align-items: center; gap: 10px; padding-top: 28px;
+    }
+    .top-label {
+      font-size: 11px; font-weight: 800; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--blue-600); opacity: 0.8;
+    }
+    .avatar { border-radius: 50%; object-fit: cover; flex: none; }
+    .top-row .avatar { width: 22px; height: 22px; border: 2px solid var(--sky); }
+
+    /* ── Hero, staged as a card in the deck's own navy ── */
+    .hero {
+      margin-top: 20px; padding: 36px 24px 32px; border-radius: 22px;
+      background: var(--blue-900); color: var(--blue-100);
+    }
+    .hero-logo { height: 46px; width: auto; margin-bottom: 22px; }
+    .hero .eyebrow { color: var(--sky); opacity: 0.9; }
+    .hero h1 {
+      font: 800 32px/1.2 var(--font);
+      letter-spacing: -0.01em;
+      color: #fff;
+      margin: 14px 0 18px;
+    }
+    .hero-sub { font-size: 16px; line-height: 1.6; color: var(--blue-100); max-width: 62ch; }
+    .hero-card {
+      margin-top: 24px;
+      padding: 20px 22px;
+      border-radius: var(--r-card);
+      background: rgba(255,255,255,0.08);
+      color: var(--blue-100);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+    .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 20px; border-radius: var(--r-pill);
+      font: 700 15px/1 var(--font); text-decoration: none;
+    }
+    .btn-primary { background: var(--sky); color: var(--blue-900); }
+    .btn-primary:hover { background: #a5edff; }
+    .btn-ghost { background: rgba(255,255,255,0.12); color: #fff; }
+    .btn-ghost:hover { background: rgba(255,255,255,0.2); }
+
+    .scenario-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+    .scenario-chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 12px; border-radius: var(--r-pill);
+      background: rgba(255,255,255,0.1); color: var(--blue-100);
+      font-size: 12.5px; font-weight: 700;
+    }
+
+    .rule { height: 1px; background: var(--line); margin: 4px 0; }
+
+    /* ── Sections ── */
+    .section { padding: 44px 0; opacity: 0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .section.in { opacity: 1; transform: none; }
+    .section h2 { font: 800 24px/1.3 var(--font); margin-bottom: 14px; letter-spacing: -0.01em; }
+    .prose p { font-size: 16px; line-height: 1.7; color: var(--ink); max-width: 68ch; }
+    .prose p + p { margin-top: 14px; }
+    .prose p.muted { color: var(--muted); }
+
+    /* Card sections: a couple of chapters staged in the deck's own colours,
+       the same rounded-card device the deck itself uses throughout. */
+    .section.card {
+      padding: 36px 24px; border-radius: 22px; margin: 8px 0;
+    }
+    .section.card.navy { background: var(--blue-900); color: var(--blue-100); }
+    .section.card.navy .eyebrow { background: var(--sky); color: var(--blue-900); }
+    .section.card.navy .eyebrow::before { background: var(--blue-900); color: var(--sky); }
+    .section.card.navy h2 { color: #fff; }
+    .section.card.navy .prose p { color: var(--blue-100); }
+    .section.card.navy .prose p.muted { color: var(--neutral-500); }
+    .section.card.navy .dropped-item { border-left-color: rgba(255,255,255,0.25); }
+    .section.card.navy .dropped-item h3 { color: #fff; }
+    .section.card.navy .dropped-item p { color: var(--blue-100); }
+    .section.card.navy .proof-label { color: var(--blue-100); opacity: 0.8; }
+
+    .section.card.sky { background: var(--sky); color: var(--blue-900); }
+    .section.card.sky .eyebrow { background: var(--blue-900); color: var(--sky); }
+    .section.card.sky .eyebrow::before { background: var(--sky); color: var(--blue-900); }
+    .section.card.sky h2 { color: var(--blue-900); }
+    .section.card.sky .prose p { color: var(--blue-800); }
+    .section.card.sky .gallery img { border-color: rgba(15,27,45,0.18); }
+
+    /* ── Stat chips (used for the problem scenario + validation) ── */
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+    .chip {
+      display: flex; flex-direction: column; gap: 2px;
+      padding: 10px 16px; border-radius: var(--r-card);
+      background: var(--neutral-100); font-size: 12.5px; color: var(--muted);
+    }
+    .chip strong { font-size: 16px; color: var(--ink); }
+
+    .stat-row { display: flex; flex-wrap: wrap; gap: 28px; margin: 22px 0 6px; }
+    .stat { min-width: 150px; }
+    .stat .num { font: 800 34px/1 var(--font); color: var(--blue-600); }
+    .stat .num.bad { color: var(--red-500); }
+    .stat .num.good { color: #1c8a52; }
+    .stat .label { margin-top: 8px; font-size: 13.5px; color: var(--muted); max-width: 26ch; }
+
+    /* ── Dropped ideas ── */
+    .dropped { display: flex; flex-direction: column; gap: 16px; margin-top: 8px; }
+    .dropped-item { padding-left: 18px; border-left: 3px solid var(--line); }
+    .dropped-item h3 { font: 800 15px/1.3 var(--font); margin-bottom: 4px; }
+    .dropped-item p { font-size: 14.5px; color: var(--muted); line-height: 1.6; }
+
+    /* ── AI list ── */
+    .ai-list { display: flex; flex-direction: column; gap: 18px; margin-top: 8px; }
+    .ai-item { display: flex; gap: 14px; }
+    .ai-tag {
+      flex: none; width: 92px; padding-top: 2px;
+      font: 800 11px/1.4 var(--font); letter-spacing: 0.04em; text-transform: uppercase;
+      color: var(--blue-600);
+    }
+    .ai-item p { font-size: 15px; line-height: 1.65; color: var(--ink); }
+    .ai-item p .verdict { color: var(--muted); font-style: italic; }
+
+    /* ══════════ Proof components, exact tokens/markup from the shipped prototype ══════════ */
+    .proof-label {
+      font-size: 12px; font-weight: 700; color: var(--faint);
+      margin-bottom: 10px; text-align: center;
+    }
+    .proof-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin: 24px 0; }
+
+    /* Result card */
+    .proof-card {
+      border: 1px solid var(--line); border-radius: var(--r-card);
+      background: #fff; overflow: hidden; font-family: var(--font);
+    }
+    .proof-card__body { padding: 16px; }
+    .proof-card__best {
+      display: inline-block; padding: 4px 10px; border-radius: var(--r-md);
+      background: var(--best-price); font: 800 12px/1 var(--font); color: var(--blue-900);
+      margin-bottom: 12px;
+    }
+    .proof-card__row { display: flex; justify-content: space-between; gap: 12px; }
+    .proof-card__times { font-size: 15px; }
+    .proof-card__times div { display: flex; gap: 8px; }
+    .proof-card__times div + div { margin-top: 4px; }
+    .proof-card__times strong { font-weight: 800; }
+    .proof-card__price { text-align: right; }
+    .proof-card__price .dès { display: block; font-size: 12px; color: var(--faint); }
+    .proof-card__price strong { font: 800 19px/1 var(--font); }
+    .proof-card__dur {
+      display: flex; align-items: center; gap: 8px; margin-top: 12px;
+      padding: 10px 12px; border-radius: var(--r-pill); background: var(--blue-50);
+      color: var(--muted); font-size: 13.5px; font-weight: 600;
+    }
+    .proof-strip {
+      display: flex; align-items: center; gap: 8px; width: 100%;
+      padding: 12px 16px; background: var(--orange-100); color: var(--orange-600);
+      font: 700 13.5px/1.3 var(--font); text-align: left; cursor: default;
+    }
+    .proof-strip svg { flex: none; }
+    .proof-strip span { flex: 1; }
+    .proof-alteration {
+      padding: 8px 16px; background: var(--orange-50); color: var(--orange-700);
+      font: 700 13px/1.4 var(--font);
+    }
+
+    /* Date chip strip */
+    .proof-dates { display: flex; gap: 8px; }
+    .proof-date {
+      flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
+      padding: 12px 6px; border-radius: var(--r-card); background: #fff; border: 1px solid var(--line);
+      font-family: var(--font);
+    }
+    .proof-date .d { font-size: 12px; color: var(--muted); font-weight: 700; }
+    .proof-date .p { font: 800 15px/1 var(--font); }
+    .proof-date .t { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--orange-600); font-weight: 700; }
+    .proof-date .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange-400); }
+    .proof-date.on { background: var(--blue-600); border-color: var(--blue-600); color: #fff; }
+    .proof-date.on .d, .proof-date.on .p { color: #fff; }
+    .proof-date.on .t { color: #fff; }
+    .proof-date.on .dot { background: #fff; }
+
+    /* Drawer excerpt */
+    .proof-drawer {
+      border-radius: var(--r-card); background: #fff; border: 1px solid var(--line);
+      overflow: hidden; font-family: var(--font);
+    }
+    .proof-drawer__head {
+      background: var(--blue-900); color: #fff; padding: 14px 16px;
+      font: 800 15px/1 var(--font);
+    }
+    .proof-rail { padding: 18px 16px; }
+    .proof-stop { display: flex; gap: 12px; }
+    .proof-stop__line { flex: none; width: 16px; display: flex; flex-direction: column; align-items: center; }
+    .proof-stop__dot { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--blue-600); background: #fff; }
+    .proof-stop__seg { width: 2px; flex: 1; min-height: 34px; background: var(--blue-600); }
+    .proof-stop.alt .proof-stop__dot { border-color: var(--orange-600); }
+    .proof-stop.alt .proof-stop__seg { background: var(--orange-600); }
+    .proof-stop__body { padding-bottom: 18px; flex: 1; }
+    .proof-stop:last-child .proof-stop__body { padding-bottom: 0; }
+    .proof-pill {
+      display: inline-block; padding: 3px 10px; border-radius: var(--r-pill);
+      background: var(--blue-600); color: #fff; font: 800 12px/1.6 var(--font); margin-bottom: 4px;
+    }
+    .proof-stop.alt .proof-pill { background: var(--orange-600); }
+    .proof-stop__name { font: 800 14.5px/1.3 var(--font); }
+    .proof-stop__note { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+    .proof-stop__box {
+      margin-top: 8px; padding: 10px 12px; border-radius: var(--r-md);
+      background: var(--orange-50); color: var(--orange-700); font-size: 12.5px; font-weight: 700; line-height: 1.5;
+    }
+
+    /* Lock-screen alert */
+    .proof-lock {
+      max-width: 300px; margin: 0 auto; border-radius: 22px; overflow: hidden;
+      background:
+        radial-gradient(120% 80% at 20% 0%, var(--blue-700), transparent 60%),
+        radial-gradient(100% 70% at 90% 20%, var(--blue-600), transparent 55%),
+        var(--blue-900);
+      padding: 26px 16px 18px; font-family: var(--font); color: #fff; text-align: center;
+    }
+    .proof-lock__clock { font: 200 36px/1 var(--font); letter-spacing: -0.02em; }
+    .proof-lock__date { margin: 4px 0 18px; font-size: 12px; opacity: 0.8; }
+    .proof-lock__push {
+      text-align: left; padding: 10px 12px; border-radius: var(--r-card);
+      background: rgba(255,255,255,0.16); backdrop-filter: blur(10px); margin-bottom: 10px;
+    }
+    .proof-lock__app { font: 800 9px/1.4 var(--font); letter-spacing: 0.08em; opacity: 0.85; }
+    .proof-lock__title { font: 800 12.5px/1.4 var(--font); margin-top: 2px; }
+    .proof-lock__alert { text-align: left; border-radius: var(--r-strip); overflow: hidden; background: #fff; color: var(--ink); }
+    .proof-lock__strip { display: flex; align-items: center; gap: 6px; padding: 10px 12px; background: var(--orange-100); color: var(--orange-600); font: 700 12px/1.3 var(--font); }
+    .proof-lock__body { padding: 12px; }
+    .proof-lock__body h4 { font: 800 13.5px/1.3 var(--font); margin-bottom: 6px; }
+    .proof-lock__body p { font-size: 11.5px; color: var(--muted); line-height: 1.5; }
+    .proof-lock__pill { display: inline-block; margin-top: 8px; padding: 5px 10px; border-radius: var(--r-md); background: var(--orange-50); color: var(--orange-700); font: 700 11.5px/1 var(--font); }
+
+    /* Slide gallery */
+    .gallery-note { font-size: 14.5px; color: var(--muted); margin: 26px 0 16px; max-width: 62ch; }
+    .gallery { display: flex; flex-direction: column; gap: 18px; }
+    .gallery figure { margin: 0; }
+    .gallery img { border-radius: var(--r-card); border: 1px solid var(--line); }
+
+    /* ── Footer ── */
+    .footer {
+      display: flex; align-items: center; gap: 14px;
+      padding: 32px 0 56px; font-size: 12.5px; color: var(--faint); line-height: 1.7;
+      border-top: 1px solid var(--line); margin-top: 20px;
+    }
+    .footer .avatar { width: 34px; height: 34px; border: 2px solid var(--sky); }
+    .footer a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+
+    /* ── Responsive ── */
+    @media (min-width: 700px) {
+      .page { padding: 0 32px; }
+      .hero h1 { font: 800 46px/1.15 var(--font); max-width: 18ch; }
+      .hero-sub { font-size: 18px; }
+      .proof-grid.two { grid-template-columns: 1fr 1fr; align-items: start; }
+      .gallery { flex-direction: row; }
+      .gallery figure { flex: 1; }
+      .stat-row { gap: 44px; }
+      .ai-item { gap: 20px; }
+      .ai-tag { width: 120px; }
+    }
+    @media (min-width: 860px) {
+      .hero h1 { font: 800 52px/1.14 var(--font); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="disclaimer">
+  This page isn't public. Shared directly as part of an NTT DATA interview process.
+</div>
+
+<div class="page">
+
+  <div class="top-row">
+    <img class="avatar" src="images/avatar.png" alt="">
+    <p class="top-label">Product case study · Anis Slimani</p>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <img class="hero-logo" src="images/logo-sncf-connect.svg" alt="SNCF Connect">
+    <span class="eyebrow">Results redesign</span>
+    <h1>The disruption was already known. It just never reached the results page.</h1>
+    <p class="hero-sub">SNCF Connect writes clear, specific copy about engineering works and replacement coaches. On the results page (the screen where the booking decision actually happens), almost none of it survives. This is a redesign of that one flow, coded end to end rather than left in Figma, built for an interview with NTT DATA.</p>
+
+    <div class="scenario-row" aria-hidden="true">
+      <span class="scenario-chip">Massy → Marseille</span>
+      <span class="scenario-chip">Sat 26 Sept, engineering works</span>
+      <span class="scenario-chip">+50 min, replacement coach</span>
+    </div>
+
+    <div class="hero-card">
+      What follows is the process, not just the deliverable: where the idea came from, an unusually long discovery phase for a topic that looked simple at first glance, the decisions I made and the ones I deliberately didn't, where AI genuinely helped and where it didn't, and the prototype it shipped as.
+    </div>
+
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="https://anisslimani.com/sncf/" target="_blank" rel="noopener">Open the live prototype ↗</a>
+      <a class="btn btn-ghost" href="#shipped">See what's coded, not just designed</a>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- Where it started -->
+  <section class="section reveal">
+    <span class="eyebrow">Where it started</span>
+    <h2>A route that wasn't offered</h2>
+    <div class="prose">
+      <p>This isn't the first time I've designed for transit. <strong>Smartport</strong> was a seven-week team project during my studies: user story interviews, low-fidelity paper prototypes, and the freedom to design our own product with no existing app to imitate and no client constraints, just the problem of navigating an unfamiliar station and finding your way. It's where I first learned that journey planning hides a lot of smaller, harder problems underneath the obvious one, and it's the reason transit kept pulling me back since (<a href="https://anisslimani.com/#lab" target="_blank" rel="noopener">see academic and art work ↗</a>, <a href="https://anisslimani.com/portfolio/smartport/" target="_blank" rel="noopener">see Smartport ↗</a>).</p>
+      <p>The spark for this specific case study was much more recent. Using Citymapper to get to a friend's place, my usual route wasn't being suggested: the app kept recommending others instead. I didn't know why, and it was frustrating enough that I found myself thinking: <em>what if I could just build my own route?</em> It turned out the line had engineering works. That question, what if the traveller could see and shape their own trajet instead of being quietly rerouted around a problem nobody told them about, is what stuck with me.</p>
+      <p>I started sketching that idea for <strong>Brief to Ship</strong>, a personal series I'm building about turning a brief into something actually shipped. Two days later, this exact scenario landed as a real brief, from a different direction entirely: a redesign of SNCF Connect's disruption handling, built for an interview with NTT DATA. The idea I'd already started chasing for myself turned out to be the brief I was handed to solve for real.</p>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- The problem -->
+  <section class="section reveal">
+    <span class="eyebrow">The problem</span>
+    <h2>Real information, wrong moment</h2>
+    <div class="prose">
+      <p>On SNCF Connect, planned engineering works and the replacement coaches they force are real, well-documented disruptions. The copy exists and it's specific. The problem is where it lives: past the results list, past the point where it could still change a decision. A traveller can book a journey, only discover the replacement coach once they open the details (or worse, on the day), and never get the chance to choose differently while it still mattered.</p>
+      <p>The primary case I designed for: <strong>Marc, 45</strong>, an occasional long-distance traveller going from Massy to Marseille. He isn't chasing the cheapest fare across every disruption type. He just wants to know, from the results list alone, which journeys are affected and how, without opening every single one to find out.</p>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- Discovery -->
+  <section class="section reveal">
+    <span class="eyebrow">Discovery</span>
+    <h2>Simple at first glance was the warning sign</h2>
+    <div class="prose">
+      <p>At first read, the brief looked simple: show disruptions in the results. That simplicity made me nervous rather than comfortable: when something looks obvious this early, it's usually because I haven't found the harder problem underneath it yet. So instead of moving straight to screens, I spent longer than the topic seemed to warrant on discovery: mapping the existing flow end to end, reading how SNCF Connect currently communicates travaux in its own copy, and deliberately testing a few different discovery methodologies against each other instead of defaulting to the one I usually reach for.</p>
+      <p>I also asked a former colleague from Legalstart (someone whose research instincts I trust) what she reaches for when she has to get up to speed on a product she doesn't know well. Comparing her approach to my own turned out to be as useful as the discovery itself: it's easy to assume your default method is the right one until you watch someone else's.</p>
+      <p class="muted">FigJam carried most of that synthesis: screenshots, quotes and half-formed ideas on one board before any of it became a screen.</p>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- The redesign -->
+  <section class="section reveal">
+    <span class="eyebrow">The redesign</span>
+    <h2>One severity language, used everywhere</h2>
+    <div class="prose">
+      <p>The fix isn't a new feature. It's a language: one severity system (icon, label and colour, always together, never colour alone) carried consistently across every place a traveller makes a decision. Below are the actual pieces from the shipped prototype, not mockups.</p>
+    </div>
+
+    <div class="proof-grid two">
+      <div>
+        <p class="proof-label">Result card: severity on the card, the altered duration spelled out</p>
+        <article class="proof-card" aria-hidden="true">
+          <div class="proof-card__body">
+            <span class="proof-card__best">Meilleur prix</span>
+            <div class="proof-card__row">
+              <div class="proof-card__times">
+                <div><strong>07:28</strong> Massy TGV</div>
+                <div><strong>12:10</strong> Marseille Saint-Charles</div>
+              </div>
+              <div class="proof-card__price"><span class="dès">dès</span><strong>145&nbsp;€</strong></div>
+            </div>
+            <div class="proof-card__dur">
+              <svg width="14" height="14" viewBox="0 0 18 18" fill="none"><path d="M9 1.5C7.01088 1.5 5.10322 2.29018 3.6967 3.6967C2.29018 5.10322 1.5 7.01088 1.5 9C1.5 10.9891 2.29018 12.8968 3.6967 14.3033C5.10322 15.7098 7.01088 16.5 9 16.5C10.9891 16.5 12.8968 15.7098 14.3033 14.3033C15.7098 12.8968 16.5 10.9891 16.5 9C16.5 7.01088 15.7098 5.10322 14.3033 3.6967C12.8968 2.29018 10.9891 1.5 9 1.5ZM9 3.075C9.77808 3.075 10.5485 3.22825 11.2674 3.52601C11.9863 3.82377 12.6394 4.26021 13.1896 4.81039C13.7398 5.36058 14.1762 6.01375 14.474 6.7326C14.7717 7.45145 14.925 8.22192 14.925 9C14.925 9.77808 14.7717 10.5485 14.474 11.2674C14.1762 11.9863 13.7398 12.6394 13.1896 13.1896C12.6394 13.7398 11.9863 14.1762 11.2674 14.474C10.5485 14.7717 9.77808 14.925 9 14.925C7.42859 14.925 5.92155 14.3008 4.81039 13.1896C3.69924 12.0785 3.075 10.5714 3.075 9C3.075 7.42859 3.69924 5.92155 4.81039 4.81039C5.92155 3.69924 7.42859 3.075 9 3.075ZM8.9625 5.025C8.76359 5.025 8.57282 5.10402 8.43217 5.24467C8.29152 5.38532 8.2125 5.57609 8.2125 5.775V9C8.2125 9.225 8.31 9.45 8.4825 9.585L10.8075 11.46C10.9627 11.5853 11.1612 11.6439 11.3595 11.6228C11.5579 11.6017 11.7397 11.5027 11.865 11.3475C11.9903 11.1923 12.0489 10.9938 12.0278 10.7954C12.0067 10.5971 11.9077 10.4153 11.7525 10.29L9.75 8.7V5.775C9.75013 5.67327 9.72956 5.57258 9.68954 5.47905C9.64953 5.38553 9.59091 5.30112 9.51724 5.23096C9.44358 5.1608 9.35641 5.10636 9.26104 5.07096C9.16567 5.03555 9.0641 5.01991 8.9625 5.025Z" fill="currentColor"/></svg>
+              4h42 · 1 correspondance
+            </div>
+          </div>
+          <button class="proof-strip" tabindex="-1">
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><g><g><path d="M16.8866 5.83333H8.4435C7.9509 5.83414 7.46964 5.98143 7.06093 6.25648C6.65223 6.53151 6.33455 6.92188 6.14828 7.37793H7.23926C7.71589 7.3818 8.18559 7.49248 8.61384 7.70181H14.6959L14.4797 8.70467C14.4533 8.82467 14.3867 8.932 14.2911 9.00908C14.1954 9.08617 14.0764 9.12842 13.9536 9.12883H10.4043L10.8479 9.5325H11.8287C12.1936 9.535 12.5522 9.62792 12.8725 9.80292H13.9536C14.2303 9.80167 14.4985 9.70625 14.7138 9.53233C14.9291 9.35842 15.0788 9.11642 15.1382 8.84608L15.4423 7.43548C15.4528 7.38637 15.4521 7.33556 15.4403 7.28674C15.4287 7.23793 15.4063 7.19233 15.3747 7.15328C15.3432 7.11422 15.3033 7.08269 15.2581 7.06098C15.2128 7.03926 15.1633 7.02791 15.1131 7.02775H7.46902C7.35886 7.0284 7.2491 7.0412 7.14175 7.06592C7.3097 6.88964 7.51166 6.74926 7.73541 6.65327C7.95916 6.55727 8.20006 6.50764 8.4435 6.5074H16.8866C17.0529 6.50878 17.2142 6.56433 17.346 6.66565C17.4779 6.76697 17.5731 6.90853 17.6173 7.06885H17.155C16.9186 7.06906 16.6904 7.15567 16.5135 7.31237C16.3365 7.46908 16.2229 7.68506 16.1941 7.91968L15.9433 9.96242C15.9268 10.0985 15.9393 10.2366 15.98 10.3675C16.0208 10.4985 16.0888 10.6192 16.1797 10.722C16.2705 10.8247 16.3821 10.9069 16.5071 10.9633C16.6321 11.0198 16.7676 11.049 16.9047 11.0492H17.6602V12.177H16.3912C16.3315 11.9359 16.2068 11.7159 16.0307 11.5409C15.8545 11.3659 15.6336 11.2426 15.3922 11.1846C15.1508 11.1265 14.898 11.1358 14.6615 11.2117C14.425 11.2874 14.2139 11.4267 14.0512 11.6143C14.0549 11.6669 14.0671 11.7173 14.0671 11.7709V12.1317C14.0671 12.1487 14.0624 12.1643 14.0621 12.1811C14.0491 12.4976 13.9736 12.8084 13.84 13.0957C13.9587 13.3503 14.1533 13.5621 14.3973 13.7016C14.6412 13.8412 14.9223 13.9017 15.202 13.8749C15.4818 13.8481 15.7463 13.7352 15.9593 13.5518C16.1722 13.3685 16.3231 13.1237 16.3912 12.8511H17.9968C18.0861 12.8509 18.1717 12.8153 18.2348 12.7522C18.2979 12.6889 18.3333 12.6032 18.3334 12.514V7.28093C18.3331 6.89725 18.1806 6.52936 17.9093 6.25798C17.6381 5.98659 17.2703 5.83388 16.8866 5.83333ZM15.072 13.2069C14.9349 13.2069 14.8009 13.1663 14.687 13.0902C14.573 13.014 14.4842 12.9058 14.4318 12.7792C14.3793 12.6525 14.3656 12.5132 14.3923 12.3787C14.4191 12.2443 14.4851 12.1209 14.582 12.024C14.6789 11.9271 14.8023 11.8611 14.9368 11.8343C15.0712 11.8076 15.2105 11.8213 15.3372 11.8737C15.4638 11.9262 15.572 12.015 15.6482 12.129C15.7243 12.2429 15.7649 12.3769 15.7649 12.514C15.7647 12.6977 15.6916 12.8738 15.5617 13.0037C15.4318 13.1336 15.2557 13.2067 15.072 13.2069ZM16.9047 10.3751C16.8629 10.3751 16.8217 10.3662 16.7836 10.3492C16.7455 10.3321 16.7115 10.3071 16.6838 10.2758C16.6561 10.2446 16.6353 10.2078 16.6228 10.1679C16.6104 10.1281 16.6066 10.0861 16.6117 10.0446L16.8623 8.00185C16.8711 7.93041 16.9058 7.86463 16.9596 7.81693C17.0135 7.76923 17.083 7.74291 17.155 7.74291H17.6602V10.3751H16.9047Z" fill="currentColor"/></g></g></svg>
+            <span>Travaux, car de substitution entre Avignon et Marseille</span>
+          </button>
+          <div class="proof-alteration">4 h 42 au lieu de 3 h 52</div>
+        </article>
+      </div>
+
+      <div>
+        <p class="proof-label">Date strip: severity carried into the chip, before you even open a day</p>
+        <div class="proof-dates" aria-hidden="true">
+          <div class="proof-date">
+            <span class="d">Ven 25</span>
+            <span class="p">101&nbsp;€</span>
+            <span class="t"><span class="dot"></span>Travaux</span>
+          </div>
+          <div class="proof-date on">
+            <span class="d">Sam 26</span>
+            <span class="p">72&nbsp;€</span>
+            <span class="t"><span class="dot"></span>Travaux</span>
+          </div>
+          <div class="proof-date">
+            <span class="d">Dim 27</span>
+            <span class="p">92&nbsp;€</span>
+            <span class="t"><span class="dot"></span>Travaux</span>
+          </div>
+          <div class="proof-date">
+            <span class="d">Lun 28</span>
+            <span class="p">118&nbsp;€</span>
+          </div>
+        </div>
+
+        <p class="proof-label" style="margin-top:22px;">Filter: a choice offered, not a route silently taken away</p>
+        <p class="prose" style="font-size:14px;color:var(--muted);">"Masquer les trajets perturbés" ships as a real toggle, a switch with a state a screen reader announces, not automatic rerouting. The traveller decides; the product doesn't decide for them.</p>
+      </div>
+    </div>
+
+    <p class="proof-label" style="margin-top:8px;">The detail drawer: the disruption marked from the time pill, through the rail, to the stop</p>
+    <div class="proof-drawer" aria-hidden="true">
+      <div class="proof-drawer__head">Ce trajet en détail</div>
+      <div class="proof-rail">
+        <div class="proof-stop">
+          <div class="proof-stop__line"><span class="proof-stop__dot"></span><span class="proof-stop__seg"></span></div>
+          <div class="proof-stop__body">
+            <span class="proof-pill">07:28</span>
+            <div class="proof-stop__name">Massy TGV</div>
+          </div>
+        </div>
+        <div class="proof-stop">
+          <div class="proof-stop__line"><span class="proof-stop__dot"></span><span class="proof-stop__seg"></span></div>
+          <div class="proof-stop__body">
+            <span class="proof-pill">10:12</span>
+            <div class="proof-stop__name">Avignon TGV</div>
+            <div class="proof-stop__note">Correspondance, 18 min</div>
+          </div>
+        </div>
+        <div class="proof-stop alt">
+          <div class="proof-stop__line"><span class="proof-stop__dot"></span><span class="proof-stop__seg"></span></div>
+          <div class="proof-stop__body">
+            <span class="proof-pill">10:30</span>
+            <div class="proof-stop__name">Avignon TGV</div>
+            <div class="proof-stop__box">Car de substitution : travaux sur la ligne entre Avignon et Marseille</div>
+          </div>
+        </div>
+        <div class="proof-stop alt">
+          <div class="proof-stop__line"><span class="proof-stop__dot"></span></div>
+          <div class="proof-stop__body">
+            <span class="proof-pill">12:10</span>
+            <div class="proof-stop__name">Marseille Saint-Charles</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- The slides -->
+  <section class="section card sky reveal">
+    <span class="eyebrow">The slides</span>
+    <h2>A visual language borrowed, not invented</h2>
+    <div class="prose">
+      <p>For the deck and this write-up, I didn't want to invent a presentation style from a blank page. While researching the brand I came across an SNCF Connect design book, and its own way of showing before-and-after work stuck with me: two cards linked by a single curved line, and a day/night toggle used to hold both themes in one frame instead of two separate screenshots. That became the reference for how I built my own slides.</p>
+    </div>
+    <div class="gallery" style="margin-top:22px;">
+      <figure>
+        <img src="images/slide-fare-card.webp" alt="Fare selection card shown before and after, paired with a connecting line, in light and dark mode.">
+      </figure>
+      <figure>
+        <img src="images/slide-night-mode.png" alt="SNCF Connect home screen with a light to dark mode toggle graphic.">
+      </figure>
+      <figure>
+        <img src="images/slide-night-train.png" alt="Night train journey card shown before and after, paired with a connecting line, in light and dark mode.">
+      </figure>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- What I didn't build -->
+  <section class="section card navy reveal">
+    <span class="eyebrow">Deliberately dropped</span>
+    <h2>What I chose not to build</h2>
+    <div class="dropped">
+      <div class="dropped-item">
+        <h3>A bigger banner</h3>
+        <p>The works banner already exists on today's site. The problem was never that it's too quiet: it's that the information doesn't survive into the results list. Making it louder would have treated the symptom, not the cause.</p>
+      </div>
+      <div class="dropped-item">
+        <h3>Automatic rerouting</h3>
+        <p>Quietly swapping a traveller's route around a disruption removes the exact agency this redesign is trying to protect. It's the same instinct that made Citymapper's silent substitution frustrating in the first place. The filter is offered as a choice instead: the traveller decides, the product doesn't decide for them.</p>
+      </div>
+      <div class="dropped-item">
+        <h3>A per-line traffic map</h3>
+        <p>A network-wide map answers a different question ("what's happening on the network") than the one this brief was actually about: "is my journey, the one I'm about to book, affected."</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- Accessibility -->
+  <section class="section reveal">
+    <span class="eyebrow">Accessibility, not an afterthought</span>
+    <h2>Severity never rests on colour alone</h2>
+    <div class="prose">
+      <p>Every severity is icon <strong>and</strong> text label <strong>and</strong> colour, never colour on its own. Each result card is an <code>&lt;article&gt;</code> whose accessible name states departure, arrival, the disruption if any, duration, then price, in that order, so the disruption is never the last thing a screen reader announces. The filter is a real checkbox with a state, not a styled div pretending to be one. The detail drawer is a focus-trapped dialog, reachable by keyboard, that names the affected leg explicitly rather than relying on colour in the rail alone.</p>
+      <p class="muted">Verified programmatically, not just eyeballed: every visible text node, its actual composited background through every ancestor, checked against the correct WCAG threshold for its size and weight, across every route, both themes, both breakpoints, drawers open and closed. Zero contrast failures.</p>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- Validation -->
+  <section class="section reveal">
+    <span class="eyebrow">What I tested</span>
+    <h2>Five people, one comparison</h2>
+    <div class="prose">
+      <p>A small moderated usability test, five participants plus a pilot, mobile web, today's SNCF Connect against the redesign, same scenario each time.</p>
+    </div>
+    <div class="stat-row">
+      <div class="stat">
+        <div class="num bad">0 / 5</div>
+        <div class="label">knew their train was affected before opening it, on today's site</div>
+      </div>
+      <div class="stat">
+        <div class="num good">4 / 5</div>
+        <div class="label">knew from the redesigned card alone, without opening anything</div>
+      </div>
+    </div>
+    <p class="prose muted" style="margin-top:14px;">Five participants is directional, not statistically powered. But the gap wasn't subtle, and it landed exactly where the redesign was supposed to make a difference: at the moment of choice, not after it.</p>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- AI -->
+  <section class="section reveal">
+    <span class="eyebrow">Where AI helped, and where it didn't</span>
+    <h2>A brief to ship, honestly reported</h2>
+    <div class="ai-list">
+      <div class="ai-item">
+        <span class="ai-tag">Discovery</span>
+        <p>FigJam held the synthesis: screenshots, quotes and half-formed ideas in one place before any of it became a screen. Dovetail's built-in AI got a real trial for auto-tagging research notes. <span class="verdict">Verdict: not great. It needed enough manual correction that it wasn't a clear win over tagging by hand.</span></p>
+      </div>
+      <div class="ai-item">
+        <span class="ai-tag">Design</span>
+        <p>Figma's agents got tested during the design pass, mostly for speed on repetitive component work rather than for decisions: the severity system, the drawer, what to drop, those stayed manual.</p>
+      </div>
+      <div class="ai-item">
+        <span class="ai-tag">Build</span>
+        <p>The live prototype (Vite, React, TypeScript, every colour and spacing value mapped to a token, zero UI libraries) was built with Claude Code and its MCPs, screen by screen against the Figma spec. This case study page was too. <span class="verdict">This is the actual point of the exercise: not "AI wrote the code," but that the distance between a brief and something a reviewer can click through got a lot shorter, which is exactly the idea behind Brief to Ship, the series this project seeded.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- Shipped -->
+  <section class="section card navy reveal" id="shipped">
+    <span class="eyebrow">Shipped, not just Figma</span>
+    <h2>Proof it runs in a real browser</h2>
+    <div class="prose">
+      <p>One scripted scenario, played end to end: Massy TGV to Marseille Saint-Charles, a weekend of engineering works, a replacement coach between Avignon and Marseille, about fifty minutes added. Five screens (landing, autocomplete, passengers, results, and the mobile pre-departure alert), French UI throughout, because it's SNCF's product, not mine.</p>
+    </div>
+
+    <p class="proof-label" style="margin-top:24px;">The payoff screen: the pre-departure alert, mobile only</p>
+    <div class="proof-lock" aria-hidden="true">
+      <div class="proof-lock__clock">10:24</div>
+      <div class="proof-lock__date">samedi 26 septembre</div>
+      <div class="proof-lock__push">
+        <div class="proof-lock__app">SNCF CONNECT</div>
+        <div class="proof-lock__title">Travaux sur votre trajet de demain</div>
+      </div>
+      <div class="proof-lock__alert">
+        <div class="proof-lock__strip">
+          <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><g><g><path d="M16.8866 5.83333H8.4435C7.9509 5.83414 7.46964 5.98143 7.06093 6.25648C6.65223 6.53151 6.33455 6.92188 6.14828 7.37793H7.23926C7.71589 7.3818 8.18559 7.49248 8.61384 7.70181H14.6959L14.4797 8.70467C14.4533 8.82467 14.3867 8.932 14.2911 9.00908C14.1954 9.08617 14.0764 9.12842 13.9536 9.12883H10.4043L10.8479 9.5325H11.8287C12.1936 9.535 12.5522 9.62792 12.8725 9.80292H13.9536C14.2303 9.80167 14.4985 9.70625 14.7138 9.53233C14.9291 9.35842 15.0788 9.11642 15.1382 8.84608L15.4423 7.43548C15.4528 7.38637 15.4521 7.33556 15.4403 7.28674C15.4287 7.23793 15.4063 7.19233 15.3747 7.15328C15.3432 7.11422 15.3033 7.08269 15.2581 7.06098C15.2128 7.03926 15.1633 7.02791 15.1131 7.02775H7.46902C7.35886 7.0284 7.2491 7.0412 7.14175 7.06592C7.3097 6.88964 7.51166 6.74926 7.73541 6.65327C7.95916 6.55727 8.20006 6.50764 8.4435 6.5074H16.8866C17.0529 6.50878 17.2142 6.56433 17.346 6.66565C17.4779 6.76697 17.5731 6.90853 17.6173 7.06885H17.155C16.9186 7.06906 16.6904 7.15567 16.5135 7.31237C16.3365 7.46908 16.2229 7.68506 16.1941 7.91968L15.9433 9.96242C15.9268 10.0985 15.9393 10.2366 15.98 10.3675C16.0208 10.4985 16.0888 10.6192 16.1797 10.722C16.2705 10.8247 16.3821 10.9069 16.5071 10.9633C16.6321 11.0198 16.7676 11.049 16.9047 11.0492H17.6602V12.177H16.3912C16.3315 11.9359 16.2068 11.7159 16.0307 11.5409C15.8545 11.3659 15.6336 11.2426 15.3922 11.1846C15.1508 11.1265 14.898 11.1358 14.6615 11.2117C14.425 11.2874 14.2139 11.4267 14.0512 11.6143C14.0549 11.6669 14.0671 11.7173 14.0671 11.7709V12.1317C14.0671 12.1487 14.0624 12.1643 14.0621 12.1811C14.0491 12.4976 13.9736 12.8084 13.84 13.0957C13.9587 13.3503 14.1533 13.5621 14.3973 13.7016C14.6412 13.8412 14.9223 13.9017 15.202 13.8749C15.4818 13.8481 15.7463 13.7352 15.9593 13.5518C16.1722 13.3685 16.3231 13.1237 16.3912 12.8511H17.9968C18.0861 12.8509 18.1717 12.8153 18.2348 12.7522C18.2979 12.6889 18.3333 12.6032 18.3334 12.514V7.28093C18.3331 6.89725 18.1806 6.52936 17.9093 6.25798C17.6381 5.98659 17.2703 5.83388 16.8866 5.83333ZM15.072 13.2069C14.9349 13.2069 14.8009 13.1663 14.687 13.0902C14.573 13.014 14.4842 12.9058 14.4318 12.7792C14.3793 12.6525 14.3656 12.5132 14.3923 12.3787C14.4191 12.2443 14.4851 12.1209 14.582 12.024C14.6789 11.9271 14.8023 11.8611 14.9368 11.8343C15.0712 11.8076 15.2105 11.8213 15.3372 11.8737C15.4638 11.9262 15.572 12.015 15.6482 12.129C15.7243 12.2429 15.7649 12.3769 15.7649 12.514C15.7647 12.6977 15.6916 12.8738 15.5617 13.0037C15.4318 13.1336 15.2557 13.2067 15.072 13.2069ZM16.9047 10.3751C16.8629 10.3751 16.8217 10.3662 16.7836 10.3492C16.7455 10.3321 16.7115 10.3071 16.6838 10.2758C16.6561 10.2446 16.6353 10.2078 16.6228 10.1679C16.6104 10.1281 16.6066 10.0861 16.6117 10.0446L16.8623 8.00185C16.8711 7.93041 16.9058 7.86463 16.9596 7.81693C17.0135 7.76923 17.083 7.74291 17.155 7.74291H17.6602V10.3751H16.9047Z" fill="currentColor"/></g></g></svg>
+          <span>Travaux ajoutés sur votre trajet</span>
+        </div>
+        <div class="proof-lock__body">
+          <h4>Massy vers Marseille, samedi 26 septembre</h4>
+          <p>Un car de substitution remplace le train entre Avignon et Marseille. Comptez environ 50 minutes de plus.</p>
+          <span class="proof-lock__pill">4 h 42 au lieu de 3 h 52</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-cta" style="margin-top:28px;justify-content:center;">
+      <a class="btn btn-primary" href="https://anisslimani.com/sncf/" target="_blank" rel="noopener">Open the live prototype ↗</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <img class="avatar" src="images/avatar.png" alt="Anis Slimani">
+    <div>
+      Built by Anis Slimani for an NTT DATA interview process · not indexed, shared by link only.<br>
+      HTML, CSS, JavaScript, and Claude Code · <a href="https://anisslimani.com">anisslimani.com</a> · <a href="https://www.linkedin.com/in/anisslimani" target="_blank" rel="noopener">linkedin.com/in/anisslimani</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.06 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
