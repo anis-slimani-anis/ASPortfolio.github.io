@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { getJourneys } from '../data/journeys'
 import { BANNER, getDays } from '../data/dates'
 import { ResultCard } from '../components/ResultCard'
@@ -12,12 +12,26 @@ import { ModeTabs } from '../components/ModeTabs'
 import { LoadMoreBar } from '../components/LoadMoreBar'
 import { EmptyState } from '../components/EmptyState'
 import { Toast } from '../components/Toast'
+import { useAnnouncer } from '../components/Announcer'
 import { useIsDesktop } from '../lib/useMedia'
 import { go } from '../lib/router'
 
 const LONG = new Intl.DateTimeFormat('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' })
 const SHORT = new Intl.DateTimeFormat('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' })
 const at = (iso: string) => new Date(`${iso}T12:00:00`)
+const plural = (n: number, one: string, many: string) => `${n} ${n > 1 ? many : one}`
+
+/* Scrolling alone moves nothing for a screen reader, so every jump also moves
+   focus. Targets that are not controls get tabindex -1 on the way. Runs a tick
+   late so a target that the same click just rendered exists by then. */
+function focusOn(sel: string) {
+  setTimeout(() => {
+    const el = document.querySelector<HTMLElement>(sel)
+    if (!el) return
+    if (!el.matches('a[href],button,input,select,textarea')) el.tabIndex = -1
+    el.focus({ preventScroll: true })
+  })
+}
 
 export function Results({ date, filtre }: { date: string; filtre: boolean }) {
   const desktop = useIsDesktop()
@@ -27,6 +41,8 @@ export function Results({ date, filtre }: { date: string; filtre: boolean }) {
   const days = useMemo(() => getDays(), [])
   const s = useSheet()
   const [toast, setToast] = useState<{ msg: string; tone: 'on' | 'off' } | null>(null)
+  const { say, region } = useAnnouncer()
+  const notify = (msg: string, tone: 'on' | 'off') => { setToast({ msg, tone }); say(msg) }
 
   /* "Suivre ce trajet" is the bridge into the proactive story.
      Desktop confirms with a toast; mobile hands straight over to the
@@ -35,11 +51,11 @@ export function Results({ date, filtre }: { date: string; filtre: boolean }) {
     s.setFollowed(on)
     if (!on) {
       // Turning it off confirms too, so the change is never silent.
-      setToast({ msg: 'Notifications désactivées pour ce trajet', tone: 'off' })
+      notify('Notifications désactivées pour ce trajet', 'off')
       return
     }
     if (desktop) {
-      setToast({ msg: 'Notifications activées pour ce trajet', tone: 'on' })
+      notify('Notifications activées pour ce trajet', 'on')
     } else {
       s.close()
       go('/alerte')
@@ -50,6 +66,7 @@ export function Results({ date, filtre }: { date: string; filtre: boolean }) {
     const el = document.querySelector(sel)
     if (!el) return
     el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    focusOn(sel)
     el.classList.add('is-flagged')
     setTimeout(() => el.classList.remove('is-flagged'), 1600)
   }
@@ -64,9 +81,29 @@ export function Results({ date, filtre }: { date: string; filtre: boolean }) {
 
   const setDate = (iso: string) => go(`/resultats?date=${iso}${hide ? '&filtre=1' : ''}`)
 
+  /* The list changes under the user without focus moving, on a new date or
+     on the filter, so the new count is spoken. Not on first render: the page
+     heading already carries that. */
+  const perturbes = all.length - all.filter((j) => !j.strips.length).length
+  const countFor = (masque: boolean) => {
+    const n = masque ? all.length - perturbes : all.length
+    const base = `${plural(n, 'trajet', 'trajets')}, ${LONG.format(at(date))}`
+    if (!perturbes) return base
+    return masque
+      ? `${base}. ${plural(perturbes, 'trajet perturbé masqué', 'trajets perturbés masqués')}`
+      : `${base}, dont ${plural(perturbes, 'perturbé', 'perturbés')}`
+  }
+  const firstDate = useRef(true)
+  useEffect(() => {
+    if (firstDate.current) { firstDate.current = false; return }
+    say(countFor(hide))
+  }, [date])
+  const setHideSpoken = (v: boolean) => { setHide(v); say(countFor(v)) }
+
   return (
     <>
-      <JourneyBar depart="Massy" arrivee="Marseille" dateLabel={SHORT.format(at(date))} />
+      <JourneyBar depart="Massy" arrivee="Marseille" dateLabel={SHORT.format(at(date))}
+                  dateSpoken={LONG.format(at(date))} />
 
       <main className="main">
         <div className="shell stack results">
@@ -82,14 +119,14 @@ export function Results({ date, filtre }: { date: string; filtre: boolean }) {
             {disrupted && (
               <span className="filterbar__switch">
                 <label htmlFor="hide-disrupted">Masquer les trajets perturbés</label>
-                <Toggle id="hide-disrupted" checked={hide} onChange={setHide}
+                <Toggle id="hide-disrupted" checked={hide} onChange={setHideSpoken}
                         label="Masquer les trajets perturbés" />
               </span>
             )}
           </div>
 
           {mode === 'bus' ? (
-            <EmptyState onReset={() => setMode('train')} />
+            <EmptyState onReset={() => { setMode('train'); focusOn('.modetab') }} />
           ) : (
             <div className="stack results__list">
               {shown.map((j) => (
@@ -104,14 +141,18 @@ export function Results({ date, filtre }: { date: string; filtre: boolean }) {
                 {hidden} trajet{hidden > 1 ? 's' : ''} perturbé{hidden > 1 ? 's' : ''}{' '}
                 {hidden > 1 ? 'sont masqués' : 'est masqué'}
               </span>
-              <button type="button" onClick={() => setHide(false)}>Tout afficher</button>
+              {/* This button disappears when pressed; focus goes to the switch
+                  that controls the same thing rather than falling to <body>. */}
+              <button type="button" onClick={() => { setHideSpoken(false); focusOn('#hide-disrupted') }}>
+                Tout afficher
+              </button>
             </div>
           )}
 
           {mode === 'train' && <LoadMoreBar klass={klass} onKlass={setKlass} />}
           <UpsellRow
             onPrices={() => { setMode('train'); scrollTo('#trajet-recommande') }}
-            onBus={() => { setMode('bus'); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
+            onBus={() => { setMode('bus'); window.scrollTo({ top: 0, behavior: 'smooth' }); focusOn('.empty__title') }}
             onHelp={() => scrollTo('#besoin-aide')}
           />
         </div>
@@ -129,6 +170,7 @@ export function Results({ date, filtre }: { date: string; filtre: boolean }) {
           onDismiss={() => setToast(null)}
         />
       )}
+      {region}
     </>
   )
 }

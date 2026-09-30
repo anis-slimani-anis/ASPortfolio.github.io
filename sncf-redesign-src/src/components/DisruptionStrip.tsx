@@ -16,11 +16,15 @@ export function DisruptionStrip({ severity, label, onClick }: {
   severity: Severity; label: string; onClick?: () => void
 }) {
   const desktop = useIsDesktop()
+  // Only prefixed when the label does not already open with the severity,
+  // otherwise VoiceOver reads "Travaux. Travaux, car de substitution…".
+  const named = label.toLowerCase().startsWith(SPOKEN[severity].toLowerCase())
   return (
-    <button type="button" className={`strip strip--${severity}`} onClick={onClick}>
+    <button type="button" className={`strip strip--${severity}`} onClick={onClick}
+            aria-haspopup={onClick ? 'dialog' : undefined}>
       <Icon name={GLYPH[severity]} size={desktop ? 20 : 18} />
       <span className="strip__label">
-        <span className="sr-only">{SPOKEN[severity]}. </span>{label}
+        {!named && <span className="sr-only">{SPOKEN[severity]}. </span>}{label}
       </span>
       <Icon name="chevron" size={desktop ? 16 : 14} />
     </button>

@@ -22,12 +22,14 @@ export function Autocomplete() {
   const stops = q.trim() ? STOPS : STOPS
 
   const panel = (
-    <div className="ac__panel" role="listbox" aria-label="Suggestions de gares">
-      <ul className="ac__list">
+    /* Plain lists of buttons, not role="listbox": a listbox may only own
+       options, and VoiceOver announced this one as empty. */
+    <div className="ac__panel" role="group" aria-label="Suggestions de gares">
+      <ul className="ac__list" aria-label="Gares et villes">
         {list.map((s, i) => <StationRow key={`${s.name}-${i}`} s={s} onPick={pick} />)}
       </ul>
-      <p className="ac__section">Arrêts et stations</p>
-      <ul className="ac__list">
+      <p className="ac__section" id="ac-stops">Arrêts et stations</p>
+      <ul className="ac__list" aria-labelledby="ac-stops">
         {stops.map((s, i) => <StationRow key={`stop-${i}`} s={s} onPick={pick} />)}
       </ul>
     </div>
@@ -67,8 +69,10 @@ export function Autocomplete() {
 
   return (
     <div className="ac" onMouseDown={dismiss}>
-      {/* The page you came from stays visible behind the scrim. */}
-      <div className="ac__behind" aria-hidden="true"><Landing /></div>
+      {/* The page you came from stays visible behind the scrim. inert, not
+          just aria-hidden: it is full of links and a focusable field, and
+          aria-hidden left them in the tab order, announced as nothing. */}
+      <div className="ac__behind" aria-hidden="true" inert><Landing /></div>
       <div className="ac__dim" aria-hidden="true" />
       <div className="shell ac__inner">
         <form className="bigsearch bigsearch--open" onSubmit={(e) => { e.preventDefault(); pick() }} role="search">

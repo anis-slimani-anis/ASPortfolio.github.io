@@ -4,15 +4,18 @@ const FILTERS = ['Trajets directs', 'Prix', 'Trajets via', 'Type de train', 'Tem
 
 /* The dark "Aller" block under the header. Mobile is the 295px hero from the
    design, desktop the single-row journey bar. */
-export function JourneyBar({ depart, arrivee, dateLabel, onSwap }: {
-  depart: string; arrivee: string; dateLabel: string; onSwap?: () => void
+export function JourneyBar({ depart, arrivee, dateLabel, dateSpoken, onSwap }: {
+  depart: string; arrivee: string; dateLabel: string; dateSpoken?: string; onSwap?: () => void
 }) {
   const desktop = useIsDesktop()
   return (
     <section className="aller" aria-label="Votre recherche">
       <div className="shell aller__inner">
         <div className="aller__head">
-          <h1 className="aller__title">Aller</h1>
+          {/* Focus lands here on arrival; "Aller" alone says nothing. */}
+          <h1 className="aller__title">
+            Aller<span className="sr-only"> : {depart} vers {arrivee}, {dateSpoken ?? dateLabel}</span>
+          </h1>
           {desktop ? (
             <>
               <p className="aller__note">Nos offres sont présentées par horaires de départ.</p>

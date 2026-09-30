@@ -1,6 +1,8 @@
 import { DateChip } from './DateChip'
 import { useIsDesktop } from '../lib/useMedia'
 
+const SPOKEN = new Intl.DateTimeFormat('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' })
+
 export type DayEntry = { iso: string; label: string; price: string; severity: 'normal' | 'travaux' }
 
 export function DateStrip({ days, selected, onSelect }: {
@@ -18,7 +20,7 @@ export function DateStrip({ days, selected, onSelect }: {
   return (
     <div className="datestrip" role="group" aria-label="Choisir une date">
       {shown.map((d) => (
-        <DateChip key={d.iso} day={d.label} price={d.price} severity={d.severity}
+        <DateChip key={d.iso} day={d.label} spoken={SPOKEN.format(new Date(`${d.iso}T12:00:00`))} price={d.price} severity={d.severity}
           selected={d.iso === selected} onSelect={() => onSelect(d.iso)} />
       ))}
     </div>

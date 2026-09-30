@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>Case study · SNCF Connect · Anis Slimani</title>
-  <meta name="description" content="A disruption-first redesign of the SNCF Connect results flow, built end to end and shipped as a working prototype. Case study for an NTT DATA interview.">
+  <title>Working notes · NTT DATA exercise · Anis Slimani</title>
+  <meta name="description" content="Working notes on the SNCF Connect exercise, prepared only for an NTT DATA recruitment process. Not a portfolio piece.">
   <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
   <link rel="icon" type="image/png" sizes="240x240" href="images/favicon.png">
   <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
@@ -433,14 +433,14 @@
 <body>
 
 <div class="disclaimer">
-  This page isn't public. Shared directly as part of an NTT DATA interview process.
+  Private working notes, prepared only for the NTT DATA recruitment process. Not part of my portfolio, not indexed, and not shared anywhere else. SNCF Connect is used here as the exercise subject; I have no affiliation with SNCF.
 </div>
 
 <div class="page">
 
   <div class="top-row">
     <img class="avatar" src="images/avatar.png" alt="">
-    <p class="top-label">Product case study · Anis Slimani</p>
+    <p class="top-label">Working notes · Anis Slimani</p>
   </div>
 
   <nav class="toc" aria-label="Section navigation">
@@ -456,17 +456,17 @@
       <a class="toc-link" href="#a11y">Accessibility</a>
       <a class="toc-link" href="#validation">What I tested</a>
       <a class="toc-link" href="#ai">Where AI helped</a>
-      <a class="toc-link" href="#shipped">Shipped</a>
+      <a class="toc-link" href="#shipped">The prototype</a>
     </div>
   </nav>
 
   <!-- Hero -->
   <section class="hero">
     <img class="hero-logo" src="images/logo-sncf-connect.svg" alt="SNCF Connect">
-    <span class="kicker">Case study</span>
-    <span class="eyebrow">Results redesign</span>
+    <span class="kicker">Working notes</span>
+    <span class="eyebrow">NTT DATA exercise</span>
     <h1>The disruption was already known. It just never reached the results page.</h1>
-    <p class="hero-sub">SNCF Connect writes clear, specific copy about engineering works and replacement coaches. On the results page (the screen where the booking decision actually happens), almost none of it survives. This is a redesign of that one flow, coded end to end rather than left in Figma, built for an interview with NTT DATA.</p>
+    <p class="hero-sub">SNCF Connect writes clear, specific copy about engineering works and replacement coaches. On the results page (the screen where the booking decision actually happens), almost none of it survives. For the NTT DATA exercise I worked on that one flow, and these notes are my record of how I approached it.</p>
 
     <div class="scenario-row" aria-hidden="true">
       <span class="scenario-chip">Massy → Marseille</span>
@@ -475,12 +475,12 @@
     </div>
 
     <div class="hero-card">
-      What follows is the process, not just the deliverable: where the idea came from, an unusually long discovery phase for a topic that looked simple at first glance, the decisions I made and the ones I deliberately didn't, where AI genuinely helped and where it didn't, and the prototype it shipped as.
+      These are notes on how I worked, written for the people reviewing this exercise: where my thinking started, a longer discovery phase than the topic seemed to need, the decisions I made and the ones I deliberately didn't, which tools helped and which didn't, and the prototype that came out of it.
     </div>
 
     <div class="hero-cta">
       <a class="btn btn-primary" href="https://anisslimani.com/sncf/" target="_blank" rel="noopener">Open the live prototype ↗</a>
-      <a class="btn btn-ghost" href="#shipped">See what's coded, not just designed</a>
+      <a class="btn btn-ghost" href="#shipped">What the prototype covers</a>
     </div>
   </section>
 
@@ -497,9 +497,9 @@
     </div>
     <div class="prose">
       <p class="lead">This isn't the first time I've designed for transit.</p>
-      <p><strong>Smartport</strong> was a seven-week team project during my studies: user story interviews, low-fidelity paper prototypes, and the freedom to design our own product with no existing app to imitate and no client constraints, just the problem of navigating an unfamiliar station and finding your way. It's where I first learned that journey planning hides a lot of smaller, harder problems underneath the obvious one, and it's the reason transit kept pulling me back since (<a href="https://anisslimani.com/#lab" target="_blank" rel="noopener">see academic and art work ↗</a>, <a href="https://anisslimani.com/portfolio/smartport/" target="_blank" rel="noopener">see Smartport ↗</a>).</p>
-      <p>The spark for this specific case study was much more recent. Using Citymapper to get to a friend's place, my usual route wasn't being suggested: the app kept recommending others instead. I didn't know why, and it was frustrating enough that I found myself thinking: <em>what if I could just build my own route?</em> It turned out the line had engineering works. That question, what if the traveller could see and shape their own trajet instead of being quietly rerouted around a problem nobody told them about, is what stuck with me.</p>
-      <p>I started sketching that idea for <strong>Brief to Ship</strong>, a personal series I'm building about turning a brief into something actually shipped. Two days later, this exact scenario landed as a real brief, from a different direction entirely: a redesign of SNCF Connect's disruption handling, built for an interview with NTT DATA. The idea I'd already started chasing for myself turned out to be the brief I was handed to solve for real.</p>
+      <p>During my studies I spent seven weeks on a team project about navigating an unfamiliar station. It's where I first learned that journey planning hides a lot of smaller, harder problems underneath the obvious one, and it's why I was glad to see a transit brief.</p>
+      <p>The starting point for this exercise was much more recent. Using Citymapper to get to a friend's place, my usual route wasn't being suggested: the app kept recommending others instead. I didn't know why, and it was frustrating enough that I found myself thinking: <em>what if I could just build my own route?</em> It turned out the line had engineering works. That question, what if the traveller could see and shape their own trajet instead of being quietly rerouted around a problem nobody told them about, is what stuck with me.</p>
+      <p>A couple of days later, the NTT DATA exercise arrived: SNCF Connect's disruption handling. The question I'd already been turning over for myself turned out to be the one I was asked to work on.</p>
     </div>
   </section>
 
@@ -538,7 +538,7 @@
     <h2>One severity language, used everywhere</h2>
     <div class="prose">
       <p class="lead">The fix isn't a new feature. It's a language.</p>
-      <p>One severity system (icon, label and colour, always together, never colour alone) carried consistently across every place a traveller makes a decision. Below are the actual pieces from the shipped prototype, not mockups.</p>
+      <p>One severity system (icon, label and colour, always together, never colour alone) carried consistently across every place a traveller makes a decision. Below are pieces taken from the prototype itself.</p>
     </div>
 
     <div class="proof-grid two">
@@ -688,7 +688,7 @@
     <h2>Severity never rests on colour alone</h2>
     <div class="prose">
       <p class="lead">Severity is icon <strong>and</strong> text label <strong>and</strong> colour. Never colour on its own.</p>
-      <p>Each result card is an <code>&lt;article&gt;</code> whose accessible name states departure, arrival, the disruption if any, duration, then price, in that order, so the disruption is never the last thing a screen reader announces. The filter is a real checkbox with a state, not a styled div pretending to be one. The detail drawer is a focus-trapped dialog, reachable by keyboard, that names the affected leg explicitly rather than relying on colour in the rail alone.</p>
+      <p>Each result card opens with a heading that a screen reader reads as departure, arrival, the disruption if any, duration, then price, in that order, so the disruption is never the last thing announced. The filter is a real checkbox with a state, not a styled div pretending to be one. The detail drawer is a focus-trapped dialog, reachable by keyboard, that names the affected leg explicitly rather than relying on colour in the rail alone.</p>
       <p class="muted">Verified programmatically, not just eyeballed: every visible text node, its actual composited background through every ancestor, checked against the correct WCAG threshold for its size and weight, across every route, both themes, both breakpoints, drawers open and closed. Zero contrast failures.</p>
     </div>
   </section>
@@ -721,7 +721,7 @@
   <!-- AI -->
   <section class="section reveal" id="ai">
     <span class="eyebrow">Where AI helped, and where it didn't</span>
-    <h2>A brief to ship, honestly reported</h2>
+    <h2>The tools, and how useful they were</h2>
     <div class="ai-list">
       <div class="ai-item">
         <span class="ai-tag">Discovery</span>
@@ -733,7 +733,7 @@
       </div>
       <div class="ai-item">
         <span class="ai-tag">Build</span>
-        <p>The live prototype (Vite, React, TypeScript, every colour and spacing value mapped to a token, zero UI libraries) was built with Claude Code and its MCPs, screen by screen against the Figma spec. This case study page was too. <span class="verdict">This is the actual point of the exercise: not "AI wrote the code," but that the distance between a brief and something a reviewer can click through got a lot shorter, which is exactly the idea behind Brief to Ship, the series this project seeded.</span></p>
+        <p>The live prototype (Vite, React, TypeScript, every colour and spacing value mapped to a token, zero UI libraries) was built with Claude Code and its MCPs, screen by screen against the Figma spec. So was this page.</p>
       </div>
     </div>
   </section>
@@ -742,11 +742,11 @@
 
   <!-- Shipped -->
   <section class="section card navy reveal" id="shipped">
-    <span class="eyebrow">Shipped, not just Figma</span>
-    <h2>Proof it runs in a real browser</h2>
+    <span class="eyebrow">The prototype</span>
+    <h2>What it covers</h2>
     <div class="prose">
-      <p class="lead">This isn't a Figma flow. It runs in a real browser.</p>
-      <p>One scripted scenario, played end to end: Massy TGV to Marseille Saint-Charles, a weekend of engineering works, a replacement coach between Avignon and Marseille, about fifty minutes added. Five screens (landing, autocomplete, passengers, results, and the mobile pre-departure alert), French UI throughout, because it's SNCF's product, not mine.</p>
+      <p class="lead">A clickable prototype, so the flow can be tried rather than described.</p>
+      <p>One scripted scenario, played end to end: Massy TGV to Marseille Saint-Charles, a weekend of engineering works, a replacement coach between Avignon and Marseille, about fifty minutes added. Five screens (landing, autocomplete, passengers, results, and the mobile pre-departure alert), French UI throughout, since it's SNCF's product.</p>
     </div>
 
     <p class="proof-label" style="margin-top:24px;">The payoff screen: the pre-departure alert, mobile only</p>
@@ -778,7 +778,7 @@
   <footer class="footer">
     <img class="avatar" src="images/avatar.png" alt="Anis Slimani">
     <div>
-      Built by Anis Slimani for an NTT DATA interview process · not indexed, shared by link only.<br>
+      Prepared by Anis Slimani for the NTT DATA recruitment process only · not indexed, not part of my portfolio, shared by link only.<br>
       HTML, CSS, JavaScript, and Claude Code · <a href="https://anisslimani.com">anisslimani.com</a> · <a href="https://www.linkedin.com/in/anisslimani" target="_blank" rel="noopener">linkedin.com/in/anisslimani</a>
     </div>
   </footer>

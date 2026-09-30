@@ -20,9 +20,10 @@ export function FollowRoute({
     <div className="follow">
       <span className="follow__text">
         <label htmlFor={id} className="follow__title">Suivre ce trajet</label>
-        <span className="follow__sub">{sub}</span>
+        <span id={`${id}-sub`} className="follow__sub">{sub}</span>
       </span>
-      <Toggle id={id} checked={checked} onChange={onChange} label="Suivre ce trajet" />
+      <Toggle id={id} checked={checked} onChange={onChange} label="Suivre ce trajet"
+              describedBy={`${id}-sub`} />
     </div>
   )
 }

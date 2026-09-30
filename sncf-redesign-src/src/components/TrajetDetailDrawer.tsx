@@ -1,4 +1,5 @@
 import { useId } from 'react'
+import { createPortal } from 'react-dom'
 import { Icon } from './Icon'
 import { FollowRoute } from './FollowRoute'
 import { useDialog } from '../lib/useDialog'
@@ -48,6 +49,9 @@ function RailRow({ row }: { row: Row }) {
 
         {row.vehicle && (
           <div className={`vehicule${row.vehicle.severity ? ' vehicule--severity' : ''}`}>
+            {/* The tinted card and the severity rail say "this is the leg" to
+                the eye; this says it to the ear. */}
+            {row.vehicle.severity && <p className="sr-only">Étape perturbée :</p>}
             <div className="vehicule__head">
               <Icon name={row.vehicle.icon} size={26} />
               <p className="vehicule__name">{row.vehicle.name}</p>
@@ -84,9 +88,11 @@ export function TrajetDetailDrawer({ type, onClose, followed, onFollow }: Props)
   const c = ITINERARY[type]
   const tone = TONE[type]
   const titleId = useId()
+  const noticeId = useId()
   const ref = useDialog(true, onClose)
 
-  return (
+  /* Portalled to <body> because useDialog makes #root inert while open. */
+  return createPortal(
     <div
       className="drawer-scrim"
       onMouseDown={(e) => { if (e.target === e.currentTarget) onClose() }}
@@ -96,6 +102,8 @@ export function TrajetDetailDrawer({ type, onClose, followed, onFollow }: Props)
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
+        aria-describedby={noticeId}
+        tabIndex={-1}
         className={`drawer drawer--${type}`}
       >
         <header className="drawer__header">
@@ -105,7 +113,7 @@ export function TrajetDetailDrawer({ type, onClose, followed, onFollow }: Props)
 
         <div className="drawer__body">
           <div className="drawer__content">
-            <div className={`avis avis--${tone}`}>
+            <div id={noticeId} className={`avis avis--${tone}`}>
               <Icon name={GLYPH[type]} size={22} className="avis__icon" />
               <div className="avis__txt">
                 <h3 className="avis__title">{c.title}</h3>
@@ -121,6 +129,7 @@ export function TrajetDetailDrawer({ type, onClose, followed, onFollow }: Props)
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }

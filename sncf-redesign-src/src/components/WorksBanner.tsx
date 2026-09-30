@@ -7,7 +7,8 @@ export function WorksBanner({ title, body, onOpen }: {
 }) {
   const desktop = useIsDesktop()
   const more = (
-    <button type="button" className={`banner__more${desktop ? '' : ' banner__more--mobile'}`} onClick={onOpen}>
+    <button type="button" className={`banner__more${desktop ? '' : ' banner__more--mobile'}`} onClick={onOpen}
+            aria-haspopup="dialog">
       <span>Lire la suite</span>
       <span className="banner__bullet" aria-hidden="true"><Icon name="chevron" size={12} /></span>
     </button>

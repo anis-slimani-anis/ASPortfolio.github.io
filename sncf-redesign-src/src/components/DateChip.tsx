@@ -4,20 +4,21 @@
    "these three are disrupted" rather than as a row of status badges. */
 type Props = {
   day: string          // "Mer 16"
+  spoken?: string      // "mercredi 16 septembre": "Sam 26" is read as a name
   price: string        // "19 €"
   severity?: 'normal' | 'travaux'
   selected?: boolean
   onSelect?: () => void
 }
 
-export function DateChip({ day, price, severity = 'normal', selected = false, onSelect }: Props) {
+export function DateChip({ day, spoken, price, severity = 'normal', selected = false, onSelect }: Props) {
   const travaux = severity === 'travaux'
   return (
     <button
       type="button"
       className={`daychip${selected ? ' daychip--selected' : ''} daychip--${severity}`}
       aria-pressed={selected}
-      aria-label={`${day}, à partir de ${price}${travaux ? ', travaux' : ''}`}
+      aria-label={`${spoken ?? day}, à partir de ${price}${travaux ? ', travaux' : ''}`}
       onClick={onSelect}
     >
       <span className="daychip__day">{day}</span>

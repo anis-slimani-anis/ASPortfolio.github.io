@@ -46,7 +46,11 @@ near-black, silently passing whatever sits on it.
 
 ## Left over
 
-- VoiceOver listen-through, Anis is doing this himself
+- VoiceOver listen-through on a real device, Anis is doing this himself.
+  The code-side pass is done (28 Sept 2026): cards read through an sr-only
+  heading in brief order, the drawer focuses itself and makes `#root` inert,
+  confirmations and filter/date changes go through `useAnnouncer`, and every
+  vanishing button or jump moves focus somewhere real
 - Mobile app-shell variant (`235:2227`) was approximated, not built
 - Search: typing filters the real 2,950-station dataset (`findStations()`),
   but only the Marseille set routes through. `FORCED_QUERY` documents it.

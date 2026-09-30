@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { Header } from './components/Header'
 import { Faq } from './components/Faq'
 import { SiteFooter } from './components/SiteFooter'
@@ -12,6 +12,13 @@ import { useIsDesktop } from './lib/useMedia'
 import { useTheme } from './lib/useTheme'
 import { DATE_DISRUPTED } from './lib/types'
 
+const TITLES: Record<string, string> = {
+  '/recherche': 'Recherche',
+  '/voyageurs': 'Qui voyage ?',
+  '/resultats': 'Résultats, Massy vers Marseille',
+  '/alerte': 'Alerte avant le départ',
+}
+
 export function App() {
   const route = useRoute()
   const desktop = useIsDesktop()
@@ -23,6 +30,24 @@ export function App() {
   // be a mistake, so it hands back to the results instead. The redirect runs as
   // an effect rather than during render, which is the only place navigation is
   // safe to trigger.
+  /* Hash routing swaps the screen without a page load, so a screen reader
+     hears nothing and its cursor is left on a button that no longer exists.
+     On every change of screen (not of query: picking a date keeps focus on the
+     date strip) the title is updated and focus moves to the new h1.
+     /recherche is skipped because it focuses its own search field. */
+  const firstPath = useRef(true)
+  const baseTitle = useRef(document.title)
+  useEffect(() => {
+    const t = TITLES[route.path]
+    document.title = t ? `${t} | SNCF Connect` : baseTitle.current
+    if (firstPath.current) { firstPath.current = false; return }
+    if (route.path === '/recherche') return
+    const h1 = document.querySelector<HTMLElement>('h1')
+    if (!h1) return
+    h1.tabIndex = -1
+    h1.focus({ preventScroll: true })
+  }, [route.path])
+
   const onAlerte = route.path === '/alerte'
   useEffect(() => {
     if (onAlerte && desktop) go(`/resultats?date=${DATE_DISRUPTED}`)

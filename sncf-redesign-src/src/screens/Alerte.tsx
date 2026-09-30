@@ -21,9 +21,10 @@ export function Alerte() {
         <div className="lock__bg" aria-hidden="true" />
 
         <div className="lock__top">
-          <p className="sim__note">
+          {/* The screen's heading, so a route change has somewhere to land. */}
+          <h1 className="sim__note">
             Simulation : la notification reçue avant le départ
-          </p>
+          </h1>
           <p className="lock__clock">10:24</p>
           <p className="lock__date">samedi 26 septembre</p>
 
