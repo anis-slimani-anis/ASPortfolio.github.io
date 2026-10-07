@@ -1076,11 +1076,23 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
     band.style.transform = 'translate3d(0,' + (y - half).toFixed(1) + 'px,0)';
     pic.style.transform = 'translate3d(0,' + (half - y).toFixed(1) + 'px,0)';
   }
+  function leave() {
+    if (!over) return;
+    over = false; clearTimeout(openTimer);
+    if (wrap.classList.contains('is-lens')) leftAt = performance.now();
+    wrap.classList.remove('is-lens');
+  }
   function frame(t) {
+    // The browser does not always send a leave event (page scrolled under a
+    // still pointer, pointer left the window): check the real hover state.
+    if (over && !wrap.matches(':hover')) leave();
     y += (ty - y) * FOLLOW;
     put();
     raf = over || t - leftAt < CLOSE_MS ? requestAnimationFrame(frame) : 0;
   }
+  // Have the picture downloaded and decoded before the first hover, so the
+  // band never opens empty and then pops in.
+  if (pic.decode) pic.decode().catch(function () {});
 
   wrap.addEventListener('pointerenter', function (e) {
     if (e.pointerType !== 'mouse') return;
@@ -1093,9 +1105,8 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
   });
   wrap.addEventListener('pointermove', function (e) { if (over) ty = e.clientY - top; });
   window.addEventListener('scroll', function () { if (over) top = photo.getBoundingClientRect().top; }, { passive: true });
-  wrap.addEventListener('pointerleave', function () {
-    over = false; clearTimeout(openTimer);
-    if (wrap.classList.contains('is-lens')) leftAt = performance.now();
-    wrap.classList.remove('is-lens');
-  });
+  wrap.addEventListener('pointerleave', leave);
+  wrap.addEventListener('pointercancel', leave);
+  window.addEventListener('blur', leave);
+  document.addEventListener('visibilitychange', function () { if (document.hidden) leave(); });
 })();

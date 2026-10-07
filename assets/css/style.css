@@ -319,9 +319,11 @@ body::-webkit-scrollbar-button {
   background: #03020a;
   /* closed: a hairline at the pointer. open: the full band. Leaving is the exact reverse. */
   clip-path: inset(50% 0 50% 0);
-  transition: clip-path 0.3s cubic-bezier(0.3, 0.7, 0.2, 1);
+  /* fully removed once closed, so nothing can flash when the pointer is away */
+  visibility: hidden;
+  transition: clip-path 0.3s cubic-bezier(0.3, 0.7, 0.2, 1), visibility 0s linear 0.3s;
 }
-.hero-photo-wrap.is-lens .hero-lens-glass { clip-path: inset(0 0 0 0); }
+.hero-photo-wrap.is-lens .hero-lens-glass { clip-path: inset(0 0 0 0); visibility: visible; transition-delay: 0s, 0s; }
 /* the two scan lines */
 .hero-lens::before, .hero-lens::after {
   content: ''; position: absolute; left: 0; right: 0; height: 1px; z-index: 1;
@@ -3719,3 +3721,70 @@ html[data-theme="light"] .decision-num { font-family: 'Caveat', var(--font-numer
     -webkit-text-fill-color: currentColor; color: #1b1d1f;
   }
 }
+
+/* ── Day mode homepage: a workshop-board feel ──────────────────
+   Stats and services become post-it notes, project cards become tinted
+   board sections, the contact blocks become tinted panels. */
+html[data-theme="light"] .stats-strip { background: transparent !important; box-shadow: none !important; border: 0 !important; }
+html[data-theme="light"] .stats-strip-inner { gap: 18px; padding-top: 6px; padding-bottom: 6px; }
+html[data-theme="light"] .stat-item + .stat-item::before { content: none; }
+html[data-theme="light"] .stat-item,
+html[data-theme="light"] .service-block {
+  --paper: #FFF1B5;
+  background: var(--paper) !important;
+  border: 0 !important; border-radius: 2px !important;
+  box-shadow: 0 1px 1px rgba(40,40,60,0.10), 0 10px 18px -8px rgba(40,40,60,0.28) !important;
+  transition: rotate 0.25s ease, translate 0.25s ease, box-shadow 0.25s ease;
+}
+html[data-theme="light"] :is(.stat-item, .service-block):nth-child(5n+1) { --paper: #C7F1ED; rotate: -1.2deg; }
+html[data-theme="light"] :is(.stat-item, .service-block):nth-child(5n+2) { --paper: #C6EDC9; rotate: 0.9deg; }
+html[data-theme="light"] :is(.stat-item, .service-block):nth-child(5n+3) { --paper: #F6C3B4; rotate: -0.6deg; }
+html[data-theme="light"] :is(.stat-item, .service-block):nth-child(5n+4) { --paper: #E3DBFF; rotate: 1.1deg; }
+html[data-theme="light"] :is(.stat-item, .service-block):nth-child(5n+5) { --paper: #FFF1B5; rotate: -0.8deg; }
+html[data-theme="light"] :is(.stat-item, .service-block):hover { rotate: 0deg; translate: 0 -3px; box-shadow: 0 1px 1px rgba(40,40,60,0.10), 0 18px 26px -10px rgba(40,40,60,0.32) !important; }
+html[data-theme="light"] .service-block::after { content: none; }
+html[data-theme="light"] .stat-item .stat-num,
+html[data-theme="light"] .service-block .service-block-num {
+  font-family: 'Caveat', var(--font-numeric); font-weight: 700; color: #1b1d1f !important;
+  -webkit-text-fill-color: currentColor; background: none;
+}
+html[data-theme="light"] .stat-item .stat-num { font-size: 46px; line-height: 1; }
+html[data-theme="light"] .service-block .service-block-num { font-size: 26px; opacity: 0.6; }
+html[data-theme="light"] .stat-item .stat-label,
+html[data-theme="light"] .service-block p { color: rgba(27,29,31,0.74) !important; }
+html[data-theme="light"] .services-grid { gap: 20px; }
+
+html[data-theme="light"] a.case-card {
+  --tint: #EAF2FC; --edge: #A9CBF2;
+  background: var(--tint) !important;
+  border: 1.5px solid var(--edge) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 6px 20px rgba(40,60,90,0.06) !important;
+}
+html[data-theme="light"] a.case-card:nth-of-type(4n+2) { --tint: #EFFBF9; --edge: #A8DDD6; }
+html[data-theme="light"] a.case-card:nth-of-type(4n+3) { --tint: #FDF1ED; --edge: #F0BBAA; }
+html[data-theme="light"] a.case-card:nth-of-type(4n+4) { --tint: #F4F1FD; --edge: #C9BDF2; }
+html[data-theme="light"] a.case-card:hover { border-color: var(--edge) !important; box-shadow: 0 14px 34px rgba(40,60,90,0.12) !important; }
+html[data-theme="light"] a.case-card .case-body { background: transparent; }
+html[data-theme="light"] a.case-card .case-eyebrow {
+  display: inline-block; padding: 6px 12px; border-radius: 10px;
+  background: #fff; border: 1px solid rgba(27,29,31,0.16);
+}
+html[data-theme="light"] a.case-card .case-metric-val { font-family: 'Caveat', var(--font-numeric); font-weight: 700; font-size: 34px; color: #1b1d1f; }
+
+html[data-theme="light"] .contact-left,
+html[data-theme="light"] .contact-form {
+  background: #FDFBEC !important; border: 1.5px solid #E6DC9A !important;
+  border-radius: 14px !important; box-shadow: none !important;
+}
+html[data-theme="light"] .contact-form { background: #F4F1FD !important; border-color: #C9BDF2 !important; }
+html[data-theme="light"] .contact-form::before { content: none; }
+@media (max-width: 860px) {
+  html[data-theme="light"] .stats-strip-inner { gap: 12px; }
+  html[data-theme="light"] .stat-item .stat-num { font-size: 38px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme="light"] :is(.stat-item, .service-block) { transition: none; }
+}
+html[data-theme="light"] .work-stats-embed,
+html[data-theme="light"] .work-stats-embed .stats-strip { background: transparent !important; border: 0 !important; box-shadow: none !important; }
