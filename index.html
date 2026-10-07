@@ -27,7 +27,7 @@
 
   <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
   <noscript><link rel="preload" href="/assets/images/portrait.webp" as="image" fetchpriority="high"></noscript>
-  <link rel="stylesheet" href="/assets/css/style.css?v=4">
+  <link rel="stylesheet" href="/assets/css/style.css?v=5">
 </head>
 <body>
 
@@ -190,7 +190,14 @@
           </div>
         </div>
         <div class="case-visual">
-          <img class="case-visual-img" src="/assets/images/case-lafoy-partners.webp" alt="Legalstart cobranded funnels with Qonto, Shine, BoursoBank and bpifrance" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <picture class="theme-night">
+            <source srcset="/assets/images/legalstart-partners-night.webp" type="image/webp">
+            <img class="case-visual-img case-visual-img--cover" src="/assets/images/legalstart-partners-night.png" alt="Legalstart partner integration flows with bpifrance, Qonto, Shine and BoursoBank" width="1600" height="1000" loading="lazy" decoding="async">
+          </picture>
+          <picture class="theme-day">
+            <source srcset="/assets/images/legalstart-partners-day.webp" type="image/webp">
+            <img class="case-visual-img case-visual-img--cover" src="/assets/images/legalstart-partners-day.png" alt="Legalstart partner integration flows with bpifrance, Qonto, Shine and BoursoBank" width="1600" height="1000" loading="lazy" decoding="async">
+          </picture>
           <div class="case-mock">
             <div class="mock-funnel">
               <div class="mock-funnel-row" style="width:100%"></div>
@@ -230,8 +237,14 @@
           </div>
         </div>
         <div class="case-visual case-visual--dark">
-          <img class="case-visual-img case-visual-img--float case-visual-img--night" src="/assets/images/principotes-thumb.webp" alt="Principotes Ksamil night design" loading="lazy" decoding="async" onerror="this.style.display='none'">
-          <img class="case-visual-img case-visual-img--float case-visual-img--day" src="/assets/images/principotes-thumb-day.webp" alt="Principotes Ksamil day design" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <picture class="theme-night">
+            <source srcset="/assets/images/principotes-night.webp" type="image/webp">
+            <img class="case-visual-img case-visual-img--cover" src="/assets/images/principotes-night.png" alt="Principotes Ksamil website, desktop and mobile, night mode (La Guerre)" width="1600" height="1000" loading="lazy" decoding="async">
+          </picture>
+          <picture class="theme-day">
+            <source srcset="/assets/images/principotes-day.webp" type="image/webp">
+            <img class="case-visual-img case-visual-img--cover" src="/assets/images/principotes-day.png" alt="Principotes Ksamil website, desktop and mobile, day mode" width="1600" height="1000" loading="lazy" decoding="async">
+          </picture>
           <div class="case-mock">
             <div class="mock-components">
               <div class="mock-chip a"></div>
@@ -278,7 +291,14 @@
           </div>
         </div>
         <div class="case-visual">
-          <img class="case-visual-img" src="/assets/images/case-legalstart.webp" alt="Legalstart SaaS rebranding" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <picture class="theme-night">
+            <source srcset="/assets/images/legalstart-rebrand-night.webp" type="image/webp">
+            <img class="case-visual-img case-visual-img--cover" src="/assets/images/legalstart-rebrand-night.png" alt="Legalstart service flow before and after the rebrand" width="1600" height="1000" loading="lazy" decoding="async">
+          </picture>
+          <picture class="theme-day">
+            <source srcset="/assets/images/legalstart-rebrand-day.webp" type="image/webp">
+            <img class="case-visual-img case-visual-img--cover" src="/assets/images/legalstart-rebrand-day.png" alt="Legalstart service flow before and after the rebrand" width="1600" height="1000" loading="lazy" decoding="async">
+          </picture>
           <div class="case-mock">
             <div class="mock-sidebar">
               <div class="mock-sb-row" style="width:60%"></div>
@@ -330,8 +350,15 @@
             <span class="case-link" data-fr="Voir l'impact →">See the impact →</span>
           </div>
         </div>
-        <div class="case-visual">
-          <img class="case-visual-img case-visual-img--lower" src="/assets/images/case-ai.webp" alt="AI-assisted design workflows" loading="lazy" decoding="async" onerror="this.style.display='none'">
+        <div class="case-visual case-visual--ai">
+          <picture class="theme-night">
+            <source srcset="/assets/images/ai-workflow-night.webp" type="image/webp">
+            <img class="case-visual-img" src="/assets/images/ai-workflow-night.png" alt="Brief to Ship AI workflow: brief with Claude, design in Figma, ship with Claude Code" width="1600" height="1000" loading="lazy" decoding="async">
+          </picture>
+          <picture class="theme-day">
+            <source srcset="/assets/images/ai-workflow-day.webp" type="image/webp">
+            <img class="case-visual-img" src="/assets/images/ai-workflow-day.png" alt="Brief to Ship AI workflow: brief with Claude, design in Figma, ship with Claude Code" width="1600" height="1000" loading="lazy" decoding="async">
+          </picture>
           <div class="case-mock">
             <div class="mock-components">
               <div class="mock-chip a"></div>
@@ -604,6 +631,6 @@
   </nav>
 </footer>
 
-<script src="/assets/js/main.js?v=3"></script>
+<script src="/assets/js/main.js?v=4"></script>
 </body>
 </html>

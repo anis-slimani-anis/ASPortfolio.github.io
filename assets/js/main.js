@@ -926,3 +926,84 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
     });
   });
 })();
+
+/* ── Before / after slider ─────────────────────────────────
+   Markup: .ba[data-ba] > .ba-window > .ba-view with .ba-handle[role=slider].
+   No dependencies. Position is the CSS variable --ba-pos on .ba. */
+(function () {
+  document.querySelectorAll('[data-ba]').forEach(function (root) {
+    var view = root.querySelector('.ba-view');
+    var handle = root.querySelector('.ba-handle');
+    var before = root.querySelector('.ba-label--before');
+    var after = root.querySelector('.ba-label--after');
+    if (!view || !handle) return;
+
+    var pos = 50, dragging = false, touched = false, raf = 0;
+    root.hidden = false;
+
+    function set(p) {
+      pos = Math.max(0, Math.min(100, p));
+      root.style.setProperty('--ba-pos', pos + '%');
+      handle.setAttribute('aria-valuenow', Math.round(pos));
+      // A label fades out when its side is under 15% visible
+      if (before) before.classList.toggle('is-off', pos < 15);
+      if (after) after.classList.toggle('is-off', pos > 85);
+    }
+    function fromEvent(e) {
+      var r = view.getBoundingClientRect();
+      set((e.clientX - r.left) / r.width * 100);
+    }
+    function interact() { touched = true; cancelAnimationFrame(raf); }
+
+    view.addEventListener('pointerdown', function (e) {
+      if (e.button) return;
+      interact();
+      dragging = true;
+      view.setPointerCapture(e.pointerId);
+      fromEvent(e);
+      handle.focus({ preventScroll: true });
+      e.preventDefault();
+    });
+    view.addEventListener('pointermove', function (e) { if (dragging) fromEvent(e); });
+    ['pointerup', 'pointercancel'].forEach(function (t) {
+      view.addEventListener(t, function () { dragging = false; });
+    });
+
+    handle.addEventListener('keydown', function (e) {
+      var k = e.key, next = null;
+      if (k === 'ArrowLeft' || k === 'ArrowDown') next = pos - 5;
+      else if (k === 'ArrowRight' || k === 'ArrowUp') next = pos + 5;
+      else if (k === 'Home') next = 0;
+      else if (k === 'End') next = 100;
+      if (next === null) return;
+      e.preventDefault();
+      interact();
+      set(next);
+    });
+
+    // One nudge the first time the slider scrolls into view: 50 → 40 → 60 → 50
+    function nudge() {
+      var keys = [50, 40, 60, 50], seg = 420, start = null;
+      function step(t) {
+        if (touched) return;
+        if (start === null) start = t;
+        var x = (t - start) / seg, i = Math.min(Math.floor(x), keys.length - 2);
+        var f = Math.min(x - i, 1), ease = f < 0.5 ? 2 * f * f : 1 - Math.pow(-2 * f + 2, 2) / 2;
+        set(keys[i] + (keys[i + 1] - keys[i]) * ease);
+        if (x < keys.length - 1) raf = requestAnimationFrame(step); else set(50);
+      }
+      raf = requestAnimationFrame(step);
+    }
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduced && 'IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        if (!entries[0].isIntersecting) return;
+        io.disconnect();
+        if (!touched) nudge();
+      }, { threshold: 0.6 });
+      io.observe(view);
+    }
+
+    set(50);
+  });
+})();
