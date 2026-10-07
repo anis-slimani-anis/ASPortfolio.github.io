@@ -311,7 +311,7 @@ body::-webkit-scrollbar-button {
 .hero-lens {
   position: absolute; left: 0; right: 0; top: 0;
   height: var(--band, 200px);
-  transform: translate3d(0, calc(var(--ly, 0px) - var(--band, 200px) / 2), 0);
+  transform: translate3d(0, -100%, 0);   /* positioned by script */
   will-change: transform;
 }
 .hero-lens-glass {
@@ -319,15 +319,14 @@ body::-webkit-scrollbar-button {
   background: #03020a;
   /* closed: a hairline at the pointer. open: the full band. Leaving is the exact reverse. */
   clip-path: inset(50% 0 50% 0);
-  transition: clip-path 0.34s cubic-bezier(0.3, 0.7, 0.2, 1);
-  will-change: clip-path;
+  transition: clip-path 0.3s cubic-bezier(0.3, 0.7, 0.2, 1);
 }
 .hero-photo-wrap.is-lens .hero-lens-glass { clip-path: inset(0 0 0 0); }
 /* the two scan lines */
 .hero-lens::before, .hero-lens::after {
   content: ''; position: absolute; left: 0; right: 0; height: 1px; z-index: 1;
   background: linear-gradient(to right, transparent, rgba(200,200,255,0.75) 18%, rgba(200,200,255,0.75) 82%, transparent);
-  box-shadow: 0 0 14px 1px rgba(170,170,255,0.45);
+  box-shadow: 0 0 8px rgba(170,170,255,0.4);
   opacity: 0; transition: opacity 0.2s ease, transform 0.34s cubic-bezier(0.3, 0.7, 0.2, 1);
 }
 .hero-lens::before { top: 0; transform: translateY(calc(var(--band, 200px) / 2)); }
@@ -338,8 +337,7 @@ body::-webkit-scrollbar-button {
   position: absolute; left: 0; top: 0; max-width: none;
   width: var(--pw, 100%); height: var(--ph, 100%);
   object-fit: contain; object-position: center top;
-  transform: translate3d(0, calc(var(--band, 200px) / 2 - var(--ly, 0px)), 0);
-  will-change: transform;
+  will-change: transform;   /* positioned by script */
 }
 
 /* Light mode: the pinned photo straightens on hover and the picture quietly

@@ -1052,41 +1052,47 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
 })();
 
 /* ── Hero portrait (dark mode): scan band that follows the pointer ──
-   The band's vertical position is eased in one requestAnimationFrame loop.
-   The loop keeps running briefly after the pointer leaves, so the band
-   closes where it is, and a quick re-entry glides from there instead of
-   jumping. Rapid in and out is absorbed by a short open delay. */
+   The band and the picture inside it are moved with direct transforms (no
+   CSS variables, so nothing else on the page is restyled each frame) and
+   track the pointer closely. The loop only runs while the pointer is over
+   the portrait, plus the moment it takes the band to close. */
 (function () {
   var wrap = document.querySelector('.hero-photo-wrap');
   var photo = wrap && wrap.querySelector('.hero-photo');
-  if (!photo || !wrap.querySelector('.hero-lens')) return;
-  var CLOSE_MS = 360, OPEN_DELAY = 70;
-  var ty = 0, y = 0, raf = 0, over = false, leftAt = -1e9, openTimer = 0;
+  var band = wrap && wrap.querySelector('.hero-lens');
+  var pic = band && band.querySelector('img');
+  if (!photo || !band || !pic) return;
+  var CLOSE_MS = 320, OPEN_DELAY = 60, FOLLOW = 0.45;
+  var ty = 0, y = 0, half = 100, top = 0, raf = 0, over = false, leftAt = -1e9, openTimer = 0;
 
   function measure() {
     var r = photo.getBoundingClientRect();
+    top = r.top; half = Math.round(r.height * 0.29);
     wrap.style.setProperty('--pw', r.width + 'px');
     wrap.style.setProperty('--ph', r.height + 'px');
-    wrap.style.setProperty('--band', Math.round(r.height * 0.58) + 'px');
+    wrap.style.setProperty('--band', (half * 2) + 'px');
   }
-  function put() { wrap.style.setProperty('--ly', y.toFixed(1) + 'px'); }
+  function put() {
+    band.style.transform = 'translate3d(0,' + (y - half).toFixed(1) + 'px,0)';
+    pic.style.transform = 'translate3d(0,' + (half - y).toFixed(1) + 'px,0)';
+  }
   function frame(t) {
-    y += (ty - y) * 0.18;
+    y += (ty - y) * FOLLOW;
     put();
     raf = over || t - leftAt < CLOSE_MS ? requestAnimationFrame(frame) : 0;
   }
-  function aim(e) { ty = e.clientY - photo.getBoundingClientRect().top; }
 
   wrap.addEventListener('pointerenter', function (e) {
     if (e.pointerType !== 'mouse') return;
     var stillClosing = performance.now() - leftAt < CLOSE_MS;
-    over = true; measure(); aim(e);
+    over = true; measure(); ty = e.clientY - top;
     if (!stillClosing) { y = ty; put(); }          // fully closed: open right at the pointer
     clearTimeout(openTimer);
     openTimer = setTimeout(function () { if (over) wrap.classList.add('is-lens'); }, stillClosing ? 0 : OPEN_DELAY);
     if (!raf) raf = requestAnimationFrame(frame);
   });
-  wrap.addEventListener('pointermove', function (e) { if (over) aim(e); });
+  wrap.addEventListener('pointermove', function (e) { if (over) ty = e.clientY - top; });
+  window.addEventListener('scroll', function () { if (over) top = photo.getBoundingClientRect().top; }, { passive: true });
   wrap.addEventListener('pointerleave', function () {
     over = false; clearTimeout(openTimer);
     if (wrap.classList.contains('is-lens')) leftAt = performance.now();
