@@ -3638,143 +3638,40 @@ nav.work-header {
 }
 .contact-link-icon svg { display: block; }
 
-/* ── Day mode: some cards become post-it notes ─────────────────
-   Pastel paper, a slight tilt, a soft lifted shadow. Uses the `rotate`
-   property so it never fights the reveal and hover transforms. */
-html[data-theme="light"] .case-steps li,
-html[data-theme="light"] .outcome-card,
-html[data-theme="light"] .partner-card,
-html[data-theme="light"] .tool-card {
-  --paper: #FFF1B5;
-  background: var(--paper) !important;
-  border: 0 !important;
-  border-radius: 2px !important;
-  box-shadow: 0 1px 1px rgba(40,40,60,0.10), 0 10px 18px -8px rgba(40,40,60,0.28) !important;
-  color: #1b1d1f;
-  transition: rotate 0.25s ease, translate 0.25s ease, box-shadow 0.25s ease;
-}
-html[data-theme="light"] :is(.case-steps li, .outcome-card, .partner-card, .tool-card):nth-child(5n+1) { --paper: #C7F1ED; rotate: -1.1deg; }
-html[data-theme="light"] :is(.case-steps li, .outcome-card, .partner-card, .tool-card):nth-child(5n+2) { --paper: #C6EDC9; rotate: 0.8deg; }
-html[data-theme="light"] :is(.case-steps li, .outcome-card, .partner-card, .tool-card):nth-child(5n+3) { --paper: #F6C3B4; rotate: -0.5deg; }
-html[data-theme="light"] :is(.case-steps li, .outcome-card, .partner-card, .tool-card):nth-child(5n+4) { --paper: #E3DBFF; rotate: 1.2deg; }
-html[data-theme="light"] :is(.case-steps li, .outcome-card, .partner-card, .tool-card):nth-child(5n+5) { --paper: #FFF1B5; rotate: -0.9deg; }
-html[data-theme="light"] :is(.case-steps li, .outcome-card, .partner-card, .tool-card):hover {
-  rotate: 0deg; translate: 0 -3px;
-  box-shadow: 0 1px 1px rgba(40,40,60,0.10), 0 18px 26px -10px rgba(40,40,60,0.32) !important;
-}
-html[data-theme="light"] .outcome-card .outcome-val,
-html[data-theme="light"] .case-steps li::before { color: #1b1d1f; }
-html[data-theme="light"] .outcome-card .outcome-label,
-html[data-theme="light"] .partner-card .partner-desc,
-html[data-theme="light"] .partner-card .partner-scope,
-html[data-theme="light"] .tool-card p { color: rgba(27,29,31,0.74); }
-html[data-theme="light"] .outcomes-grid, html[data-theme="light"] .partner-grid, html[data-theme="light"] .tools-grid, html[data-theme="light"] .case-steps { gap: 18px; }
-@media (prefers-reduced-motion: reduce) {
-  html[data-theme="light"] :is(.case-steps li, .outcome-card, .partner-card, .tool-card) { transition: none; }
-}
-
-/* Day mode, second layer: handwritten note titles and tinted panels with a
-   label tab, in the spirit of a workshop board. */
-html[data-theme="light"] .partner-card .partner-name,
-html[data-theme="light"] .tool-card .tool-card-name,
-html[data-theme="light"] .case-steps li {
-  font-family: 'Caveat', var(--font-head); font-weight: 700; letter-spacing: 0;
-}
-html[data-theme="light"] .partner-card .partner-name,
-html[data-theme="light"] .tool-card .tool-card-name { font-size: 26px; line-height: 1.1; }
-html[data-theme="light"] .case-steps li { font-size: 24px; line-height: 1.15; }
-html[data-theme="light"] .outcome-card .outcome-val { font-family: 'Caveat', var(--font-numeric); font-weight: 700; font-size: clamp(44px, 5.4vw, 62px); }
-
-html[data-theme="light"] .decision-item,
-html[data-theme="light"] .callout,
-html[data-theme="light"] .insight {
-  --tint: #EAF2FC; --edge: #A9CBF2;
-  background: var(--tint) !important;
-  border: 1px solid var(--edge) !important;
-  border-radius: 10px !important;
-  box-shadow: none !important;
-}
-html[data-theme="light"] .decision-item:nth-child(4n+2) { --tint: #EFFBF9; --edge: #A8DDD6; }
-html[data-theme="light"] .decision-item:nth-child(4n+3) { --tint: #F4F1FD; --edge: #C9BDF2; }
-html[data-theme="light"] .decision-item:nth-child(4n+4) { --tint: #FDFBEC; --edge: #E6DC9A; }
-html[data-theme="light"] .callout { --tint: #FDFBEC; --edge: #E6DC9A; }
-html[data-theme="light"] .insight { --tint: #F4F1FD; --edge: #C9BDF2; }
-html[data-theme="light"] .decision-num { font-family: 'Caveat', var(--font-numeric); font-weight: 700; font-size: 30px; color: #1b1d1f; opacity: 0.55; }
-/* section labels as a board tab */
-@media (min-width: 960px) {
-  html[data-theme="light"] .case-slide > h2 {
-    justify-self: start; padding: 10px 14px 12px; border-radius: 12px;
-    background: #ffffff; border: 1px solid rgba(27,29,31,0.16);
-    box-shadow: 0 2px 6px rgba(27,29,31,0.06);
-    /* the site paints light headings as clipped gradients; a tab needs plain ink */
-    -webkit-background-clip: border-box; background-clip: border-box;
-    -webkit-text-fill-color: currentColor; color: #1b1d1f;
-  }
-}
-
-/* ── Day mode homepage: a workshop-board feel ──────────────────
-   Stats and services become post-it notes, project cards become tinted
-   board sections, the contact blocks become tinted panels. */
-html[data-theme="light"] .stats-strip { background: transparent !important; box-shadow: none !important; border: 0 !important; }
+/* ── Day mode homepage: post-it notes ──────────────────────────
+   Only two places use them: the four stats under "Selected work" and the
+   six blocks under "How I contribute". Classic yellow paper, a slight tilt,
+   a lifted shadow. Type stays the site's own. Every other card keeps its
+   normal white day-mode look. `rotate` is used so the tilt never fights the
+   reveal and hover transforms. */
+html[data-theme="light"] .work-stats-embed,
+html[data-theme="light"] .work-stats-embed .stats-strip,
+html[data-theme="light"] .stats-strip { background: transparent !important; border: 0 !important; box-shadow: none !important; }
 html[data-theme="light"] .stats-strip-inner { gap: 18px; padding-top: 6px; padding-bottom: 6px; }
 html[data-theme="light"] .stat-item + .stat-item::before { content: none; }
 html[data-theme="light"] .stat-item,
 html[data-theme="light"] .service-block {
-  --paper: #FFF1B5;
-  background: var(--paper) !important;
+  background: linear-gradient(180deg, #FFF79A 0%, #FFEE70 100%) !important;
   border: 0 !important; border-radius: 2px !important;
-  box-shadow: 0 1px 1px rgba(40,40,60,0.10), 0 10px 18px -8px rgba(40,40,60,0.28) !important;
+  box-shadow: 0 1px 1px rgba(60,50,0,0.10), 0 12px 16px -10px rgba(60,50,0,0.38) !important;
   transition: rotate 0.25s ease, translate 0.25s ease, box-shadow 0.25s ease;
 }
-html[data-theme="light"] :is(.stat-item, .service-block):nth-child(5n+1) { --paper: #C7F1ED; rotate: -1.2deg; }
-html[data-theme="light"] :is(.stat-item, .service-block):nth-child(5n+2) { --paper: #C6EDC9; rotate: 0.9deg; }
-html[data-theme="light"] :is(.stat-item, .service-block):nth-child(5n+3) { --paper: #F6C3B4; rotate: -0.6deg; }
-html[data-theme="light"] :is(.stat-item, .service-block):nth-child(5n+4) { --paper: #E3DBFF; rotate: 1.1deg; }
-html[data-theme="light"] :is(.stat-item, .service-block):nth-child(5n+5) { --paper: #FFF1B5; rotate: -0.8deg; }
-html[data-theme="light"] :is(.stat-item, .service-block):hover { rotate: 0deg; translate: 0 -3px; box-shadow: 0 1px 1px rgba(40,40,60,0.10), 0 18px 26px -10px rgba(40,40,60,0.32) !important; }
+html[data-theme="light"] :is(.stat-item, .service-block):nth-child(4n+1) { rotate: -1.2deg; }
+html[data-theme="light"] :is(.stat-item, .service-block):nth-child(4n+2) { rotate: 0.9deg; }
+html[data-theme="light"] :is(.stat-item, .service-block):nth-child(4n+3) { rotate: -0.6deg; }
+html[data-theme="light"] :is(.stat-item, .service-block):nth-child(4n+4) { rotate: 1.1deg; }
+html[data-theme="light"] :is(.stat-item, .service-block):hover {
+  rotate: 0deg; translate: 0 -3px;
+  box-shadow: 0 1px 1px rgba(60,50,0,0.10), 0 20px 24px -12px rgba(60,50,0,0.42) !important;
+}
 html[data-theme="light"] .service-block::after { content: none; }
-html[data-theme="light"] .stat-item .stat-num,
-html[data-theme="light"] .service-block .service-block-num {
-  font-family: 'Caveat', var(--font-numeric); font-weight: 700; color: #1b1d1f !important;
-  -webkit-text-fill-color: currentColor; background: none;
-}
-html[data-theme="light"] .stat-item .stat-num { font-size: 46px; line-height: 1; }
-html[data-theme="light"] .service-block .service-block-num { font-size: 26px; opacity: 0.6; }
 html[data-theme="light"] .stat-item .stat-label,
-html[data-theme="light"] .service-block p { color: rgba(27,29,31,0.74) !important; }
+html[data-theme="light"] .service-block p { color: rgba(27,29,31,0.78) !important; }
+html[data-theme="light"] .service-block .service-block-link { color: rgba(27,29,31,0.72) !important; }
 html[data-theme="light"] .services-grid { gap: 20px; }
-
-html[data-theme="light"] a.case-card {
-  --tint: #EAF2FC; --edge: #A9CBF2;
-  background: var(--tint) !important;
-  border: 1.5px solid var(--edge) !important;
-  border-radius: 14px !important;
-  box-shadow: 0 6px 20px rgba(40,60,90,0.06) !important;
-}
-html[data-theme="light"] a.case-card:nth-of-type(4n+2) { --tint: #EFFBF9; --edge: #A8DDD6; }
-html[data-theme="light"] a.case-card:nth-of-type(4n+3) { --tint: #FDF1ED; --edge: #F0BBAA; }
-html[data-theme="light"] a.case-card:nth-of-type(4n+4) { --tint: #F4F1FD; --edge: #C9BDF2; }
-html[data-theme="light"] a.case-card:hover { border-color: var(--edge) !important; box-shadow: 0 14px 34px rgba(40,60,90,0.12) !important; }
-html[data-theme="light"] a.case-card .case-body { background: transparent; }
-html[data-theme="light"] a.case-card .case-eyebrow {
-  display: inline-block; padding: 6px 12px; border-radius: 10px;
-  background: #fff; border: 1px solid rgba(27,29,31,0.16);
-}
-html[data-theme="light"] a.case-card .case-metric-val { font-family: 'Caveat', var(--font-numeric); font-weight: 700; font-size: 34px; color: #1b1d1f; }
-
-html[data-theme="light"] .contact-left,
-html[data-theme="light"] .contact-form {
-  background: #FDFBEC !important; border: 1.5px solid #E6DC9A !important;
-  border-radius: 14px !important; box-shadow: none !important;
-}
-html[data-theme="light"] .contact-form { background: #F4F1FD !important; border-color: #C9BDF2 !important; }
-html[data-theme="light"] .contact-form::before { content: none; }
 @media (max-width: 860px) {
   html[data-theme="light"] .stats-strip-inner { gap: 12px; }
-  html[data-theme="light"] .stat-item .stat-num { font-size: 38px; }
 }
 @media (prefers-reduced-motion: reduce) {
   html[data-theme="light"] :is(.stat-item, .service-block) { transition: none; }
 }
-html[data-theme="light"] .work-stats-embed,
-html[data-theme="light"] .work-stats-embed .stats-strip { background: transparent !important; border: 0 !important; box-shadow: none !important; }
