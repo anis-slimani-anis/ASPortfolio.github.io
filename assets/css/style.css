@@ -1733,6 +1733,8 @@ footer {
   max-width: calc(var(--max-w) + var(--pad-x) * 2);
   margin: 0 auto;
 }
+/* Media placed at the very top of a case study hero, above tags and title */
+.page-hero .page-hero-media { margin: 0 0 40px; }
 .page-hero .case-tags { margin-bottom: 24px; }
 .page-hero h1 { font-size: clamp(34px, 5vw, 60px); margin-bottom: 24px; }
 .page-hero-sub {
