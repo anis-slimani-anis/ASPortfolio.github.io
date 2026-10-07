@@ -3407,7 +3407,7 @@ nav.work-header {
 
 /* ── LinkedIn post cards carousel (Brief to Ship page hero) ── */
 .lp { --lp-w: 300px; }
-.page-hero .lp.page-hero-media { margin-bottom: 44px; }
+.page-hero .lp.page-hero-carousel { margin-top: 56px; }
 .lp-viewport {
   overflow-x: auto; overflow-y: hidden;
   margin: 0 calc(var(--pad-x) * -1); padding: 6px var(--pad-x) 18px;
@@ -3464,6 +3464,23 @@ nav.work-header {
 .lp-cover-text { font-size: 3.7cqw; line-height: 1.5; max-width: 92%; }
 .lp-cover-tag { margin-top: auto; padding-left: 3cqw; border-left: 0.6cqw solid var(--hot); font-size: 2.6cqw; letter-spacing: 0.12em; text-transform: uppercase; color: var(--hot); margin-bottom: 9cqw; }
 .lp-cover-page { position: absolute; right: 9%; bottom: 6%; font-size: 2.3cqw; letter-spacing: 0.18em; text-transform: uppercase; }
+/* Special covers */
+.lp-cover--ai { background: #2a0a8f; --ink: #f5f2ec; --hot: #ff6b7a; }
+.lp-cover--ai .lp-cover-title { font-size: 30cqw; margin-top: 10cqw; }
+.lp-cover--wild { background: #f3eefb; --ink: #3a0ca3; --hot: #e0218a; }
+.lp-cover-pill { margin-left: auto; padding: 1.2cqw 3cqw; border-radius: 99px; background: rgba(42,10,143,0.10); font-size: 2.3cqw; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; }
+.lp-cover--video { background: #f7f4fb; }
+.lp-video { position: relative; display: block; width: 100%; aspect-ratio: 16 / 9; margin-top: 7cqw; border-radius: 2cqw; overflow: hidden; border: 0.3cqw solid rgba(42,10,143,0.12); box-shadow: 0 6px 18px rgba(26,0,108,0.14); background: #fff; }
+.lp-video img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+.lp-play { position: absolute; left: 50%; top: 50%; width: 15cqw; height: 15cqw; transform: translate(-50%,-50%); border-radius: 50%; background: rgba(26,0,108,0.82); }
+.lp-play::after { content: ''; position: absolute; left: 54%; top: 50%; transform: translate(-50%,-50%); border-style: solid; border-width: 2.6cqw 0 2.6cqw 4.4cqw; border-color: transparent transparent transparent #fff; }
+.lp-cover--video .lp-cover-title { margin-top: 8cqw; font-size: 9.5cqw; }
+.lp-cover--video .lp-cover-text { margin-top: 4cqw; }
+.lp-cover--c { background: #1a006c; --ink: #faf8f3; }
+.lp-cover--c .lp-logo { font-size: 5cqw; }
+.lp-cover--c .lp-cover-pill { background: rgba(250,248,243,0.14); }
+.lp-cover--c .lp-cover-title { margin-top: 18cqw; font-size: 11.5cqw; }
+.lp-cover--c .lp-cover-text { margin-top: 5cqw; opacity: 0.85; }
 .lp-more {
   display: inline-flex; align-items: center; gap: 10px; margin-top: 6px;
   padding: 9px 16px; border-radius: 999px;
