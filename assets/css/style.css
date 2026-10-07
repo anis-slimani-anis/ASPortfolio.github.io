@@ -313,7 +313,11 @@ body::-webkit-scrollbar-button {
 }
 .hero-photo .cartoon-light { display: none; }
 [data-theme="light"] .hero-photo .cartoon-dark  { display: none; }
-[data-theme="light"] .hero-photo .cartoon-light { display: block; background: #dddbd6; }
+/* Same studio backdrop as the light portrait photo, so only the figure changes on hover */
+[data-theme="light"] .hero-photo .cartoon-light {
+  display: block;
+  background: linear-gradient(158deg, #80837d 0%, #666c69 30%, #454b49 58%, #2c3130 82%, #222725 100%);
+}
 @media (hover: hover) {
   .hero-photo-wrap:hover .portrait-cartoon { opacity: 1; }
   .hero-photo-wrap:hover .portrait-photo   { opacity: 0; }
