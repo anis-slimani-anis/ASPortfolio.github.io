@@ -263,19 +263,20 @@ body::-webkit-scrollbar-button {
 }
 
 /* Hero title — starry fill stays scoped to the filled hero line */
-[data-theme="light"] .hero-title {
-  background: linear-gradient(135deg, #141618 0%, #1b1d1f 60%, #1e2022 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* Solid ink, no background-clip: a clipped gradient on the h1 made the
+   animated carousel word repaint as a filled ghost over the first line. */
+[data-theme="light"] .hero-title,
+[data-theme="light"] .hero-title-fill {
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-text-fill-color: currentColor;
   color: #1b1d1f;
 }
-[data-theme="light"] .hero-title-fill {
-  color: transparent;
-  background: linear-gradient(135deg, #141618 0%, #1b1d1f 60%, #1e2022 100%);
-  background-repeat: no-repeat;
-  -webkit-background-clip: text;
-  background-clip: text;
+[data-theme="light"] .hero-title em {
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
   -webkit-text-fill-color: transparent;
 }
 [data-theme="light"] .hero-title-fill::before,
@@ -301,6 +302,28 @@ body::-webkit-scrollbar-button {
 .hero-photo .portrait-light { display: none; }
 [data-theme="light"] .hero-photo .portrait-dark  { display: none; }
 [data-theme="light"] .hero-photo .portrait-light { display: block; }
+
+/* Cartoon portrait — sits on top of the photo and fades in on hover */
+.hero-photo .portrait-photo,
+.hero-photo .portrait-cartoon { transition: opacity 0.35s ease; }
+.hero-photo .portrait-cartoon {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+.hero-photo .cartoon-light { display: none; }
+[data-theme="light"] .hero-photo .cartoon-dark  { display: none; }
+[data-theme="light"] .hero-photo .cartoon-light { display: block; background: #dddbd6; }
+@media (hover: hover) {
+  .hero-photo-wrap:hover .portrait-cartoon { opacity: 1; }
+  .hero-photo-wrap:hover .portrait-photo   { opacity: 0; }
+}
+.hero-photo-wrap:focus-visible .portrait-cartoon { opacity: 1; }
+.hero-photo-wrap:focus-visible .portrait-photo   { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-photo .portrait-photo,
+  .hero-photo .portrait-cartoon { transition: none; }
+}
 
 /* Light mode hero photo — pinned photograph on paper */
 [data-theme="light"] .hero-photo img {
