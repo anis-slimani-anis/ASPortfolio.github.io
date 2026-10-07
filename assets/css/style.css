@@ -1816,6 +1816,19 @@ footer {
 }
 
 .case-section { margin-bottom: 88px; }
+/* Hero CTA row on case pages, and a divider that opens a second part of a page */
+.page-hero-cta { margin-top: 28px; }
+.case-section .hero-cta-row { margin-top: 28px; }
+.case-part { margin-bottom: 64px; padding-top: 56px; border-top: 1px solid var(--border); }
+.case-part-label {
+  display: block; margin-bottom: 14px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent); opacity: 0.8;
+}
+.case-part h2 { margin-bottom: 16px; }
+.case-part > p { font-size: 16px; line-height: 1.8; color: var(--text-mid); margin-bottom: 32px; max-width: 720px; }
+.case-part .page-stat-strip { margin: 0 0 28px; }
+.case-part .case-confidential { margin-bottom: 0; }
 .case-section h2 {
   font-size: clamp(20px, 2.5vw, 28px);
   margin-bottom: 28px;
