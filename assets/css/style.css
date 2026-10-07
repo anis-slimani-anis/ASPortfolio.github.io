@@ -3453,38 +3453,17 @@ nav.work-header {
   background: #f5f2ec; color: var(--ink);
   font-family: var(--font-body);
 }
-.lp-cover--wild { background: #f3eefb; --ink: #3a0ca3; --hot: #e0218a; }
 .lp-cover-top { display: flex; align-items: center; gap: 2.4cqw; width: 100%; }
 .lp-mark { width: 9cqw; height: 7.5cqw; fill: var(--ink); flex: none; }
 .lp-logo { font-family: var(--font-head); font-weight: 700; font-size: 6cqw; letter-spacing: -0.01em; }
 .lp-logo i { font-style: normal; color: var(--hot); }
 .lp-cover-kicker { margin-top: 3.5cqw; font-size: 2.7cqw; letter-spacing: 0.32em; text-transform: uppercase; opacity: 0.85; }
 .lp-cover-kicker--plain { margin-top: 4cqw; letter-spacing: 0; text-transform: none; font-size: 3.6cqw; color: #55535c; opacity: 1; }
-.lp-cover-title { margin-top: 15cqw; font-family: var(--font-head); font-weight: 600; font-size: 14.5cqw; line-height: 1.02; letter-spacing: -0.02em; }
+.lp-cover-title { margin-top: 15cqw; font-family: var(--font-head); font-weight: 600; font-size: 13.5cqw; line-height: 1.02; letter-spacing: -0.02em; }
 .lp-cover-rule { width: 11cqw; height: 0.6cqw; margin: 6cqw 0 4.5cqw; background: var(--hot); }
 .lp-cover-text { font-size: 3.7cqw; line-height: 1.5; max-width: 92%; }
 .lp-cover-tag { margin-top: auto; padding-left: 3cqw; border-left: 0.6cqw solid var(--hot); font-size: 2.6cqw; letter-spacing: 0.12em; text-transform: uppercase; color: var(--hot); margin-bottom: 9cqw; }
 .lp-cover-page { position: absolute; right: 9%; bottom: 6%; font-size: 2.3cqw; letter-spacing: 0.18em; text-transform: uppercase; }
-.lp-cover--b { background: #f6f4ef; --ink: #17161c; }
-.lp-cover--b .lp-cover-title { margin-top: 2cqw; font-weight: 500; font-size: 15cqw; }
-.lp-cover--b .lp-cover-title b { font-weight: 500; color: #2a0a8f; }
-.lp-cover-box { margin-top: 6cqw; padding: 1.6cqw 3cqw; border: 0.5cqw solid var(--hot); border-radius: 1cqw; font-size: 2.5cqw; letter-spacing: 0.16em; text-transform: uppercase; color: var(--hot); }
-.lp-cover-small { margin-top: 9cqw; font-size: 2.3cqw; letter-spacing: 0.2em; text-transform: uppercase; color: #55535c; }
-.lp-cover--b .lp-cover-text { margin-top: 2cqw; padding-bottom: 4cqw; border-bottom: 0.3cqw solid rgba(0,0,0,0.12); width: 100%; max-width: 100%; }
-.lp-cover--c { background: #1a006c; color: #faf8f3; --ink: #faf8f3; }
-.lp-cover--c .lp-logo { font-size: 5cqw; }
-.lp-cover-pill { margin-left: auto; padding: 1.2cqw 3cqw; border-radius: 99px; background: rgba(250,248,243,0.14); font-size: 2.3cqw; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; }
-.lp-cover--c .lp-cover-title { margin-top: 18cqw; font-size: 11.5cqw; }
-.lp-cover--c .lp-cover-text { margin-top: 5cqw; opacity: 0.85; }
-
-.lp-cover--video { background: #f7f4fb; padding: 6% 6% 8%; }
-.lp-video { position: relative; display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 6px; overflow: hidden; box-shadow: 0 6px 18px rgba(26,0,108,0.14); }
-.lp-video img { width: 100%; height: 100%; object-fit: cover; object-position: left top; display: block; }
-.lp-play { position: absolute; left: 50%; top: 50%; width: 15cqw; height: 15cqw; transform: translate(-50%,-50%); border-radius: 50%; background: rgba(26,0,108,0.82); }
-.lp-play::after { content: ''; position: absolute; left: 54%; top: 50%; transform: translate(-50%,-50%); border-style: solid; border-width: 2.6cqw 0 2.6cqw 4.4cqw; border-color: transparent transparent transparent #fff; }
-.lp-cover--video .lp-cover-kicker { margin-top: 7cqw; letter-spacing: 0.2em; }
-.lp-cover--video .lp-cover-title { margin-top: 4cqw; font-size: 9.5cqw; }
-.lp-cover--video .lp-cover-text { margin-top: 4cqw; }
 .lp-more {
   display: inline-flex; align-items: center; gap: 10px; margin-top: 6px;
   padding: 9px 16px; border-radius: 999px;
