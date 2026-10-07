@@ -1051,16 +1051,36 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
   });
 })();
 
-/* ── Hero portrait: the cartoon opens from where the pointer enters ── */
+/* ── Hero portrait (dark mode): glass lens that follows the pointer ──
+   Position is eased in a requestAnimationFrame loop that only runs while
+   the pointer is over the portrait. */
 (function () {
   var wrap = document.querySelector('.hero-photo-wrap');
   var photo = wrap && wrap.querySelector('.hero-photo');
-  if (!photo) return;
-  function aim(e) {
+  if (!photo || !photo.querySelector('.hero-lens')) return;
+  var tx = 0, ty = 0, x = 0, y = 0, raf = 0, active = false;
+
+  function measure() {
     var r = photo.getBoundingClientRect();
-    photo.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
-    photo.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+    photo.style.setProperty('--pw', r.width + 'px');
+    photo.style.setProperty('--ph', r.height + 'px');
+    photo.style.setProperty('--lens', Math.round(Math.min(r.width * 0.5, 230)) + 'px');
+    return r;
   }
-  wrap.addEventListener('pointerenter', aim);
-  wrap.addEventListener('pointerleave', aim);
+  function frame() {
+    x += (tx - x) * 0.2; y += (ty - y) * 0.2;
+    photo.style.setProperty('--lx', x.toFixed(1) + 'px');
+    photo.style.setProperty('--ly', y.toFixed(1) + 'px');
+    raf = active || Math.abs(tx - x) > 0.3 || Math.abs(ty - y) > 0.3 ? requestAnimationFrame(frame) : 0;
+  }
+  function aim(e) { var r = photo.getBoundingClientRect(); tx = e.clientX - r.left; ty = e.clientY - r.top; }
+
+  wrap.addEventListener('pointerenter', function (e) {
+    if (e.pointerType !== 'mouse') return;
+    measure(); aim(e); x = tx; y = ty; active = true;
+    photo.classList.add('is-lens');
+    if (!raf) raf = requestAnimationFrame(frame);
+  });
+  wrap.addEventListener('pointermove', function (e) { if (active) aim(e); });
+  wrap.addEventListener('pointerleave', function () { active = false; photo.classList.remove('is-lens'); });
 })();

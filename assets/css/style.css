@@ -303,33 +303,57 @@ body::-webkit-scrollbar-button {
 [data-theme="light"] .hero-photo .portrait-dark  { display: none; }
 [data-theme="light"] .hero-photo .portrait-light { display: block; }
 
-/* Cartoon portrait: sits on top of the photo and opens from the pointer
-   like an iris. The photo underneath never fades, so nothing washes out. */
-.hero-photo .portrait-cartoon {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  clip-path: circle(0% at var(--mx, 50%) var(--my, 38%));
-  transition: clip-path 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+/* Dark mode: a glass lens follows the pointer over the portrait and shows
+   the cartoon through it. Only transforms move, so it stays smooth. */
+.hero-lens {
+  position: absolute; left: 0; top: 0; z-index: 2;
+  width: var(--lens, 180px); height: var(--lens, 180px);
+  margin: calc(var(--lens, 180px) / -2) 0 0 calc(var(--lens, 180px) / -2);
+  transform: translate3d(var(--lx, 0px), var(--ly, 0px), 0);
+  pointer-events: none; will-change: transform;
 }
-.hero-photo .cartoon-dark { background: #03020a; }
+.hero-lens-glass {
+  position: relative; width: 100%; height: 100%;
+  border-radius: 50%; overflow: hidden;
+  background: #03020a;
+  box-shadow: 0 18px 50px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.10);
+  transform: scale(0); opacity: 0;
+  transition: transform 0.38s cubic-bezier(0.2, 0.9, 0.25, 1.15), opacity 0.2s ease;
+}
+.hero-lens-glass::after {
+  content: ''; position: absolute; inset: 0; border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px rgba(255,255,255,0.55), inset 0 10px 26px rgba(255,255,255,0.20), inset 0 -14px 28px rgba(120,120,255,0.14);
+  background: linear-gradient(135deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0) 38%);
+}
+.hero-photo.is-lens .hero-lens-glass { transform: scale(1); opacity: 1; }
+.hero-photo .hero-lens img {
+  position: absolute; left: 0; top: 0; max-width: none;
+  width: var(--pw, 100%); height: var(--ph, 100%);
+  object-fit: contain; object-position: center top;
+  -webkit-mask-image: none; mask-image: none;
+  transform: translate3d(calc(var(--lens, 180px) / 2 - var(--lx, 0px)), calc(var(--lens, 180px) / 2 - var(--ly, 0px)), 0);
+  will-change: transform;
+}
+[data-theme="light"] .hero-lens { display: none; }
+
+/* Light mode: the pinned photo straightens on hover and the picture quietly
+   becomes the cartoon. The photo underneath never fades. */
 .hero-photo .cartoon-light { display: none; }
-[data-theme="light"] .hero-photo .cartoon-dark  { display: none; }
-/* Same studio backdrop as the light portrait photo, so only the figure changes */
 [data-theme="light"] .hero-photo .cartoon-light {
-  display: block;
+  display: block; position: absolute; inset: 0;
+  opacity: 0; transition: opacity 0.3s ease 0.08s;
+  /* Same studio backdrop as the photo, so only the figure changes */
   background: linear-gradient(158deg, #80837d 0%, #666c69 30%, #454b49 58%, #2c3130 82%, #222725 100%);
 }
 @media (hover: hover) {
-  .hero-photo-wrap:hover .portrait-cartoon { clip-path: circle(150% at var(--mx, 50%) var(--my, 38%)); }
+  [data-theme="light"] .hero-photo-wrap:hover .cartoon-light { opacity: 1; }
 }
-.hero-photo-wrap:focus-visible .portrait-cartoon { clip-path: circle(150% at 50% 38%); }
-/* Touch screens: no hover, so the cartoon is not shown (or downloaded) */
+/* Touch screens: no hover, so neither effect is shown */
 @media (hover: none) {
-  .hero-photo .portrait-cartoon { display: none !important; }
+  .hero-lens, .hero-photo .cartoon-light { display: none !important; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-photo .portrait-cartoon { transition: none; }
+  .hero-lens-glass, [data-theme="light"] .hero-photo .cartoon-light { transition: none; }
 }
 
 /* Light mode hero photo — pinned photograph on paper */

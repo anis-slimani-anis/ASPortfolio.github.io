@@ -27,7 +27,7 @@
 
   <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
   <noscript><link rel="preload" href="/assets/images/portrait.webp" as="image" fetchpriority="high"></noscript>
-  <link rel="stylesheet" href="/assets/css/style.css?v=19">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20">
 </head>
 <body>
 
@@ -115,10 +115,13 @@
              onerror="this.style.display='none';">
         <img class="portrait-photo portrait-light" src="/assets/images/portrait-light.webp" alt="Anis Slimani"
              fetchpriority="low" decoding="async">
-        <img class="portrait-cartoon cartoon-dark" src="/assets/images/portrait-cartoon-dark.webp" alt="" aria-hidden="true"
-             loading="lazy" decoding="async">
         <img class="portrait-cartoon cartoon-light" src="/assets/images/portrait-cartoon-light.webp" alt="" aria-hidden="true"
              loading="lazy" decoding="async">
+        <div class="hero-lens" aria-hidden="true">
+          <div class="hero-lens-glass">
+            <img class="cartoon-dark" src="/assets/images/portrait-cartoon-dark.webp" alt="" loading="lazy" decoding="async">
+          </div>
+        </div>
       </div>
     </a>
   </div>
@@ -634,6 +637,6 @@
   </nav>
 </footer>
 
-<script src="/assets/js/main.js?v=7"></script>
+<script src="/assets/js/main.js?v=8"></script>
 </body>
 </html>
