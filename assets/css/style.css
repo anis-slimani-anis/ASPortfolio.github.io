@@ -3477,6 +3477,14 @@ nav.work-header {
 .lp-cover--c .lp-cover-title { margin-top: 18cqw; font-size: 11.5cqw; }
 .lp-cover--c .lp-cover-text { margin-top: 5cqw; opacity: 0.85; }
 
+.lp-cover--video { background: #f7f4fb; padding: 6% 6% 8%; }
+.lp-video { position: relative; display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 6px; overflow: hidden; box-shadow: 0 6px 18px rgba(26,0,108,0.14); }
+.lp-video img { width: 100%; height: 100%; object-fit: cover; object-position: left top; display: block; }
+.lp-play { position: absolute; left: 50%; top: 50%; width: 15cqw; height: 15cqw; transform: translate(-50%,-50%); border-radius: 50%; background: rgba(26,0,108,0.82); }
+.lp-play::after { content: ''; position: absolute; left: 54%; top: 50%; transform: translate(-50%,-50%); border-style: solid; border-width: 2.6cqw 0 2.6cqw 4.4cqw; border-color: transparent transparent transparent #fff; }
+.lp-cover--video .lp-cover-kicker { margin-top: 7cqw; letter-spacing: 0.2em; }
+.lp-cover--video .lp-cover-title { margin-top: 4cqw; font-size: 9.5cqw; }
+.lp-cover--video .lp-cover-text { margin-top: 4cqw; }
 .lp-more {
   display: inline-flex; align-items: center; gap: 10px; margin-top: 6px;
   padding: 9px 16px; border-radius: 999px;
