@@ -49,8 +49,8 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 .top { display: flex; justify-content: space-between; gap: 16px; padding-top: 28px; }
 .top a { text-decoration: none; display: inline-block; padding: 6px 0; margin: -6px 0; }
 .top a:hover { text-decoration: underline; }
-.lang { display: flex; gap: 14px; }
-.lang a { opacity: 0.6; }
+.lang { display: flex; gap: 4px; margin-right: -10px; }
+.lang a { opacity: 0.6; min-width: 40px; padding: 10px; margin: -10px 0; text-align: center; }
 .lang a[aria-current] { opacity: 1; text-decoration: underline; }
 
 /* ── Hero ── */
