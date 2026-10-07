@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>À ma façon · prototype</title>
+  <link rel="canonical" href="https://anisslimani.com/brief-to-ship-citymapper/">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="prototype.css">
+  <style>
+    html, body { margin: 0; min-height: 100%; background: #FAF8F3; }
+    body { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; min-height: 100vh; min-height: 100dvh; padding: 16px; box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
+    main { width: min(100%, 390px, calc((100dvh - 80px) * 390 / 844)); }
+    #proto { border-radius: 28px; box-shadow: 0 24px 60px rgba(26, 0, 108, 0.16); }
+    .caption { margin: 0; font-size: 13px; line-height: 18px; color: #1A006C; opacity: 0.7; text-align: center; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">À ma façon, prototype interactif</h1>
+    <h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Écran du prototype</h2>
+    <div id="proto"></div>
+  </main>
+  <p class="caption">Concept indépendant, non affilié à Citymapper. Données illustratives.</p>
+  <script src="data.js"></script>
+  <script src="prototype.js"></script>
+  <script>mountPrototype(document.getElementById('proto'));</script>
+</body>
+</html>
