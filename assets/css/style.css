@@ -3667,7 +3667,8 @@ html[data-theme="light"] :is(.stat-item, .service-block):hover {
 html[data-theme="light"] .service-block::after { content: none; }
 html[data-theme="light"] .stat-item .stat-label,
 html[data-theme="light"] .service-block p { color: rgba(27,29,31,0.78) !important; }
-html[data-theme="light"] .service-block .service-block-link { color: rgba(27,29,31,0.72) !important; }
+html[data-theme="light"] .service-block .service-block-link { color: #1b1d1f !important; opacity: 0.8; }
+html[data-theme="light"] .service-block:hover .service-block-link { opacity: 1; }
 html[data-theme="light"] .services-grid { gap: 20px; }
 @media (max-width: 860px) {
   html[data-theme="light"] .stats-strip-inner { gap: 12px; }
