@@ -1051,36 +1051,37 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
   });
 })();
 
-/* ── Hero portrait (dark mode): glass lens that follows the pointer ──
+/* ── Hero portrait (dark mode): soft lens that follows the pointer ──
    Position is eased in a requestAnimationFrame loop that only runs while
    the pointer is over the portrait. */
 (function () {
   var wrap = document.querySelector('.hero-photo-wrap');
   var photo = wrap && wrap.querySelector('.hero-photo');
-  if (!photo || !photo.querySelector('.hero-lens')) return;
+  if (!photo || !wrap.querySelector('.hero-lens')) return;
   var tx = 0, ty = 0, x = 0, y = 0, raf = 0, active = false;
 
   function measure() {
-    var r = photo.getBoundingClientRect();
-    photo.style.setProperty('--pw', r.width + 'px');
-    photo.style.setProperty('--ph', r.height + 'px');
-    photo.style.setProperty('--lens', Math.round(Math.min(r.width * 0.5, 230)) + 'px');
-    return r;
+    var r = photo.getBoundingClientRect(), w = wrap.getBoundingClientRect();
+    wrap.style.setProperty('--pw', r.width + 'px');
+    wrap.style.setProperty('--ph', r.height + 'px');
+    wrap.style.setProperty('--ox', (r.left - w.left) + 'px');
+    wrap.style.setProperty('--oy', (r.top - w.top) + 'px');
+    wrap.style.setProperty('--lens', Math.round(Math.min(r.width * 0.78, 340)) + 'px');
   }
   function frame() {
-    x += (tx - x) * 0.2; y += (ty - y) * 0.2;
-    photo.style.setProperty('--lx', x.toFixed(1) + 'px');
-    photo.style.setProperty('--ly', y.toFixed(1) + 'px');
+    x += (tx - x) * 0.16; y += (ty - y) * 0.16;
+    wrap.style.setProperty('--lx', x.toFixed(1) + 'px');
+    wrap.style.setProperty('--ly', y.toFixed(1) + 'px');
     raf = active || Math.abs(tx - x) > 0.3 || Math.abs(ty - y) > 0.3 ? requestAnimationFrame(frame) : 0;
   }
-  function aim(e) { var r = photo.getBoundingClientRect(); tx = e.clientX - r.left; ty = e.clientY - r.top; }
+  function aim(e) { var w = wrap.getBoundingClientRect(); tx = e.clientX - w.left; ty = e.clientY - w.top; }
 
   wrap.addEventListener('pointerenter', function (e) {
     if (e.pointerType !== 'mouse') return;
     measure(); aim(e); x = tx; y = ty; active = true;
-    photo.classList.add('is-lens');
+    wrap.classList.add('is-lens');
     if (!raf) raf = requestAnimationFrame(frame);
   });
   wrap.addEventListener('pointermove', function (e) { if (active) aim(e); });
-  wrap.addEventListener('pointerleave', function () { active = false; photo.classList.remove('is-lens'); });
+  wrap.addEventListener('pointerleave', function () { active = false; wrap.classList.remove('is-lens'); });
 })();

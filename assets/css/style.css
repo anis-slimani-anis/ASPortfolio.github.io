@@ -303,35 +303,44 @@ body::-webkit-scrollbar-button {
 [data-theme="light"] .hero-photo .portrait-dark  { display: none; }
 [data-theme="light"] .hero-photo .portrait-light { display: block; }
 
-/* Dark mode: a glass lens follows the pointer over the portrait and shows
-   the cartoon through it. Only transforms move, so it stays smooth. */
+/* Dark mode: a soft lens follows the pointer over the portrait and shows
+   the cartoon through it. It lives outside the photo box so the edges of the
+   picture never cut it. Only transforms move, so it stays smooth. */
 .hero-lens {
   position: absolute; left: 0; top: 0; z-index: 2;
-  width: var(--lens, 180px); height: var(--lens, 180px);
-  margin: calc(var(--lens, 180px) / -2) 0 0 calc(var(--lens, 180px) / -2);
+  width: var(--lens, 260px); height: var(--lens, 260px);
+  margin: calc(var(--lens, 260px) / -2) 0 0 calc(var(--lens, 260px) / -2);
   transform: translate3d(var(--lx, 0px), var(--ly, 0px), 0);
   pointer-events: none; will-change: transform;
+}
+/* The aura: a faint glow around the lens, no hard outline */
+.hero-lens::before {
+  content: ''; position: absolute; inset: -14%; border-radius: 50%;
+  background: radial-gradient(circle, rgba(190,190,255,0.16) 0%, rgba(190,190,255,0.07) 52%, transparent 70%);
+  opacity: 0; transform: scale(0.6);
+  transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .hero-lens-glass {
   position: relative; width: 100%; height: 100%;
   border-radius: 50%; overflow: hidden;
-  background: #03020a;
-  box-shadow: 0 18px 50px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.10);
-  transform: scale(0); opacity: 0;
-  transition: transform 0.38s cubic-bezier(0.2, 0.9, 0.25, 1.15), opacity 0.2s ease;
+  /* soft edge instead of a rim */
+  -webkit-mask-image: radial-gradient(circle, #000 58%, rgba(0,0,0,0.55) 68%, transparent 73%);
+  mask-image: radial-gradient(circle, #000 58%, rgba(0,0,0,0.55) 68%, transparent 73%);
+  transform: scale(0.5); opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.3s ease;
 }
 .hero-lens-glass::after {
   content: ''; position: absolute; inset: 0; border-radius: 50%;
-  box-shadow: inset 0 0 0 1.5px rgba(255,255,255,0.55), inset 0 10px 26px rgba(255,255,255,0.20), inset 0 -14px 28px rgba(120,120,255,0.14);
-  background: linear-gradient(135deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0) 38%);
+  background: radial-gradient(circle at 32% 24%, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 42%);
 }
-.hero-photo.is-lens .hero-lens-glass { transform: scale(1); opacity: 1; }
-.hero-photo .hero-lens img {
+.hero-photo-wrap.is-lens .hero-lens::before { opacity: 1; transform: scale(1); }
+.hero-photo-wrap.is-lens .hero-lens-glass { transform: scale(1); opacity: 1; }
+.hero-lens img {
   position: absolute; left: 0; top: 0; max-width: none;
   width: var(--pw, 100%); height: var(--ph, 100%);
   object-fit: contain; object-position: center top;
-  -webkit-mask-image: none; mask-image: none;
-  transform: translate3d(calc(var(--lens, 180px) / 2 - var(--lx, 0px)), calc(var(--lens, 180px) / 2 - var(--ly, 0px)), 0);
+  background: #03020a;   /* covers the photo only where the photo is */
+  transform: translate3d(calc(var(--lens, 260px) / 2 - var(--lx, 0px) + var(--ox, 0px)), calc(var(--lens, 260px) / 2 - var(--ly, 0px) + var(--oy, 0px)), 0);
   will-change: transform;
 }
 [data-theme="light"] .hero-lens { display: none; }
@@ -353,7 +362,7 @@ body::-webkit-scrollbar-button {
   .hero-lens, .hero-photo .cartoon-light { display: none !important; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-lens-glass, [data-theme="light"] .hero-photo .cartoon-light { transition: none; }
+  .hero-lens-glass, .hero-lens::before, [data-theme="light"] .hero-photo .cartoon-light { transition: none; }
 }
 
 /* Light mode hero photo — pinned photograph on paper */
