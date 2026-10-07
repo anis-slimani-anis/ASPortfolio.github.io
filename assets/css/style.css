@@ -1735,6 +1735,31 @@ footer {
 }
 /* Media placed at the very top of a case study hero, above tags and title */
 .page-hero .page-hero-media { margin: 0 0 40px; }
+/* A framed panel for hero media */
+.hero-frame {
+  padding: clamp(14px, 2.6vw, 36px);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  background: radial-gradient(ellipse at 50% 0%, rgba(204,204,255,0.07), transparent 70%), var(--bg3);
+}
+[data-theme="light"] .hero-frame { background: #ffffff; box-shadow: 0 12px 36px rgba(0,0,0,0.07); }
+.hero-frame > img {
+  display: block; width: 100%; height: auto;
+  border-radius: clamp(6px, 1vw, 12px);
+  box-shadow: 0 18px 48px rgba(0,0,0,0.35);
+}
+[data-theme="light"] .hero-frame > img { box-shadow: 0 14px 36px rgba(0,0,0,0.14); }
+/* Funnels hero: compact version of the co-branded partners table */
+.partner-hero-label {
+  font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-muted); margin-bottom: clamp(14px, 2vw, 24px);
+}
+.partner-hero-label strong { color: var(--text); font-weight: 600; }
+.partner-hero-grid { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.partner-hero-item { display: flex; flex-direction: column; gap: 6px; padding: clamp(14px, 2vw, 26px); background: var(--bg2); }
+.partner-hero-name { font-family: var(--font-head); font-weight: 600; font-size: clamp(17px, 2.2vw, 26px); letter-spacing: -0.01em; color: var(--text); }
+.partner-hero-scope { font-size: 11px; letter-spacing: 0.04em; color: var(--text-muted); line-height: 1.5; }
+@media (max-width: 700px) { .partner-hero-grid { grid-template-columns: repeat(2, 1fr); } }
 .page-hero .case-tags { margin-bottom: 24px; }
 .page-hero h1 { font-size: clamp(34px, 5vw, 60px); margin-bottom: 24px; }
 .page-hero-sub {
@@ -3379,3 +3404,87 @@ nav.work-header {
 @media (prefers-reduced-motion: reduce) {
   .ba-label { transition: none; }
 }
+
+/* ── LinkedIn post cards carousel (Brief to Ship page hero) ── */
+.lp { --lp-w: 300px; }
+.page-hero .lp.page-hero-media { margin-bottom: 44px; }
+.lp-viewport {
+  overflow-x: auto; overflow-y: hidden;
+  margin: 0 calc(var(--pad-x) * -1); padding: 6px var(--pad-x) 18px;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+}
+.lp-viewport::-webkit-scrollbar { display: none; }
+.lp-viewport:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 12px; }
+.lp-track { list-style: none; display: flex; gap: 20px; width: max-content; margin: 0; padding: 0; }
+.lp-item { flex: none; width: var(--lp-w); }
+.lp-card {
+  display: flex; flex-direction: column; gap: 12px; height: 100%;
+  padding: 16px; border-radius: 14px;
+  background: var(--bg2); border: 1px solid var(--border-light);
+  color: var(--text); text-decoration: none;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+.lp-card:hover, .lp-card:focus-visible { transform: translateY(-3px); border-color: var(--accent-border); }
+[data-theme="light"] .lp-card { box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+.lp-head { display: flex; align-items: center; gap: 10px; }
+.lp-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex: none; }
+.lp-who { display: flex; flex-direction: column; min-width: 0; line-height: 1.3; }
+.lp-name { font-size: 14px; font-weight: 600; }
+.lp-role, .lp-date { font-size: 11px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lp-hook {
+  font-size: 13px; line-height: 1.5; color: var(--text-mid); min-height: 4.5em;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.lp-foot { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
+.lp-doc { display: flex; flex-direction: column; font-size: 11px; color: var(--text-muted); line-height: 1.4; }
+.lp-doc strong { font-size: 13px; font-weight: 600; color: var(--text); }
+.lp-cta { font-size: 12px; font-weight: 600; color: var(--accent); }
+[data-theme="light"] .lp-cta { color: #0a66c2; }
+
+/* Cover: the first page of each carousel, rebuilt in HTML (always light, like the PDFs) */
+.lp-cover {
+  --ink: #2a0a8f; --hot: #d62839;
+  container-type: inline-size;
+  position: relative; aspect-ratio: 4 / 5; overflow: hidden;
+  display: flex; flex-direction: column; align-items: flex-start;
+  padding: 9% 9% 8%; border-radius: 8px;
+  background: #f5f2ec; color: var(--ink);
+  font-family: var(--font-body);
+}
+.lp-cover--wild { background: #f3eefb; --ink: #3a0ca3; --hot: #e0218a; }
+.lp-cover-top { display: flex; align-items: center; gap: 2.4cqw; width: 100%; }
+.lp-mark { width: 9cqw; height: 7.5cqw; fill: var(--ink); flex: none; }
+.lp-logo { font-family: var(--font-head); font-weight: 700; font-size: 6cqw; letter-spacing: -0.01em; }
+.lp-logo i { font-style: normal; color: var(--hot); }
+.lp-cover-kicker { margin-top: 3.5cqw; font-size: 2.7cqw; letter-spacing: 0.32em; text-transform: uppercase; opacity: 0.85; }
+.lp-cover-kicker--plain { margin-top: 4cqw; letter-spacing: 0; text-transform: none; font-size: 3.6cqw; color: #55535c; opacity: 1; }
+.lp-cover-title { margin-top: 15cqw; font-family: var(--font-head); font-weight: 600; font-size: 14.5cqw; line-height: 1.02; letter-spacing: -0.02em; }
+.lp-cover-rule { width: 11cqw; height: 0.6cqw; margin: 6cqw 0 4.5cqw; background: var(--hot); }
+.lp-cover-text { font-size: 3.7cqw; line-height: 1.5; max-width: 92%; }
+.lp-cover-tag { margin-top: auto; padding-left: 3cqw; border-left: 0.6cqw solid var(--hot); font-size: 2.6cqw; letter-spacing: 0.12em; text-transform: uppercase; color: var(--hot); margin-bottom: 9cqw; }
+.lp-cover-page { position: absolute; right: 9%; bottom: 6%; font-size: 2.3cqw; letter-spacing: 0.18em; text-transform: uppercase; }
+.lp-cover--b { background: #f6f4ef; --ink: #17161c; }
+.lp-cover--b .lp-cover-title { margin-top: 2cqw; font-weight: 500; font-size: 15cqw; }
+.lp-cover--b .lp-cover-title b { font-weight: 500; color: #2a0a8f; }
+.lp-cover-box { margin-top: 6cqw; padding: 1.6cqw 3cqw; border: 0.5cqw solid var(--hot); border-radius: 1cqw; font-size: 2.5cqw; letter-spacing: 0.16em; text-transform: uppercase; color: var(--hot); }
+.lp-cover-small { margin-top: 9cqw; font-size: 2.3cqw; letter-spacing: 0.2em; text-transform: uppercase; color: #55535c; }
+.lp-cover--b .lp-cover-text { margin-top: 2cqw; padding-bottom: 4cqw; border-bottom: 0.3cqw solid rgba(0,0,0,0.12); width: 100%; max-width: 100%; }
+.lp-cover--c { background: #1a006c; color: #faf8f3; --ink: #faf8f3; }
+.lp-cover--c .lp-logo { font-size: 5cqw; }
+.lp-cover-pill { margin-left: auto; padding: 1.2cqw 3cqw; border-radius: 99px; background: rgba(250,248,243,0.14); font-size: 2.3cqw; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; }
+.lp-cover--c .lp-cover-title { margin-top: 18cqw; font-size: 11.5cqw; }
+.lp-cover--c .lp-cover-text { margin-top: 5cqw; opacity: 0.85; }
+
+.lp-more {
+  display: inline-flex; align-items: center; gap: 10px; margin-top: 6px;
+  padding: 9px 16px; border-radius: 999px;
+  border: 1px solid var(--border-light); background: var(--bg2);
+  font-size: 13px; font-weight: 500; color: var(--text); text-decoration: none;
+  transition: border-color 0.2s ease;
+}
+.lp-more:hover { border-color: var(--accent-border); }
+.lp-more-dot { width: 8px; height: 8px; border-radius: 50%; background: #0a66c2; }
+@media (max-width: 600px) { .lp { --lp-w: 258px; } .lp-track { gap: 14px; } }
+@media (prefers-reduced-motion: reduce) { .lp-card { transition: none; } .lp-card:hover { transform: none; } }

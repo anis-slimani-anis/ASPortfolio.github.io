@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/assets/css/style.css?v=8">
+  <link rel="stylesheet" href="/assets/css/style.css?v=10">
 </head>
 <body>
 
@@ -81,18 +81,9 @@
 </div>
 
 <div class="page-hero">
-  <div class="img-block page-hero-media">
-    <div class="case-img-wrap">
-      <picture class="theme-night">
-        <source srcset="/assets/images/principotes-night.webp" type="image/webp">
-        <img class="case-img" src="/assets/images/principotes-night.png" alt="Principotes Ksamil website, desktop and mobile, night mode (La Guerre)" width="1600" height="1000" loading="lazy" decoding="async">
-      </picture>
-      <picture class="theme-day">
-        <source srcset="/assets/images/principotes-day.webp" type="image/webp">
-        <img class="case-img" src="/assets/images/principotes-day.png" alt="Principotes Ksamil website, desktop and mobile, day mode" width="1600" height="1000" loading="lazy" decoding="async">
-      </picture>
-    </div>
-  </div>
+  <figure class="hero-frame page-hero-media">
+    <img src="/assets/images/principotes-hero.webp" alt="Principotes Ksamil homepage, day design on the left and La Guerre night design on the right" width="2400" height="1200" fetchpriority="high" decoding="async">
+  </figure>
   <div class="case-tags">
     <span class="tag" data-fr="Management Produit">Product Management</span>
     <span class="tag" data-fr="Design System">Design System</span>
@@ -134,10 +125,6 @@
 <div class="case-content-wrap">
   <a href="/#work" class="back-to-work" data-fr="← Retour">← Back</a>
   <a href="/work/legalstart/" class="next-project" data-fr="Legalstart →">Legalstart →</a>
-
-  <div class="img-block">
-    <img class="case-img--bare" src="/assets/images/principotes-hero.webp" alt="Principotes Ksamil: Day and Night homepage designs" onerror="this.style.display='none'" loading="eager" decoding="async">
-  </div>
 
   <div id="context" class="case-section reveal">
     <h2 data-fr="Contexte">Context</h2>
@@ -448,6 +435,6 @@
   </nav>
 </footer>
 
-<script src="/assets/js/main.js?v=4"></script>
+<script src="/assets/js/main.js?v=5"></script>
 </body>
 </html>

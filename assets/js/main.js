@@ -1007,3 +1007,42 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
     set(50);
   });
 })();
+
+/* ── Auto-scrolling post carousel ──────────────────────────
+   .lp[data-lp] > .lp-viewport > .lp-track holds the cards twice (second
+   set aria-hidden). It drifts slowly, pauses on hover, focus or touch,
+   can be scrolled by hand, and stays still under reduced motion. */
+(function () {
+  document.querySelectorAll('[data-lp]').forEach(function (root) {
+    var view = root.querySelector('.lp-viewport');
+    var track = root.querySelector('.lp-track');
+    if (!view || !track) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var SPEED = 28;            // pixels per second
+    var paused = false, visible = false, last = 0, pos = 0, resume = 0;
+    function half() { return track.scrollWidth / 2; }
+    function hold(ms) { paused = true; clearTimeout(resume); if (ms) resume = setTimeout(function () { paused = false; pos = view.scrollLeft; }, ms); }
+
+    view.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') hold(0); });
+    view.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') { paused = false; pos = view.scrollLeft; } });
+    view.addEventListener('focusin', function () { hold(0); });
+    view.addEventListener('focusout', function () { paused = false; pos = view.scrollLeft; });
+    ['touchstart', 'wheel'].forEach(function (t) { view.addEventListener(t, function () { hold(3500); }, { passive: true }); });
+
+    function tick(t) {
+      if (visible && !paused) {
+        var dt = Math.min(t - (last || t), 64) / 1000;
+        pos += SPEED * dt;
+        if (pos >= half()) pos -= half();
+        view.scrollLeft = pos;
+      } else if (paused && view.scrollLeft >= half()) {
+        view.scrollLeft -= half();      // keep manual scrolling inside the loop
+      }
+      last = t;
+      requestAnimationFrame(tick);
+    }
+    new IntersectionObserver(function (entries) { visible = entries[0].isIntersecting; }, { threshold: 0.1 }).observe(view);
+    requestAnimationFrame(tick);
+  });
+})();
