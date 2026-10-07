@@ -309,8 +309,11 @@ body::-webkit-scrollbar-button {
    instead of being cut. Only transforms move, so it stays smooth. */
 .hero-lens-stage {
   position: absolute; inset: 0; z-index: 2; overflow: hidden; pointer-events: none;
-  -webkit-mask-image: radial-gradient(ellipse 90% 95% at 50% 50%, black 60%, transparent 100%);
-  mask-image: radial-gradient(ellipse 90% 95% at 50% 50%, black 60%, transparent 100%);
+  /* fade to nothing along all four sides, so neither the lens nor its glow ever ends on a straight line */
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 16%, #000 84%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent 0, #000 16%, #000 84%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
+  mask-composite: intersect;
 }
 [data-theme="light"] .hero-lens-stage { display: none; }
 .hero-lens {
@@ -323,7 +326,7 @@ body::-webkit-scrollbar-button {
 /* The aura: a faint glow around the lens, no hard outline */
 .hero-lens::before {
   content: ''; position: absolute; inset: -14%; border-radius: 50%;
-  background: radial-gradient(circle, rgba(190,190,255,0.16) 0%, rgba(190,190,255,0.07) 52%, transparent 70%);
+  background: radial-gradient(circle closest-side, rgba(190,190,255,0.14) 0%, rgba(190,190,255,0.06) 70%, transparent 100%);
   opacity: 0; transform: scale(0.6);
   transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
@@ -332,8 +335,8 @@ body::-webkit-scrollbar-button {
   border-radius: 50%; overflow: hidden;
   background: #03020a;
   /* soft edge instead of a rim */
-  -webkit-mask-image: radial-gradient(circle, #000 58%, rgba(0,0,0,0.55) 68%, transparent 73%);
-  mask-image: radial-gradient(circle, #000 58%, rgba(0,0,0,0.55) 68%, transparent 73%);
+  -webkit-mask-image: radial-gradient(circle closest-side, #000 66%, rgba(0,0,0,0.5) 84%, transparent 100%);
+  mask-image: radial-gradient(circle closest-side, #000 66%, rgba(0,0,0,0.5) 84%, transparent 100%);
   transform: scale(0.5); opacity: 0;
   transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.3s ease;
 }
