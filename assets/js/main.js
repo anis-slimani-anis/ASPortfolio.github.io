@@ -1052,14 +1052,16 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
 })();
 
 /* ── Hero portrait (dark mode): scan band that follows the pointer ──
-   The band's vertical position is eased in a requestAnimationFrame loop
-   that only runs while the pointer is over the portrait. On leave the band
-   stays where it is and simply closes. */
+   The band's vertical position is eased in one requestAnimationFrame loop.
+   The loop keeps running briefly after the pointer leaves, so the band
+   closes where it is, and a quick re-entry glides from there instead of
+   jumping. Rapid in and out is absorbed by a short open delay. */
 (function () {
   var wrap = document.querySelector('.hero-photo-wrap');
   var photo = wrap && wrap.querySelector('.hero-photo');
   if (!photo || !wrap.querySelector('.hero-lens')) return;
-  var ty = 0, y = 0, raf = 0, active = false;
+  var CLOSE_MS = 360, OPEN_DELAY = 70;
+  var ty = 0, y = 0, raf = 0, over = false, leftAt = -1e9, openTimer = 0;
 
   function measure() {
     var r = photo.getBoundingClientRect();
@@ -1067,20 +1069,27 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
     wrap.style.setProperty('--ph', r.height + 'px');
     wrap.style.setProperty('--band', Math.round(r.height * 0.58) + 'px');
   }
-  function frame() {
-    y += (ty - y) * 0.2;
-    wrap.style.setProperty('--ly', y.toFixed(1) + 'px');
-    raf = active ? requestAnimationFrame(frame) : 0;
+  function put() { wrap.style.setProperty('--ly', y.toFixed(1) + 'px'); }
+  function frame(t) {
+    y += (ty - y) * 0.18;
+    put();
+    raf = over || t - leftAt < CLOSE_MS ? requestAnimationFrame(frame) : 0;
   }
   function aim(e) { ty = e.clientY - photo.getBoundingClientRect().top; }
 
   wrap.addEventListener('pointerenter', function (e) {
     if (e.pointerType !== 'mouse') return;
-    measure(); aim(e); y = ty; active = true;
-    wrap.style.setProperty('--ly', y.toFixed(1) + 'px');
-    wrap.classList.add('is-lens');
+    var stillClosing = performance.now() - leftAt < CLOSE_MS;
+    over = true; measure(); aim(e);
+    if (!stillClosing) { y = ty; put(); }          // fully closed: open right at the pointer
+    clearTimeout(openTimer);
+    openTimer = setTimeout(function () { if (over) wrap.classList.add('is-lens'); }, stillClosing ? 0 : OPEN_DELAY);
     if (!raf) raf = requestAnimationFrame(frame);
   });
-  wrap.addEventListener('pointermove', function (e) { if (active) aim(e); });
-  wrap.addEventListener('pointerleave', function () { active = false; wrap.classList.remove('is-lens'); });
+  wrap.addEventListener('pointermove', function (e) { if (over) aim(e); });
+  wrap.addEventListener('pointerleave', function () {
+    over = false; clearTimeout(openTimer);
+    if (wrap.classList.contains('is-lens')) leftAt = performance.now();
+    wrap.classList.remove('is-lens');
+  });
 })();
