@@ -1064,7 +1064,7 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
     var r = photo.getBoundingClientRect();
     wrap.style.setProperty('--pw', r.width + 'px');
     wrap.style.setProperty('--ph', r.height + 'px');
-    wrap.style.setProperty('--lens', Math.round(Math.min(r.width * 0.78, 340)) + 'px');
+    wrap.style.setProperty('--lens', Math.round(Math.min(r.width * 1.2, 540)) + 'px');
   }
   function frame() {
     x += (tx - x) * 0.16; y += (ty - y) * 0.16;
