@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brief to Ship · Citymapper · Anis Slimani</title>
+  <meta name="description" content="Étude de cas : « À ma façon », un mode optionnel pour Citymapper où l'on compose son trajet ligne par ligne, sans perdre les horaires en direct. Concept indépendant, prototype interactif.">
+  <meta name="author" content="Anis Slimani">
+  <link rel="canonical" href="https://anisslimani.com/brief-to-ship-citymapper/fr/">
+  <link rel="alternate" hreflang="en" href="https://anisslimani.com/brief-to-ship-citymapper/">
+  <link rel="alternate" hreflang="fr" href="https://anisslimani.com/brief-to-ship-citymapper/fr/">
+  <link rel="alternate" hreflang="x-default" href="https://anisslimani.com/brief-to-ship-citymapper/">
+
+  <!-- Open Graph -->
+  <meta property="og:title"       content="Brief to Ship · Citymapper : l'itinéraire que l'application ne me propose pas">
+  <meta property="og:description" content="Un mode optionnel pour Citymapper : composer son trajet ligne par ligne et garder l'intelligence de l'app. Étude de cas et prototype interactif.">
+  <meta property="og:image"       content="https://anisslimani.com/brief-to-ship-citymapper/assets/og.png">
+  <meta property="og:image:width"  content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:url"         content="https://anisslimani.com/brief-to-ship-citymapper/fr/">
+  <meta property="og:type"        content="article">
+  <meta property="og:locale"      content="fr_FR">
+  <meta property="og:locale:alternate" content="en_GB">
+  <meta property="og:site_name"   content="Anis Slimani">
+  <!-- Twitter / X -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="Brief to Ship · Citymapper : l'itinéraire que l'application ne me propose pas">
+  <meta name="twitter:description" content="Un mode optionnel pour Citymapper : composer son trajet ligne par ligne et garder l'intelligence de l'app.">
+  <meta name="twitter:image"       content="https://anisslimani.com/brief-to-ship-citymapper/assets/og.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Geist:wght@400;500&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" id="cm-inter">
+
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../prototype/prototype.css">
+
+  <link rel="stylesheet" href="../page.css">
+</head>
+<body class="no-js">
+
+<header class="page">
+  <div class="top t-kicker">
+    <a href="/">Anis Slimani</a>
+    <nav class="lang" aria-label="Langue"><a href="../" lang="en" hreflang="en">EN</a><a href="./" lang="fr" aria-current="page">FR</a></nav>
+  </div>
+</header>
+
+<main>
+<div class="page">
+
+  <!-- 1. Hero -->
+  <section class="hero">
+    <p class="series"><svg class="bts-mark" viewBox="0 0 120 100" aria-hidden="true" focusable="false"><path d="M58 8 L58 66 L18 66 Z"/><path d="M66 26 L66 66 L98 66 Z"/><path d="M10 74 L110 74 L98 92 L22 92 Z"/></svg><span class="series-name">Brief to Ship</span><span class="t-kicker">Chapitre build</span></p>
+    <h1 class="t-display">L'itinéraire que l'application ne me propose pas</h1>
+    <p class="hero-sub t-body">« À ma façon » est un concept de mode optionnel pour Citymapper. Je compose mon trajet ligne par ligne. L'application garde le reste : les horaires en direct, l'heure d'arrivée, le suivi.</p>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- 2. Story -->
+  <section class="section reveal">
+    <p class="t-kicker eyebrow">Le point de départ</p>
+    <h2 class="t-display h2">Un trajet que je connais par cœur</h2>
+    <div class="prose t-body">
+      <p>Je vais souvent de Massy - Palaiseau à Louis Blanc, voir une amie proche. Je planifie avec « arriver à ». L'application me répond toujours la même chose : le RER B jusqu'à Châtelet, puis la ligne 7.</p>
+      <p>Moi, je fais autrement. Le B jusqu'à Châtelet. Le RER A pour un seul arrêt, jusqu'à Auber. Puis la 7 à Opéra, dans le même complexe.</p>
+      <p>À Châtelet, la correspondance vers la 7 est longue et stressante. Il y a la foule, des couloirs sans fin, des tapis roulants et des escalators souvent en panne. Je m'y sens moins en sécurité. À Opéra, c'est propre, direct, et la sécurité est plus visible.</p>
+      <p>Mon trajet existe. L'application ne me le propose jamais.</p>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- 3. Stat trio -->
+  <section class="section reveal">
+    <p class="t-kicker eyebrow eyebrow--stats">En trois chiffres</p>
+    <div class="stats">
+      <p class="t-small"><span class="stat-val t-display">1</span>trajet que je fais tout le temps</p>
+      <p class="t-small"><span class="stat-val stat-val--zero t-display">0</span>fois proposé par l'application</p>
+      <p class="t-small"><span class="stat-val t-display">9 <small>min</small></span>de correspondance à Châtelet, contre 4 min à Opéra</p>
+    </div>
+    <p class="stats-note t-small">Chiffres illustratifs, tirés de mon expérience du trajet.</p>
+  </section>
+
+  <div class="rule"></div>
+</div>
+
+<!-- 4. Ideation board -->
+<section class="section wide reveal">
+  <div class="page">
+    <p class="t-kicker eyebrow">Sur le mur</p>
+    <h2 class="t-display h2">Pourquoi mon trajet disparaît</h2>
+  </div>
+  <ul class="board">
+    <li class="postit"><strong>Il n'est pas oublié, il est élagué.</strong>Le calculateur connaît mon trajet. Il l'écarte parce qu'il est « dominé » : un autre fait mieux en temps, en correspondances et en marche.</li>
+    <li class="postit postit--lav"><strong>Je n'optimise pas la même chose.</strong>Ce qui compte pour moi pèse à peine dans son calcul : la façon dont une correspondance se vit.</li>
+    <li class="postit"><strong>La donnée sait déjà.</strong>Île-de-France Mobilités publie le réseau en GTFS ouvert (licence ODbL), y compris les cheminements à pied dans les stations.</li>
+    <li class="postit postit--lav"><strong>Donc c'est un choix produit.</strong>Pas un mur technique.</li>
+    <li class="postit"><strong>L'idée.</strong>Un mode optionnel où je compose le trajet, et où je garde les horaires en direct, « arriver à » et le suivi.</li>
+    <li class="postit postit--lav"><strong>Le risque.</strong>Si la correspondance que j'ai épinglée se passe mal, à qui la faute ?</li>
+  </ul>
+</section>
+
+<div class="page">
+  <div class="rule"></div>
+
+  <!-- 5. Insight -->
+  <section class="section reveal">
+    <p class="insight t-display">L'algorithme optimise. Moi, je préfère.</p>
+  </section>
+
+  <div class="rule"></div>
+</div>
+
+<!-- 6. Section 01 : prototype -->
+<section class="section wide" id="prototype" aria-labelledby="s01">
+  <div class="page">
+    <div class="numbered">
+      <div class="num t-display" aria-hidden="true">01</div>
+      <div>
+        <h2 class="t-display h2" id="s01">Composer son trajet, garder l'intelligence</h2>
+        <p class="t-body">Le prototype est réel. Il est branché sur un petit jeu de données et il se manipule. Les quatre moments ci-dessous le placent au bon endroit, mais tu peux aussi le parcourir librement.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="showcase" id="showcase">
+    <ol class="notes" id="notes">
+      <li class="note is-active" data-state="results">
+        <h3><button type="button">Un nouveau mode, à côté de Classique</button></h3>
+        <p class="t-small">Rien ne change pour qui veut laisser l'application décider. « À ma façon » est un onglet de plus dans la barre des modes.</p>
+      </li>
+      <li class="note" data-state="picker">
+        <h3><button type="button">Seules les lignes qui existent, avec leur coût</button></h3>
+        <p class="t-small">À chaque station, je ne vois que les lignes qui la desservent et qui me rapprochent de l'arrivée. Chaque option affiche sa correspondance. Les longues passent en couleur d'alerte.</p>
+      </li>
+      <li class="note" data-state="composed">
+        <h3><button type="button">Un trajet validé tronçon par tronçon</button></h3>
+        <p class="t-small">Arrivé à Louis Blanc, le trajet se résume sur une carte : les tronçons, les correspondances, la durée totale. L'heure de départ est calculée depuis l'heure d'arrivée.</p>
+      </li>
+      <li class="note" data-state="pinned">
+        <h3><button type="button">Épinglé en tête, suivi en direct</button></h3>
+        <p class="t-small">Mon trajet remonte en haut des suggestions, avec son étiquette et son état en temps réel. Il se comporte comme un trajet proposé par l'application.</p>
+      </li>
+    </ol>
+
+    <div class="phone-col">
+      <p class="phone-label t-kicker">Prototype interactif</p>
+      <button type="button" class="fullscreen-btn" id="fullscreen" hidden>Ouvrir en plein écran</button>
+      <p class="phone-hint t-small" id="phoneHint">Aperçu ci-dessous. Le plein écran est plus confortable pour le manipuler.</p>
+      <div class="phone-slot" id="phoneSlot">
+        <div class="phone" id="phone" tabindex="-1">
+          <div class="phone-bar">
+            <button type="button" class="quit" id="quit">✕ Quitter</button>
+            <span class="phone-bar-title" aria-hidden="true">Prototype</span>
+            <button type="button" id="skip">Lire la suite ↓</button>
+          </div>
+          <div id="proto" lang="fr"></div>
+          <div class="coach" id="coach">
+            <div class="coach-spot" id="coachSpot"></div>
+            <p class="coach-card" id="coachCard" role="status"><strong>Tu es dans le prototype</strong>Explore « À ma façon ».</p>
+          </div>
+        </div>
+      </div>
+      <p class="phone-caption t-small">Concept indépendant, non affilié à Citymapper. Données illustratives.</p>
+    </div>
+  </div>
+</section>
+
+<div class="page" id="after-prototype">
+  <div class="rule"></div>
+</div>
+
+<!-- 7. Section 02 -->
+<section class="section wide reveal">
+  <div class="page">
+    <div class="numbered">
+      <div class="num t-display" aria-hidden="true">02</div>
+      <div>
+        <h2 class="t-display h2">Contribuer à un système existant</h2>
+        <div class="prose t-body">
+          <p>Je n'ai pas redessiné Citymapper. J'ai ajouté le minimum, dans son langage visuel. Tout est construit dans Figma, sur des tokens et en auto layout. Les pastilles de ligne sont celles qui existent déjà, réutilisées telles quelles.</p>
+        </div>
+        <ul class="added t-body">
+          <li><strong>Un onglet de mode</strong>, dans la barre du bas.</li>
+          <li><strong>Une ligne de sélection</strong> avec bouton radio, pour choisir la ligne suivante.</li>
+          <li><strong>Une ligne de correspondance</strong>, entre deux tronçons.</li>
+          <li><strong>Une étiquette</strong> « Ton trajet · épinglé ».</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <ul class="frames">
+    <li><figure>
+      <img src="../assets/figma-01-resultats.webp" width="780" height="1688" loading="lazy" decoding="async" alt="Maquette Figma. Résultats de Massy - Palaiseau à Louis Blanc, avec l'onglet À ma façon dans la barre des modes.">
+      <figcaption class="t-small">01 · Résultats, nouveau mode</figcaption>
+    </figure></li>
+    <li><figure>
+      <img src="../assets/figma-02a-choix-de-ligne.webp" width="780" height="1688" loading="lazy" decoding="async" alt="Maquette Figma. Depuis Châtelet, choix entre le RER A, la ligne 4 et la ligne 7, chacune avec sa correspondance.">
+      <figcaption class="t-small">02a · Choix de ligne</figcaption>
+    </figure></li>
+    <li><figure>
+      <img src="../assets/figma-02b-trajet-compose.webp" width="780" height="1688" loading="lazy" decoding="async" alt="Maquette Figma. Trajet composé en trois tronçons, 49 minutes, départ 17:41, bouton Épingler ce trajet.">
+      <figcaption class="t-small">02b · Trajet composé</figcaption>
+    </figure></li>
+    <li><figure>
+      <img src="../assets/figma-03-trajet-epingle.webp" width="780" height="1688" loading="lazy" decoding="async" alt="Maquette Figma. Résultats avec le trajet épinglé en tête de liste et l'onglet À ma façon actif.">
+      <figcaption class="t-small">03 · Trajet épinglé</figcaption>
+    </figure></li>
+  </ul>
+</section>
+
+<div class="page">
+  <div class="rule"></div>
+
+  <!-- 8. Section 03 -->
+  <section class="section reveal">
+    <div class="numbered">
+      <div class="num t-display" aria-hidden="true">03</div>
+      <div>
+        <h2 class="t-display h2">Pourquoi ça n'existe pas (encore)</h2>
+        <div class="prose t-body">
+          <p>La plupart des gens veulent que l'application décide. C'est sa promesse, et elle la tient bien.</p>
+          <p>Un trajet que l'application n'a pas choisi pose deux questions. Est-il fiable ? Et s'il se passe mal, qui en est responsable ?</p>
+          <p>D'où un mode optionnel, pas un remplacement. On y entre exprès. On sait que le trajet est le sien.</p>
+        </div>
+        <p class="to-test">À tester : afficher le coût d'une correspondance comme un critère visible, pas seulement la durée totale.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- 9. Section 04 -->
+  <section class="section reveal">
+    <div class="numbered">
+      <div class="num t-display" aria-hidden="true">04</div>
+      <div>
+        <h2 class="t-display h2">Où la machine a mené, où j'ai repris la main</h2>
+        <div class="prose t-body">
+          <p>Claude Code et le connecteur Figma ont construit vite : les tokens, les écrans, le code.</p>
+          <p>Claude a d'abord redessiné les pastilles de ligne à partir de zéro. Je lui ai fait réutiliser celles que j'avais extraites.</p>
+          <p>Il a utilisé du positionnement absolu. J'ai exigé de l'auto layout partout.</p>
+          <p>Il a surdimensionné l'en-tête. Je l'ai corrigé à la main, et il a pris ma correction comme modèle pour la suite.</p>
+          <p>Les temps de trajet restent illustratifs. Ils le resteront tant qu'ils ne sont pas remplacés par les données d'Île-de-France Mobilités.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+</div>
+</main>
+
+<div class="page">
+  <!-- 10. Footer -->
+  <footer class="footer t-small">
+    <svg class="bts-mark" viewBox="0 0 120 100" aria-hidden="true" focusable="false"><path d="M58 8 L58 66 L18 66 Z"/><path d="M66 26 L66 66 L98 66 Z"/><path d="M10 74 L110 74 L98 92 L22 92 Z"/></svg>
+    Concept indépendant, non affilié à Citymapper. Chiffres illustratifs.<br>
+    Série Brief to Ship, chapitre build. Figma · Claude Code · HTML, CSS, JavaScript · <a href="https://anisslimani.com">anisslimani.com</a>
+  </footer>
+</div>
+
+<script src="../prototype/data.js"></script>
+<script src="../prototype/prototype.js"></script>
+<script src="../page.js"></script>
+
+</body>
+</html>

@@ -1,4 +1,4 @@
-/* À ma façon · étude de cas. Comportement de la page (FR et EN). */
+/* À ma façon · étude de cas. Comportement de la page (EN et FR). */
 (function () {
   document.body.classList.remove('no-js');
 
