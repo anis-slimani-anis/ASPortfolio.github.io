@@ -304,8 +304,15 @@ body::-webkit-scrollbar-button {
 [data-theme="light"] .hero-photo .portrait-light { display: block; }
 
 /* Dark mode: a soft lens follows the pointer over the portrait and shows
-   the cartoon through it. It lives outside the photo box so the edges of the
-   picture never cut it. Only transforms move, so it stays smooth. */
+   the cartoon through it. The lens lives in a stage that fades out toward the
+   picture's edges exactly like the photo does, so it dissolves at the edge
+   instead of being cut. Only transforms move, so it stays smooth. */
+.hero-lens-stage {
+  position: absolute; inset: 0; z-index: 2; overflow: hidden; pointer-events: none;
+  -webkit-mask-image: radial-gradient(ellipse 90% 95% at 50% 50%, black 60%, transparent 100%);
+  mask-image: radial-gradient(ellipse 90% 95% at 50% 50%, black 60%, transparent 100%);
+}
+[data-theme="light"] .hero-lens-stage { display: none; }
 .hero-lens {
   position: absolute; left: 0; top: 0; z-index: 2;
   width: var(--lens, 260px); height: var(--lens, 260px);
@@ -323,6 +330,7 @@ body::-webkit-scrollbar-button {
 .hero-lens-glass {
   position: relative; width: 100%; height: 100%;
   border-radius: 50%; overflow: hidden;
+  background: #03020a;
   /* soft edge instead of a rim */
   -webkit-mask-image: radial-gradient(circle, #000 58%, rgba(0,0,0,0.55) 68%, transparent 73%);
   mask-image: radial-gradient(circle, #000 58%, rgba(0,0,0,0.55) 68%, transparent 73%);
@@ -335,11 +343,11 @@ body::-webkit-scrollbar-button {
 }
 .hero-photo-wrap.is-lens .hero-lens::before { opacity: 1; transform: scale(1); }
 .hero-photo-wrap.is-lens .hero-lens-glass { transform: scale(1); opacity: 1; }
-.hero-lens img {
+.hero-photo .hero-lens img {
+  -webkit-mask-image: none; mask-image: none;
   position: absolute; left: 0; top: 0; max-width: none;
   width: var(--pw, 100%); height: var(--ph, 100%);
   object-fit: contain; object-position: center top;
-  background: #03020a;   /* covers the photo only where the photo is */
   transform: translate3d(calc(var(--lens, 260px) / 2 - var(--lx, 0px) + var(--ox, 0px)), calc(var(--lens, 260px) / 2 - var(--ly, 0px) + var(--oy, 0px)), 0);
   will-change: transform;
 }
@@ -359,7 +367,7 @@ body::-webkit-scrollbar-button {
 }
 /* Touch screens: no hover, so neither effect is shown */
 @media (hover: none) {
-  .hero-lens, .hero-photo .cartoon-light { display: none !important; }
+  .hero-lens-stage, .hero-photo .cartoon-light { display: none !important; }
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-lens-glass, .hero-lens::before, [data-theme="light"] .hero-photo .cartoon-light { transition: none; }

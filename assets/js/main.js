@@ -1061,11 +1061,9 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
   var tx = 0, ty = 0, x = 0, y = 0, raf = 0, active = false;
 
   function measure() {
-    var r = photo.getBoundingClientRect(), w = wrap.getBoundingClientRect();
+    var r = photo.getBoundingClientRect();
     wrap.style.setProperty('--pw', r.width + 'px');
     wrap.style.setProperty('--ph', r.height + 'px');
-    wrap.style.setProperty('--ox', (r.left - w.left) + 'px');
-    wrap.style.setProperty('--oy', (r.top - w.top) + 'px');
     wrap.style.setProperty('--lens', Math.round(Math.min(r.width * 0.78, 340)) + 'px');
   }
   function frame() {
@@ -1074,7 +1072,7 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
     wrap.style.setProperty('--ly', y.toFixed(1) + 'px');
     raf = active || Math.abs(tx - x) > 0.3 || Math.abs(ty - y) > 0.3 ? requestAnimationFrame(frame) : 0;
   }
-  function aim(e) { var w = wrap.getBoundingClientRect(); tx = e.clientX - w.left; ty = e.clientY - w.top; }
+  function aim(e) { var r = photo.getBoundingClientRect(); tx = e.clientX - r.left; ty = e.clientY - r.top; }
 
   wrap.addEventListener('pointerenter', function (e) {
     if (e.pointerType !== 'mouse') return;
