@@ -1050,3 +1050,17 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
     requestAnimationFrame(tick);
   });
 })();
+
+/* ── Hero portrait: the cartoon opens from where the pointer enters ── */
+(function () {
+  var wrap = document.querySelector('.hero-photo-wrap');
+  var photo = wrap && wrap.querySelector('.hero-photo');
+  if (!photo) return;
+  function aim(e) {
+    var r = photo.getBoundingClientRect();
+    photo.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+    photo.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+  }
+  wrap.addEventListener('pointerenter', aim);
+  wrap.addEventListener('pointerleave', aim);
+})();

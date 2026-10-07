@@ -303,29 +303,32 @@ body::-webkit-scrollbar-button {
 [data-theme="light"] .hero-photo .portrait-dark  { display: none; }
 [data-theme="light"] .hero-photo .portrait-light { display: block; }
 
-/* Cartoon portrait — sits on top of the photo and fades in on hover */
-.hero-photo .portrait-photo,
-.hero-photo .portrait-cartoon { transition: opacity 0.35s ease; }
+/* Cartoon portrait: sits on top of the photo and opens from the pointer
+   like an iris. The photo underneath never fades, so nothing washes out. */
 .hero-photo .portrait-cartoon {
   position: absolute;
   inset: 0;
-  opacity: 0;
+  pointer-events: none;
+  clip-path: circle(0% at var(--mx, 50%) var(--my, 38%));
+  transition: clip-path 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
+.hero-photo .cartoon-dark { background: #03020a; }
 .hero-photo .cartoon-light { display: none; }
 [data-theme="light"] .hero-photo .cartoon-dark  { display: none; }
-/* Same studio backdrop as the light portrait photo, so only the figure changes on hover */
+/* Same studio backdrop as the light portrait photo, so only the figure changes */
 [data-theme="light"] .hero-photo .cartoon-light {
   display: block;
   background: linear-gradient(158deg, #80837d 0%, #666c69 30%, #454b49 58%, #2c3130 82%, #222725 100%);
 }
 @media (hover: hover) {
-  .hero-photo-wrap:hover .portrait-cartoon { opacity: 1; }
-  .hero-photo-wrap:hover .portrait-photo   { opacity: 0; }
+  .hero-photo-wrap:hover .portrait-cartoon { clip-path: circle(150% at var(--mx, 50%) var(--my, 38%)); }
 }
-.hero-photo-wrap:focus-visible .portrait-cartoon { opacity: 1; }
-.hero-photo-wrap:focus-visible .portrait-photo   { opacity: 0; }
+.hero-photo-wrap:focus-visible .portrait-cartoon { clip-path: circle(150% at 50% 38%); }
+/* Touch screens: no hover, so the cartoon is not shown (or downloaded) */
+@media (hover: none) {
+  .hero-photo .portrait-cartoon { display: none !important; }
+}
 @media (prefers-reduced-motion: reduce) {
-  .hero-photo .portrait-photo,
   .hero-photo .portrait-cartoon { transition: none; }
 }
 
@@ -3608,3 +3611,9 @@ nav.work-header {
 .case-cta-title { font-family: var(--font-head); font-weight: 500; font-size: clamp(26px, 3.8vw, 42px); line-height: 1.15; letter-spacing: -0.02em; color: var(--text); max-width: 18em; }
 .case-cta-text { margin-top: 14px; font-size: 17px; line-height: 1.7; color: var(--text-mid); max-width: 34em; }
 .case-cta .hero-cta-row { margin-top: 28px; }
+
+/* Homepage Brief to Ship card on small screens: give the image its real shape */
+@media (max-width: 860px) {
+  .case-visual.case-visual--ai { aspect-ratio: 16 / 10; min-height: 0; padding: 0; }
+}
+.contact-link-icon svg { display: block; }
