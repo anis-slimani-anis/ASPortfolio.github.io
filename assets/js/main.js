@@ -1010,7 +1010,7 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
 
 /* ── Auto-scrolling post carousel ──────────────────────────
    .lp[data-lp] > .lp-viewport > .lp-track holds the cards twice (second
-   set aria-hidden). It drifts slowly, pauses on hover, focus or touch,
+   set aria-hidden). It drifts slowly, waits while it is being handled,
    can be scrolled by hand, and stays still under reduced motion. */
 (function () {
   document.querySelectorAll('[data-lp]').forEach(function (root) {
@@ -1024,11 +1024,15 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
     function half() { return track.scrollWidth / 2; }
     function hold(ms) { paused = true; clearTimeout(resume); if (ms) resume = setTimeout(function () { paused = false; pos = view.scrollLeft; }, ms); }
 
-    view.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') hold(0); });
-    view.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') { paused = false; pos = view.scrollLeft; } });
-    view.addEventListener('focusin', function () { hold(0); });
-    view.addEventListener('focusout', function () { paused = false; pos = view.scrollLeft; });
-    ['touchstart', 'wheel'].forEach(function (t) { view.addEventListener(t, function () { hold(3500); }, { passive: true }); });
+    // Keeps drifting while the page scrolls or the mouse passes over it.
+    // It only waits while someone is actually handling it: keyboard focus,
+    // a finger on it, or a sideways scroll gesture.
+    function release(ms) { clearTimeout(resume); resume = setTimeout(function () { paused = false; pos = view.scrollLeft; }, ms); }
+    view.addEventListener('focusin', function (e) { if (e.target.matches(':focus-visible')) hold(0); });
+    view.addEventListener('focusout', function () { release(0); });
+    view.addEventListener('touchstart', function () { hold(0); }, { passive: true });
+    ['touchend', 'touchcancel'].forEach(function (t) { view.addEventListener(t, function () { release(1200); }, { passive: true }); });
+    view.addEventListener('wheel', function (e) { if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) { hold(0); release(1500); } }, { passive: true });
 
     function tick(t) {
       if (visible && !paused) {
