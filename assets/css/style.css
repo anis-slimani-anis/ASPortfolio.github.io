@@ -3640,7 +3640,7 @@ nav.work-header {
 
 /* ── Day mode homepage: post-it notes ──────────────────────────
    Only two places use them: the four stats under "Selected work" and the
-   six blocks under "How I contribute". Classic yellow paper, a slight tilt,
+   six blocks under "How I contribute". Pastel paper in five colours, a slight tilt,
    a lifted shadow. Type stays the site's own. Every other card keeps its
    normal white day-mode look. `rotate` is used so the tilt never fights the
    reveal and hover transforms. */
@@ -3651,18 +3651,25 @@ html[data-theme="light"] .stats-strip-inner { gap: 18px; padding-top: 6px; paddi
 html[data-theme="light"] .stat-item + .stat-item::before { content: none; }
 html[data-theme="light"] .stat-item,
 html[data-theme="light"] .service-block {
-  background: linear-gradient(180deg, #FFF79A 0%, #FFEE70 100%) !important;
+  --paper: #FFF1B5;
+  background: var(--paper) !important;
   border: 0 !important; border-radius: 2px !important;
-  box-shadow: 0 1px 1px rgba(60,50,0,0.10), 0 12px 16px -10px rgba(60,50,0,0.38) !important;
+  box-shadow: 0 1px 1px rgba(40,40,60,0.10), 0 12px 16px -10px rgba(40,40,60,0.34) !important;
   transition: rotate 0.25s ease, translate 0.25s ease, box-shadow 0.25s ease;
 }
+/* paper colours cycle through five, tilts through four, so neighbours never match */
+html[data-theme="light"] :is(.stat-item, .service-block):nth-child(5n+1) { --paper: #C7F1ED; }
+html[data-theme="light"] :is(.stat-item, .service-block):nth-child(5n+2) { --paper: #C6EDC9; }
+html[data-theme="light"] :is(.stat-item, .service-block):nth-child(5n+3) { --paper: #F6C3B4; }
+html[data-theme="light"] :is(.stat-item, .service-block):nth-child(5n+4) { --paper: #E3DBFF; }
+html[data-theme="light"] :is(.stat-item, .service-block):nth-child(5n+5) { --paper: #FFF1B5; }
 html[data-theme="light"] :is(.stat-item, .service-block):nth-child(4n+1) { rotate: -1.2deg; }
 html[data-theme="light"] :is(.stat-item, .service-block):nth-child(4n+2) { rotate: 0.9deg; }
 html[data-theme="light"] :is(.stat-item, .service-block):nth-child(4n+3) { rotate: -0.6deg; }
 html[data-theme="light"] :is(.stat-item, .service-block):nth-child(4n+4) { rotate: 1.1deg; }
 html[data-theme="light"] :is(.stat-item, .service-block):hover {
   rotate: 0deg; translate: 0 -3px;
-  box-shadow: 0 1px 1px rgba(60,50,0,0.10), 0 20px 24px -12px rgba(60,50,0,0.42) !important;
+  box-shadow: 0 1px 1px rgba(40,40,60,0.10), 0 20px 24px -12px rgba(40,40,60,0.38) !important;
 }
 html[data-theme="light"] .service-block::after { content: none; }
 html[data-theme="light"] .stat-item .stat-label,
