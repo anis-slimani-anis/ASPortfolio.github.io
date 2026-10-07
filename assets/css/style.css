@@ -303,58 +303,43 @@ body::-webkit-scrollbar-button {
 [data-theme="light"] .hero-photo .portrait-dark  { display: none; }
 [data-theme="light"] .hero-photo .portrait-light { display: block; }
 
-/* Dark mode: a soft lens follows the pointer over the portrait and shows
-   the cartoon through it. The lens lives in a stage that fades out toward the
-   picture's edges exactly like the photo does, so it dissolves at the edge
-   instead of being cut. Only transforms move, so it stays smooth. */
-.hero-lens-stage {
-  position: absolute; inset: 0; z-index: 2; overflow: hidden; pointer-events: none;
-  /* fade to nothing along all four sides, so neither the lens nor its glow ever ends on a straight line */
-  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 16%, #000 84%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
-  -webkit-mask-composite: source-in;
-  mask-image: linear-gradient(to right, transparent 0, #000 16%, #000 84%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
-  mask-composite: intersect;
-}
+/* Dark mode: a scan band follows the pointer up and down the portrait.
+   Inside the band the whole width is the cartoon, so the real photo never
+   shows behind it. Only transforms move while it follows. */
+.hero-lens-stage { position: absolute; inset: 0; z-index: 2; overflow: hidden; pointer-events: none; }
 [data-theme="light"] .hero-lens-stage { display: none; }
 .hero-lens {
-  position: absolute; left: 0; top: 0; z-index: 2;
-  width: var(--lens, 260px); height: var(--lens, 260px);
-  margin: calc(var(--lens, 260px) / -2) 0 0 calc(var(--lens, 260px) / -2);
-  transform: translate3d(var(--lx, 0px), var(--ly, 0px), 0);
-  pointer-events: none; will-change: transform;
-}
-/* The aura: a faint glow around the lens, no hard outline */
-.hero-lens::before {
-  content: ''; position: absolute; inset: -14%; border-radius: 50%;
-  background: radial-gradient(circle closest-side, rgba(190,190,255,0.14) 0%, rgba(190,190,255,0.06) 70%, transparent 100%);
-  opacity: 0; transform: scale(0.6);
-  transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  position: absolute; left: 0; right: 0; top: 0;
+  height: var(--band, 200px);
+  transform: translate3d(0, calc(var(--ly, 0px) - var(--band, 200px) / 2), 0);
+  will-change: transform;
 }
 .hero-lens-glass {
-  position: relative; width: 100%; height: 100%;
-  border-radius: 50%; overflow: hidden;
+  position: absolute; inset: 0; overflow: hidden;
   background: #03020a;
-  /* soft edge instead of a rim */
-  -webkit-mask-image: radial-gradient(circle closest-side, #000 66%, rgba(0,0,0,0.5) 84%, transparent 100%);
-  mask-image: radial-gradient(circle closest-side, #000 66%, rgba(0,0,0,0.5) 84%, transparent 100%);
-  transform: scale(0.5); opacity: 0;
-  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.3s ease;
+  /* closed: a hairline at the pointer. open: the full band. Leaving is the exact reverse. */
+  clip-path: inset(50% 0 50% 0);
+  transition: clip-path 0.34s cubic-bezier(0.3, 0.7, 0.2, 1);
 }
-.hero-lens-glass::after {
-  content: ''; position: absolute; inset: 0; border-radius: 50%;
-  background: radial-gradient(circle at 32% 24%, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 42%);
+.hero-photo-wrap.is-lens .hero-lens-glass { clip-path: inset(0 0 0 0); }
+/* the two scan lines */
+.hero-lens::before, .hero-lens::after {
+  content: ''; position: absolute; left: 0; right: 0; height: 1px; z-index: 1;
+  background: linear-gradient(to right, transparent, rgba(200,200,255,0.75) 18%, rgba(200,200,255,0.75) 82%, transparent);
+  box-shadow: 0 0 14px 1px rgba(170,170,255,0.45);
+  opacity: 0; transition: opacity 0.2s ease, transform 0.34s cubic-bezier(0.3, 0.7, 0.2, 1);
 }
-.hero-photo-wrap.is-lens .hero-lens::before { opacity: 1; transform: scale(1); }
-.hero-photo-wrap.is-lens .hero-lens-glass { transform: scale(1); opacity: 1; }
+.hero-lens::before { top: 0; transform: translateY(calc(var(--band, 200px) / 2)); }
+.hero-lens::after { bottom: 0; transform: translateY(calc(var(--band, 200px) / -2)); }
+.hero-photo-wrap.is-lens .hero-lens::before, .hero-photo-wrap.is-lens .hero-lens::after { opacity: 1; transform: none; }
 .hero-photo .hero-lens img {
   -webkit-mask-image: none; mask-image: none;
   position: absolute; left: 0; top: 0; max-width: none;
   width: var(--pw, 100%); height: var(--ph, 100%);
   object-fit: contain; object-position: center top;
-  transform: translate3d(calc(var(--lens, 260px) / 2 - var(--lx, 0px) + var(--ox, 0px)), calc(var(--lens, 260px) / 2 - var(--ly, 0px) + var(--oy, 0px)), 0);
+  transform: translate3d(0, calc(var(--band, 200px) / 2 - var(--ly, 0px)), 0);
   will-change: transform;
 }
-[data-theme="light"] .hero-lens { display: none; }
 
 /* Light mode: the pinned photo straightens on hover and the picture quietly
    becomes the cartoon. The photo underneath never fades. */
@@ -373,7 +358,7 @@ body::-webkit-scrollbar-button {
   .hero-lens-stage, .hero-photo .cartoon-light { display: none !important; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-lens-glass, .hero-lens::before, [data-theme="light"] .hero-photo .cartoon-light { transition: none; }
+  .hero-lens-glass, .hero-lens::before, .hero-lens::after, [data-theme="light"] .hero-photo .cartoon-light { transition: none; }
 }
 
 /* Light mode hero photo — pinned photograph on paper */

@@ -1051,32 +1051,33 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
   });
 })();
 
-/* ── Hero portrait (dark mode): soft lens that follows the pointer ──
-   Position is eased in a requestAnimationFrame loop that only runs while
-   the pointer is over the portrait. */
+/* ── Hero portrait (dark mode): scan band that follows the pointer ──
+   The band's vertical position is eased in a requestAnimationFrame loop
+   that only runs while the pointer is over the portrait. On leave the band
+   stays where it is and simply closes. */
 (function () {
   var wrap = document.querySelector('.hero-photo-wrap');
   var photo = wrap && wrap.querySelector('.hero-photo');
   if (!photo || !wrap.querySelector('.hero-lens')) return;
-  var tx = 0, ty = 0, x = 0, y = 0, raf = 0, active = false;
+  var ty = 0, y = 0, raf = 0, active = false;
 
   function measure() {
     var r = photo.getBoundingClientRect();
     wrap.style.setProperty('--pw', r.width + 'px');
     wrap.style.setProperty('--ph', r.height + 'px');
-    wrap.style.setProperty('--lens', Math.round(Math.min(r.width * 1.75, 780)) + 'px');
+    wrap.style.setProperty('--band', Math.round(r.height * 0.36) + 'px');
   }
   function frame() {
-    x += (tx - x) * 0.16; y += (ty - y) * 0.16;
-    wrap.style.setProperty('--lx', x.toFixed(1) + 'px');
+    y += (ty - y) * 0.2;
     wrap.style.setProperty('--ly', y.toFixed(1) + 'px');
-    raf = active || Math.abs(tx - x) > 0.3 || Math.abs(ty - y) > 0.3 ? requestAnimationFrame(frame) : 0;
+    raf = active ? requestAnimationFrame(frame) : 0;
   }
-  function aim(e) { var r = photo.getBoundingClientRect(); tx = e.clientX - r.left; ty = e.clientY - r.top; }
+  function aim(e) { ty = e.clientY - photo.getBoundingClientRect().top; }
 
   wrap.addEventListener('pointerenter', function (e) {
     if (e.pointerType !== 'mouse') return;
-    measure(); aim(e); x = tx; y = ty; active = true;
+    measure(); aim(e); y = ty; active = true;
+    wrap.style.setProperty('--ly', y.toFixed(1) + 'px');
     wrap.classList.add('is-lens');
     if (!raf) raf = requestAnimationFrame(frame);
   });
