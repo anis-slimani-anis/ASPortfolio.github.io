@@ -1051,62 +1051,67 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
   });
 })();
 
-/* ── Hero portrait (dark mode): scan band that follows the pointer ──
-   The band and the picture inside it are moved with direct transforms (no
-   CSS variables, so nothing else on the page is restyled each frame) and
-   track the pointer closely. The loop only runs while the pointer is over
-   the portrait, plus the moment it takes the band to close. */
+/* ── Hero portrait (dark mode): scan band under the pointer ──
+   Deliberately simple, so there is little that can go wrong:
+   - no animation loop: the strip is placed straight from pointer events;
+   - it only fades (CSS opacity), it never changes size;
+   - it never moves while it is fading out, and it never reopens until the
+     previous fade has finished, so quick in-and-out cannot make it jump;
+   - the pointer has to rest on the portrait for a moment before it shows. */
 (function () {
   var wrap = document.querySelector('.hero-photo-wrap');
-  var photo = wrap && wrap.querySelector('.hero-photo');
-  var band = wrap && wrap.querySelector('.hero-lens');
+  var stage = wrap && wrap.querySelector('.hero-scan-stage');
+  var band = stage && stage.querySelector('.hero-scan');
   var pic = band && band.querySelector('img');
-  if (!photo || !band || !pic) return;
-  var CLOSE_MS = 320, OPEN_DELAY = 60, FOLLOW = 0.45;
-  var ty = 0, y = 0, half = 100, top = 0, raf = 0, over = false, leftAt = -1e9, openTimer = 0;
+  if (!pic) return;
 
-  function measure() {
-    var r = photo.getBoundingClientRect();
-    top = r.top; half = Math.round(r.height * 0.29);
-    wrap.style.setProperty('--pw', r.width + 'px');
-    wrap.style.setProperty('--ph', r.height + 'px');
-    wrap.style.setProperty('--band', (half * 2) + 'px');
+  var FADE = 180;     // matches the opacity transition in the stylesheet
+  var INTENT = 70;    // ms the pointer must stay before the strip shows
+  var inside = false, shown = false, lastY = 0, clearAt = 0, timer = 0;
+
+  function place() {
+    var r = stage.getBoundingClientRect();
+    var dpr = window.devicePixelRatio || 1;
+    // strip centred on the pointer, snapped to whole device pixels so the picture does not shimmer
+    var v = Math.round((lastY - r.top - r.height * 0.29) * dpr) / dpr;
+    band.style.transform = 'translate3d(0,' + v + 'px,0)';
+    pic.style.transform = 'translate3d(0,' + (-v) + 'px,0)';   // keeps the picture still while the strip moves
   }
-  function put() {
-    band.style.transform = 'translate3d(0,' + (y - half).toFixed(1) + 'px,0)';
-    pic.style.transform = 'translate3d(0,' + (half - y).toFixed(1) + 'px,0)';
+  function show() {
+    if (!inside) return;
+    place(); shown = true; wrap.classList.add('is-scanning');
+  }
+  function enter(e) {
+    if (e.pointerType !== 'mouse' || document.documentElement.getAttribute('data-theme') === 'light') return;
+    inside = true; lastY = e.clientY;
+    clearTimeout(timer);
+    timer = setTimeout(show, Math.max(INTENT, clearAt - performance.now()));
+  }
+  function move(e) {
+    if (!inside) return;
+    lastY = e.clientY;
+    if (shown) place();
   }
   function leave() {
-    if (!over) return;
-    over = false; clearTimeout(openTimer);
-    if (wrap.classList.contains('is-lens')) leftAt = performance.now();
-    wrap.classList.remove('is-lens');
+    if (!inside) return;
+    inside = false; clearTimeout(timer);
+    if (shown) { shown = false; clearAt = performance.now() + FADE; wrap.classList.remove('is-scanning'); }
   }
-  function frame(t) {
-    // The browser does not always send a leave event (page scrolled under a
-    // still pointer, pointer left the window): check the real hover state.
-    if (over && !wrap.matches(':hover')) leave();
-    y += (ty - y) * FOLLOW;
-    put();
-    raf = over || t - leftAt < CLOSE_MS ? requestAnimationFrame(frame) : 0;
-  }
-  // Have the picture downloaded and decoded before the first hover, so the
-  // band never opens empty and then pops in.
-  if (pic.decode) pic.decode().catch(function () {});
 
-  wrap.addEventListener('pointerenter', function (e) {
-    if (e.pointerType !== 'mouse') return;
-    var stillClosing = performance.now() - leftAt < CLOSE_MS;
-    over = true; measure(); ty = e.clientY - top;
-    if (!stillClosing) { y = ty; put(); }          // fully closed: open right at the pointer
-    clearTimeout(openTimer);
-    openTimer = setTimeout(function () { if (over) wrap.classList.add('is-lens'); }, stillClosing ? 0 : OPEN_DELAY);
-    if (!raf) raf = requestAnimationFrame(frame);
-  });
-  wrap.addEventListener('pointermove', function (e) { if (over) ty = e.clientY - top; });
-  window.addEventListener('scroll', function () { if (over) top = photo.getBoundingClientRect().top; }, { passive: true });
+  wrap.addEventListener('pointerenter', enter);
+  wrap.addEventListener('pointermove', move);
   wrap.addEventListener('pointerleave', leave);
   wrap.addEventListener('pointercancel', leave);
+  // Browsers do not always report a leave. These make sure it still closes.
+  document.addEventListener('pointermove', function (e) { if (inside && !wrap.contains(e.target)) leave(); }, { passive: true });
+  document.documentElement.addEventListener('mouseleave', leave);
   window.addEventListener('blur', leave);
   document.addEventListener('visibilitychange', function () { if (document.hidden) leave(); });
+  window.addEventListener('scroll', function () {
+    if (!inside) return;
+    requestAnimationFrame(function () { if (!wrap.matches(':hover')) leave(); else if (shown) place(); });
+  }, { passive: true });
+
+  // Download and decode the picture up front, so the strip never opens empty.
+  if (pic.decode) pic.decode().catch(function () {});
 })();

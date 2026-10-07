@@ -303,43 +303,33 @@ body::-webkit-scrollbar-button {
 [data-theme="light"] .hero-photo .portrait-dark  { display: none; }
 [data-theme="light"] .hero-photo .portrait-light { display: block; }
 
-/* Dark mode: a scan band follows the pointer up and down the portrait.
-   Inside the band the whole width is the cartoon, so the real photo never
-   shows behind it. Only transforms move while it follows. */
-.hero-lens-stage { position: absolute; inset: 0; z-index: 2; overflow: hidden; pointer-events: none; }
-[data-theme="light"] .hero-lens-stage { display: none; }
-.hero-lens {
-  position: absolute; left: 0; right: 0; top: 0;
-  height: var(--band, 200px);
-  transform: translate3d(0, -100%, 0);   /* positioned by script */
-  will-change: transform;
+/* Dark mode: a scan band sits under the pointer on the portrait and shows
+   the cartoon across the full width. Kept deliberately simple: the band is a
+   fixed-size strip that only fades in and out. Nothing changes size or shape,
+   and it is moved with transforms only. */
+.hero-scan-stage { position: absolute; inset: 0; z-index: 2; overflow: hidden; pointer-events: none; }
+[data-theme="light"] .hero-scan-stage { display: none; }
+.hero-scan {
+  position: absolute; left: 0; right: 0; top: 0; height: 58%;
+  overflow: hidden; background: #03020a;
+  transform: translate3d(0, -120%, 0);   /* parked out of sight until the script places it */
+  opacity: 0; transition: opacity 0.18s ease-out;
+  will-change: transform, opacity;
 }
-.hero-lens-glass {
-  position: absolute; inset: 0; overflow: hidden;
-  background: #03020a;
-  /* closed: a hairline at the pointer. open: the full band. Leaving is the exact reverse. */
-  clip-path: inset(50% 0 50% 0);
-  /* fully removed once closed, so nothing can flash when the pointer is away */
-  visibility: hidden;
-  transition: clip-path 0.3s cubic-bezier(0.3, 0.7, 0.2, 1), visibility 0s linear 0.3s;
-}
-.hero-photo-wrap.is-lens .hero-lens-glass { clip-path: inset(0 0 0 0); visibility: visible; transition-delay: 0s, 0s; }
-/* the two scan lines */
-.hero-lens::before, .hero-lens::after {
+.hero-photo-wrap.is-scanning .hero-scan { opacity: 1; }
+.hero-scan::before, .hero-scan::after {   /* the two scan lines */
   content: ''; position: absolute; left: 0; right: 0; height: 1px; z-index: 1;
-  background: linear-gradient(to right, transparent, rgba(200,200,255,0.75) 18%, rgba(200,200,255,0.75) 82%, transparent);
-  box-shadow: 0 0 8px rgba(170,170,255,0.4);
-  opacity: 0; transition: opacity 0.2s ease, transform 0.34s cubic-bezier(0.3, 0.7, 0.2, 1);
+  background: linear-gradient(to right, transparent, rgba(205,205,255,0.85) 18%, rgba(205,205,255,0.85) 82%, transparent);
+  box-shadow: 0 0 8px rgba(170,170,255,0.45);
 }
-.hero-lens::before { top: 0; transform: translateY(calc(var(--band, 200px) / 2)); }
-.hero-lens::after { bottom: 0; transform: translateY(calc(var(--band, 200px) / -2)); }
-.hero-photo-wrap.is-lens .hero-lens::before, .hero-photo-wrap.is-lens .hero-lens::after { opacity: 1; transform: none; }
-.hero-photo .hero-lens img {
-  -webkit-mask-image: none; mask-image: none;
+.hero-scan::before { top: 0; }
+.hero-scan::after { bottom: 0; }
+.hero-photo .hero-scan img {
   position: absolute; left: 0; top: 0; max-width: none;
-  width: var(--pw, 100%); height: var(--ph, 100%);
+  width: 100%; height: calc(100% / 0.58);   /* the full portrait height, whatever the strip height */
   object-fit: contain; object-position: center top;
-  will-change: transform;   /* positioned by script */
+  -webkit-mask-image: none; mask-image: none;
+  will-change: transform;
 }
 
 /* Light mode: the pinned photo straightens on hover and the picture quietly
@@ -356,10 +346,10 @@ body::-webkit-scrollbar-button {
 }
 /* Touch screens: no hover, so neither effect is shown */
 @media (hover: none) {
-  .hero-lens-stage, .hero-photo .cartoon-light { display: none !important; }
+  .hero-scan-stage, .hero-photo .cartoon-light { display: none !important; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-lens-glass, .hero-lens::before, .hero-lens::after, [data-theme="light"] .hero-photo .cartoon-light { transition: none; }
+  .hero-scan, [data-theme="light"] .hero-photo .cartoon-light { transition: none; }
 }
 
 /* Light mode hero photo — pinned photograph on paper */
