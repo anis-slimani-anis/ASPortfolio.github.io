@@ -88,10 +88,10 @@
 
   /* Ink black: the day-mode accent for links, numbers, outlines and highlights.
      Same near-black as the headings (dark mode keeps its lavender). */
-  /* Solid buttons: the same lavender button as night mode, with dark text */
-  --cta-bg:        #ccccff;
-  --cta-text:      #07070f;
-  --cta-shadow:    120,120,220;
+  /* Solid buttons: ink black with white text (night mode keeps its lavender button) */
+  --cta-bg:        #1b1d1f;
+  --cta-text:      #ffffff;
+  --cta-shadow:    27,29,31;
   --accent:        #1b1d1f;
   --accent-rgb:    27,29,31;
   --accent-dim:    rgba(27,29,31,0.05);
@@ -220,27 +220,27 @@ body::-webkit-scrollbar-button {
 [data-theme="light"] .nav-burger span,
 [data-theme="light"] .mobile-nav-close span { background: var(--text); }
 
-/* Primary CTA: lavender, dark text, no stars */
+/* Primary CTA: solid ink, no stars */
 [data-theme="light"] .btn-primary {
   background: var(--cta-bg) !important;
   color: var(--cta-text) !important;
   -webkit-text-fill-color: var(--cta-text) !important;
   border: none !important;
-  box-shadow: 0 2px 8px rgba(var(--cta-shadow),0.35) !important;
+  box-shadow: 0 2px 8px rgba(var(--cta-shadow),0.28) !important;
   overflow: visible;
   transition: transform 0.15s, box-shadow 0.2s !important;
 }
 [data-theme="light"] .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(var(--cta-shadow),0.45) !important;
+  box-shadow: 0 6px 18px rgba(var(--cta-shadow),0.35) !important;
   filter: none;
 }
 [data-theme="light"] .btn-primary::before,
 [data-theme="light"] .btn-primary::after { display: none; }
 [data-theme="light"] .btn-primary:hover {
   transform: translateY(-2px);
-  filter: brightness(1.03);
-  box-shadow: 0 8px 20px rgba(var(--cta-shadow),0.40);
+  filter: brightness(1.12);
+  box-shadow: 0 8px 20px rgba(var(--cta-shadow),0.30);
 }
 [data-theme="light"] .btn-secondary {
   background: #ffffff;
@@ -791,7 +791,7 @@ h1 em, h2 em {
   color: var(--cta-text) !important;
   -webkit-text-fill-color: var(--cta-text) !important;
   border: none !important;
-  box-shadow: 0 2px 8px rgba(var(--cta-shadow),0.32) !important;
+  box-shadow: 0 2px 8px rgba(var(--cta-shadow),0.25) !important;
   overflow: visible;
   transition: transform 0.15s, box-shadow 0.2s !important;
 }
@@ -809,8 +809,8 @@ h1 em, h2 em {
 }
 [data-theme="light"] .btn-nav:hover {
   transform: translateY(-1px);
-  filter: brightness(1.03);
-  box-shadow: 0 6px 16px rgba(var(--cta-shadow),0.40);
+  filter: brightness(1.12);
+  box-shadow: 0 6px 16px rgba(var(--cta-shadow),0.28);
 }
 .lang-toggle {
   font-family: var(--font-body);
@@ -3702,8 +3702,8 @@ html[data-theme="light"] .services-grid { gap: 20px; }
   .nav-logo { padding: 11px 0; margin: -11px 0; }
   .btn-ghost { display: inline-block; padding: 10px 0; }
 }
-/* Day mode: the closing call-to-action panel picks up the lavender of its button */
+/* Day mode: the closing call-to-action panel stays neutral, a soft shade behind a black button */
 [data-theme="light"] .case-cta {
-  background: radial-gradient(ellipse at 0% 0%, rgba(204,204,255,0.50), transparent 62%), var(--bg2);
-  border-color: rgba(var(--cta-shadow), 0.32);
+  background: radial-gradient(ellipse at 0% 0%, rgba(27,29,31,0.07), transparent 62%), var(--bg2);
+  border-color: rgba(27,29,31,0.16);
 }
