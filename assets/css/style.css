@@ -3710,19 +3710,19 @@ html[data-theme="light"] .services-grid > .service-block::after {
   transition: none;
   pointer-events: none;
 }
-/* Papers come from the Art section's disciplines. Stats run pink, green,
-   lilac, peach (the first four notes of the Art pile); the services grid
-   alternates warm and cool so neighbours never match. */
+/* Papers come from the Art section's disciplines. Stats run yellow, pink,
+   blue, green; the services grid alternates warm and cool so neighbours
+   never match. */
 html[data-theme="light"] .stat-item:nth-child(4n+1),
-html[data-theme="light"] .service-block:nth-child(6n+4) { --paper: #FFE7F3; --edge: #FFC8E3; --fold-c: #E8ACCA; --glow: 232,172,202; }
-html[data-theme="light"] .stat-item:nth-child(4n+2),
-html[data-theme="light"] .service-block:nth-child(6n+6) { --paper: #EFFFF3; --edge: #AED2B8; --fold-c: #90BD9C; --glow: 144,189,156; }
-html[data-theme="light"] .stat-item:nth-child(4n+3),
-html[data-theme="light"] .service-block:nth-child(6n+5) { --paper: #FAEEFF; --edge: #C590DC; --fold-c: #C9ACD6; --glow: 201,172,214; }
-html[data-theme="light"] .stat-item:nth-child(4n+4) { --paper: #FFEEE1; --edge: #F3C095; --fold-c: #FFBB83; --glow: 255,187,131; }
 html[data-theme="light"] .service-block:nth-child(6n+1) { --paper: #FDF8CA; --edge: #B8B276; --fold-c: #EDCF7F; --glow: 237,207,127; }
+html[data-theme="light"] .stat-item:nth-child(4n+2),
+html[data-theme="light"] .service-block:nth-child(6n+4) { --paper: #FFE7F3; --edge: #FFC8E3; --fold-c: #E8ACCA; --glow: 232,172,202; }
+html[data-theme="light"] .stat-item:nth-child(4n+3),
 html[data-theme="light"] .service-block:nth-child(6n+2) { --paper: #E8FAFF; --edge: #9EC8D5; --fold-c: #B9E5F3; --glow: 185,229,243; }
+html[data-theme="light"] .stat-item:nth-child(4n+4),
+html[data-theme="light"] .service-block:nth-child(6n+6) { --paper: #EFFFF3; --edge: #AED2B8; --fold-c: #90BD9C; --glow: 144,189,156; }
 html[data-theme="light"] .service-block:nth-child(6n+3) { --paper: #D8FFF9; --edge: #ADE5DC; --fold-c: #94E7DB; --glow: 148,231,219; }
+html[data-theme="light"] .service-block:nth-child(6n+5) { --paper: #FAEEFF; --edge: #C590DC; --fold-c: #C9ACD6; --glow: 201,172,214; }
 html[data-theme="light"] :is(.stat-item, .service-block):nth-child(4n+1) { rotate: -1.2deg; }
 html[data-theme="light"] :is(.stat-item, .service-block):nth-child(4n+2) { rotate: 0.9deg; }
 html[data-theme="light"] :is(.stat-item, .service-block):nth-child(4n+3) { rotate: -0.6deg; }
