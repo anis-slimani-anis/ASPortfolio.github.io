@@ -731,7 +731,9 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgpqqly';
   const cards = document.querySelectorAll('.case-card, .service-block');
   if (!cards.length) return;
 
-  const BASE_T  = 'border-color 0.25s, box-shadow 0.2s';
+  /* rotate, translate and filter belong to the day-mode notes: listed here so
+     their hover eases too once this inline transition takes over */
+  const BASE_T  = 'border-color 0.25s, box-shadow 0.2s, rotate 0.25s ease, translate 0.25s ease, filter 0.3s ease';
   const ENTER_T = BASE_T + ', transform 0.35s ease-out';
   const MOVE_T  = BASE_T + ', transform 0.08s ease-out';
   const LEAVE_T = BASE_T + ', transform 0.4s ease-out';

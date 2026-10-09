@@ -3638,38 +3638,107 @@ nav.work-header {
 
 /* ── Day mode homepage: post-it notes ──────────────────────────
    Only two places use them: the four stats under "Selected work" and the
-   six blocks under "How I contribute". Pastel paper in five colours, a slight tilt,
-   a lifted shadow. Type stays the site's own. Every other card keeps its
-   normal white day-mode look. `rotate` is used so the tilt never fights the
-   reveal and hover transforms. */
+   six blocks under "How I contribute". They are the Art section's notes:
+   the same pale discipline papers, a thin edge in the darker tone, a folded
+   bottom-right corner, a soft shadow, and the note's own colour as a glow on
+   hover. Type stays the site's own. Every other card keeps its normal white
+   day-mode look. `rotate` is used so the tilt never fights the reveal and
+   hover transforms. */
 html[data-theme="light"] .work-stats-embed,
 html[data-theme="light"] .work-stats-embed .stats-strip,
 html[data-theme="light"] .stats-strip { background: transparent !important; border: 0 !important; box-shadow: none !important; }
+/* the frame must not crop the tilted corners, the shadows or the hover glow */
+html[data-theme="light"] .work-stats-embed { overflow: visible; }
 html[data-theme="light"] .stats-strip-inner { gap: 18px; padding-top: 6px; padding-bottom: 6px; }
-html[data-theme="light"] .stat-item + .stat-item::before { content: none; }
 html[data-theme="light"] .stat-item,
 html[data-theme="light"] .service-block {
-  --paper: #FFF1B5;
-  background: var(--paper) !important;
-  border: 0 !important; border-radius: 2px !important;
-  box-shadow: 0 1px 1px rgba(40,40,60,0.10), 0 12px 16px -10px rgba(40,40,60,0.34) !important;
-  transition: rotate 0.25s ease, translate 0.25s ease, box-shadow 0.25s ease;
+  --paper: #FDF8CA; --edge: #B8B276; --fold-c: #EDCF7F; --glow: 237,207,127;
+  /* slightly wider than tall, as on the Art page (26 × 23 there) */
+  --fold-w: 34px;
+  --fold-h: 30px;
+  background: transparent !important;
+  border: 0 !important; border-radius: 0 !important;
+  box-shadow: none !important;
+  overflow: visible;
+  /* Stacked hard shadows trace the edge along the notched outline, fold
+     included, which a border cannot follow. The last one is the hover glow,
+     kept in the list at zero so it can ease in. */
+  filter:
+    drop-shadow( 1px 0 0 var(--edge))
+    drop-shadow(-1px 0 0 var(--edge))
+    drop-shadow(0  1px 0 var(--edge))
+    drop-shadow(0 -1px 0 var(--edge))
+    drop-shadow(0 6px 8px rgba(20,18,35,0.15))
+    drop-shadow(0 0 0 rgba(var(--glow), 0));
+  transition:
+    opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1),
+    rotate 0.25s ease, translate 0.25s ease, filter 0.3s ease;
 }
-/* paper colours cycle through five, tilts through four, so neighbours never match */
-html[data-theme="light"] :is(.stat-item, .service-block):nth-child(5n+1) { --paper: #C7F1ED; }
-html[data-theme="light"] :is(.stat-item, .service-block):nth-child(5n+2) { --paper: #C6EDC9; }
-html[data-theme="light"] :is(.stat-item, .service-block):nth-child(5n+3) { --paper: #F6C3B4; }
-html[data-theme="light"] :is(.stat-item, .service-block):nth-child(5n+4) { --paper: #E3DBFF; }
-html[data-theme="light"] :is(.stat-item, .service-block):nth-child(5n+5) { --paper: #FFF1B5; }
+/* Paper: the full sheet with a rectangular bite out of the bottom-right */
+html[data-theme="light"] .stats-strip-inner > .stat-item::before,
+html[data-theme="light"] .services-grid > .service-block::before {
+  content: "";
+  display: block;   /* the phone layout hides the old divider on stats 2 and 4 */
+  position: absolute;
+  inset: 0;
+  width: auto;
+  z-index: -1;
+  background: var(--paper);
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - var(--fold-h)),
+    calc(100% - var(--fold-w)) calc(100% - var(--fold-h)),
+    calc(100% - var(--fold-w)) 100%,
+    0 100%
+  );
+  pointer-events: none;
+}
+/* Fold: a darker triangle in the upper-left half of that bite, so the two
+   read as a turned-up corner */
+html[data-theme="light"] .stats-strip-inner > .stat-item::after,
+html[data-theme="light"] .services-grid > .service-block::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 auto;
+  width: var(--fold-w);
+  height: var(--fold-h);
+  z-index: -1;
+  opacity: 1;
+  background: var(--fold-c);
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  transition: none;
+  pointer-events: none;
+}
+/* Papers come from the Art section's disciplines. Stats run pink, green,
+   lilac, peach (the first four notes of the Art pile); the services grid
+   alternates warm and cool so neighbours never match. */
+html[data-theme="light"] .stat-item:nth-child(4n+1),
+html[data-theme="light"] .service-block:nth-child(6n+4) { --paper: #FFE7F3; --edge: #FFC8E3; --fold-c: #E8ACCA; --glow: 232,172,202; }
+html[data-theme="light"] .stat-item:nth-child(4n+2),
+html[data-theme="light"] .service-block:nth-child(6n+6) { --paper: #EFFFF3; --edge: #AED2B8; --fold-c: #90BD9C; --glow: 144,189,156; }
+html[data-theme="light"] .stat-item:nth-child(4n+3),
+html[data-theme="light"] .service-block:nth-child(6n+5) { --paper: #FAEEFF; --edge: #C590DC; --fold-c: #C9ACD6; --glow: 201,172,214; }
+html[data-theme="light"] .stat-item:nth-child(4n+4) { --paper: #FFEEE1; --edge: #F3C095; --fold-c: #FFBB83; --glow: 255,187,131; }
+html[data-theme="light"] .service-block:nth-child(6n+1) { --paper: #FDF8CA; --edge: #B8B276; --fold-c: #EDCF7F; --glow: 237,207,127; }
+html[data-theme="light"] .service-block:nth-child(6n+2) { --paper: #E8FAFF; --edge: #9EC8D5; --fold-c: #B9E5F3; --glow: 185,229,243; }
+html[data-theme="light"] .service-block:nth-child(6n+3) { --paper: #D8FFF9; --edge: #ADE5DC; --fold-c: #94E7DB; --glow: 148,231,219; }
 html[data-theme="light"] :is(.stat-item, .service-block):nth-child(4n+1) { rotate: -1.2deg; }
 html[data-theme="light"] :is(.stat-item, .service-block):nth-child(4n+2) { rotate: 0.9deg; }
 html[data-theme="light"] :is(.stat-item, .service-block):nth-child(4n+3) { rotate: -0.6deg; }
 html[data-theme="light"] :is(.stat-item, .service-block):nth-child(4n+4) { rotate: 1.1deg; }
+/* hover: the note straightens, lifts, and lights its own colour, like the Art pile */
 html[data-theme="light"] :is(.stat-item, .service-block):hover {
   rotate: 0deg; translate: 0 -3px;
-  box-shadow: 0 1px 1px rgba(40,40,60,0.10), 0 20px 24px -12px rgba(40,40,60,0.38) !important;
+  box-shadow: none !important;   /* the white cards' hover shadow would square off the note */
+  filter:
+    drop-shadow( 1px 0 0 var(--edge))
+    drop-shadow(-1px 0 0 var(--edge))
+    drop-shadow(0  1px 0 var(--edge))
+    drop-shadow(0 -1px 0 var(--edge))
+    drop-shadow(0 10px 13px rgba(20,18,35,0.18))
+    drop-shadow(0 0 18px rgba(var(--glow), 0.8));
 }
-html[data-theme="light"] .service-block::after { content: none; }
 html[data-theme="light"] .stat-item .stat-label,
 html[data-theme="light"] .service-block p { color: rgba(27,29,31,0.78) !important; }
 html[data-theme="light"] .service-block .service-block-link { color: #1b1d1f !important; opacity: 0.8; }
@@ -3677,6 +3746,8 @@ html[data-theme="light"] .service-block:hover .service-block-link { opacity: 1; 
 html[data-theme="light"] .services-grid { gap: 20px; }
 @media (max-width: 860px) {
   html[data-theme="light"] .stats-strip-inner { gap: 12px; }
+  html[data-theme="light"] .stat-item,
+  html[data-theme="light"] .service-block { --fold-w: 26px; --fold-h: 23px; }
 }
 @media (prefers-reduced-motion: reduce) {
   html[data-theme="light"] :is(.stat-item, .service-block) { transition: none; }
