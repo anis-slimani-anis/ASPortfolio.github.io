@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script>(function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);document.documentElement.style.colorScheme=t==='light'?'only light':'dark';})();</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>SNCF Connect, journey search redesign · Anis Slimani</title>
+  <meta name="description" content="Independent concept case study: a redesign of the SNCF Connect results page so travellers see engineering works, replacement coaches and the real journey time before they book. Not affiliated with SNCF Connect.">
+
+  <!-- Open Graph -->
+  <meta property="og:title"       content="SNCF Connect, journey search redesign · Anis Slimani">
+  <meta property="og:description" content="Independent concept case study: travellers see the disruption, its type and the real journey time before they book. Not affiliated with SNCF Connect.">
+  <meta property="og:image"       content="https://anisslimani.com/work/sncf-connect/images/og-sncf-connect.png">
+  <meta property="og:image:width"  content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:url"         content="https://anisslimani.com/work/sncf-connect/">
+  <meta property="og:type"        content="article">
+  <!-- Twitter / X -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="SNCF Connect, journey search redesign · Anis Slimani">
+  <meta name="twitter:description" content="Independent concept case study: travellers see the disruption, its type and the real journey time before they book. Not affiliated with SNCF Connect.">
+  <meta name="twitter:image"       content="https://anisslimani.com/work/sncf-connect/images/og-sncf-connect.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/style.css?v=77">
+</head>
+<body>
+
+<div class="progress-bar"></div>
+
+<nav class="work-header">
+  <a href="/" class="nav-logo">
+    <span class="nav-logo-dot"></span>
+    Anis <span>Slimani</span>
+  </a>
+  <div class="work-header-sections">
+    <a href="#origin"    class="work-header-link active" data-fr="Origine">Origin</a>
+    <a href="#problem"   class="work-header-link" data-fr="Problème">Problem</a>
+    <a href="#discovery" class="work-header-link" data-fr="Discovery">Discovery</a>
+    <a href="#framing"   class="work-header-link" data-fr="Cadrage">Framing</a>
+    <a href="#redesign"  class="work-header-link" data-fr="Refonte">Redesign</a>
+    <a href="#testing"   class="work-header-link" data-fr="Tests">Testing</a>
+    <a href="#next"      class="work-header-link" data-fr="Suite">Next</a>
+  </div>
+  <button class="lang-toggle" aria-label="Switch language"><svg width="14" height="10" viewBox="0 0 21 15"><rect width="7" height="15" fill="#002395"/><rect x="7" width="7" height="15" fill="#fff"/><rect x="14" width="7" height="15" fill="#ED2939"/></svg> FR</button>
+  <button class="theme-toggle" aria-label="Toggle light mode"><span class="icon-moon"><span data-fr="Clair">Light</span></span><span class="icon-sun"><span data-fr="Sombre">Dark</span></span></button>
+  <a href="mailto:anisslimani013@gmail.com" class="btn-nav" data-fr="Me recruter">Hire me</a>
+  <button class="nav-burger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-nav-overlay" aria-hidden="true">
+  <div class="mobile-nav-header">
+    <a href="/" class="nav-logo">
+      <span class="nav-logo-dot"></span>
+      Anis <span>Slimani</span>
+    </a>
+    <button class="mobile-nav-close" aria-label="Close menu">
+      <span></span><span></span>
+    </button>
+  </div>
+  <nav class="mobile-nav">
+    <a href="#origin" data-fr="Origine">Origin</a>
+    <a href="#problem" data-fr="Problème">Problem</a>
+    <a href="#discovery" data-fr="Discovery">Discovery</a>
+    <a href="#framing" data-fr="Cadrage">Framing</a>
+    <a href="#redesign" data-fr="Refonte">Redesign</a>
+    <a href="#testing" data-fr="Tests">Testing</a>
+    <a href="#next" data-fr="Suite">Next</a>
+  </nav>
+  <div class="mobile-nav-footer">
+    <a href="mailto:anisslimani013@gmail.com" class="mobile-nav-btn" data-fr="Me recruter">Hire me</a>
+    <button class="mobile-nav-btn lang-toggle" aria-label="Switch language"><svg width="14" height="10" viewBox="0 0 21 15"><rect width="7" height="15" fill="#002395"/><rect x="7" width="7" height="15" fill="#fff"/><rect x="14" width="7" height="15" fill="#ED2939"/></svg> FR</button>
+    <button class="mobile-nav-btn theme-toggle" aria-label="Toggle light mode"><span class="icon-moon"><span data-fr="Clair">Light</span></span><span class="icon-sun"><span data-fr="Sombre">Dark</span></span></button>
+  </div>
+</div>
+
+<div class="page-hero">
+  <div class="img-block page-hero-media">
+    <div class="case-img-wrap">
+      <picture class="theme-night">
+        <source srcset="/work/sncf-connect/images/sncf-hero-night-1280.webp 1280w, /work/sncf-connect/images/sncf-hero-night.webp 2800w" sizes="(max-width: 860px) 100vw, 1080px" type="image/webp">
+        <img class="case-img" src="/work/sncf-connect/images/sncf-hero-night.png" alt="SNCF Connect journey search redesign shown on desktop and mobile: a works notice, date chips marked Travaux and result cards carrying the replacement coach" width="1400" height="1000" fetchpriority="high" decoding="async">
+      </picture>
+      <picture class="theme-day">
+        <source srcset="/work/sncf-connect/images/sncf-hero-day-1280.webp 1280w, /work/sncf-connect/images/sncf-hero-day.webp 2800w" sizes="(max-width: 860px) 100vw, 1080px" type="image/webp">
+        <img class="case-img" src="/work/sncf-connect/images/sncf-hero-day.png" alt="SNCF Connect journey search redesign shown on desktop and mobile: a works notice, date chips marked Travaux and result cards carrying the replacement coach" width="1400" height="1000" fetchpriority="high" decoding="async">
+      </picture>
+    </div>
+  </div>
+  <div class="case-tags">
+    <span class="tag" data-fr="Concept indépendant">Independent concept</span>
+    <span class="tag" data-fr="Recherche UX">UX Research</span>
+    <span class="tag" data-fr="Tests utilisateurs">Usability Testing</span>
+    <span class="tag">Design System</span>
+    <span class="tag" data-fr="Prototypage">Prototyping</span>
+    <span class="tag" data-fr="Mobilité">Mobility</span>
+  </div>
+  <h1 data-fr-html="SNCF Connect,<br><em>refonte de la recherche d'itinéraire</em>">SNCF Connect,<br><em>journey search redesign</em></h1>
+  <p class="page-hero-sub" data-fr="SNCF Connect rédige déjà de bons contenus sur les travaux et les cars de substitution. Ils n'apparaissent simplement jamais là où l'on choisit son train. J'ai repensé la page de résultats pour que les voyageurs voient la perturbation, son type et la durée réelle du trajet avant de réserver.">SNCF Connect already writes good copy about engineering works and replacement coaches. It just never shows it where people choose their train. I redesigned the results page so travellers see the disruption, its type and the real journey time before they book.</p>
+  <div class="page-meta-row">
+    <span class="tag" data-fr="Rôle : recherche, cadrage, UX, UI, prototypage, tests (seul)">Role: research, framing, UX, UI, prototyping, testing (solo)</span>
+    <span class="tag" data-fr="Durée : environ deux semaines, septembre 2026">Timeline: about two weeks, September 2026</span>
+    <span class="tag" data-fr="Outils : Figma, Dovetail, React, TypeScript, Vite">Tools: Figma, Dovetail, React, TypeScript, Vite</span>
+  </div>
+  </div>
+  </div>
+</div>
+
+
+<div class="case-content-wrap">
+  <div class="case-confidential case-disclaimer reveal">
+    <span class="case-confidential-icon" aria-hidden="true">ⓘ</span>
+    <div class="case-disclaimer-body">
+      <p data-fr="Étude de cas conceptuelle indépendante. Sans lien avec SNCF Connect.">Independent concept case study. Not affiliated with SNCF Connect.</p>
+      <p class="case-disclaimer-role">
+        <span class="case-role-badge" data-fr="Seul">Solo</span>
+        <span data-fr="Entièrement mon travail : recherche, cadrage, UX, UI, prototypage et tests.">All of it is my own work: research, framing, UX, UI, prototyping and testing.</span>
+      </p>
+    </div>
+  </div>
+  <a href="/#work" class="back-to-work" data-fr="← Retour">← Back</a>
+  <a href="/work/lafoy/" class="next-project" data-fr="Lafoy →">Lafoy →</a>
+
+  <!-- 01 Where it started -->
+  <div id="origin" class="case-section case-slide reveal">
+    <h2 data-fr="D'où c'est parti">Where it started</h2>
+    <p class="case-lead" data-fr-html="Un itinéraire habituel qui n'était plus proposé, <mark>sans que personne ne dise pourquoi</mark>.">A usual route that stopped being suggested, <mark>and nobody said why</mark>.</p>
+    <p data-fr="Le déclic est venu en utilisant Citymapper : mon itinéraire habituel n'était plus proposé et je ne savais pas pourquoi. La ligne était en travaux. La question qui m'est restée : et si le voyageur pouvait voir et façonner son propre trajet, au lieu d'être discrètement redirigé autour d'un problème dont personne ne lui a parlé ?">The trigger came while using Citymapper: my usual route stopped being suggested and I didn't know why. It turned out the line had engineering works. The question that stuck: what if the traveller could see and shape their own trip instead of being quietly rerouted around a problem nobody told them about?</p>
+    <p data-fr="J'ai posé cette question à la gestion des perturbations de SNCF Connect, où le même manque apparaît au moment où l'on réserve.">I took that question to SNCF Connect's disruption handling, where the same gap shows up at the moment people book.</p>
+    <details class="case-more">
+      <summary><span data-fr="Lire le détail">Read the detail</span></summary>
+      <p data-fr="Pendant mes études, un projet d'équipe de sept semaines sur l'orientation dans une gare inconnue m'a appris que la planification d'un trajet cache des problèmes plus petits et plus difficiles sous le problème évident.">During my studies, a seven-week team project on navigating an unfamiliar station taught me that journey planning hides smaller, harder problems underneath the obvious one.</p>
+    </details>
+  </div>
+
+  <!-- 02 The problem -->
+  <div id="problem" class="case-section case-slide reveal">
+    <h2 data-fr="Le problème">The problem</h2>
+    <p class="case-lead" data-fr-html="La bonne information, <mark>au mauvais moment</mark>.">Real information, <mark>wrong moment</mark>.</p>
+    <div class="callout reveal" data-fr-html="<strong>SNCF rédige bien ses contenus de perturbation,</strong> mais ils se trouvent après le moment de la décision. Les voyageurs réservent d'abord et découvrent le car ensuite.">
+      <strong>SNCF writes disruption content well,</strong> but it lives after the decision point. Travellers book first and discover the coach later.
+    </div>
+
+  <div class="case-diagram reveal">
+    <svg viewBox="0 0 720 300" role="img" xmlns="http://www.w3.org/2000/svg">
+      <title data-fr="Les deux voies : ce que fait le voyageur, et où la perturbation est expliquée.">Two lanes: what the traveller does, and where the disruption is explained.</title>
+      <desc data-fr="La voie du voyageur va de la recherche au billet. Le moment du choix se situe tôt. La voie du contenu reste vide jusqu’à la page Info trafic, trouvée après la réservation.">The traveller lane runs from search to ticket, with the decision point early. The content lane stays empty until the Info trafic page, found after booking.</desc>
+      <text x="0" y="62" class="dg-eyebrow" text-anchor="start" data-fr="CE QUE FAIT LE VOYAGEUR">WHAT THE TRAVELLER DOES</text>
+      <line x1="0" y1="95" x2="700" y2="95" class="dg-rule"/>
+      <circle cx="40" cy="95" r="6" class="dg-dot"/>
+      <text x="40" y="122" class="dg-text" text-anchor="middle" data-fr="Recherche">Search</text>
+      <circle cx="200" cy="95" r="6" class="dg-dot"/>
+      <text x="200" y="122" class="dg-text" text-anchor="middle" data-fr="Résultats">Results</text>
+      <circle cx="360" cy="95" r="6" class="dg-dot"/>
+      <text x="360" y="122" class="dg-text" text-anchor="middle" data-fr="Choix du train">Pick a train</text>
+      <circle cx="520" cy="95" r="6" class="dg-dot"/>
+      <text x="520" y="122" class="dg-text" text-anchor="middle" data-fr="Paiement">Pay</text>
+      <circle cx="665" cy="95" r="6" class="dg-dot"/>
+      <text x="665" y="122" class="dg-text" text-anchor="middle" data-fr="Billet">Ticket</text>
+      <text x="0" y="182" class="dg-eyebrow" text-anchor="start" data-fr="OÙ LA PERTURBATION EST EXPLIQUÉE">WHERE THE DISRUPTION IS EXPLAINED</text>
+      <line x1="0" y1="215" x2="700" y2="215" class="dg-dash"/>
+      <circle cx="665" cy="215" r="6" class="dg-dot"/>
+      <text x="665" y="242" class="dg-text" text-anchor="middle" data-fr="Page Info trafic">Info trafic page</text>
+      <text x="665" y="260" class="dg-mute" text-anchor="middle" data-fr="après réservation">found after booking</text>
+      <line x1="280" y1="46" x2="280" y2="265" class="dg-dash"/>
+      <circle cx="280" cy="95" r="4" class="dg-dot"/>
+      <text x="280" y="34" class="dg-eyebrow" text-anchor="middle" data-fr="MOMENT DU CHOIX">DECISION POINT</text>
+      <text x="440" y="248" class="dg-mute" text-anchor="middle" data-fr="Rien au moment du choix">Nothing at the moment of choice</text>
+    </svg>
+  </div>
+  <p class="img-caption" data-fr="Le contenu existe et il est bien écrit. Il arrive simplement une voie trop bas et plusieurs écrans trop tard.">The content exists and it is well written. It just arrives one lane down and several screens too late.</p>
+    <div class="case-system-grid">
+      <div class="case-system-item">
+        <h4 data-fr="Le coût pour le voyageur">Cost for the traveller</h4>
+        <p data-fr="Réserver à l'aveugle, prévoir la mauvaise heure d'arrivée, et ne pas pouvoir peser le prix contre le risque.">Booking blindly, planning the wrong arrival time, and not being able to weigh price against risk.</p>
+      </div>
+      <div class="case-system-item">
+        <h4 data-fr="Le coût pour SNCF">Cost for SNCF</h4>
+        <p data-fr="Des appels à l'assistance, des réclamations, des remboursements, de la confiance perdue et de la conversion perdue.">Calls, complaints, refunds, lost trust and lost conversion.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 Discovery -->
+  <div id="discovery" class="case-section case-slide reveal">
+    <h2 data-fr="Discovery">Discovery</h2>
+    <p class="case-lead" data-fr-html="Le sujet semblait simple, alors je ne l'ai pas pris tel quel. <mark>Sept constats</mark>, un seul schéma.">It looked simple, so I didn't take it at face value. <mark>Seven findings</mark>, one pattern.</p>
+    <ol class="case-steps">
+      <li data-fr="Trois parcours audités en direct : desktop, web mobile et application">Three flows audited live: desktop, mobile web and the app</li>
+      <li data-fr="Un audit concurrentiel sur trois produits">A competitive audit across three products</li>
+      <li data-fr="Trois proto-personas et onze fonctionnalités évaluées">Three proto-personas and eleven features weighed</li>
+    </ol>
+
+    <div class="case-system-grid">
+      <div class="case-system-item">
+        <h4>Citymapper</h4>
+        <p data-fr="Signale la perturbation, mais ne l'explique pas.">Surfaces the disruption, but doesn't explain it.</p>
+      </div>
+      <div class="case-system-item">
+        <h4>Trainline</h4>
+        <p data-fr="N'affichait rien.">Showed nothing.</p>
+      </div>
+      <div class="case-system-item">
+        <h4>Google Maps</h4>
+        <p data-fr="Redirige sans rien dire.">Reroutes silently.</p>
+      </div>
+    </div>
+
+    <div class="case-system-grid">
+      <div class="case-system-item">
+        <h4 data-fr="Sarah, 29 ans">Sarah, 29</h4>
+        <p data-fr="Voyageuse du quotidien.">Daily commuter.</p>
+      </div>
+      <div class="case-system-item">
+        <h4 data-fr="Marc, 45 ans · scénario prioritaire">Marc, 45 · priority scenario</h4>
+        <p data-fr="Voyageur occasionnel sur longue distance.">Occasional long-distance traveller.</p>
+      </div>
+      <div class="case-system-item">
+        <h4 data-fr="Liliane, 68 ans">Liliane, 68</h4>
+        <p data-fr="A besoin d'une information claire et très contrastée.">Needs clear, high-contrast information.</p>
+      </div>
+    </div>
+    <p class="img-caption" data-fr="Des proto-personas issus du cadrage et de l'audit, non validés par des entretiens.">Proto-personas drawn from the framing and the audit, not validated through interviews.</p>
+
+  <div class="case-diagram reveal">
+    <svg viewBox="0 0 720 400" role="img" xmlns="http://www.w3.org/2000/svg">
+      <title data-fr="Onze fonctionnalités placées sur une matrice impact et effort.">Eleven features plotted on impact against effort.</title>
+      <desc data-fr="Huit fonctionnalités se regroupent à faible effort et fort impact, car elles réutilisent une seule carte, un seul bandeau et un seul panneau de détail. Trois demandaient plus d’effort et ont été reportées.">Eight features cluster at low effort and high impact because they reuse one card, one strip and one detail sheet. Three needed more effort and were parked.</desc>
+      <rect x="96" y="44" width="288" height="300" class="dg-band"/>
+      <line x1="96" y1="44" x2="96" y2="344" class="dg-rule"/>
+      <line x1="96" y1="344" x2="680" y2="344" class="dg-rule"/>
+      <text x="108" y="34" class="dg-eyebrow" text-anchor="start" data-fr="FAIBLE EFFORT">LOW EFFORT</text>
+      <text x="400" y="34" class="dg-eyebrow" text-anchor="start" data-fr="EFFORT ÉLEVÉ">HIGHER EFFORT</text>
+      <text x="384" y="378" class="dg-eyebrow" text-anchor="middle" data-fr="EFFORT →">EFFORT →</text>
+      <text x="78" y="194" class="dg-eyebrow" text-anchor="middle" transform="rotate(-90 78 194)" data-fr="IMPACT →">IMPACT →</text>
+      <circle cx="470" cy="130" r="7" class="dg-dot--muted"/>
+      <circle cx="560" cy="232" r="7" class="dg-dot--muted"/>
+      <circle cx="618" cy="168" r="7" class="dg-dot--muted"/>
+      <text x="452" y="318" class="dg-mute" text-anchor="start" data-fr="Trois reportées">Three parked for later</text>
+      <circle cx="150" cy="86" r="11" class="dg-dot"/>
+      <text x="150" y="90" class="dg-num" text-anchor="middle">1</text>
+      <text x="166" y="90" class="dg-text" text-anchor="start" data-fr="Bandeau travaux">Works strip</text>
+      <circle cx="225" cy="112" r="11" class="dg-dot"/>
+      <text x="225" y="116" class="dg-num" text-anchor="middle">2</text>
+      <text x="241" y="116" class="dg-text" text-anchor="start" data-fr="Durée réelle">Honest duration</text>
+      <circle cx="140" cy="170" r="11" class="dg-dot"/>
+      <text x="140" y="174" class="dg-num" text-anchor="middle">3</text>
+      <text x="156" y="174" class="dg-text" text-anchor="start" data-fr="Gare signalée">Station flag</text>
+      <circle cx="288" cy="146" r="11" class="dg-dot"/>
+      <text x="288" y="150" class="dg-num" text-anchor="middle">4</text>
+      <text x="304" y="150" class="dg-text" text-anchor="start" data-fr="Alternative directe">Direct alternative</text>
+      <circle cx="182" cy="228" r="11" class="dg-dot"/>
+      <text x="182" y="232" class="dg-num" text-anchor="middle">5</text>
+      <text x="198" y="232" class="dg-text" text-anchor="start" data-fr="Pastilles de date">Date chips</text>
+      <circle cx="322" cy="204" r="11" class="dg-dot"/>
+      <text x="322" y="208" class="dg-num" text-anchor="middle">6</text>
+      <text x="338" y="208" class="dg-text" text-anchor="start" data-fr="Panneau de détail">Detail drawer</text>
+      <circle cx="238" cy="278" r="11" class="dg-dot"/>
+      <text x="238" y="282" class="dg-num" text-anchor="middle">7</text>
+      <text x="254" y="282" class="dg-text" text-anchor="start" data-fr="Filtre">Filter</text>
+      <circle cx="330" cy="304" r="11" class="dg-dot"/>
+      <text x="330" y="308" class="dg-num" text-anchor="middle">8</text>
+      <text x="346" y="308" class="dg-text" text-anchor="start" data-fr="Retour arrière">Way back</text>
+    </svg>
+  </div>
+  <p class="img-caption" data-fr="Les huit retenues réutilisent une seule carte, un seul bandeau et un seul panneau de détail, ce qui explique leur faible effort. Les trois reportées ne sont pas détaillées ici.">The eight that made it reuse one card, one strip and one detail sheet, which is why they cost so little. The three parked ones are not detailed here.</p>
+
+      <figure class="embed reveal" data-src="https://embed.figma.com/deck/NbyVOybKTZsBixn84uNjlE?embed-host=anisslimani&amp;hide-ui=1" data-title="SNCF Connect journey search redesign, slides">
+    <div class="embed-frame">
+      <img class="embed-preview" src="/work/sncf-connect/images/slides.webp" alt="Title slide of the journey search redesign deck" width="1280" height="720" loading="lazy" decoding="async">
+      <button class="embed-load" type="button" data-fr="Charger les slides">Load the slides</button>
+    </div>
+    <figcaption class="embed-bar">
+      <span class="embed-title">Slides</span>
+      <a class="embed-open" href="https://www.figma.com/slides/NbyVOybKTZsBixn84uNjlE" target="_blank" rel="noopener" data-fr="Ouvrir dans un nouvel onglet ↗">Open in a new tab ↗</a>
+    </figcaption>
+      </figure>
+
+    <details class="case-more">
+      <summary><span data-fr="Lire le détail">Read the detail</span></summary>
+      <p data-fr="J'ai audité trois parcours en direct, sur desktop, web mobile et application : la recherche longue distance, la liste de résultats et la page Info trafic. Sept constats, un seul schéma : le contenu existe et il est bien écrit, mais il n'arrive jamais au moment du choix.">I audited three flows live on desktop, mobile web and the app: long-distance search, the results list, and the Info trafic page. Seven findings, one pattern: the content exists and is well written, but never arrives at the moment of choice.</p>
+      <p data-fr="Chaque action observée est devenue une fonctionnalité possible. Onze ont été placées sur une matrice impact et effort. Huit demandaient peu d'effort, parce qu'elles réutilisent une seule carte, un seul bandeau et un seul panneau de détail.">Every observed action became a possible feature. Eleven were plotted on impact against effort. Eight were low effort, because they reuse one card, one strip and one detail sheet.</p>
+    </details>
+  </div>
+
+  <!-- 04 Framing -->
+  <div id="framing" class="case-section case-slide reveal">
+    <h2 data-fr="Cadrage">Framing</h2>
+    <p class="case-lead" data-fr-html="Si la perturbation apparaît directement dans la liste de résultats, les voyageurs peuvent <mark>choisir en connaissance de cause</mark> avant d'acheter leur billet, et SNCF reçoit moins d'appels à l'assistance.">If we show the disruption directly in the results list, travellers can <mark>make an informed choice</mark> before buying their ticket, and SNCF gets fewer customer service calls.</p>
+  <div class="case-diagram reveal">
+    <svg viewBox="0 0 700 300" role="img" xmlns="http://www.w3.org/2000/svg">
+      <title data-fr="Comment les trois mesures se répondent.">How the three measures relate.</title>
+      <desc data-fr="La mesure secondaire est l’indicateur avancé : elle alimente l’étoile polaire, moins d’appels à l’assistance. Le garde-fou, les ventes ne baissent pas, borne les deux.">The secondary measure is the leading indicator and feeds the north star, fewer customer service calls. The guardrail, sales don’t drop, bounds them both.</desc>
+      <rect x="0" y="50" width="290" height="130" rx="12" class="dg-box"/>
+      <text x="22" y="78" class="dg-eyebrow" text-anchor="start" data-fr="SECONDAIRE">SECONDARY</text>
+      <text x="22" y="106" class="dg-head" text-anchor="start" data-fr="8 voyageurs sur 10 savent">8 in 10 can tell if their</text>
+      <text x="22" y="128" class="dg-head" text-anchor="start" data-fr="si leur train est perturbé">train is disrupted</text>
+      <text x="22" y="156" class="dg-text" text-anchor="start" data-fr="Uniquement depuis la liste.">Just from the results list.</text>
+      <line x1="290" y1="115" x2="382" y2="115" class="dg-arrow"/>
+      <path d="M374 109 L384 115 L374 121" class="dg-arrow"/>
+      <text x="336" y="101" class="dg-eyebrow" text-anchor="middle" data-fr="ALIMENTE">DRIVES</text>
+      <rect x="390" y="50" width="310" height="130" rx="12" class="dg-box"/>
+      <text x="412" y="78" class="dg-eyebrow" text-anchor="start" data-fr="ÉTOILE POLAIRE">NORTH STAR</text>
+      <text x="412" y="106" class="dg-head" text-anchor="start" data-fr="Moins d'appels à l'assistance">Fewer customer service calls</text>
+      <text x="412" y="138" class="dg-text" text-anchor="start" data-fr="Pour 1 000 billets vendus">For every 1,000 tickets sold</text>
+      <text x="412" y="156" class="dg-text" text-anchor="start" data-fr="sur les trajets perturbés.">on disrupted routes.</text>
+      <line x1="145" y1="180" x2="145" y2="215" class="dg-dash"/>
+      <line x1="545" y1="180" x2="545" y2="215" class="dg-dash"/>
+      <rect x="0" y="215" width="700" height="62" rx="12" class="dg-box"/>
+      <text x="22" y="251" class="dg-eyebrow" text-anchor="start" data-fr="GARDE-FOU">GUARDRAIL</text>
+      <text x="130" y="243" class="dg-head" text-anchor="start" data-fr="Les ventes ne baissent pas">Sales don't drop</text>
+      <text x="130" y="262" class="dg-text" text-anchor="start" data-fr="Les ventes sur les trajets perturbés se maintiennent.">Ticket sales on disrupted routes hold steady.</text>
+    </svg>
+  </div>
+  <p class="img-caption" data-fr="La mesure secondaire bouge en premier et se lit depuis la liste de résultats. L’étoile polaire se vérifie plus tard, et le garde-fou dit quand s’arrêter.">The secondary measure moves first and can be read straight off the results list. The north star confirms later, and the guardrail says when to stop.</p>
+  </div>
+
+  <!-- 05 The redesign -->
+  <div id="redesign" class="case-section case-slide reveal">
+    <h2 data-fr="La refonte">The redesign</h2>
+    <p class="case-lead" data-fr-html="Un seul langage de gravité à chaque moment de décision : <mark>icône, libellé et couleur</mark>, jamais la couleur seule.">One severity language at every decision moment: <mark>icon, label and colour</mark> together, never colour alone.</p>
+    <div class="decision-list">
+      <div class="decision-item reveal">
+        <div class="decision-num">01</div>
+        <div class="decision-body">
+          <h4 data-fr="Avant même les résultats">Before the results</h4>
+          <p data-fr="La gare de destination est signalée dans l'autocomplétion, et les jours de travaux sont marqués sur les dates.">The destination station is flagged in autocomplete, and date chips mark the days with works.</p>
+        </div>
+      </div>
+      <div class="decision-item reveal">
+        <div class="decision-num">02</div>
+        <div class="decision-body">
+          <h4 data-fr="La carte de résultat dit la vérité">The result card tells the truth</h4>
+          <p data-fr="Un bandeau teinté (« Travaux, car de substitution ») et la durée honnête (« 4 h 42 au lieu de 3 h 52 »), avec l'alternative directe juste en dessous.">A tinted strip (« Travaux, car de substitution ») and the honest duration (« 4 h 42 au lieu de 3 h 52 »), with the direct alternative right below.</p>
+        </div>
+      </div>
+      <div class="decision-item reveal">
+        <div class="decision-num">03</div>
+        <div class="decision-body">
+          <h4 data-fr="Un filtre, avec un chemin de retour">A filter, with a way back</h4>
+          <p data-fr="Un interrupteur masque les trajets perturbés, et une ligne permet de tout réafficher. Le voyageur choisit, le produit ne choisit pas à sa place.">A switch hides disrupted journeys, and a row brings them all back. The traveller decides; the product doesn't decide for them.</p>
+        </div>
+      </div>
+      <div class="decision-item reveal">
+        <div class="decision-num">04</div>
+        <div class="decision-body">
+          <h4 data-fr="Le panneau de SNCF, corrigé">SNCF's own drawer, corrected</h4>
+          <p data-fr="« Ce trajet en détail » nomme désormais les travaux et marque la partie du trajet concernée.">« Ce trajet en détail » now names the works and marks the affected part of the trip.</p>
+        </div>
+      </div>
+    </div>
+
+  <div class="img-block reveal">
+    <div class="case-img-wrap">
+      <picture class="theme-night">
+        <source srcset="/work/sncf-connect/images/card-states-night-1280.webp 1280w, /work/sncf-connect/images/card-states-night.webp 2880w" sizes="(max-width: 860px) 100vw, 860px" type="image/webp">
+        <img class="case-img" src="/work/sncf-connect/images/card-states-night.png" alt="The result card in seven states: normal, recommended best price, works with replacement coach, delay, two disruptions stacked, no viable alternative, and traffic status unknown" width="1440" height="690" loading="lazy" decoding="async">
+      </picture>
+      <picture class="theme-day">
+        <source srcset="/work/sncf-connect/images/card-states-day-1280.webp 1280w, /work/sncf-connect/images/card-states-day.webp 2880w" sizes="(max-width: 860px) 100vw, 860px" type="image/webp">
+        <img class="case-img" src="/work/sncf-connect/images/card-states-day.png" alt="The result card in seven states: normal, recommended best price, works with replacement coach, delay, two disruptions stacked, no viable alternative, and traffic status unknown" width="1440" height="690" loading="lazy" decoding="async">
+      </picture>
+    </div>
+  </div>
+  <p class="img-caption" data-fr="Une seule carte, sept états. Chaque perturbation utilise la même combinaison icône, libellé et couleur, jamais la couleur seule.">One card, seven states. Every disruption uses the same icon, label and colour together, never colour alone.</p>
+
+    <div class="case-system-grid">
+      <div class="case-system-item">
+        <h4 data-fr="Deux perturbations">Two disruptions</h4>
+        <p data-fr="Les bandeaux s'empilent sur la même carte, sans badge « +1 ».">The strips stack on the same card, with no "+1" badge.</p>
+      </div>
+      <div class="case-system-item">
+        <h4 data-fr="État inconnu">Unknown status</h4>
+        <p data-fr="Un état neutre à part entière : l'absence d'information est aussi une information.">Its own neutral state: missing information is information too.</p>
+      </div>
+      <div class="case-system-item">
+        <h4 data-fr="Pas d'alternative">No alternative</h4>
+        <p data-fr="Aucune fausse alternative quand il n'en existe pas.">No fake alternative when none exists.</p>
+      </div>
+    </div>
+
+    <div class="page-stat-strip">
+      <div class="page-stat-item">
+        <div class="page-stat-val">40</div>
+        <div class="page-stat-key" data-fr="Tokens primitifs">Primitive tokens</div>
+      </div>
+      <div class="page-stat-item">
+        <div class="page-stat-val">26</div>
+        <div class="page-stat-key" data-fr="Tokens sémantiques, modes Jour et Nuit">Semantic tokens, Day and Night modes</div>
+      </div>
+      <div class="page-stat-item">
+        <div class="page-stat-val">7</div>
+        <div class="page-stat-key" data-fr="États sur une seule carte de résultat">States on one result card</div>
+      </div>
+      <div class="page-stat-item">
+        <div class="page-stat-val">16</div>
+        <div class="page-stat-key" data-fr="Écrans en 1440 et 393">Screens at 1440 and 393</div>
+      </div>
+    </div>
+
+      <figure class="embed reveal" data-src="https://embed.figma.com/design/loA6bfeV7VKqkWsik9iaLr?embed-host=anisslimani&amp;node-id=816-17606" data-title="SNCF Connect journey search redesign, Figma design file">
+    <div class="embed-frame">
+      <img class="embed-preview" src="/work/sncf-connect/images/figma-file.webp" alt="Cover of the Figma design file for the SNCF Connect journey search redesign" width="1280" height="720" loading="lazy" decoding="async">
+      <button class="embed-load" type="button" data-fr="Charger le fichier interactif">Load interactive file</button>
+    </div>
+    <figcaption class="embed-bar">
+      <span><span class="embed-title" data-fr="Fichier de design Figma">Figma design file</span> · <span data-fr="discovery, design system, maquettes, tests">discovery, design system, screens, testing</span></span>
+      <a class="embed-open" href="https://www.figma.com/design/loA6bfeV7VKqkWsik9iaLr?node-id=816-17606" target="_blank" rel="noopener" data-fr="Ouvrir dans un nouvel onglet ↗">Open in a new tab ↗</a>
+    </figcaption>
+      </figure>
+  </div>
+
+
+
+
+
+  <!-- 06 What changed, and why -->
+  <div id="changes" class="case-section case-slide reveal">
+    <h2 data-fr="Ce qui a changé, et pourquoi">What changed, and why</h2>
+    <p class="case-lead" data-fr-html="Trois idées abandonnées tôt, <mark>une corrigée tard</mark>.">Three ideas dropped early, <mark>one corrected late</mark>.</p>
+    <div class="decision-list decision-list--labels">
+      <div class="decision-item reveal">
+        <div class="decision-num" data-fr="Abandonné">Dropped</div>
+        <div class="decision-body">
+          <h4 data-fr="Un bandeau travaux plus grand">A bigger works banner</h4>
+          <p data-fr="Il restait déconnecté du trajet qu'il concerne.">It stays disconnected from the journey it affects.</p>
+        </div>
+      </div>
+      <div class="decision-item reveal">
+        <div class="decision-num" data-fr="Abandonné">Dropped</div>
+        <div class="decision-body">
+          <h4 data-fr="La redirection automatique">Automatic rerouting</h4>
+          <p data-fr="Elle passe outre le choix du voyageur.">It overrides the traveller's choice.</p>
+        </div>
+      </div>
+      <div class="decision-item reveal">
+        <div class="decision-num" data-fr="Abandonné">Dropped</div>
+        <div class="decision-body">
+          <h4 data-fr="Refondre Info trafic">Redesigning Info trafic</h4>
+          <p data-fr="Elle répond à une autre question.">It answers a different question.</p>
+        </div>
+      </div>
+      <div class="decision-item reveal">
+        <div class="decision-num" data-fr="Corrigé">Corrected</div>
+        <div class="decision-body">
+          <h4 data-fr="Mon panneau, remplacé par celui de SNCF">My panel, replaced by SNCF's</h4>
+          <p data-fr="En construisant le prototype codé, j'ai découvert que SNCF a déjà un panneau de détail qui montre une correspondance sans jamais dire pourquoi. J'ai abandonné mon propre panneau et corrigé le leur : une seule notice, une seule partie du trajet marquée.">While building the coded prototype I found SNCF already has a detail drawer that shows a correspondance but never says why. I dropped my own panel and corrected theirs: one notice, one marked part of the trip.</p>
+        </div>
+      </div>
+    </div>
+  <div class="img-block reveal">
+    <div class="case-img-wrap">
+      <picture class="theme-night">
+        <source srcset="/work/sncf-connect/images/before-after-results-night-1280.webp 1280w, /work/sncf-connect/images/before-after-results-night.webp 2880w" sizes="(max-width: 860px) 100vw, 860px" type="image/webp">
+        <img class="case-img" src="/work/sncf-connect/images/before-after-results-night.png" alt="Today's SNCF Connect results list beside the redesign: the redesign marks works, the replacement coach and the real duration on each affected journey" width="1440" height="1080" loading="lazy" decoding="async">
+      </picture>
+      <picture class="theme-day">
+        <source srcset="/work/sncf-connect/images/before-after-results-day-1280.webp 1280w, /work/sncf-connect/images/before-after-results-day.webp 2880w" sizes="(max-width: 860px) 100vw, 860px" type="image/webp">
+        <img class="case-img" src="/work/sncf-connect/images/before-after-results-day.png" alt="Today's SNCF Connect results list beside the redesign: the redesign marks works, the replacement coach and the real duration on each affected journey" width="1440" height="1080" loading="lazy" decoding="async">
+      </picture>
+    </div>
+  </div>
+  <p class="img-caption" data-fr="La liste actuelle à côté de la refonte. La perturbation passe de nulle part à la carte que l'on s'apprête à choisir.">Today's results list beside the redesign. The disruption moves from nowhere to the card you are about to choose.</p>
+
+  <div class="img-block reveal">
+    <div class="case-img-wrap">
+      <picture class="theme-night">
+        <source srcset="/work/sncf-connect/images/before-after-drawer-night-1280.webp 1280w, /work/sncf-connect/images/before-after-drawer-night.webp 2880w" sizes="(max-width: 860px) 100vw, 860px" type="image/webp">
+        <img class="case-img" src="/work/sncf-connect/images/before-after-drawer-night.png" alt="Today's journey detail drawer beside the redesign: the redesign names the replacement coach and marks the affected part of the trip" width="1440" height="1000" loading="lazy" decoding="async">
+      </picture>
+      <picture class="theme-day">
+        <source srcset="/work/sncf-connect/images/before-after-drawer-day-1280.webp 1280w, /work/sncf-connect/images/before-after-drawer-day.webp 2880w" sizes="(max-width: 860px) 100vw, 860px" type="image/webp">
+        <img class="case-img" src="/work/sncf-connect/images/before-after-drawer-day.png" alt="Today's journey detail drawer beside the redesign: the redesign names the replacement coach and marks the affected part of the trip" width="1440" height="1000" loading="lazy" decoding="async">
+      </picture>
+    </div>
+  </div>
+  <p class="img-caption" data-fr="Le panneau de détail. Aujourd'hui il montre une correspondance sans dire pourquoi ; corrigé, il nomme le car et marque la partie du trajet concernée.">The detail drawer. Today it shows a correspondance without saying why; corrected, it names the coach and marks the part of the trip it affects.</p>
+  </div>
+
+  <!-- 07 Accessibility -->
+  <div id="a11y" class="case-section case-slide reveal">
+    <h2 data-fr="Accessibilité">Accessibility</h2>
+    <p class="case-lead" data-fr-html="La gravité ne repose <mark>jamais sur la couleur seule</mark>.">Severity is <mark>never colour alone</mark>.</p>
+    <div class="case-system-grid">
+      <div class="case-system-item">
+        <h4 data-fr="Icône, libellé, couleur">Icon, label, colour</h4>
+        <p data-fr="Chaque niveau de gravité associe une icône distincte et un libellé écrit à sa couleur.">Each severity pairs a distinct icon and a written label with its colour.</p>
+      </div>
+      <div class="case-system-item">
+        <h4 data-fr="HTML sémantique">Semantic HTML</h4>
+        <p data-fr="Chaque carte est un article, le filtre une vraie case à cocher, et le panneau de détail une boîte de dialogue qui garde le focus.">Each card is an article, the filter a real checkbox, and the detail drawer a focus-trapped dialog.</p>
+      </div>
+      <div class="case-system-item">
+        <h4>VoiceOver</h4>
+        <p data-fr="Testé avec VoiceOver sur iPhone. Chaque carte se lit départ, arrivée, perturbation, durée, puis prix : la perturbation n'est jamais la dernière chose entendue.">Tested with VoiceOver on iPhone. Each card reads departure, arrival, disruption, duration, then price, so the disruption is never the last thing heard.</p>
+      </div>
+      <div class="case-system-item">
+        <h4 data-fr="Contraste">Contrast</h4>
+        <p data-fr="Vérifié par script sur chaque route, les deux thèmes et les deux formats d'écran, face aux seuils WCAG 2.2 AA.">Checked programmatically across every route, both themes and both breakpoints, against WCAG 2.2 AA thresholds.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 08 What I tested -->
+  <div id="testing" class="case-section case-slide reveal">
+    <h2 data-fr="Ce que j'ai testé">What I tested</h2>
+    <p class="case-lead" data-fr-html="Cinq personnes, deux produits : <mark>0 sur 5</mark> contre <mark>4 sur 5</mark>.">Five people, two products: <mark>0 of 5</mark> against <mark>4 of 5</mark>.</p>
+    <div class="callout reveal" data-fr-html="<strong>Modéré, intra-sujets, web mobile.</strong> Cinq participants plus un pilote, le SNCF Connect actuel face à la refonte, ordre contrebalancé (3 ont vu le site actuel en premier, 2 la refonte). Indicatif, pas statistique.">
+      <strong>Moderated, within-subjects, mobile web.</strong> Five participants plus a pilot, today's SNCF Connect against the redesign, order counterbalanced (3 saw today's site first, 2 the redesign first). Directional, not statistical.
+    </div>
+    <table class="score-table score-table--compare">
+      <thead><tr><th data-fr="Mesure">Measure</th><th data-fr="Site actuel">Today's site</th><th data-fr="Refonte">Redesign</th></tr></thead>
+      <tbody>
+        <tr><td data-fr="Savaient que le train choisi était perturbé avant de l'ouvrir">Knew their chosen train was affected before opening it</td><td data-fr="0 sur 5">0 of 5</td><td data-fr="4 sur 5">4 of 5</td></tr>
+        <tr><td data-fr="Facilité à repérer les trains à problème">Ease of telling which trains had problems</td><td data-fr="environ 0 à 1 / 10">about 0 to 1 / 10</td><td>7.8 / 10</td></tr>
+        <tr><td data-fr="Ont choisi le trajet en car, moins cher, en connaissance de cause">Chose the cheaper coach journey knowingly</td><td>n/a</td><td data-fr="3 sur 5">3 of 5</td></tr>
+        <tr><td data-fr="Ont trouvé « Suivre ce trajet » sans aide">Found « Suivre ce trajet » unaided</td><td>n/a</td><td data-fr="2 sur 5">2 of 5</td></tr>
+        <tr><td data-fr="Souvenir après un coup d'œil (sur 3)">Glance recall (out of 3)</td><td>1.0</td><td>0.9</td></tr>
+      </tbody>
+    </table>
+    <p class="img-caption" data-fr="Le souvenir après un coup d'œil a à peine bougé : le gain porte sur la compréhension au moment du choix, pas sur la mémoire.">Glance recall barely moved: the gain is understanding while choosing, not memory.</p>
+
+    <blockquote class="case-quote" data-fr="« Je n'avais pas compris que le train que j'avais choisi me posait problème. » P3, site actuel">
+      "I did not understand that the train I chose gave me problems." P3, today's site
+    </blockquote>
+    <blockquote class="case-quote" data-fr="« Ça ne dit rien sur le fait que mon train a des problèmes. Ça dit juste que je dois changer. » P4, site actuel">
+      "It doesn't say anything about my train having problems. It just says I have to change." P4, today's site
+    </blockquote>
+
+    <details class="case-more">
+      <summary><span data-fr="Les limites">The limits</span></summary>
+      <p data-fr="Cinq participants à l'aise avec le numérique. Le site actuel a été testé sur Paris vers Dijon et la refonte sur Massy vers Marseille. J'ai modéré les sessions sur mon propre design, et certaines consignes orientaient la réponse.">Five tech-savvy participants. The live site was tested on Paris to Dijon and the redesign on Massy to Marseille. I moderated my own design, and some prompts were leading.</p>
+    </details>
+    <figure class="embed reveal" data-src="/sncf/" data-title="SNCF Connect journey search redesign, coded prototype">
+      <div class="embed-frame embed-frame--phone">
+        <picture class="theme-night">
+              <source srcset="/work/sncf-connect/images/coded-prototype-night.webp" type="image/webp">
+              <img class="embed-preview" src="/work/sncf-connect/images/coded-prototype-night.png" alt="Coded prototype on mobile, Massy to Marseille: result cards carrying the works strip, the honest duration and the direct alternative" width="393" height="852" loading="lazy" decoding="async">
+            </picture>
+            
+<picture class="theme-day">
+              <source srcset="/work/sncf-connect/images/coded-prototype-day.webp" type="image/webp">
+              <img class="embed-preview" src="/work/sncf-connect/images/coded-prototype-day.png" alt="Coded prototype on mobile, Massy to Marseille: result cards carrying the works strip, the honest duration and the direct alternative" width="393" height="852" loading="lazy" decoding="async">
+            </picture>
+        <button class="embed-load" type="button" data-fr="Lancer le prototype codé">Run the coded prototype</button>
+      </div>
+      <figcaption class="embed-bar">
+        <span class="embed-title" data-fr="Prototype codé, React">Coded prototype, React</span>
+        <a class="embed-open" href="/sncf/" target="_blank" rel="noopener" data-fr="Ouvrir en plein écran ↗">Open full screen ↗</a>
+      </figcaption>
+    </figure>
+  </div>
+
+
+
+  <!-- 09 What comes next -->
+  <div id="next" class="case-section case-slide reveal">
+    <h2 data-fr="La suite">What comes next</h2>
+    <p class="case-lead" data-fr-html="Passer de l'information au bon moment à <mark>l'information avant même d'ouvrir l'application</mark>.">From information at the right moment to <mark>information before the app is even open</mark>.</p>
+    <ol class="case-steps">
+      <li data-fr="Communication proactive : placer « Suivre ce trajet » sur la carte et tester les notifications push">Proactive communication: move « Suivre ce trajet » onto the card and test push notifications</li>
+      <li data-fr="Montrer l'arrêt du car et le temps de marche pour y aller">Show the coach stop and the walking time to it</li>
+      <li data-fr="Le prouver avec le garde-fou, dans un vrai test A/B">Prove it with the guardrail in a live A/B trial</li>
+    </ol>
+  </div>
+
+  <!-- 10 Where AI helped -->
+  <div id="ai" class="case-section case-slide reveal">
+    <h2 data-fr="Là où l'IA a aidé">Where AI helped</h2>
+    <p class="case-lead" data-fr-html="De la vitesse sur les tâches répétitives, <mark>les décisions sont restées manuelles</mark>.">Speed on the repetitive work, <mark>while the decisions stayed manual</mark>.</p>
+    <div class="case-system-grid">
+      <div class="case-system-item">
+        <h4>Dovetail</h4>
+        <p data-fr="Pour organiser les sessions. Son étiquetage automatique a demandé beaucoup de corrections à la main.">To organise the sessions. Its auto-tagging needed a lot of manual correction.</p>
+      </div>
+      <div class="case-system-item">
+        <h4 data-fr="Agents Figma">Figma agents</h4>
+        <p data-fr="Pour le travail répétitif sur les composants. Le système de gravité, le panneau et ce qu'il fallait abandonner sont restés des décisions manuelles.">For repetitive component work. The severity system, the drawer and what to drop stayed manual decisions.</p>
+      </div>
+      <div class="case-system-item">
+        <h4 data-fr="Code assisté par IA">AI-assisted coding</h4>
+        <p data-fr="Pour construire rapidement le prototype fonctionnel, écran par écran, à partir des maquettes Figma.">To build the working prototype quickly, screen by screen, against the Figma designs.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p class="footer-left" data-fr="© 2026 Anis Slimani. Étude de cas conceptuelle indépendante. Sans lien avec SNCF Connect.">© 2026 Anis Slimani. Independent concept case study. Not affiliated with SNCF Connect.</p>
+  <nav class="footer-links" aria-label="Footer navigation">
+    <a href="/#work" data-fr="Projets">Work</a>
+    <a href="/#about" data-fr="À propos">About</a>
+    <a href="mailto:anisslimani013@gmail.com" data-fr="Contact">Contact</a>
+    <a href="https://www.linkedin.com/in/anisslimani" target="_blank" rel="noopener">LinkedIn ↗</a>
+  </nav>
+</footer>
+
+<script src="/assets/js/main.js?v=19"></script>
+<script>
+/* Click-to-load embeds: the page ships a still preview and only fetches the
+   interactive file once someone asks for it, so the page stays fast. */
+document.querySelectorAll('.embed[data-src]').forEach(function (fig) {
+  var btn = fig.querySelector('.embed-load');
+  if (!btn) return;
+  btn.addEventListener('click', function () {
+    var frame = fig.querySelector('.embed-frame');
+    var iframe = document.createElement('iframe');
+    iframe.src = fig.dataset.src;
+    iframe.title = fig.dataset.title;
+    iframe.allow = 'fullscreen';
+    iframe.allowFullscreen = true;
+    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+    frame.replaceChildren(iframe);
+    iframe.focus();
+  });
+});
+</script>
+</body>
+</html>

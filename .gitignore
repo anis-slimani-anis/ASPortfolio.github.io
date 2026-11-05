@@ -1,0 +1,4 @@
+
+# Raw Figma exports, kept locally so images can be re-converted
+# without re-exporting. Derivatives live in assets/images and work/*/images.
+_sources/

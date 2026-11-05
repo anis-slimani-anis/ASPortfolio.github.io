@@ -36,8 +36,14 @@
   --accent-mid:    rgba(204,204,255,0.14);
   --accent-border: rgba(204,204,255,0.18);
   --accent-glow:   rgba(204,204,255,0.05);
-  --card-glow:     0 0 24px rgba(204,204,255,0.06), 0 0 60px rgba(204,204,255,0.03);
-  --card-glow-hover: 0 4px 32px rgba(204,204,255,0.10), 0 0 72px rgba(204,204,255,0.05);
+  /* One glow recipe for the whole site. Three periwinkle layers falling off
+     from a tight edge shine to a wide blue bloom, plus a 1px rim light.
+     --panel-glow is the quieter version for strips and small panels. */
+  --card-glow:       0 0 10px rgba(172,157,255,0.18), 0 0 38px rgba(162,142,255,0.14), 0 0 96px rgba(142,162,255,0.08), inset 0 1px 0 rgba(204,204,255,0.12);
+  --card-glow-hover: 0 0 14px rgba(177,162,255,0.35), 0 0 54px rgba(162,142,255,0.27), 0 0 130px rgba(142,162,255,0.16), inset 0 1px 0 rgba(204,204,255,0.20);
+  --panel-glow:      0 0 36px rgba(162,142,255,0.10), 0 0 92px rgba(142,162,255,0.055), inset 0 1px 0 rgba(204,204,255,0.10);
+  --card-lift:       0 14px 34px rgba(0,0,0,0.50);
+  --card-lift-hover: 0 18px 46px rgba(0,0,0,0.55);
 
   --text:          #eeeef8;
   --text-mid:      rgba(238,238,248,0.90);
@@ -102,6 +108,9 @@
   /* Clean neutral shadows */
   --card-glow:       0 1px 2px rgba(0,0,0,0.05), 0 4px 12px rgba(0,0,0,0.07);
   --card-glow-hover: 0 2px 6px rgba(0,0,0,0.08), 0 12px 28px rgba(0,0,0,0.10);
+  --panel-glow:      0 1px 3px rgba(0,0,0,0.04), 0 6px 18px rgba(0,0,0,0.06);
+  --card-lift:       none;
+  --card-lift-hover: none;
 
   --text:          #1b1d1f;
   --text-mid:      rgba(27,29,31,0.72);
@@ -435,7 +444,7 @@ body::-webkit-scrollbar-button {
 
 /* Spotlight — subtle cobalt in light mode */
 [data-theme="light"] .case-card::after,
-[data-theme="light"] .service-block::after { background: radial-gradient(500px circle at var(--cx, 50%) var(--cy, 50%), rgba(27,29,31,0.05), transparent 55%); }
+[data-theme="light"] .service-block::after { background: radial-gradient(500px circle at var(--cx, 50%) var(--cy, 50%), rgba(27,29,31,0.07), transparent 58%); }
 [data-theme="light"] .work-stats-embed,
 [data-theme="light"] .outcome-card,
 [data-theme="light"] .partner-card,
@@ -1149,10 +1158,7 @@ section, footer, .page-hero, .case-content-wrap {
   border: 1px solid rgba(204,204,255,0.10);
   border-radius: var(--radius-xl);
   overflow: hidden;
-  box-shadow:
-    0 0 60px rgba(120,80,255,0.12),
-    0 0 120px rgba(80,120,255,0.07),
-    inset 0 1px 0 rgba(204,204,255,0.12);
+  box-shadow: var(--panel-glow);
 }
 .work-stats-embed::before {
   content: '';
@@ -1193,7 +1199,7 @@ section, footer, .page-hero, .case-content-wrap {
   background: var(--bg2);
   overflow: hidden;
   position: relative;
-  transition: border-color 0.25s, transform 0.2s, box-shadow 0.2s;
+  transition: border-color 0.25s, transform 0.2s, box-shadow 0.38s cubic-bezier(0.22,1,0.36,1);
   text-decoration: none;
   color: inherit;
   backface-visibility: hidden;
@@ -1205,9 +1211,9 @@ section, footer, .page-hero, .case-content-wrap {
   inset: 0;
   opacity: 0;
   background: radial-gradient(
-    500px circle at var(--cx, 50%) var(--cy, 50%),
-    rgba(204,204,255,0.06),
-    transparent 55%
+    560px circle at var(--cx, 50%) var(--cy, 50%),
+    rgba(204,204,255,0.14),
+    transparent 58%
   );
   transition: opacity 0.4s ease;
   pointer-events: none;
@@ -1222,6 +1228,34 @@ section, footer, .page-hero, .case-content-wrap {
   transform: translateY(-4px);
   box-shadow: var(--card-glow-hover);
 }
+/* Night cards sat flat until hover, which meant no glow at all on touch and
+   nothing on desktop until the pointer arrived. Give them a real resting
+   glow at every width; hover just brightens it. Day is untouched: its
+   photo-frame shadow is set with !important further down. */
+/* Everything else that reads as a surface gets the quieter version of the
+   same glow, so the hues match across the homepage, the work pages and the
+   AI page. Scoped to night; day keeps its own neutral shadows. The hover
+   selectors are written at the same specificity so they still win. */
+:root:not([data-theme="light"]) .service-block,
+:root:not([data-theme="light"]) .contact-link,
+:root:not([data-theme="light"]) .outcome-card,
+:root:not([data-theme="light"]) .partner-card,
+:root:not([data-theme="light"]) .decision-item,
+:root:not([data-theme="light"]) .case-system-item,
+:root:not([data-theme="light"]) .page-stat-strip,
+:root:not([data-theme="light"]) .case-diagram,
+:root:not([data-theme="light"]) .embed-frame {
+  box-shadow: var(--panel-glow);
+}
+:root:not([data-theme="light"]) .service-block:hover,
+:root:not([data-theme="light"]) .contact-link:hover,
+:root:not([data-theme="light"]) .outcome-card:hover,
+:root:not([data-theme="light"]) .partner-card:hover,
+:root:not([data-theme="light"]) .decision-item:hover {
+  box-shadow: var(--card-glow-hover);
+}
+:root:not([data-theme="light"]) .case-card { box-shadow: var(--card-glow), var(--card-lift); }
+:root:not([data-theme="light"]) .case-card:hover { box-shadow: var(--card-glow-hover), var(--card-lift-hover); }
 .case-card.flipped { direction: rtl; }
 .case-card.flipped > * { direction: ltr; }
 
@@ -1238,7 +1272,7 @@ section, footer, .page-hero, .case-content-wrap {
   margin-bottom: 20px;
 }
 .tag {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.07em;
   text-transform: uppercase;
@@ -1533,7 +1567,7 @@ section, footer, .page-hero, .case-content-wrap {
   background: var(--bg2);
   position: relative;
   overflow: hidden;
-  box-shadow: 0 0 50px rgba(120,80,255,0.10), 0 0 100px rgba(80,120,255,0.05), inset 0 1px 0 rgba(204,204,255,0.10);
+  box-shadow: var(--panel-glow);
 }
 .tech-strip::before {
   content: '';
@@ -1602,7 +1636,7 @@ section, footer, .page-hero, .case-content-wrap {
   flex-direction: column;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 0 50px rgba(120,80,255,0.10), 0 0 100px rgba(80,120,255,0.05), inset 0 1px 0 rgba(204,204,255,0.10);
+  box-shadow: var(--panel-glow);
 }
 .contact-left::before,
 .contact-form::before {
@@ -1665,7 +1699,7 @@ section, footer, .page-hero, .case-content-wrap {
   flex-direction: column;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 0 50px rgba(120,80,255,0.10), 0 0 100px rgba(80,120,255,0.05), inset 0 1px 0 rgba(204,204,255,0.10);
+  box-shadow: var(--panel-glow);
 }
 .contact-form form {
   flex: 1;
@@ -1841,6 +1875,9 @@ footer {
   flex-wrap: wrap;
   margin-bottom: 52px;
 }
+.page-hero > .page-meta-row:last-child {
+  margin-bottom: 0;
+}
 .page-stat-strip {
   display: flex;
   gap: 0;
@@ -1881,7 +1918,10 @@ footer {
 .page-stat-key { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; }
 
 .case-content-wrap {
-  max-width: var(--max-w);
+  /* Must match .page-hero: --max-w is the CONTENT width, so the horizontal
+     padding has to be added on top or the body sits 2x--pad-x narrower
+     than the hero above it. */
+  max-width: calc(var(--max-w) + var(--pad-x) * 2);
   margin: 0 auto;
   padding: 24px var(--pad-x) 110px;
 }
@@ -1906,6 +1946,31 @@ footer {
 }
 
 .case-section { margin-bottom: 88px; }
+
+/* Ownership block: who owned what on a team project */
+.case-role {
+  margin: 0 0 48px;
+  padding: 18px 20px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+}
+/* When the ownership block follows the disclaimer, the two read as one unit,
+   so tighten the gap between them rather than pulling it up with a negative
+   margin (which made the space above and below the pair uneven). */
+.case-confidential:has(+ .case-role) { margin-bottom: 16px; }
+.case-role-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.case-role-label {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-muted);
+}
+.case-role-badge {
+  padding: 3px 10px; border-radius: 999px;
+  font-size: 12px; font-weight: 600;
+  color: var(--accent); background: var(--accent-dim); border: 1px solid var(--accent-border);
+}
+.case-role-line { font-size: 15px; line-height: 1.7; color: var(--text-mid); margin: 0 0 8px; }
+.case-role-context { font-size: 13px; line-height: 1.6; color: var(--text-muted); margin: 0; }
+.case-role-context a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
 /* Hero CTA row on case pages, and a divider that opens a second part of a page */
 .page-hero-cta { margin-top: 28px; }
 .case-section .hero-cta-row { margin-top: 28px; }
@@ -2458,10 +2523,10 @@ nav.work-header {
   align-items: center;
   justify-content: center;
   font-family: var(--font-numeric);
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 800;
   color: var(--accent);
-  opacity: 0.4;
+  opacity: 0.6;
   border-right: 1px solid var(--border);
   font-variant-numeric: lining-nums tabular-nums;
   letter-spacing: 0.04em;
@@ -2469,6 +2534,24 @@ nav.work-header {
   padding: 0 4px;
 }
 .decision-body { padding: 24px 28px; }
+
+/* Word labels instead of 01/02/03: the numeric column is 56px and 9px type,
+   which crushes "North Star" or "Guardrail". Give them room and set them
+   as a label rather than a figure. */
+.decision-list--labels .decision-item { grid-template-columns: 132px 1fr; }
+.decision-list--labels .decision-num {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  opacity: 0.85;
+  line-height: 1.35;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+  padding: 26px 14px 26px 22px;
+}
 .decision-body h4 {
   font-family: var(--font-body);
   font-size: 16px;
@@ -3065,7 +3148,9 @@ nav.work-header {
 
   /* ── Footer ── */
   footer { flex-direction: column; gap: 12px; text-align: center; padding: 20px var(--pad-x); }
-  .footer-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
+  .footer-links { flex-wrap: wrap; justify-content: center; gap: 4px 16px; }
+  /* 12px text in a 20px box is far under the 44px touch minimum. */
+  .footer-links a { display: inline-flex; align-items: center; min-height: 44px; }
 
   /* ── Card glow (permanent on mobile) ── */
   .case-card,
@@ -3131,7 +3216,7 @@ nav.work-header {
   .case-body p { font-size: 14px; }
   .case-metric-val { font-size: 18px; }
   .case-visual { min-height: 120px; }
-  .tag { font-size: 10px; padding: 2px 7px; }
+  .tag { font-size: 11px; padding: 3px 8px; }
   .case-mock { max-width: 160px; }
 
   /* Grids */
@@ -3164,9 +3249,9 @@ nav.work-header {
   .about-text p { font-size: 15px; }
 
   /* Footer */
-  .footer-left { font-size: 11px; }
-  .footer-links a { font-size: 11px; }
-  .footer-links { gap: 12px; }
+  .footer-left { font-size: 12px; }
+  .footer-links a { font-size: 12px; }
+  .footer-links { gap: 4px 12px; }
 }
 
 /* ── 15. LAB: doorway to the paper portfolio ─────────────────
@@ -3174,6 +3259,70 @@ nav.work-header {
    themes. At rest they are a single squared-up deck; on hover they
    fan out around their epicentre, each carrying its own discipline
    glow. Nothing to mismatch the background, so no height problem. */
+
+/* ── AI: Brief to Ship ─────────────────────────────────────
+   The card is a .case-card so it inherits the same chrome, the pointer
+   glow and the day-mode photo frame as the work cards; only the shape
+   and the inner layout change. */
+#ai { padding: 152px 0; overflow: hidden; }
+.ai-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+  display: grid;
+  grid-template-columns: 0.72fr 1fr;
+  gap: 64px;
+  align-items: stretch;
+}
+/* Height comes from the copy column; the floor keeps the card sane when the
+   copy is short or the grid collapses to one column. */
+.case-card--tall { grid-template-columns: 1fr; min-height: 340px; }
+/* A plain glow all round the card, like a coloured drop shadow: on at rest,
+   brighter on hover. No travelling halo, no extra element. The day theme
+   keeps its own photo-frame shadow, which wins on !important. */
+.case-card--tall { transition: border-color 0.25s, transform 0.2s, box-shadow 0.35s ease; }
+
+.ai-face {
+  container-type: inline-size;
+  display: flex; flex-direction: column; align-items: flex-start;
+  width: 100%; height: 100%; padding: 8.5% 9% 8%;
+}
+.ai-card-top { display: flex; align-items: center; gap: 2.6cqw; width: 100%; }
+.ai-mark { width: 10cqw; height: 8.3cqw; fill: var(--text); flex: none; }
+.ai-card-logo { font-weight: 700; font-size: 6cqw; letter-spacing: -0.01em; color: var(--text); }
+.ai-card-logo i { font-style: normal; opacity: 0.55; margin: 0 0.3em; }
+.ai-card-kicker {
+  margin-top: 6cqw; font-size: 3.1cqw; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted);
+}
+.ai-card-title {
+  margin-top: 3cqw; font-family: var(--font-display, var(--font-body));
+  font-size: 11.5cqw; line-height: 1.05; font-weight: 700;
+  letter-spacing: -0.03em; color: var(--text);
+}
+.ai-card-rule { width: 16cqw; height: 2px; margin: 4.5cqw 0 0; background: var(--accent); opacity: 0.9; }
+.ai-card-text { margin-top: 3.5cqw; font-size: 3.7cqw; line-height: 1.5; color: var(--text-mid); }
+.ai-card-foot {
+  margin-top: auto; padding-top: 4cqw; display: flex; gap: 4cqw; width: 100%;
+  font-size: 3.1cqw; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--text-muted);
+}
+.ai-copy h2 { margin-bottom: 14px; }
+.ai-copy .section-desc { margin-top: 0; margin-bottom: 28px; max-width: 46ch; }
+.ai-cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+
+@media (max-width: 860px) {
+  #ai { padding: 104px 0; }
+  .ai-inner { grid-template-columns: 1fr; gap: 48px; justify-items: center; }
+  /* Stacked, the copy should introduce the card rather than follow it.
+     Reordered here instead of in the DOM so the card stays on the left
+     at desktop width. */
+  .ai-copy { order: -1; }
+  .case-card--tall { width: min(360px, 100%); }
+  .ai-copy { text-align: center; }
+  .ai-copy .section-desc { margin-left: auto; margin-right: auto; }
+  .ai-cta-row { justify-content: center; }
+}
 
 #lab { padding: 120px 0; overflow: hidden; }
 .lab-inner {
@@ -3489,9 +3638,13 @@ nav.work-header {
   padding: 16px; border-radius: 14px;
   background: var(--bg2); border: 1px solid var(--border-light);
   color: var(--text); text-decoration: none;
-  transition: transform 0.25s ease, border-color 0.25s ease;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.38s cubic-bezier(0.22,1,0.36,1);
 }
 .lp-card:hover, .lp-card:focus-visible { transform: translateY(-3px); border-color: var(--accent-border); }
+/* The edition cards are surfaces too, so they take the same glow. */
+:root:not([data-theme="light"]) .lp-card { box-shadow: var(--panel-glow); }
+:root:not([data-theme="light"]) .lp-card:hover,
+:root:not([data-theme="light"]) .lp-card:focus-visible { box-shadow: var(--card-glow-hover); }
 [data-theme="light"] .lp-card { box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
 .lp-head { display: flex; align-items: center; gap: 10px; }
 .lp-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex: none; }
@@ -3541,6 +3694,14 @@ nav.work-header {
 .lp-play::after { content: ''; position: absolute; left: 54%; top: 50%; transform: translate(-50%,-50%); border-style: solid; border-width: 2.6cqw 0 2.6cqw 4.4cqw; border-color: transparent transparent transparent #fff; }
 .lp-cover--video .lp-cover-title { margin-top: 8cqw; font-size: 9.5cqw; }
 .lp-cover--video .lp-cover-text { margin-top: 4cqw; }
+/* Edition 08 carries the artwork from the post itself, so the cover goes
+   dark to sit with it instead of the usual cream. */
+.lp-cover--gladia { background: #07030f; --ink: #f3effa; --hot: #c9a9ff; }
+.lp-shot { position: relative; display: block; width: 100%; aspect-ratio: 700 / 491; margin-top: 6cqw; border-radius: 2cqw; overflow: hidden; }
+.lp-shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.lp-cover--gladia .lp-cover-kicker { opacity: 0.7; }
+.lp-cover--gladia .lp-cover-title { margin-top: 7cqw; font-size: 11cqw; }
+.lp-cover--gladia .lp-cover-text { margin-top: 3.5cqw; opacity: 0.85; }
 .lp-cover--c { background: #1a006c; --ink: #faf8f3; }
 .lp-cover--c .lp-logo { font-size: 5cqw; }
 .lp-cover--c .lp-cover-pill { background: rgba(250,248,243,0.14); }
@@ -3570,7 +3731,13 @@ nav.work-header {
   color: var(--text); max-width: 21em; margin-bottom: 36px;
 }
 .case-lead mark { background: none; color: var(--accent); white-space: nowrap; }
-[data-theme="light"] .case-lead mark { color: inherit; background: linear-gradient(transparent 62%, rgba(var(--accent-rgb), 0.22) 62%); }
+/* Day accent is ink black, so a translucent wash reads as a stuck text
+   selection. A solid underline band at full strength reads as deliberate,
+   and a gradient (not box-shadow) keeps it correct across line wraps. */
+[data-theme="light"] .case-lead mark {
+  color: inherit;
+  background: linear-gradient(transparent 86%, var(--accent) 86%, var(--accent) 95%, transparent 95%);
+}
 .case-slide { margin-bottom: 112px; }
 .case-slide .decision-body h4 { font-size: 19px; line-height: 1.35; margin-bottom: 10px; }
 .case-slide .outcome-val { font-size: clamp(34px, 4.6vw, 52px); margin-bottom: 10px; }
@@ -3597,8 +3764,14 @@ nav.work-header {
   content: counter(slide, decimal-leading-zero);
   display: block; margin-bottom: 10px;
   font-family: var(--font-numeric); font-size: 44px; font-weight: 600; letter-spacing: -0.03em; line-height: 1;
-  color: var(--text); opacity: 0.3;
+  /* These are section markers people read, not decoration. At 0.3 they came
+     out at 2.28:1 on dark and 1.90:1 on light, under the 3:1 minimum for
+     large text. The two themes need different values to land in the same
+     place, because the ink-black day accent darkens much faster than the
+     off-white night one lightens. */
+  color: var(--text); opacity: 0.5;
 }
+[data-theme="light"] .case-slide > h2::before { opacity: 0.62; }
 @media (min-width: 960px) {
   .case-slide { display: grid; grid-template-columns: 170px minmax(0, 1fr); column-gap: 56px; padding-top: 40px; border-top: 1px solid var(--border); }
   .case-slide > * { grid-column: 2; min-width: 0; }
@@ -3630,9 +3803,20 @@ nav.work-header {
 .case-cta .hero-cta-row { margin-top: 28px; }
 
 /* Homepage Brief to Ship card on small screens: give the image its real shape */
+/* No hover on touch, so the night cards had nothing lifting them off the
+   page: the glow only existed on :hover. Day already reads well because its
+   photo-frame shadow is always on. Give night the same permanent presence. */
+@media (hover: none), (max-width: 860px) {
+}
+
 @media (max-width: 860px) {
-  /* the picture is shown whole; the cap stops it becoming huge on wide phones and tablets */
-  .case-visual.case-visual--ai { aspect-ratio: 16 / 10; min-height: 0; max-height: 250px; width: 100%; padding: 0; }
+  /* Every card carries a 16:10 product shot now, so give the slot that ratio
+     rather than letting it take whatever height the copy leaves over. The
+     card with the most text was collapsing to 120px and cropping 46% of its
+     image, while the shortest card showed its image whole. The cap stops the
+     picture becoming huge on wide phones and tablets. */
+  .case-visual { aspect-ratio: 16 / 10; min-height: 0; max-height: 250px; }
+  .case-visual.case-visual--ai { width: 100%; padding: 0; }
 }
 .contact-link-icon svg { display: block; }
 
@@ -3758,6 +3942,8 @@ html[data-theme="light"] .services-grid { gap: 20px; }
   /* decision and workflow cards: the number sits above the text instead of
      taking a narrow column of its own */
   .decision-item, .workflow-step { grid-template-columns: 1fr; }
+  .decision-list--labels .decision-item { grid-template-columns: 1fr; }
+  .decision-list--labels .decision-num { padding: 18px 20px 0; }
   .decision-num, .workflow-step-num {
     justify-content: flex-start; border-right: 0;
     padding: 18px 20px 0; font-size: 11px; opacity: 0.75;
@@ -3777,4 +3963,119 @@ html[data-theme="light"] .services-grid { gap: 20px; }
 [data-theme="light"] .case-cta {
   background: radial-gradient(ellipse at 0% 0%, rgba(27,29,31,0.07), transparent 62%), var(--bg2);
   border-color: rgba(27,29,31,0.16);
+}
+
+/* ── SNCF Connect case: click-to-load embeds, slide gallery, scorecard ── */
+.embed { margin: 28px 0 0; }
+.embed-frame {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  background: var(--bg2);
+  aspect-ratio: 16 / 9;
+}
+.embed-frame--phone {
+  width: 393px; max-width: 100%;
+  aspect-ratio: 393 / 780;
+  margin: 0 auto;
+  border-radius: 34px;
+  border-width: 8px;
+  border-color: var(--surface2);
+}
+.embed-preview, .embed-frame iframe {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  border: 0; display: block;
+}
+.embed-preview { object-fit: cover; object-position: top center; }
+.embed-frame--phone .embed-preview { object-fit: cover; }
+.embed-load {
+  position: absolute; left: 50%; bottom: 20px; transform: translateX(-50%);
+  padding: 11px 20px; border-radius: 999px; border: 0; cursor: pointer;
+  font: 600 14px/1 var(--font-body);
+  color: var(--bg); background: var(--accent);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+  white-space: nowrap;
+}
+.embed-load:hover { filter: brightness(1.08); }
+.embed-load:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+.embed-bar {
+  display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px;
+  margin-top: 12px; font-size: 13px; color: var(--text-muted);
+}
+.embed-frame--phone + .embed-bar { max-width: 393px; margin-left: auto; margin-right: auto; }
+.embed-title { font-weight: 600; color: var(--text-mid); }
+.embed-open { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+.embed-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; margin-top: 8px; }
+.embed-grid > * { min-width: 0; }
+@media (min-width: 900px) {
+  .embed-grid--split { grid-template-columns: minmax(0, 1fr) 393px; align-items: start; }
+}
+
+.case-disclaimer { margin-bottom: 48px; }
+/* Disclaimer and ownership merged into one box on solo pages, so the body
+   stacks two lines beside the icon instead of a single run of text. */
+.case-disclaimer-body { display: flex; flex-direction: column; gap: 9px; min-width: 0; }
+.case-disclaimer-body p { margin: 0; }
+.case-disclaimer-role { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; color: var(--text-mid); }
+
+/* ── Case study diagrams ───────────────────────────────────
+   Hand-drawn SVG rather than exported images: they carry data, they stay
+   crisp at any width, and they re-theme with the page instead of needing a
+   day asset and a night asset. All colour comes from the page tokens. */
+.case-diagram {
+  margin: 10px 0 14px;
+  padding: clamp(16px, 2.4vw, 30px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--bg3);
+}
+[data-theme="light"] .case-diagram { background: #ffffff; }
+.case-diagram svg { display: block; width: 100%; height: auto; overflow: visible; }
+.dg-rule   { stroke: var(--border); stroke-width: 1; fill: none; }
+.dg-dash   { stroke: var(--border); stroke-width: 1; fill: none; stroke-dasharray: 4 5; }
+.dg-box    { fill: none; stroke: var(--border); stroke-width: 1; rx: 12; }
+.dg-band   { fill: var(--accent); opacity: 0.06; }
+.dg-dot    { fill: var(--accent); }
+.dg-dot--muted { fill: var(--text-muted); opacity: 0.4; }
+.dg-arrow  { stroke: var(--accent); stroke-width: 1.5; fill: none; }
+.dg-eyebrow {
+  fill: var(--text-muted); font-family: var(--font-body);
+  font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+}
+.dg-head { fill: var(--text); font-family: var(--font-body); font-size: 15px; font-weight: 600; }
+.dg-text { fill: var(--text-mid); font-family: var(--font-body); font-size: 13px; }
+.dg-mute { fill: var(--text-muted); font-family: var(--font-body); font-size: 12px; }
+.dg-num  { fill: var(--bg); font-family: var(--font-numeric); font-size: 10px; font-weight: 700; }
+@media (max-width: 760px) {
+  .case-diagram { overflow-x: auto; overscroll-behavior-x: contain; }
+  .case-diagram svg { min-width: 640px; }
+}
+
+.shot-gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 28px 0 8px; }
+.shot-gallery img {
+  width: 100%; height: 100%; aspect-ratio: 1 / 1; object-fit: cover;
+  border-radius: var(--radius); border: 1px solid var(--border);
+  background: #fff; display: block;
+}
+
+.score-table--compare td:nth-child(2) { color: var(--text-muted); font-family: var(--font-numeric); font-variant-numeric: lining-nums tabular-nums; }
+.score-table--compare td:first-child { width: 56%; }
+
+@media (max-width: 700px) {
+  .shot-gallery { grid-template-columns: 1fr; }
+  .shot-gallery img { aspect-ratio: auto; height: auto; }
+  .embed-frame--phone { aspect-ratio: auto; height: min(780px, 78vh); border-width: 6px; }
+  /* 16:9 at phone width is a 203px-tall window, which is useless for a Figma
+     file or a deck. Give the wide embeds a real viewport so panning and
+     zooming inside them is actually possible. */
+  .embed-frame:not(.embed-frame--phone) { aspect-ratio: auto; height: min(560px, 68vh); }
+  /* Touch targets: these were 33px and 22px tall, under the 44px minimum. */
+  .embed-load { font-size: 13px; padding: 13px 18px; min-height: 44px; }
+  .embed-open { display: inline-flex; align-items: center; min-height: 44px; }
+  /* The cover is a 16:9 image in a taller box, so show all of it rather than
+     cropping the middle out. */
+  .embed-frame:not(.embed-frame--phone) .embed-preview { object-fit: contain; object-position: center; }
+  .score-table--compare td, .score-table--compare th { padding: 10px; font-size: 14px; }
 }
