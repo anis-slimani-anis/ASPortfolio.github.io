@@ -32,3 +32,12 @@ assets/
 ## Recent handoff
 - See `CLAUDE-HANDOFF.md` for the April 2, 2026 QA and styling handoff.
 - That file summarizes recent theme, header, mobile nav, CTA, fallback, and cleanup work plus current follow-up notes.
+
+## Mobile work rules (always follow when working on the mobile version)
+- **Never commit to `main`.** Do all mobile work on a dedicated branch, then open a pull request.
+- **Never merge the PR yourself.** Wait for Anis to review and explicitly approve before anything is merged.
+- **Do not break the existing website.** Desktop is the reference and must stay visually and functionally unchanged:
+  - Scope mobile changes inside mobile media queries (e.g. `@media (max-width: 860px)` / `600px`, the breakpoints already used in `assets/css/style.css`) rather than editing base/desktop rules.
+  - Prefer additive CSS; don't rename or remove existing classes, IDs, or JS hooks used by `assets/js/main.js`.
+  - Keep both light and dark themes, EN/FR states, the mobile menu (scroll lock, overlay, Escape close), and reduced-motion behavior working.
+- **Check before opening the PR:** compare desktop (~1440px) and mobile (~390px) on the homepage and the work pages, and note in the PR what was checked.
